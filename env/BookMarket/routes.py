@@ -100,7 +100,7 @@ def new_item():
 @app.route("/shop")
 def shop():
     page = request.args.get('page', 1, type=int)
-    posts = Item.query.order_by(Item.date_posted.desc()).paginate(page=page, per_page=5)
+    posts = Item.query.order_by(Item.date_posted.desc()).paginate(page=page, per_page=2)
     return render_template('shop.html', title='Shop', posts=posts)
 
 
