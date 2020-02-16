@@ -3,7 +3,7 @@ import secrets
 import logging
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
-from BookMarket.models import User, Item, ItemClass, ItemDepartment
+from BookMarket.models import User, Item, ItemClass, ItemDepartment, ItemImage
 from BookMarket.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
 from BookMarket import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
@@ -90,13 +90,18 @@ def new_item():
     form.item_department.choices = department_list
     if form.validate_on_submit():
         images = form.images.data
-        if images:
-            logging.error('in if')
-            save_picture(images)
         post = Item(name=form.name.data, description=form.description.data, user_id=current_user.id,
                     price=form.price.data, class_id=form.item_class.data, department_id=form.item_department.data)
         db.session.add(post)
         db.session.commit()
+        db.session.refresh(post)
+        newId = post.id
+        if images:
+            thumbnail = save_picture(images, newId)
+        if thumbnail:
+            item = Item.query.filter_by(id=newId).first()
+            item.thumbnail = thumbnail
+            db.session.commit()
         flash('Your post has been created!', 'success')
         return redirect(url_for('home'))
     return render_template('create_post.html', title='New Item', form=form, legend='New')
@@ -156,21 +161,27 @@ def user_posts(username):
 
 # Utility functions
 
-def save_picture(form_images):
-    for images in form_images:
-        random_hex = secrets.token_hex(8)
-        _, f_ext = os.path.splitext(images.filename)
-        picture_fn = random_hex + f_ext
-        picture_path = os.path.join(app.root_path, 'static/item_pics', picture_fn)
-        output_size = (500, 500)
-        resizedImage = Image.open(images)
-        resizedImage.thumbnail(output_size)
-        resizedImage.save(picture_path)
-        logging.error('%s picture path', images.filename)
-
+def save_picture(form_images, item_id):
+    for index, images in enumerate(form_images):
+        if images:
+            random_hex = secrets.token_hex(8)
+            _, f_ext = os.path.splitext(images.filename)
+            picture_fn = random_hex + f_ext
+            if (index == 0):
+                thumbnail = picture_fn
+            picture_path = os.path.join(app.root_path, 'static/item_pics', picture_fn)
+            output_size = (183, 195)
+            # output_resolution = (1000, 1000)
+            resizedImage = Image.open(images)
+            # resizedImage.thumbnail(output_resolution)
+            resizedImage = resizedImage.resize(output_size, Image.ANTIALIAS)
+            resizedImage.save(picture_path)
+            newImage = ItemImage(item_id=item_id, image_file=picture_fn)
+            db.session.add(newImage)
+            db.session.commit()
+    return thumbnail
     # #remove use previous profile pic in file system so it doesn't get overloaded
     # if (current_user.image_file != 'default.jpg'):
     #     current_picture_path = os.path.join(app.root_path, 'static/profile_pics', current_user.image_file)
     #     if os.path.exists(current_picture_path):
     #         os.remove(current_picture_path)
-    return picture_fn

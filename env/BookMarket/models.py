@@ -42,6 +42,8 @@ class Item(db.Model):
                             default=datetime.utcnow)
     description = db.Column(db.Text, nullable=False)
     price = db.Column(db.DECIMAL(10, 2), nullable=False)
+    thumbnail = db.Column(db.String, nullable=False,
+                          default='No_picture_available.png')
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     class_id = db.Column(db.Integer, db.ForeignKey('itemclass.id'), nullable=False)
     department_id = db.Column(db.Integer, db.ForeignKey('itemdepartment.id'), nullable=False)
