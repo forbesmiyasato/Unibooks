@@ -9,6 +9,7 @@ from BookMarket import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.utils import secure_filename
 
+
 @app.route('/')
 @app.route('/home')
 def home():
@@ -74,7 +75,8 @@ def account():
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
-    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    image_file = url_for(
+        'static', filename='profile_pics/' + current_user.image_file)
     return render_template('account.html', title='Account', image_file=image_file, form=form)
 
 
@@ -110,7 +112,8 @@ def new_item():
 @app.route("/shop")
 def shop():
     page = request.args.get('page', 1, type=int)
-    posts = Item.query.order_by(Item.date_posted.desc()).paginate(page=page, per_page=6)
+    posts = Item.query.order_by(
+        Item.date_posted.desc()).paginate(page=page, per_page=6)
     return render_template('shop.html', title='Shop', posts=posts)
 
 
@@ -118,7 +121,10 @@ def shop():
 def item(item_id):
     item = Item.query.get_or_404(item_id)
     images = ItemImage.query.filter_by(item_id=item_id)
-    return render_template('single_product.html', title=item.name, item=item, images=images)
+    item_class = ItemClass.query.get(item.class_id)
+    department = ItemDepartment.query.get(item.department_id)
+    return render_template('single_product.html', title=item.name, item=item, images=images,
+                           item_class=item_class, department=department)
 
 
 @app.route('/post/<int:post_id>/update', methods=['GET', 'POST'])
@@ -156,7 +162,8 @@ def delete_post(post_id):
 def user_posts(username):
     page = request.args.get('page', 1, type=int)
     user = User.query.filter_by(username=username).first_or_404()
-    posts = Item.query.order_by(Item.date_posted.desc()).filter_by(author=user).paginate(page=page, per_page=5)
+    posts = Item.query.order_by(Item.date_posted.desc()).filter_by(
+        author=user).paginate(page=page, per_page=5)
     return render_template('user_posts.html', posts=posts, user=user)
 
 
@@ -170,7 +177,8 @@ def save_picture(form_images, item_id):
             picture_fn = random_hex + f_ext
             if (index == 0):
                 thumbnail = picture_fn
-            picture_path = os.path.join(app.root_path, 'static/item_pics', picture_fn)
+            picture_path = os.path.join(
+                app.root_path, 'static/item_pics', picture_fn)
             output_size = (183, 195)
             # output_resolution = (1000, 1000)
             resizedImage = Image.open(images)
