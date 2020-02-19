@@ -110,14 +110,15 @@ def new_item():
 @app.route("/shop")
 def shop():
     page = request.args.get('page', 1, type=int)
-    posts = Item.query.order_by(Item.date_posted.desc()).paginate(page=page, per_page=2)
+    posts = Item.query.order_by(Item.date_posted.desc()).paginate(page=page, per_page=6)
     return render_template('shop.html', title='Shop', posts=posts)
 
 
-@app.route("/post/<int:post_id>")
-def post(post_id):
-    post = Item.query.get_or_404(post_id)
-    return render_template('post.html', title=post.title, post=post)
+@app.route("/shop/<int:item_id>")
+def item(item_id):
+    item = Item.query.get_or_404(item_id)
+    images = ItemImage.query.filter_by(item_id=item_id)
+    return render_template('single_product.html', title=item.name, item=item, images=images)
 
 
 @app.route('/post/<int:post_id>/update', methods=['GET', 'POST'])

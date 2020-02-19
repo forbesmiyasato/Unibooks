@@ -83,7 +83,7 @@
                         <div class="single-product">
                             <img class="img-fluid" src="{{url_for('static', filename='item_pics/' + post.thumbnail)}}" alt="">
                             <div class="product-details">
-                                <h6>{{post.name}}</h6>
+                                <h6><a href="{{url_for('item', item_id=post.id)}}">{{post.name}}</a></h6>
                                 <div class="price">
                                     <h6>{{post.price}}</h6>
                                 </div>
