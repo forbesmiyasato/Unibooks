@@ -2,7 +2,7 @@ import os
 import secrets
 import logging
 from PIL import Image
-from flask import render_template, url_for, flash, redirect, request, abort
+from flask import render_template, url_for, flash, redirect, request, abort, jsonify
 from BookMarket.models import User, Item, ItemClass, ItemDepartment, ItemImage
 from BookMarket.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
 from BookMarket import app, db, bcrypt
@@ -83,14 +83,12 @@ def account():
 @app.route("/item/new", methods=['GET', 'POST'])
 @login_required
 def new_item():
-    classes = db.session.query(ItemClass).all()
-    class_list = [(i.id, i.class_name) for i in classes]
     form = PostForm()
-    form.item_class.choices = class_list
+    # form.item_class.choices = class_list
     departments = db.session.query(ItemDepartment).all()
     department_list = [(i.id, i.department_name) for i in departments]
     form.item_department.choices = department_list
-    if form.validate_on_submit():
+    if request.method == 'POST':
         images = form.images.data
         post = Item(name=form.name.data, description=form.description.data, user_id=current_user.id,
                     price=form.price.data, class_id=form.item_class.data, department_id=form.item_department.data)
@@ -107,6 +105,19 @@ def new_item():
         flash('Your post has been created!', 'success')
         return redirect(url_for('home'))
     return render_template('create_post.html', title='New Item', form=form, legend='New')
+
+
+@app.route('/class/<department>')
+def item_class(department):
+    classes = ItemClass.query.filter_by(department_id=department).all()
+    classArray = []
+    for item_class in classes:
+        classObj = {}
+        classObj['id'] = item_class.id
+        classObj['department_id'] = item_class.department_id
+        classObj['class_name'] = item_class.class_name
+        classArray.append(classObj)
+    return jsonify({'classes': classArray})
 
 
 @app.route("/shop")
@@ -170,7 +181,9 @@ def user_posts(username):
 # Utility functions
 
 def save_picture(form_images, item_id):
+    thumbnail = None
     for index, images in enumerate(form_images):
+        
         if images:
             random_hex = secrets.token_hex(8)
             _, f_ext = os.path.splitext(images.filename)
