@@ -25,7 +25,8 @@
                 <div class="s_Product_carousel">
                     {% for image in images %}
                     <div class="single-prd-item">
-                        <img class="img-fluid" src="{{ url_for('static', filename='item_pics/' + image.image_file)}}" alt="">
+                        <img class="img-fluid" src="{{ url_for('static', filename='item_pics/' + image.image_file)}}"
+                            alt="">
                     </div>
                     {% endfor %}
                 </div>
@@ -48,5 +49,30 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        var numImages = document.getElementsByClassName('single-prd-item').length;
+
+        if (numImages <= 1) {
+            console.log(numImages);
+            $(".s_Product_carousel").owlCarousel({
+                items: 1,
+                autoplay: false,
+                autoplayTimeout: 5000,
+                loop: false,
+                nav: false,
+                dots: false
+            });
+        }
+    });
+//     $("s_Product_carousel").owlCarousel({
+//     slideSpeed : 300,
+//     paginationSpeed : 400,
+//     items: 1,
+//     dots: false,
+//     singleItem: true
+// });
+</script>
 <!--================End Single Product Area =================-->
 {% endblock content %}
