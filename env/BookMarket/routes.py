@@ -123,13 +123,16 @@ def item_class(department):
 @app.route("/shop")
 def shop():
     page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 6, type=int)
+    order = request.args.get('order', 'desc')
+    date_sorted = getattr(Item.date_posted, order)()
     departments = db.session.query(ItemDepartment).all()
     # for department in departments:
     #     # classObj = {}
     #     classes = ItemClass.query.filter_by(department_id=department.id).all()
     #     department['classes'] = classes
     posts = Item.query.order_by(
-        Item.date_posted.desc()).paginate(page=page, per_page=6)
+        date_sorted).paginate(page=page, per_page=per_page)
     return render_template('shop.html', title='Shop', posts=posts, departments=departments)
 
 
@@ -144,7 +147,7 @@ def item(item_id):
 
 
 @app.route("/shop/class/<int:class_id>")
-def item_for_class(class_id):
+def items_for_class(class_id):
     page = request.args.get('page', 1, type=int)
     departments = db.session.query(ItemDepartment).all()
     posts = Item.query.filter_by(class_id=class_id).order_by(
@@ -152,14 +155,13 @@ def item_for_class(class_id):
     return render_template('shop.html', title='Shop', posts=posts, departments=departments)
 
 
-# @app.route("/shop/department/<int:department_id>")
-# def department_items(department_id):
-#     item = Item.query.get_or_404(item_id)
-#     images = ItemImage.query.filter_by(item_id=item_id)
-#     item_class = ItemClass.query.get(item.class_id)
-#     department = ItemDepartment.query.get(item.department_id)
-#     return render_template('single_product.html', title=item.name, item=item, images=images,
-#                            item_class=item_class, department=department)
+@app.route("/shop/department/<int:department_id>")
+def items_for_department(department_id):
+    page = request.args.get('page', 1, type=int)
+    departments = db.session.query(ItemDepartment).all()
+    posts = Item.query.filter_by(department_id=department_id).order_by(
+        Item.date_posted.desc()).paginate(page=page, per_page=6)
+    return render_template('shop.html', title='Shop', posts=posts, departments=departments)
 
 
 @app.route('/post/<int:post_id>/update', methods=['GET', 'POST'])
@@ -207,7 +209,7 @@ def user_posts(username):
 def save_picture(form_images, item_id):
     thumbnail = None
     for index, images in enumerate(form_images):
-        
+
         if images:
             random_hex = secrets.token_hex(8)
             _, f_ext = os.path.splitext(images.filename)
