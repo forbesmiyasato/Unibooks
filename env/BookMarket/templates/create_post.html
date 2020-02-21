@@ -120,8 +120,6 @@
 <script>
     let department_select = document.getElementById('department');
     let class_select = document.getElementById('class');
-    let nice_select = document.getElementsByClassName('nice-select')[0];
-    console.log(nice_select);
 
     class_select.required = true;
     department_select.required = true;
@@ -139,8 +137,6 @@
                         + item_class.class_name + '</option>';
                 }
                 class_select.innerHTML = optionHTML;
-                console.log(class_select);
-                console.log(department_select);
                 $('select').niceSelect('update');
             })
         });

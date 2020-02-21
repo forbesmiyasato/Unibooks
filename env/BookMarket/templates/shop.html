@@ -51,9 +51,9 @@
             <div class="filter-bar d-flex flex-wrap align-items-center">
                 <div class="sorting">
                     <select>
-                        <option value="1">Default sorting</option>
-                        <option value="1">Default sorting</option>
-                        <option value="1">Default sorting</option>
+                        <option value="1">Sort By</option>
+                        <option value="2">Oldest to Newest</option>
+                        <option value="3">Default sorting</option>
                     </select>
                 </div>
                 <div class="sorting mr-auto">
@@ -124,9 +124,9 @@
             <div class="filter-bar d-flex flex-wrap align-items-center">
                 <div class="sorting mr-auto">
                     <select>
-                        <option value="1">Show 12</option>
-                        <option value="1">Show 12</option>
-                        <option value="1">Show 12</option>
+                        <option value="1"><a href="{{url_for('shop', per_page=6)}}" class="persist-link">Show 6</a></option>
+                        <option value="2">Show 12</option>
+                        <option value="3">Show 24</option>
                     </select>
                 </div>
                 <div class="pagination">
@@ -197,7 +197,7 @@
     return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 }
 
-jQuery(document).ready(function ($) {
+$('document').ready(function () {
   var persistedQueryParam = getParameterByName('per_page');
 
   if (persistedQueryParam && persistedQueryParam.length > 0) {
@@ -217,6 +217,32 @@ jQuery(document).ready(function ($) {
       elem.attr('href', href + (href.indexOf('?') != -1 ? '&' : '?') + 'order=' + persistedQueryParam);
     });
   }
+});
+
+document.addEventListener('DOMContentLoaded', function(event) {
+    var options = document.getElementsByClassName('option');
+    var a = document.createElement("a");
+    //set date ascending sort for front end
+    a.textContent = options[0].innerHTML;
+    options[0].innerHTML="";
+    a.setAttribute('href', '{{url_for('shop', order='desc')}}');
+    a.setAttribute('style', 'color:rgb(119, 119, 119)')
+    a.setAttribute('class', 'persist-link')
+    options[0].appendChild(a);
+
+    //set date descending sort for front end
+    var b = document.createElement("a");
+    b.textContent = options[1].innerHTML;
+    options[1].innerHTML="";
+    b.setAttribute('href', '{{url_for('shop', order='asc')}}');
+    b.setAttribute('style', 'color:rgb(119, 119, 119)')
+    b.setAttribute('class', 'persist-link')
+    options[1].appendChild(b);
+
+    for (var i = 0; i < options.length; i++)
+    {
+        console.log(options[i]);
+    }
 });
 </script>
 <!-- End related-product Area -->
