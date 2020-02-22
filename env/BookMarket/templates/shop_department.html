@@ -230,7 +230,8 @@
         var a = document.createElement("a");
         //set date descending sort for front end
         a.textContent = "Newest to Oldest";
-        var url = "{{url_for('shop', order='desc', per_page=request.args.get('per_page'))}}".replace('&amp;','&')
+        var url = "{{url_for('items_for_department', department_id=department,order = 'desc', per_page = request.args.get('per_page'))}}"
+        .replace('&amp;', '&')
         options[0].innerHTML = "";
         a.setAttribute('href', url);
         a.setAttribute('style', 'color:rgb(119, 119, 119)')
@@ -241,47 +242,26 @@
         var b = document.createElement("a");
         b.textContent = options[1].innerHTML;
         options[1].innerHTML = "";
-        var url = "{{url_for('shop', order='asc', per_page=request.args.get('per_page'))}}".replace('&amp;','&')
+        var url = "{{url_for('items_for_department', department_id=department, order = 'asc', per_page = request.args.get('per_page'))}}"
+        .replace('&amp;', '&')
         b.setAttribute('href', url);
         b.setAttribute('style', 'color:rgb(119, 119, 119)')
         b.setAttribute('class', 'persist-link li-link')
         options[1].appendChild(b);
 
-        //set date ascending sort for front end
-        var b = document.createElement("a");
-        b.textContent = options[1].innerHTML;
-        options[1].innerHTML = "";
-        var url = "{{url_for('shop', order='asc', per_page=request.args.get('per_page'))}}".replace('&amp;','&')
-        b.setAttribute('href', url);
-        b.setAttribute('style', 'color:rgb(119, 119, 119)')
-        b.setAttribute('class', 'persist-link li-link')
-        options[1].appendChild(b);
+        // //set date ascending sort for front end
+        // var b = document.createElement("a");
+        // b.textContent = options[1].innerHTML;
+        // options[1].innerHTML = "";
+        // var url = "{{url_for('shop', order='asc', per_page=request.args.get('per_page'))}}".replace('&amp;','&')
+        // b.setAttribute('href', url);
+        // b.setAttribute('style', 'color:rgb(119, 119, 119)')
+        // b.setAttribute('class', 'persist-link li-link')
+        // options[1].appendChild(b);
 
         for (var i = 2; i < options.length; i++) {
             console.log(options[i]);
         }
-
-        // if (null == getParameterByName('order')) {
-        //     var persistedQueryParam = getParameterByName('per_page');
-
-        //     if (persistedQueryParam && persistedQueryParam.length > 0) {
-        //         $('a.persist-link').each(function () {
-        //             var elem = $(this);
-        //             var href = elem.attr('href');
-        //             elem.attr('href', href + (href.indexOf('?') != -1 ? '&' : '?') + 'per_page=' + persistedQueryParam);
-        //         });
-        //     }
-
-        //     var persistedQueryParam = getParameterByName('order');
-
-        //     if (persistedQueryParam && persistedQueryParam.length > 0) {
-        //         $('a.persist-link').each(function () {
-        //             var elem = $(this);
-        //             var href = elem.attr('href');
-        //             elem.attr('href', href + (href.indexOf('?') != -1 ? '&' : '?') + 'order=' + persistedQueryParam);
-        //         });
-        //     }
-        // }
     });
 </script>
 <!-- End related-product Area -->

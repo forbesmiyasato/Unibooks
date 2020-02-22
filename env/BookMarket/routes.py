@@ -150,8 +150,10 @@ def item(item_id):
 def items_for_class(class_id):
     page = request.args.get('page', 1, type=int)
     departments = db.session.query(ItemDepartment).all()
+    order = request.args.get('order', 'desc')
+    date_sorted = getattr(Item.date_posted, order)()
     posts = Item.query.filter_by(class_id=class_id).order_by(
-        Item.date_posted.desc()).paginate(page=page, per_page=6)
+        date_sorted).paginate(page=page, per_page=6)
     return render_template('shop.html', title='Shop', posts=posts, departments=departments)
 
 
@@ -159,9 +161,11 @@ def items_for_class(class_id):
 def items_for_department(department_id):
     page = request.args.get('page', 1, type=int)
     departments = db.session.query(ItemDepartment).all()
+    order = request.args.get('order', 'desc')
+    date_sorted = getattr(Item.date_posted, order)()
     posts = Item.query.filter_by(department_id=department_id).order_by(
-        Item.date_posted.desc()).paginate(page=page, per_page=6)
-    return render_template('shop.html', title='Shop', posts=posts, departments=departments)
+        date_sorted).paginate(page=page, per_page=6)
+    return render_template('shop_department.html', title='Shop', posts=posts, departments=departments, department=department_id)
 
 
 @app.route('/post/<int:post_id>/update', methods=['GET', 'POST'])
