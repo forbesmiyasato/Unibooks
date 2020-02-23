@@ -3,7 +3,7 @@ import secrets
 import logging
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify
-from BookMarket.models import User, Item, ItemClass, ItemDepartment, ItemImage
+from BookMarket.models import User, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater
 from BookMarket.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
 from BookMarket import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
@@ -153,9 +153,10 @@ def items_for_class(class_id):
     departments = db.session.query(ItemDepartment).all()
     order = request.args.get('order', 'desc')
     date_sorted = getattr(Item.date_posted, order)()
+    item_class = ItemClass.query.get_or_404(class_id)
     posts = Item.query.filter_by(class_id=class_id).order_by(
         date_sorted).paginate(page=page, per_page=per_page)
-    return render_template('shop.html', title='Shop', posts=posts, departments=departments)
+    return render_template('shop_class.html', title='Shop', posts=posts, departments=departments, class1=item_class)
 
 
 @app.route("/shop/department/<int:department_id>")
@@ -211,7 +212,19 @@ def user_posts(username):
     return render_template('user_posts.html', posts=posts, user=user)
 
 
+@app.route('/add-to-bag', methods=['POST'])
+def add_to_bag():
+    user = request.args.get('user')
+    item = request.args.get('item')
+    exist = SaveForLater.query.filter_by(item_id=item, user_id=user).first()
+    if exist is None:
+        new = SaveForLater(item_id=item, user_id=user)
+        db.session.add(new)
+        db.session.commit()
+    user_saved_items = SaveForLater.query.filter_by(user_id=user).count()
+    return jsonify({'num_saved': user_saved_items})
 # Utility functions
+
 
 def save_picture(form_images, item_id):
     thumbnail = None

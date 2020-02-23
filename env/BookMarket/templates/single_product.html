@@ -36,8 +36,8 @@
                     <h3>{{item.name}}</h3>
                     <h2>{{item.price}}</h2>
                     <ul class="list">
-                        <li><a class="active" href="#"><span>Department</span> : {{department.department_name}}</a></li>
-                        <li><a href="#"><span>Class</span> : {{item_class.class_name}}</a></li>
+                        <li><a class="active" href="{{url_for('items_for_department', department_id=item.department_id)}}"><span>Department</span> : {{department.department_name}}</a></li>
+                        <li><a href="{{url_for('items_for_class', class_id=item.class_id)}}"><span>Class</span> : {{item_class.class_name}}</a></li>
                     </ul>
                     <p>{{item.description}}</p>
                     <div class="card_area d-flex align-items-center">

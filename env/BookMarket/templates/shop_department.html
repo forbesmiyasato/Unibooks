@@ -8,7 +8,7 @@
                 <h1>{{department.department_name}}</h1>
                 <nav class="d-flex align-items-center">
                     <a href="{{url_for('home')}}">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="">Shop<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="{{url_for('shop')}}">Shop<span class="lnr lnr-arrow-right"></span></a>
                     <a href="">{{department.department_name}}</a>
                 </nav>
             </div>
@@ -104,15 +104,7 @@
                                         <span class="ti-bag"></span>
                                         <p class="hover-text">add to bag</p>
                                     </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-heart"></span>
-                                        <p class="hover-text">Wishlist</p>
-                                    </a>
-                                    <a href="" class="social-info">
-                                        <span class="lnr lnr-sync"></span>
-                                        <p class="hover-text">compare</p>
-                                    </a>
-                                    <a href="" class="social-info">
+                                    <a href="{{url_for('item', item_id=post.id)}}" class="social-info">
                                         <span class="lnr lnr-move"></span>
                                         <p class="hover-text">view more</p>
                                     </a>
