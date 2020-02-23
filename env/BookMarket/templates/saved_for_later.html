@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Save for later</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="{{url_for('home')}}">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="">Save for later</span></a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<div class="col-xl-9 col-lg-8 col-md-7">
+
+    <!-- Start Best Seller -->
+    <section class="lattest-product-area pb-40 category-list">
+        <div class="row">
+            {% for post in posts %}
+            <!-- single product -->
+            <div class="col-lg-4 col-md-6">
+                <div class="single-product">
+                    <img class="img-fluid" src="{{url_for('static', filename='item_pics/' + post.thumbnail)}}" alt="">
+                    <div class="product-details">
+                        <h6><a href="{{url_for('item', item_id=post.id)}}">{{post.name}}</a></h6>
+                        <div class="price">
+                            <h6>{{post.price}}</h6>
+                        </div>
+                        <div class="prd-bottom">
+                            <a href="{{url_for('item', item_id=post.id)}}" class="social-info">
+                                <span class="lnr lnr-move"></span>
+                                <p class="hover-text">view more</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <!-- End Best Seller -->
+</div>
+{% endblock content %}

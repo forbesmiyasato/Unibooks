@@ -223,6 +223,20 @@ def add_to_bag():
         db.session.commit()
     user_saved_items = SaveForLater.query.filter_by(user_id=user).count()
     return jsonify({'num_saved': user_saved_items})
+
+
+@app.route('/saved')
+@login_required
+def saved_for_later():
+    items_ids = db.session.query(SaveForLater.item_id).filter_by(user_id=current_user.id).all()
+    items = []
+    for id in items_ids:
+        item = Item.query.get(id)
+        items.append(item)
+        print(id)
+        print(item)
+    print(items)
+    return render_template('saved_for_later.html', title='Saved', posts=items)
 # Utility functions
 
 
