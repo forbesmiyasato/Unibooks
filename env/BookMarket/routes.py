@@ -228,15 +228,31 @@ def add_to_bag():
 @app.route('/saved')
 @login_required
 def saved_for_later():
-    items_ids = db.session.query(SaveForLater.item_id).filter_by(user_id=current_user.id).all()
+    items_ids = db.session.query(SaveForLater.item_id).filter_by(user_id=current_user.id).order_by(SaveForLater.id.desc()).all()
     items = []
     for id in items_ids:
         item = Item.query.get(id)
         items.append(item)
-        print(id)
-        print(item)
+
     print(items)
     return render_template('saved_for_later.html', title='Saved', posts=items)
+
+
+@app.route('/saved/delete', methods=['POST'])
+@login_required
+def delete_saved():
+    item = request.args.get('item_id')
+    print(item)
+    user = request.args.get('user_id')
+    deleting_item = SaveForLater.query.filter_by(item_id=item, user_id=user).first()
+    if deleting_item.user_id != current_user.id:
+        abort(403)
+    db.session.delete(deleting_item)
+    db.session.commit()
+    # flash('Item has been deleted', 'success')
+    return redirect(url_for('saved_for_later'))
+
+
 # Utility functions
 
 
