@@ -1,0 +1,31 @@
+{% block body_content %}
+<div class="col-xl-3 col-lg-4 col-md-5">
+    <div class="sidebar-categories">
+        <div class="head">Browse Categories</div>
+        <ul class="main-categories">
+            {% for department in departments %}
+            <li class="main-nav-list">
+                <a aria-expanded="false" {% if department.classes|length > 0 %}data-toggle="collapse"
+                    href="#nav{{department.id}}" {% endif %} aria-controls="{{department_id}}"><span
+                        class="lnr lnr-arrow-right"></span>
+                    {{department.department_name}}<span class="number">(53)</span>
+                </a>
+                <ul class="collapse" id="nav{{department.id}}" data-toggle="collapse" aria-expanded="false"
+                    aria-controls="{{department_id}}">
+                    <li class="main-nav-list child"><a
+                            href="{{url_for('items_for_department', department_id=department.id)}}">All in
+                            {{department.department_name}}<span class="number">#</span></a>
+                    </li>
+                    {% for class in department.classes %}
+                    <li class="main-nav-list child"><a
+                            href="{{url_for('items_for_class', class_id=class.id)}}">{{class.class_name}}<span
+                                class="number">#</span></a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

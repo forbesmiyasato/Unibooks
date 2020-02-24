@@ -21,134 +21,18 @@
 <!-- End Banner Area -->
 <div class="container">
     <div class="row">
-        <div class="col-xl-3 col-lg-4 col-md-5">
-            <div class="sidebar-categories">
-                <div class="head">Browse Categories</div>
-                <ul class="main-categories">
-                    {% for department in departments %}
-                    <li class="main-nav-list">
-                        <a aria-expanded="false" {% if department.classes|length > 0 %}data-toggle="collapse"
-                            href="#nav{{department.id}}" {% endif %} aria-controls="{{department_id}}"><span
-                                class="lnr lnr-arrow-right"></span>
-                            {{department.department_name}}<span class="number">(53)</span>
-                        </a>
-                        <ul class="collapse" id="nav{{department.id}}" data-toggle="collapse" aria-expanded="false"
-                            aria-controls="{{department_id}}">
-                            <li class="main-nav-list child"><a
-                                    href="{{url_for('items_for_department', department_id=department.id)}}">All in
-                                    {{department.department_name}}<span class="number">#</span></a>
-                            </li>
-                            {% for class in department.classes %}
-                            <li class="main-nav-list child"><a
-                                    href="{{url_for('items_for_class', class_id=class.id)}}">{{class.class_name}}<span
-                                        class="number">#</span></a>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
+        {% include "side_bar.html" %}
         <div class="col-xl-9 col-lg-8 col-md-7">
             <!-- Start Filter Bar -->
-            <div class="filter-bar d-flex flex-wrap align-items-center">
-                <div class="sorting">
-                    <select>
-                        <option value="1">Sort By</option>
-                        <option value="2">Oldest to Newest</option>
-                        <option value="3">Default sorting</option>
-                    </select>
-                </div>
-                <div class="sorting mr-auto">
-                    <select>
-                        <option value="1">Show 12</option>
-                        <option value="1">Show 12</option>
-                        <option value="1">Show 12</option>
-                    </select>
-                </div>
-                <div class="pagination">
-                    <a href="#" class="persist-link prev-arrow"><i class="fa fa-long-arrow-left"
-                            aria-hidden="true"></i></a>
-                    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-                    {% if page_num %}
-                    {% if posts.page == page_num %}
-                    <a class="persist-link active" rel="keep-params" href="{{url_for('shop', page=page_num)}}">
-                        {{page_num}} </a>
-                    {% else %}
-                    <a href="{{url_for('shop', page=page_num)}}" class="persist-link"> {{page_num}} </a>
-                    {% endif %}
-                    {% else %}
-                    <a class="dot-dot"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-                    {% endif %}
-                    {% endfor %}
-                    <a href="#" class="persist-link next-arrow"><i class="fa fa-long-arrow-right"
-                            aria-hidden="true"></i></a>
-                </div>
-            </div>
+            {% include "filter.html" %}
             <!-- End Filter Bar -->
             <!-- Start Best Seller -->
-            <section class="lattest-product-area pb-40 category-list">
-                <div class="row">
-                    {% for post in posts.items %}
-                    <!-- single product -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-product">
-                            <img class="img-fluid" src="{{url_for('static', filename='item_pics/' + post.thumbnail)}}"
-                                alt="">
-                            <div class="product-details">
-                                <h6><a href="{{url_for('item', item_id=post.id)}}">{{post.name}}</a></h6>
-                                <div class="price">
-                                    <h6>{{post.price}}</h6>
-                                </div>
-                                <div class="prd-bottom">
-
-                                    <a href="" class="social-info">
-                                        <span class="ti-bag"></span>
-                                        <p class="hover-text">add to bag</p>
-                                    </a>
-                                    <a href="{{url_for('item', item_id=post.id)}}" class="social-info">
-                                        <span class="lnr lnr-move"></span>
-                                        <p class="hover-text">view more</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </section>
+            {% include "item_list.html" %}
             <!-- End Best Seller -->
             <!-- Start Filter Bar -->
-            <div class="filter-bar d-flex flex-wrap align-items-center">
-                <div class="sorting mr-auto">
-                    <select>
-                        <option value="1"><a href="{{url_for('shop', per_page=6)}}" class="persist-link">Show 6</a>
-                        </option>
-                        <option value="2">Show 12</option>
-                        <option value="3">Show 24</option>
-                    </select>
-                </div>
-                <div class="pagination">
-                    <a href="#" class="persist-link prev-arrow"><i class="fa fa-long-arrow-left"
-                            aria-hidden="true"></i></a>
-                    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-                    {% if page_num %}
-                    {% if posts.page == page_num %}
-                    <a class="persist-link active" href="{{url_for('shop', page=page_num)}}"> {{page_num}} </a>
-                    {% else %}
-                    <a href="{{url_for('shop', page=page_num)}}" class="persist-link"> {{page_num}} </a>
-                    {% endif %}
-                    {% else %}
-                    <a class="dot-dot"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-                    {% endif %}
-                    {% endfor %}
-                    <a href="#" class="persist-link next-arrow"><i class="fa fa-long-arrow-right"
-                            aria-hidden="true"></i></a>
-                </div>
-            </div>
+            {% include "filter.html" %}
+            <!-- End Filter Bar -->
         </div>
-        <!-- End Filter Bar -->
     </div>
 </div>
 </div>
@@ -194,6 +78,16 @@
     </div>
 </section>
 <script>
+    function addToBag(item_id, user_id) {
+        var url = "{{url_for('add_to_bag', item='tempItem', user='tempUser')}}"
+            .replace('tempItem', item_id).replace('tempUser', user_id).replace('&amp;', '&')
+        console.log(url);
+
+        $.post(url, null, (data, status) => {
+            console.log(data)
+        })
+    }
+    
     function getParameterByName(name) {
         var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
         return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
