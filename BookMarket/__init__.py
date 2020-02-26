@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
@@ -9,8 +10,8 @@ app = Flask(__name__)
 if __name__ == '__main__':
     app.run(debug=True)
 
-app.config['SECRET_KEY'] = 'e7d40e2576fc7957e0272136af058b5f'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
