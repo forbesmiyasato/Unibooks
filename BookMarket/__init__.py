@@ -3,6 +3,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+from dotenv import load_dotenv
 # from sassutils.wsgi import SassMiddleware
 
 app = Flask(__name__)
@@ -10,8 +11,14 @@ app = Flask(__name__)
 if __name__ == '__main__':
     app.run(debug=True)
 
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+# load dotenv in the base root
+APP_ROOT = os.path.join(os.path.dirname(__file__), '..')
+dotenv_path = os.path.join(APP_ROOT, '.env')
+load_dotenv(dotenv_path)
+
+# Configurations
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
