@@ -5,7 +5,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify
 from BookMarket.models import User, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater
 from BookMarket.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
-from BookMarket import app, db, bcrypt, S3_BUCKET, s3
+from BookMarket import app, db, bcrypt, S3_BUCKET
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.utils import secure_filename
 
@@ -285,3 +285,14 @@ def save_picture(form_images, item_id):
     #     current_picture_path = os.path.join(app.root_path, 'static/profile_pics', current_user.image_file)
     #     if os.path.exists(current_picture_path):
     #         os.remove(current_picture_path)
+
+
+# def download_file(file_name):
+#     """
+#     Function to download a given file from an S3 bucket
+#     """
+#     s3 = boto3.resource('s3')
+#     output = f"downloads/{file_name}"
+#     s3.Bucket(S3_BUCKET).download_file(file_name, output)
+
+#     return output
