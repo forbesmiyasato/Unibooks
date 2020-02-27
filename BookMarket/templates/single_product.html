@@ -7,7 +7,7 @@
             <div class="col-first">
                 <h1>Product Details Page</h1>
                 <nav class="d-flex align-items-center">
-                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="{{url_for('home')}}">Home<span class="lnr lnr-arrow-right"></span></a>
                     <a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
                     <a href="{{url_for('item', item_id=item.id)}}">product-details</a>
                 </nav>
