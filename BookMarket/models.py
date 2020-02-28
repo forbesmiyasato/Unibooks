@@ -47,7 +47,7 @@ class Item(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     class_id = db.Column(db.Integer, db.ForeignKey('itemclass.id'), nullable=False)
     department_id = db.Column(db.Integer, db.ForeignKey('itemdepartment.id'), nullable=False)
-    images = db.relationship('ItemImage', backref='owner', lazy=True)
+    images = db.relationship('ItemImage', cascade="all,delete", backref='owner', lazy=True)
 
     def __repr__(self):
         return f"Post('{self.name}', '{self.date_posted}')"
