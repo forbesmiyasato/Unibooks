@@ -228,7 +228,8 @@ def add_to_bag():
 @app.route('/saved')
 @login_required
 def saved_for_later():
-    items_ids = db.session.query(SaveForLater.item_id).filter_by(user_id=current_user.id).order_by(SaveForLater.id.desc()).all()
+    items_ids = db.session.query(SaveForLater.item_id).filter_by(
+        user_id=current_user.id).order_by(SaveForLater.id.desc()).all()
     items = []
     for id in items_ids:
         item = Item.query.get(id)
@@ -244,13 +245,25 @@ def delete_saved():
     item = request.args.get('item_id')
     print(item)
     user = request.args.get('user_id')
-    deleting_item = SaveForLater.query.filter_by(item_id=item, user_id=user).first()
+    deleting_item = SaveForLater.query.filter_by(
+        item_id=item, user_id=user).first()
     if deleting_item.user_id != current_user.id:
         abort(403)
     db.session.delete(deleting_item)
     db.session.commit()
     # flash('Item has been deleted', 'success')
     return redirect(url_for('saved_for_later'))
+
+@app.route('/post/delete', methods=['POST'])
+@login_required
+def delete_item():
+    item = request.args.get('item_id')
+    deleting_item = Item.query.get_or_404(item)
+    item_name = deleting_item.name
+    db.session.delete(deleting_item)
+    db.session.commit()
+    flash(f'Post "{item_name}" has been deleted', 'success')
+    return redirect(url_for('shop'))
 
 
 # Utility functions
