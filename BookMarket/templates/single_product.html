@@ -36,13 +36,43 @@
                     <h3>{{item.name}}</h3>
                     <h2>{{item.price}}</h2>
                     <ul class="list">
-                        <li><a class="active" href="{{url_for('items_for_department', department_id=item.department_id)}}"><span>Department</span> : {{department.department_name}}</a></li>
-                        <li><a href="{{url_for('items_for_class', class_id=item.class_id)}}"><span>Class</span> : {{item_class.class_name}}</a></li>
+                        <li><a class="active"
+                                href="{{url_for('items_for_department', department_id=item.department_id)}}"><span>Department</span>
+                                : {{department.department_name}}</a></li>
+                        <li><a href="{{url_for('items_for_class', class_id=item.class_id)}}"><span>Class</span> :
+                                {{item_class.class_name}}</a></li>
                     </ul>
                     <p>{{item.description}}</p>
                     <div class="card_area d-flex align-items-center">
+                        {% if current_user.id == item.user_id %}
+                        <a class="primary-btn" data-toggle="modal" data-target="#deleteModal"
+                            href="javascript:void(0)">Delete</a>
+                        <a class="primary-btn" href="#">Edit</a>
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                            aria-labelledby="deleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <form action="{{url_for('delete_item', item_id=item.id)}}" method="POST">
+                                            <input type="submit" class="btn btn-danger" value="Delete">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
                         <a class="primary-btn" href="#">Message Seller <i class="lnr lnr-envelope"></i></a>
                         <a class="icon_btn" href="#"><span class="ti-bag"></span></i></a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

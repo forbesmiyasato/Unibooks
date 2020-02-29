@@ -254,6 +254,7 @@ def delete_saved():
     # flash('Item has been deleted', 'success')
     return redirect(url_for('saved_for_later'))
 
+
 @app.route('/post/delete', methods=['POST'])
 @login_required
 def delete_item():
