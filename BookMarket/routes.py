@@ -142,8 +142,17 @@ def item(item_id):
     images = ItemImage.query.filter_by(item_id=item_id)
     item_class = ItemClass.query.get(item.class_id)
     department = ItemDepartment.query.get(item.department_id)
+    # for updating
+    form = PostForm()
+    departments = db.session.query(ItemDepartment).all()
+    department_list = [(i.id, i.department_name) for i in departments]
+    form.item_department.choices = department_list
+    form.name.data = item.name
+    form.description.data = item.description
+    form.price.data = item.price
+    # form.item_department = item.department_id
     return render_template('single_product.html', title=item.name, item=item, images=images,
-                           item_class=item_class, department=department)
+                           item_class=item_class, department=department, form=form, legend="Edit")
 
 
 @app.route("/shop/class/<int:class_id>")
@@ -170,37 +179,6 @@ def items_for_department(department_id):
     posts = Item.query.filter_by(department_id=department_id).order_by(
         date_sorted).paginate(page=page, per_page=per_page)
     return render_template('shop_department.html', title='Shop', posts=posts, departments=departments, department=department)
-
-
-@app.route('/post/<int:post_id>/update', methods=['GET', 'POST'])
-@login_required
-def update_post(post_id):
-    post = Item.query.get_or_404(post_id)
-    if post.author != current_user:
-        abort(403)
-    form = PostForm()
-    if form.validate_on_submit():
-        post.title = form.title.data
-        post.content = form.content.data
-        db.session.commit()
-        flash('Your post has been updated!', 'success')
-        return redirect(url_for('post', post_id=post.id))
-    elif request.method == 'GET':
-        form.title.data = post.title
-        form.content.data = post.content
-    return render_template('create_post.html', title='Update Item', form=form, legend='Update')
-
-
-@app.route('/post/<int:post_id>/delete', methods=['POST'])
-@login_required
-def delete_post(post_id):
-    post = Item.query.get_or_404(post_id)
-    if post.author != current_user:
-        abort(403)
-    db.session.delete(post)
-    db.session.commit()
-    flash('Your post has been deleted', 'success')
-    return redirect(url_for('home'))
 
 
 @app.route('/user/<string:username>')
@@ -267,6 +245,24 @@ def delete_item():
     return redirect(url_for('shop'))
 
 
+@app.route('/post/update', methods=['POST'])
+@login_required
+def edit_item():
+    item = request.args.get('item_id')
+    post = Item.query.get_or_404(item)
+    if post.owner != current_user:
+        abort(403)
+    # form = PostForm()
+    # if form.validate_on_submit():
+    #     post.title = form.title.data
+    #     post.content = form.content.data
+    #     db.session.commit()
+    #     flash('Your post has been updated!', 'success')
+    #     return redirect(url_for('post', post_id=post.id))
+    # elif request.method == 'GET':
+    #     form.title.data = post.title
+    #     form.content.data = post.content
+    return redirect(url_for('shop'), item_id=item)
 # Utility functions
 
 

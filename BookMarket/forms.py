@@ -50,7 +50,7 @@ class UpdateAccountForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
+    name = StringField('Item', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
     price = DecimalField('Price', validators=[InputRequired()])
     images = MultipleFileField('Upload item images', validators=[FileAllowed(['jpg', 'png'])])

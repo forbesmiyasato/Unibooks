@@ -25,7 +25,8 @@
                 <div class="s_Product_carousel">
                     {% for image in images %}
                     <div class="single-prd-item">
-                        <img class="img-fluid" src="{{ url_for('static', filename='item_pics/' + image.image_file)}}"
+                        <img class="img-fluid"
+                            src="https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}"
                             alt="">
                     </div>
                     {% endfor %}
@@ -47,8 +48,10 @@
                         {% if current_user.id == item.user_id %}
                         <a class="primary-btn" data-toggle="modal" data-target="#deleteModal"
                             href="javascript:void(0)">Delete</a>
-                        <a class="primary-btn" href="#">Edit</a>
-                        <!-- Modal -->
+                        <a class="primary-btn" href="javascript:void(0)" data-toggle="modal" data-target="#editModal"
+                    onclick="editClicked({{item.class_id}}, {{item.department_id}})">
+                            Edit</a>
+                        <!-- Delete Modal -->
                         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
                             aria-labelledby="deleteModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -64,6 +67,31 @@
                                             data-dismiss="modal">Close</button>
                                         <form action="{{url_for('delete_item', item_id=item.id)}}" method="POST">
                                             <input type="submit" class="btn btn-danger" value="Delete">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Edit Modal -->
+                        <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+                            aria-labelledby="editModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button onclick="history.replaceState(null, null, ' ');" type="button"
+                                            class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {% include "post_form.html" %}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            onclick="history.replaceState(null, null, ' ');"
+                                            data-dismiss="modal">Close</button>
+                                        <form action="{{url_for('edit_item', item_id=item.id)}}" method="POST">
+                                            <input type="submit" class="btn btn-danger" value="edit">
                                         </form>
                                     </div>
                                 </div>
@@ -96,6 +124,28 @@
             });
         }
     });
+
+    function editClicked(item_class, item_department) {
+        console.log(item_class)
+        console.log(item_department)
+        window.location.hash = 'update';
+        $('#department').val(item_department);
+        // $('#class').val(item_class);
+        fetch('/class/' + item_department).then(function (response) {
+            response.json().then(function (data) {
+                let optionHTML = '';
+                // optionHTML += '<option data-display="Select Class">Select</option>'
+                for (let item_class of data.classes) {
+                    optionHTML += '<option value="' + item_class.id + '">'
+                        + item_class.class_name + '</option>';
+                }
+                class_select.innerHTML = optionHTML;
+                $('#class').val(item_class);
+                $('select').niceSelect('update');
+            })
+        });
+    };
+        // $('select').niceSelect('update');
 //     $("s_Product_carousel").owlCarousel({
 //     slideSpeed : 300,
 //     paginationSpeed : 400,
