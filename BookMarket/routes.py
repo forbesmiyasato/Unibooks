@@ -148,7 +148,7 @@ def item(item_id):
         item.class_id = form.item_class.data
         item.department_id = form.item_department.data
         db.session.commit()
-    images = ItemImage.query.filter_by(item_id=item_id)
+    images = ItemImage.query.filter_by(item_id=item_id).all()
     item_class = ItemClass.query.get(item.class_id)
     department = ItemDepartment.query.get(item.department_id)
     # for updating

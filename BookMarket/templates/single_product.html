@@ -23,13 +23,7 @@
         <div class="row s_product_inner">
             <div class="col-lg-6">
                 <div class="s_Product_carousel">
-                    {% if image is none %}
-                    <div class="single-prd-item">
-                        <img class="img-fluid"
-                            src="https://book-advertisement-site.s3-us-west-2.amazonaws.com/No_picture_available.png"
-                            alt="">
-                    </div>
-                    {% else %}
+                    {% if images|length > 0 %}
                     {% for image in images %}
                     <div class="single-prd-item">
                         <img class="img-fluid"
@@ -37,6 +31,12 @@
                             alt="">
                     </div>
                     {% endfor %}
+                    {% else %} 
+                    <div class="single-prd-item">
+                        <img class="img-fluid"
+                            src="https://book-advertisement-site.s3-us-west-2.amazonaws.com/No_picture_available.png"
+                            alt="">
+                    </div>
                     {% endif %}
                 </div>
             </div>
