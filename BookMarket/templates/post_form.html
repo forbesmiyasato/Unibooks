@@ -1,6 +1,7 @@
 {% block body_content %}
 
 <div class="container">
+    
     <div class="content-section">
         <form method="POST" action="" enctype="multipart/form-data">
             {{form.hidden_tag()}}
@@ -90,7 +91,7 @@
                     </div>
                     {% else %}
                     <div>
-                        {{ form.images(class="multi with-preview form-control-file") }}
+                        {{ form.images(class="files form-control-file") }}
                     </div>
                     {% endif %}
                 </div>
@@ -126,5 +127,12 @@
             })
         });
     }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input.files').fileuploader({
+            theme: 'default'
+        });
+    });
 </script>
 {% endblock %}
