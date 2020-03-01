@@ -4,7 +4,7 @@ import boto3
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify
 from BookMarket.models import User, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater
-from BookMarket.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
+from BookMarket.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, EditForm
 from BookMarket import app, db, bcrypt, S3_BUCKET
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.utils import secure_filename
@@ -136,21 +136,28 @@ def shop():
     return render_template('shop.html', title='Shop', posts=posts, departments=departments)
 
 
-@app.route("/shop/<int:item_id>")
+@app.route("/shop/<int:item_id>", methods=['GET', 'POST'])
 def item(item_id):
     item = Item.query.get_or_404(item_id)
+    form = EditForm()
+    if request.method == 'POST':
+        item.name = form.name.data
+        item.description = form.description.data
+        item.user_id = current_user.id
+        item.price = form.price.data
+        item.class_id = form.item_class.data
+        item.department_id = form.item_department.data
+        db.session.commit()
     images = ItemImage.query.filter_by(item_id=item_id)
     item_class = ItemClass.query.get(item.class_id)
     department = ItemDepartment.query.get(item.department_id)
     # for updating
-    form = PostForm()
     departments = db.session.query(ItemDepartment).all()
     department_list = [(i.id, i.department_name) for i in departments]
     form.item_department.choices = department_list
     form.name.data = item.name
     form.description.data = item.description
     form.price.data = item.price
-    # form.item_department = item.department_id
     return render_template('single_product.html', title=item.name, item=item, images=images,
                            item_class=item_class, department=department, form=form, legend="Edit")
 

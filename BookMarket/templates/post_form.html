@@ -90,13 +90,13 @@
                     </div>
                     {% else %}
                     <div>
-                        {{ form.images(class="form-control-file") }}
+                        {{ form.images(class="multi with-preview form-control-file") }}
                     </div>
                     {% endif %}
                 </div>
             </fieldset>
             <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info")}}
+                {{ form.submit(class="btn btn-outline-info", onclick="history.replaceState(null, null, ' ');")}}
             </div>
         </form>
     </div>
@@ -127,5 +127,4 @@
         });
     }
 </script>
-
 {% endblock %}

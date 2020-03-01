@@ -57,3 +57,12 @@ class PostForm(FlaskForm):
     item_department = SelectField('Department', coerce=int, validators=[InputRequired()])
     item_class = SelectField('Class', choices=[], validators=[InputRequired()])
     submit = SubmitField('Post')
+
+class EditForm(FlaskForm):
+    name = StringField('Item', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[DataRequired()])
+    price = DecimalField('Price', validators=[InputRequired()])
+    images = MultipleFileField('Upload item images', validators=[FileAllowed(['jpg', 'png'])])
+    item_department = SelectField('Department', coerce=int, validators=[InputRequired()])
+    item_class = SelectField('Class', choices=[], validators=[InputRequired()])
+    submit = SubmitField('Edit')
