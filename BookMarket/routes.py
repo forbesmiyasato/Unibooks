@@ -89,19 +89,21 @@ def new_item():
     department_list = [(i.id, i.department_name) for i in departments]
     form.item_department.choices = department_list
     if request.method == 'POST':
-        images = form.images.data
+        # images = form.images.data  # without plugin
+        images = request.files.getlist("images[]")
         post = Item(name=form.name.data, description=form.description.data, user_id=current_user.id,
                     price=form.price.data, class_id=form.item_class.data, department_id=form.item_department.data)
         db.session.add(post)
         db.session.commit()
         db.session.refresh(post)
         newId = post.id
+        print(images)
         if images:
             thumbnail = save_picture(images, newId)
-        if thumbnail:
-            item = Item.query.filter_by(id=newId).first()
-            item.thumbnail = thumbnail
-            db.session.commit()
+            if thumbnail:
+                item = Item.query.filter_by(id=newId).first()
+                item.thumbnail = thumbnail
+        db.session.commit()
         flash('Your post has been created!', 'success')
         return redirect(url_for('home'))
     return render_template('create_post.html', title='New Item', form=form, legend='New')
@@ -277,6 +279,7 @@ def save_picture(form_images, item_id):
     thumbnail = None
     for index, images in enumerate(form_images):
         if images:
+            print(images)
             random_hex = secrets.token_hex(8)
             _, f_ext = os.path.splitext(images.filename)
             picture_fn = random_hex + f_ext
