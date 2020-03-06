@@ -74,16 +74,6 @@
     </div>
 </section>
 <script>
-    function addToBag(item_id, user_id) {
-        var url = "{{url_for('add_to_bag', item='tempItem', user='tempUser')}}"
-            .replace('tempItem', item_id).replace('tempUser', user_id).replace('&amp;', '&')
-        console.log(url);
-
-        $.post(url, null, (data, status) => {
-            console.log(data)
-        })
-    }
-
     function getParameterByName(name) {
         var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
         return match && decodeURIComponent(match[1].replace(/\+/g, ' '));

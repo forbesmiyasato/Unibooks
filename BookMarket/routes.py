@@ -5,7 +5,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify
 from BookMarket.models import User, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater
 from BookMarket.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, EditForm
-from BookMarket import app, db, bcrypt, S3_BUCKET
+from BookMarket import app, db, bcrypt, S3_BUCKET, cache
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.utils import secure_filename
 
@@ -97,7 +97,6 @@ def new_item():
         db.session.commit()
         db.session.refresh(post)
         newId = post.id
-        print(images)
         if images:
             thumbnail = save_picture(images, newId)
             if thumbnail:
@@ -203,31 +202,41 @@ def user_posts(username):
 def add_to_bag():
     user = request.args.get('user')
     item = request.args.get('item')
-    exist = SaveForLater.query.filter_by(item_id=item, user_id=user).first()
-    if exist is None:
-        new = SaveForLater(item_id=item, user_id=user)
-        db.session.add(new)
-        db.session.commit()
-    user_saved_items = SaveForLater.query.filter_by(user_id=user).count()
+    if current_user.is_authenticated is True:
+        exist = SaveForLater.query.filter_by(
+            item_id=item, user_id=user).first()
+        if exist is None:
+            new = SaveForLater(item_id=item, user_id=user)
+            db.session.add(new)
+            db.session.commit()
+        user_saved_items = SaveForLater.query.filter_by(user_id=user).count()
+    else:
+        user_saved_items = 1
+        cache.add("saved", item)
     return jsonify({'num_saved': user_saved_items})
 
 
 @app.route('/saved')
-@login_required
+# @login_required
 def saved_for_later():
-    items_ids = db.session.query(SaveForLater.item_id).filter_by(
-        user_id=current_user.id).order_by(SaveForLater.id.desc()).all()
+    if current_user.is_authenticated:
+        items_ids = db.session.query(SaveForLater.item_id).filter_by(
+            user_id=current_user.id).order_by(SaveForLater.id.desc()).all()
+    else:
+        items_ids = cache.get_many("saved")
+        print(items_ids)
     items = []
     for id in items_ids:
         item = Item.query.get(id)
-        items.append(item)
-
+        print(item)
+        if item:
+            items.append(item)
     print(items)
     return render_template('saved_for_later.html', title='Saved', posts=items)
 
 
 @app.route('/saved/delete', methods=['POST'])
-@login_required
+# @login_required
 def delete_saved():
     item = request.args.get('item_id')
     print(item)
@@ -279,7 +288,6 @@ def save_picture(form_images, item_id):
     thumbnail = None
     for index, images in enumerate(form_images):
         if images:
-            print(images)
             random_hex = secrets.token_hex(8)
             _, f_ext = os.path.splitext(images.filename)
             picture_fn = random_hex + f_ext

@@ -5,8 +5,20 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from dotenv import load_dotenv
+from flask_caching import Cache
 
-# from sassutils.wsgi import SassMiddleware
+
+app = Flask(__name__)
+
+# Caching config
+config = {
+    "DEBUG": True,          # some Flask specific configs
+    "CACHE_TYPE": "simple", # Flask-Caching related configs
+    "CACHE_DEFAULT_TIMEOUT": 300
+}
+
+app.config.from_mapping(config)
+cache = Cache(app)
 
 # S3 configurations
 S3_BUCKET = os.getenv('S3_STORAGE_BUCKET')
@@ -17,7 +29,7 @@ s3 = boto3.client(
     aws_access_key_id=S3_KEY,
     aws_secret_access_key=S3_SECRET
 )
-app = Flask(__name__)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

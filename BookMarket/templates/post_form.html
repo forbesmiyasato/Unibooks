@@ -91,7 +91,7 @@
                     </div>
                     {% else %}
                     <div>
-                        {{ form.images(class="files form-control-file", onchange="test();") }}
+                        {{ form.images(class="files form-control-file") }}
                     </div>
                     {% endif %}
                 </div>
@@ -135,14 +135,5 @@
             limit: 9
         });
     });
-
-    function test () {
-    var input = document.getElementsByName("fileuploader-list-images");
-    console.log(input);
-    var input2 = document.getElementById("images");
-    console.log(input2.files);
-    console.log(input2);
-    }
-
 </script>
 {% endblock %}
