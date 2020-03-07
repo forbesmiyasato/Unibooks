@@ -2,10 +2,10 @@ import os
 import secrets
 import boto3
 from PIL import Image
-from flask import render_template, url_for, flash, redirect, request, abort, jsonify
+from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session
 from BookMarket.models import User, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater
 from BookMarket.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, EditForm
-from BookMarket import app, db, bcrypt, S3_BUCKET, cache
+from BookMarket import app, db, bcrypt, S3_BUCKET
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.utils import secure_filename
 
@@ -212,25 +212,37 @@ def add_to_bag():
         user_saved_items = SaveForLater.query.filter_by(user_id=user).count()
     else:
         user_saved_items = 1
-        cache.add("saved", item)
+        print(session.get('saved'))
+        if session.get('saved') is None:
+            session["saved"] = []
+        print(session["saved"])
+        saved_items = session["saved"]
+        if item not in saved_items:
+            saved_items.append(item)
+            session["saved"] = saved_items
+            session.modified = True
     return jsonify({'num_saved': user_saved_items})
 
 
 @app.route('/saved')
 # @login_required
 def saved_for_later():
+    items_ids = None
     if current_user.is_authenticated:
         items_ids = db.session.query(SaveForLater.item_id).filter_by(
             user_id=current_user.id).order_by(SaveForLater.id.desc()).all()
     else:
-        items_ids = cache.get_many("saved")
-        print(items_ids)
+        if "saved" in session:
+            print(session["saved"])
+            items_ids = session["saved"]
+            print(items_ids)
     items = []
-    for id in items_ids:
-        item = Item.query.get(id)
-        print(item)
-        if item:
-            items.append(item)
+    if items_ids is not None:
+        for id in items_ids:
+            item = Item.query.get(id)
+            print(item)
+            if item:
+                items.append(item)
     print(items)
     return render_template('saved_for_later.html', title='Saved', posts=items)
 

@@ -5,20 +5,11 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from dotenv import load_dotenv
-from flask_caching import Cache
-
+# from flask.ext.session import Session
 
 app = Flask(__name__)
 
-# Caching config
-config = {
-    "DEBUG": True,          # some Flask specific configs
-    "CACHE_TYPE": "simple", # Flask-Caching related configs
-    "CACHE_DEFAULT_TIMEOUT": 300
-}
-
-app.config.from_mapping(config)
-cache = Cache(app)
+# Session(app)
 
 # S3 configurations
 S3_BUCKET = os.getenv('S3_STORAGE_BUCKET')
