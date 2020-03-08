@@ -99,9 +99,11 @@
                         </div>
                         {% else %}
                         <a class="primary-btn" href="javascript:void(0)" data-toggle="modal" data-target="#messageModal"
-                        onclick="window.location.hash = 'message';">
+                            onclick="window.location.hash = 'message';">
                             Message Seller <i class="lnr lnr-envelope"></i></a>
-                        <a class="icon_btn" href="#"><span class="ti-bag"></span></i></a>
+                        <a class="icon_btn" onclick="addToBag({{item.id}}, {{current_user.id}})"
+                            href="javascript:void(0)"><span class="ti-bag"></span>
+                        </a>
                         <!-- Message Modal -->
                         <div class="modal fade" id="messageModal" tabindex="-1" role="dialog"
                             aria-labelledby="messageModalLabel" aria-hidden="true">
@@ -164,14 +166,15 @@
             })
         });
     };
-        // $('select').niceSelect('update');
-//     $("s_Product_carousel").owlCarousel({
-//     slideSpeed : 300,
-//     paginationSpeed : 400,
-//     items: 1,
-//     dots: false,
-//     singleItem: true
-// });
+
+    function addToBag(item_id, user_id) {
+        var url = "{{url_for('add_to_bag', item='tempItem', user='tempUser')}}"
+            .replace('tempItem', item_id).replace('tempUser', user_id).replace('&amp;', '&')
+        console.log(url);
+
+        $.post(url, null, (data, status) => {
+            console.log(data)
+        })
+    }
 </script>
-<!--================End Single Product Area =================-->
 {% endblock content %}

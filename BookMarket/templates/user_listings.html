@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Your Listings</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="{{url_for('home')}}">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="">Save for later</span></a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<div class="whole-wrap pb-100 mt-3">
+    <div class="container">
+        <div class="section-top-border">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Your Items</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for post in listings %}
+                    <tr>
+                        <th scope="row">{{loop.index}}</th>
+                        <td><img class="img-thumbnail list-image"
+                                src="https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{post.thumbnail}}"
+                                alt=""></td>
+                        <td>
+                            <div class="single-product">
+                                <div class="product-details">
+                                    <h6><a href="{{url_for('item', item_id=post.id)}}">{{post.name}}</a></h6>
+                                    <div class="prd-bottom">
+                                        <a onclick="addToBag({{post.id}}, {{current_user.id}})"
+                                            href="javascript:void(0)" class="social-info">
+                                            <span class="ti-bag"></span>
+                                            <p class="hover-text">add to bag</p>
+                                        </a>
+                                        <a href="{{url_for('item', item_id=post.id)}}" class="social-info">
+                                            <span class="lnr lnr-move"></span>
+                                            <p class="hover-text">view more</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="price">
+                                <h6>{{post.price}}</h6>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+
+</script>
+{% endblock content %}

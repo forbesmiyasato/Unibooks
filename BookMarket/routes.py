@@ -143,20 +143,19 @@ def item(item_id):
     item = Item.query.get_or_404(item_id)
     edit_form = EditForm()
     message_form = MessageForm()
-    if request.method == 'POST':
-        if message_form.validate_on_submit:
-            print(item.owner.email)
-            msg = Message("Hello", sender="pacificubooks@gmail.com",
-                          recipients=[item.owner.email], body=message_form.message.data)
-            mail.send(msg)
-        else:
-            item.name = edit_form.name.data
-            item.description = edit_form.description.data
-            item.user_id = current_user.id
-            item.price = edit_form.price.data
-            item.class_id = edit_form.item_class.data
-            item.department_id = edit_form.item_department.data
-            db.session.commit()
+    if message_form.validate_on_submit and message_form.message_submit.data:
+        print(item.owner.email)
+        msg = Message("Hello", sender="pacificubooks@gmail.com",
+                      recipients=[item.owner.email], body=message_form.message.data)
+        mail.send(msg)
+    elif request.method == 'POST':
+        item.name = edit_form.name.data
+        item.description = edit_form.description.data
+        item.user_id = current_user.id
+        item.price = edit_form.price.data
+        item.class_id = edit_form.item_class.data
+        item.department_id = edit_form.item_department.data
+        db.session.commit()
     images = ItemImage.query.filter_by(item_id=item_id).all()
     item_class = ItemClass.query.get(item.class_id)
     department = ItemDepartment.query.get(item.department_id)
@@ -293,24 +292,13 @@ def delete_item():
     return redirect(url_for('shop'))
 
 
-@app.route('/post/update', methods=['POST'])
+@app.route('/listings')
 @login_required
-def edit_item():
-    item = request.args.get('item_id')
-    post = Item.query.get_or_404(item)
-    if post.owner != current_user:
-        abort(403)
-    # form = PostForm()
-    # if form.validate_on_submit():
-    #     post.title = form.title.data
-    #     post.content = form.content.data
-    #     db.session.commit()
-    #     flash('Your post has been updated!', 'success')
-    #     return redirect(url_for('post', post_id=post.id))
-    # elif request.method == 'GET':
-    #     form.title.data = post.title
-    #     form.content.data = post.content
-    return redirect(url_for('shop'), item_id=item)
+def listings():
+    listings = Item.query.filter_by(user_id=current_user.id)
+    return render_template('user_listings.html', listings=listings)
+
+
 # Utility functions
 
 
