@@ -23,15 +23,22 @@
     <div class="row">
         {% include "side_bar.html" %}
         <div class="col-xl-9 col-lg-8 col-md-7">
+            {% if posts.total == 0 %}
+            <div class="container no-results mt-5">
+                <h1 class="pt-3 pb-3">No items found in {{class1.class_name}}</h1>
+            </div>
+            {% else %}
             <!-- Start Filter Bar -->
             {% include "filter.html" %}
             <!-- End Filter Bar -->
-            <!-- Start Best Seller -->
+            <!-- Start item list -->
             {% include "item_list.html" %}
-            <!-- End Best Seller -->
+            
+            <!-- End item list -->
             <!-- Start Filter Bar -->
             {% include "filter.html" %}
             <!-- End Filter Bar -->
+            {% endif %}
         </div>
     </div>
 </div>

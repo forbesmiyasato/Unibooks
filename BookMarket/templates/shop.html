@@ -19,6 +19,11 @@
     <div class="row">
         {% include "side_bar.html" %}
         <div class="col-xl-9 col-lg-8 col-md-7">
+            {% if posts.total == 0 %}
+            <div class="container no-results mt-5">
+                <h1 class="pt-3 pb-3">Sorry there's no books for sale at this moment</h1>
+            </div>
+            {% else %}
             <!-- Start Filter Bar -->
             {% include "filter.html" %}
             <!-- End Filter Bar -->
@@ -28,6 +33,7 @@
             <!-- Start Filter Bar -->
             {% include "filter.html" %}
             <!-- End Filter Bar -->
+            {% endif %}
         </div>
     </div>
 </div>
