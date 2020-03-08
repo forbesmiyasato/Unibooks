@@ -271,13 +271,13 @@ def delete_saved():
             abort(403)
         db.session.delete(deleting_item)
         db.session.commit()
-        flash(Markup(f'<a href="/shop/{item}">{item_name}</a> has been removed from your bag'), 'success')
     else:
         saved_items = session["saved"]
         if item in saved_items:
             saved_items.remove(item)
             session["saved"] = saved_items
             session.modified = True
+    flash(Markup(f'<a href="/shop/{item}">{item_name}</a> has been removed from your bag'), 'success')
     return redirect(url_for('saved_for_later'))
 
 

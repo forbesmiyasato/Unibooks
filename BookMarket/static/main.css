@@ -160,3 +160,12 @@ body {
   .hover-line:hover {
     text-decoration: underline;
   }
+
+  @media (max-width:992px) {
+    .alert.alert-info {
+      /* position: absolute; */
+      margin-bottom: -10px;
+      top: 60px;
+      z-index: 1;
+    }
+  }

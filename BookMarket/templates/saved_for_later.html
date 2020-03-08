@@ -18,6 +18,9 @@
 <div class="whole-wrap pb-100 mt-3">
     <div class="container">
         <div class="section-top-border">
+            {% if posts|length == 0 %}
+            <h1 class="pt-3 pb-3">There's no items in your bag :(</h1>
+            {% else %}
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -28,25 +31,25 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     {% for post in posts %}
                     <tr>
                         <th scope="row">{{loop.index}}</th>
-                        <td><img class="img-thumbnail list-image"
+                        <td><img class="img-thumbnail listing-image"
                                 src="https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{post.thumbnail}}"
                                 alt=""></td>
                         <td>
                             <div class="single-product">
                                 <div class="product-details">
-                                    <h6><a href="{{url_for('item', item_id=post.id)}}">{{post.name}}</a></h6>
+                                    <h6 class="hover-line"><a
+                                            href="{{url_for('item', item_id=post.id)}}">{{post.name}}</a></h6>
                                     <div class="prd-bottom">
-                                        <a href="{{url_for('item', item_id=post.id)}}" class="social-info">
-                                            <span class="lnr lnr-move"></span>
-                                            <p class="hover-text">view more</p>
+                                        <a href="{{url_for('item', item_id=post.id)}}">
+                                            <p class="hover-line">View more</p>
                                         </a>
-                                        <a data-toggle="modal" data-target="#deleteModal{{loop.index}}" href="javascript:void(0)"
-                                            class="social-info">
-                                            <span class="lnr lnr-trash"></span>
-                                            <p class="hover-text">Delete</p>
+                                        <a data-toggle="modal" data-target="#deleteModal{{loop.index}}"
+                                            href="javascript:void(0)">
+                                            <p class="hover-line">Delete</p>
                                         </a>
                                     </div>
                                 </div>
@@ -74,7 +77,8 @@
 </div> -->
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <form action="{{url_for('delete_saved', item_name=post.name, item_id=post.id, user_id=current_user.id)}}"
+                                    <form
+                                        action="{{url_for('delete_saved', item_name=post.name, item_id=post.id, user_id=current_user.id)}}"
                                         method="POST">
                                         <input type="submit" class="btn btn-danger" value="Delete">
                                     </form>
@@ -83,6 +87,7 @@
                         </div>
                     </div>
                     {% endfor %}
+                    {% endif %}
                 </tbody>
             </table>
         </div>
