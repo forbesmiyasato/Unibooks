@@ -99,24 +99,24 @@ body {
   }
 
   @media (min-width:576px) {
-    .img-fluid {
+    .list-image {
       height: 510px !important;
     }
   }
   @media (min-width:768px) {
-    .img-fluid {
+    .list-image {
       height: 180px !important;
     }
   }
 
   @media (min-width:992px) {
-    .img-fluid {
+    .list-image {
       height: 183.3px !important;
     }
   }
 
   @media (min-width:1200px) {
-    .img-fluid {
+    .list-image {
       height: 255px !important;
     }
   }

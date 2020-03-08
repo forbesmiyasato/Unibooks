@@ -58,6 +58,7 @@ class PostForm(FlaskForm):
     item_class = SelectField('Class', choices=[], validators=[InputRequired()])
     submit = SubmitField('Post')
 
+
 class EditForm(FlaskForm):
     name = StringField('Item', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
@@ -66,3 +67,10 @@ class EditForm(FlaskForm):
     item_department = SelectField('Department', coerce=int, validators=[InputRequired()])
     item_class = SelectField('Class', choices=[], validators=[InputRequired()])
     submit = SubmitField('Edit')
+
+
+class MessageForm(FlaskForm):
+    email = StringField('Your Email',
+                        validators=[DataRequired(), Email()])
+    message = TextAreaField('Message', validators=[DataRequired()])
+    submit = SubmitField('Send')

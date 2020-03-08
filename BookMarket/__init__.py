@@ -5,9 +5,23 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from dotenv import load_dotenv
+from flask_mail import Mail
 # from flask.ext.session import Session
 
 app = Flask(__name__)
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+# app.config['MAIL_DEBUG'] =
+app.config['MAIL_USERNAME'] = 'pacificubooks@gmail.com'
+app.config['MAIL_PASSWORD'] = os.getenv('EMAIL_PW')
+app.config['MAIL_DEFAULT_SENDER'] = 'pacificubooks@gmail.com'
+# app.config['MAIL_MAX_EMAILS'] =
+# app.config['MAIL_SUPPRESS_SEND'] =
+# app.config['MAIL_ASCII_ATTACHMENTS'] =
+mail = Mail(app)
 
 # Session(app)
 

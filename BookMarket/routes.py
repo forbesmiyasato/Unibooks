@@ -1,13 +1,14 @@
 import os
 import secrets
 import boto3
-from PIL import Image
+# from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session
 from BookMarket.models import User, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater
-from BookMarket.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, EditForm
-from BookMarket import app, db, bcrypt, S3_BUCKET
+from BookMarket.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, EditForm, MessageForm
+from BookMarket import app, db, bcrypt, S3_BUCKET, mail
 from flask_login import login_user, current_user, logout_user, login_required
-from werkzeug.utils import secure_filename
+from flask_mail import Message
+# from werkzeug.utils import secure_filename
 
 
 @app.route('/')
@@ -140,27 +141,38 @@ def shop():
 @app.route("/shop/<int:item_id>", methods=['GET', 'POST'])
 def item(item_id):
     item = Item.query.get_or_404(item_id)
-    form = EditForm()
+    edit_form = EditForm()
+    message_form = MessageForm()
     if request.method == 'POST':
-        item.name = form.name.data
-        item.description = form.description.data
-        item.user_id = current_user.id
-        item.price = form.price.data
-        item.class_id = form.item_class.data
-        item.department_id = form.item_department.data
-        db.session.commit()
+        if message_form.validate_on_submit:
+            print(item.owner.email)
+            msg = Message("Hello", sender="pacificubooks@gmail.com",
+                          recipients=[item.owner.email], body=message_form.message.data)
+            mail.send(msg)
+        else:
+            item.name = edit_form.name.data
+            item.description = edit_form.description.data
+            item.user_id = current_user.id
+            item.price = edit_form.price.data
+            item.class_id = edit_form.item_class.data
+            item.department_id = edit_form.item_department.data
+            db.session.commit()
     images = ItemImage.query.filter_by(item_id=item_id).all()
     item_class = ItemClass.query.get(item.class_id)
     department = ItemDepartment.query.get(item.department_id)
     # for updating
     departments = db.session.query(ItemDepartment).all()
     department_list = [(i.id, i.department_name) for i in departments]
-    form.item_department.choices = department_list
-    form.name.data = item.name
-    form.description.data = item.description
-    form.price.data = item.price
+    edit_form.item_department.choices = department_list
+    edit_form.name.data = item.name
+    edit_form.description.data = item.description
+    edit_form.price.data = item.price
+    # for messaging
+    if current_user.is_authenticated:
+        message_form.email.data = current_user.email
     return render_template('single_product.html', title=item.name, item=item, images=images,
-                           item_class=item_class, department=department, form=form, legend="Edit")
+                           item_class=item_class, department=department, form=edit_form, legend="Edit",
+                           message_form=message_form)
 
 
 @app.route("/shop/class/<int:class_id>")
@@ -251,15 +263,21 @@ def saved_for_later():
 # @login_required
 def delete_saved():
     item = request.args.get('item_id')
-    print(item)
-    user = request.args.get('user_id')
-    deleting_item = SaveForLater.query.filter_by(
-        item_id=item, user_id=user).first()
-    if deleting_item.user_id != current_user.id:
-        abort(403)
-    db.session.delete(deleting_item)
-    db.session.commit()
-    # flash('Item has been deleted', 'success')
+    if current_user.is_authenticated:
+        user = request.args.get('user_id')
+        deleting_item = SaveForLater.query.filter_by(
+            item_id=item, user_id=user).first()
+        if deleting_item.user_id != current_user.id:
+            abort(403)
+        db.session.delete(deleting_item)
+        db.session.commit()
+        flash('Item has been deleted', 'success')
+    else:
+        saved_items = session["saved"]
+        if item in saved_items:
+            saved_items.remove(item)
+            session["saved"] = saved_items
+            session.modified = True
     return redirect(url_for('saved_for_later'))
 
 
