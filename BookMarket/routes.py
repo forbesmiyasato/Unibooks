@@ -297,7 +297,8 @@ def delete_item():
 @app.route('/listings')
 @login_required
 def listings():
-    listings = Item.query.filter_by(user_id=current_user.id)
+    listings = Item.query.filter_by(user_id=current_user.id).all()
+    print(listings)
     return render_template('user_listings.html', listings=listings)
 
 
