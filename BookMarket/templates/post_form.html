@@ -1,7 +1,6 @@
 {% block body_content %}
 
-<div class="container">
-    
+<div class="container {{'mt-3' if legend == 'New'}}">
     <div class="content-section">
         <form method="POST" action="" enctype="multipart/form-data">
             {{form.hidden_tag()}}

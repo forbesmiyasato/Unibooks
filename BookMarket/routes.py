@@ -286,6 +286,7 @@ def delete_saved():
 def delete_item():
     item = request.args.get('item_id')
     deleting_item = Item.query.get_or_404(item)
+    delete_images_s3(item)
     item_name = deleting_item.name
     db.session.delete(deleting_item)
     db.session.commit()
@@ -334,6 +335,12 @@ def save_picture(form_images, item_id):
     #         os.remove(current_picture_path)
 
 
+def delete_images_s3(item_id):
+    s3_resource = boto3.resource('s3')
+    my_bucket = s3_resource.Bucket(S3_BUCKET)
+    images = ItemImage.query.filter_by(item_id=item_id).all()
+    for image in images:
+        my_bucket.Object(image.image_file).delete()
 # def download_file(file_name):
 #     """
 #     Function to download a given file from an S3 bucket

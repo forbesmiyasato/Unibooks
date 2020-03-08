@@ -19,7 +19,11 @@
     <div class="container">
         <div class="section-top-border">
             {% if posts|length == 0 %}
-            <h1 class="pt-3 pb-3">There's no items in your bag :(</h1>
+            <div class="container no-results">
+                <h1 class="pt-3 pb-3">There's no items in your bag :(</h1>
+                <a href="#" class="genric-btn primary-border circle arrow">Start Exploring<span
+                        class="lnr lnr-arrow-right"></span></a>
+            </div>
             {% else %}
             <table class="table table-hover">
                 <thead>
@@ -87,9 +91,10 @@
                         </div>
                     </div>
                     {% endfor %}
-                    {% endif %}
+                    
                 </tbody>
             </table>
+            {% endif %}
         </div>
     </div>
 </div>
