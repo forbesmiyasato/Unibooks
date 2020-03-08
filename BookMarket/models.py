@@ -48,6 +48,7 @@ class Item(db.Model):
     class_id = db.Column(db.Integer, db.ForeignKey('itemclass.id'), nullable=False)
     department_id = db.Column(db.Integer, db.ForeignKey('itemdepartment.id'), nullable=False)
     images = db.relationship('ItemImage', cascade="all,delete", backref='owner', lazy=True)
+    saved_by = db.relationship('SaveForLater', cascade="all, delete", passive_deletes=True)
 
     def __repr__(self):
         return f"Post('{self.name}', '{self.date_posted}')"
@@ -62,5 +63,5 @@ class ItemImage(db.Model):
 class SaveForLater(db.Model):
     __tablename__ = 'saveforlater'
     id = db.Column(db.Integer, primary_key=True)
-    item_id = db.Column(db.Integer, db.ForeignKey('item.id'), nullable=False)
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id', ondelete='CASCADE'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
