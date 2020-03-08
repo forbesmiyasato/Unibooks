@@ -8,14 +8,14 @@
                 <img class="img-thumbnail list-image"
                     src="https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{post.thumbnail}}" alt="">
                 <div class="product-details">
-                    <h6><a href="{{url_for('item', item_id=post.id)}}">{{post.name}}</a></h6>
+                    <h6 class="hover-line"><a href="{{url_for('item', item_id=post.id)}}">{{post.name}}</a></h6>
                     <div class="price">
                         <h6>{{post.price}}</h6>
                     </div>
                     <div class="prd-bottom">
                         <a href="{{url_for('item', item_id=post.id)}}" class="social-info">
                             <span class="lnr lnr-move"></span>
-                            <p class="hover-text">view more</p>
+                            <p class="hover-text">View more</p>
                         </a>
                         {% if current_user.id == post.user_id %}
                         <a data-toggle="modal" data-target="#deleteModal" href="javascript:void(0)" class="social-info">

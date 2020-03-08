@@ -65,3 +65,22 @@ class SaveForLater(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     item_id = db.Column(db.Integer, db.ForeignKey('item.id', ondelete='CASCADE'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+
+# class PastItem(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(100), nullable=False)
+#     date_posted = db.Column(db.DateTime, nullable=False,
+#                             default=datetime.utcnow)
+#     description = db.Column(db.Text, nullable=False)
+#     price = db.Column(db.DECIMAL(10, 2), nullable=False)
+#     thumbnail = db.Column(db.String, nullable=False,
+#                           default='No_picture_available.png')
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+#     class_id = db.Column(db.Integer, db.ForeignKey('itemclass.id'), nullable=False)
+#     department_id = db.Column(db.Integer, db.ForeignKey('itemdepartment.id'), nullable=False)
+#     images = db.relationship('ItemImage', cascade="all,delete", backref='owner', lazy=True)
+#     saved_by = db.relationship('SaveForLater', cascade="all, delete", passive_deletes=True)
+
+#     def __repr__(self):
+#         return f"Post('{self.name}', '{self.date_posted}')"

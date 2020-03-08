@@ -31,23 +31,21 @@
                 <tbody>
                     {% for post in listings %}
                     <tr>
-                        <th scope="row">{{loop.index}}</th>
-                        <td><img class="img-thumbnail list-image"
+                        <th scope="row">{{post.id}}</th>
+                        <td><img class="img-thumbnail listing-image"
                                 src="https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{post.thumbnail}}"
                                 alt=""></td>
                         <td>
                             <div class="single-product">
                                 <div class="product-details">
-                                    <h6><a href="{{url_for('item', item_id=post.id)}}">{{post.name}}</a></h6>
+                                    <h6 class="hover-line"><a
+                                            href="{{url_for('item', item_id=post.id)}}">{{post.name}}</a></h6>
                                     <div class="prd-bottom">
-                                        <a href="{{url_for('item', item_id=post.id)}}" class="social-info">
-                                            <span class="lnr lnr-move"></span>
-                                            <p class="hover-text">view more</p>
+                                        <a href="{{url_for('item', item_id=post.id)}}">
+                                            <p class="hover-line">View more</p>
                                         </a>
-                                        <a data-toggle="modal" data-target="#deleteModal" href="javascript:void(0)"
-                                            class="social-info">
-                                            <span class="lnr lnr-trash"></span>
-                                            <p class="hover-text">Delete</p>
+                                        <a data-toggle="modal" data-target="#deleteModal" href="javascript:void(0)">
+                                            <p class="hover-line">Delete</p>
                                         </a>
                                     </div>
                                 </div>
@@ -64,6 +62,26 @@
                             </div>
                         </td>
                     </tr>
+                    <!-- Modal -->
+                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                        aria-labelledby="deleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <form action="{{url_for('delete_item', item_id=post.id)}}" method="POST">
+                                        <input type="submit" class="btn btn-danger" value="Delete">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     {% endfor %}
                 </tbody>
             </table>
