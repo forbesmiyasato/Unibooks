@@ -31,7 +31,7 @@
                 <tbody>
                     {% for post in listings %}
                     <tr>
-                        <th scope="row">{{post.id}}</th>
+                        <th scope="row">{{loop.index}}</th>
                         <td><img class="img-thumbnail listing-image"
                                 src="https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{post.thumbnail}}"
                                 alt=""></td>
@@ -44,7 +44,7 @@
                                         <a href="{{url_for('item', item_id=post.id)}}">
                                             <p class="hover-line">View more</p>
                                         </a>
-                                        <a data-toggle="modal" data-target="#deleteModal" href="javascript:void(0)">
+                                        <a data-toggle="modal" data-target="#deleteModal{{loop.index}}" href="javascript:void(0)">
                                             <p class="hover-line">Delete</p>
                                         </a>
                                     </div>
@@ -63,7 +63,7 @@
                         </td>
                     </tr>
                     <!-- Modal -->
-                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="deleteModal{{loop.index}}" tabindex="-1" role="dialog"
                         aria-labelledby="deleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">

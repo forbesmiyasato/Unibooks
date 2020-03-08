@@ -18,7 +18,7 @@
                             <p class="hover-text">View more</p>
                         </a>
                         {% if current_user.id == post.user_id %}
-                        <a data-toggle="modal" data-target="#deleteModal" href="javascript:void(0)" class="social-info">
+                        <a data-toggle="modal" data-target="#deleteModal{{loop.index}}" href="javascript:void(0)" class="social-info">
                             <span class="lnr lnr-trash"></span>
                             <p class="hover-text">Delete</p>
                         </a>
@@ -34,7 +34,7 @@
             </div>
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        <div class="modal fade" id="deleteModal{{loop.index}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
