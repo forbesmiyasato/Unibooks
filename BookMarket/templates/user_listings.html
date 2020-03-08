@@ -25,6 +25,7 @@
                         <th scope="col">Your Items</th>
                         <th scope="col">Name</th>
                         <th scope="col">Price</th>
+                        <th scope="col">Post Date</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,14 +40,14 @@
                                 <div class="product-details">
                                     <h6><a href="{{url_for('item', item_id=post.id)}}">{{post.name}}</a></h6>
                                     <div class="prd-bottom">
-                                        <a onclick="addToBag({{post.id}}, {{current_user.id}})"
-                                            href="javascript:void(0)" class="social-info">
-                                            <span class="ti-bag"></span>
-                                            <p class="hover-text">add to bag</p>
-                                        </a>
                                         <a href="{{url_for('item', item_id=post.id)}}" class="social-info">
                                             <span class="lnr lnr-move"></span>
                                             <p class="hover-text">view more</p>
+                                        </a>
+                                        <a data-toggle="modal" data-target="#deleteModal" href="javascript:void(0)"
+                                            class="social-info">
+                                            <span class="lnr lnr-trash"></span>
+                                            <p class="hover-text">Delete</p>
                                         </a>
                                     </div>
                                 </div>
@@ -55,6 +56,11 @@
                         <td>
                             <div class="price">
                                 <h6>{{post.price}}</h6>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="price">
+                                <h6>{{post.date_posted.strftime('%Y-%m-%d')}}</h6>
                             </div>
                         </td>
                     </tr>

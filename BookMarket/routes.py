@@ -2,7 +2,7 @@ import os
 import secrets
 import boto3
 # from PIL import Image
-from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session
+from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session, Markup
 from BookMarket.models import User, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater
 from BookMarket.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, EditForm, MessageForm
 from BookMarket import app, db, bcrypt, S3_BUCKET, mail
@@ -262,6 +262,7 @@ def saved_for_later():
 # @login_required
 def delete_saved():
     item = request.args.get('item_id')
+    item_name = request.args.get('item_name')
     if current_user.is_authenticated:
         user = request.args.get('user_id')
         deleting_item = SaveForLater.query.filter_by(
@@ -270,7 +271,7 @@ def delete_saved():
             abort(403)
         db.session.delete(deleting_item)
         db.session.commit()
-        flash('Item has been deleted', 'success')
+        flash(Markup(f'<a href="/shop/{item}">{item_name}</a> has been removed from your bag'), 'success')
     else:
         saved_items = session["saved"]
         if item in saved_items:
