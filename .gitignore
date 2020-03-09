@@ -1,7 +1,7 @@
 .installed.cfg
 bin
 develop-eggs
-dist
+# dist
 downloads
 eggs
 parts
