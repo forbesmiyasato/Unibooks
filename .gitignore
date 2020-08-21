@@ -11,3 +11,4 @@ lib64
 env/Lib
 .env
 .vscode
+env/
