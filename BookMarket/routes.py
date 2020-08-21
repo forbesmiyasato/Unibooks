@@ -145,7 +145,8 @@ def item(item_id):
     message_form = MessageForm()
     if message_form.validate_on_submit and message_form.message_submit.data:
         print(item.owner.email)
-        msg = Message("Hello", sender="pacificubooks@gmail.com",
+        msg = Message("Message regarding " + "\"" + item.name + "\"",
+                      sender="pacificubooks@gmail.com",
                       recipients=[item.owner.email], body=message_form.message.data)
         mail.send(msg)
     elif request.method == 'POST':
@@ -277,7 +278,8 @@ def delete_saved():
             saved_items.remove(item)
             session["saved"] = saved_items
             session.modified = True
-    flash(Markup(f'<a href="/shop/{item}">{item_name}</a> has been removed from your bag'), 'success')
+    flash(Markup(
+        f'<a href="/shop/{item}">{item_name}</a> has been removed from your bag'), 'success')
     return redirect(url_for('saved_for_later'))
 
 

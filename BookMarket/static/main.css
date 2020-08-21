@@ -175,3 +175,7 @@ body {
     padding-top: 10px;
     padding-bottom: 50px;
   }
+
+  .img-fluid {
+    max-height: 585px;
+  }
