@@ -124,6 +124,7 @@ def item_class(department):
 
 @app.route("/shop")
 def shop():
+    search_term = request.args.get('search')
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 6, type=int)
     order = request.args.get('order', 'desc')
@@ -133,8 +134,14 @@ def shop():
     #     # classObj = {}
     #     classes = ItemClass.query.filter_by(department_id=department.id).all()
     #     department['classes'] = classes
-    posts = Item.query.order_by(
-        date_sorted).paginate(page=page, per_page=per_page)
+
+    if search_term:
+        search_term = '%{0}%'.format(search_term)
+        posts = Item.query.filter(Item.name.ilike(search_term)).order_by(
+            date_sorted).paginate(page=page, per_page=per_page)
+    else:
+        posts = Item.query.order_by(
+            date_sorted).paginate(page=page, per_page=per_page)
     return render_template('shop.html', title='Shop', posts=posts, departments=departments)
 
 
@@ -177,27 +184,39 @@ def item(item_id):
 
 @app.route("/shop/class/<int:class_id>")
 def items_for_class(class_id):
+    search_term = request.args.get('search')
     per_page = request.args.get('per_page', 6, type=int)
     page = request.args.get('page', 1, type=int)
     departments = db.session.query(ItemDepartment).all()
     order = request.args.get('order', 'desc')
     date_sorted = getattr(Item.date_posted, order)()
     item_class = ItemClass.query.get_or_404(class_id)
-    posts = Item.query.filter_by(class_id=class_id).order_by(
-        date_sorted).paginate(page=page, per_page=per_page)
+    if search_term:
+        search_term = '%{0}%'.format(search_term)
+        posts = Item.query.filter(Item.name.ilike(search_term)).filter_by(class_id=class_id).order_by(
+            date_sorted).paginate(page=page, per_page=per_page)
+    else:
+        posts = Item.query.filter_by(class_id=class_id).order_by(
+            date_sorted).paginate(page=page, per_page=per_page)
     return render_template('shop_class.html', title='Shop', posts=posts, departments=departments, class1=item_class)
 
 
 @app.route("/shop/department/<int:department_id>")
 def items_for_department(department_id):
+    search_term = request.args.get('search')
     per_page = request.args.get('per_page', 6, type=int)
     page = request.args.get('page', 1, type=int)
     departments = db.session.query(ItemDepartment).all()
     order = request.args.get('order', 'desc')
     date_sorted = getattr(Item.date_posted, order)()
     department = ItemDepartment.query.get_or_404(department_id)
-    posts = Item.query.filter_by(department_id=department_id).order_by(
-        date_sorted).paginate(page=page, per_page=per_page)
+    if search_term:
+        search_term = '%{0}%'.format(search_term)
+        posts = Item.query.filter(Item.name.ilike(search_term)).filter_by(department_id=department_id).order_by(
+            date_sorted).paginate(page=page, per_page=per_page)
+    else:
+        posts = Item.query.filter_by(department_id=department_id).order_by(
+            date_sorted).paginate(page=page, per_page=per_page)
     return render_template('shop_department.html', title='Shop', posts=posts, departments=departments, department=department)
 
 
@@ -309,8 +328,6 @@ def listings():
 
 
 # Utility functions
-
-
 def save_picture(form_images, item_id):
     thumbnail = None
     for index, images in enumerate(form_images):
@@ -358,10 +375,11 @@ def delete_images_s3(item_id):
 
 #     return output
 
+
 @app.context_processor
 def inject_num_items():
     if (current_user.is_authenticated):
-        return {'numItems' : db.session.query(SaveForLater.item_id).filter_by(
+        return {'numItems': db.session.query(SaveForLater.item_id).filter_by(
             user_id=current_user.id).order_by(SaveForLater.id.desc()).all()}
     else:
-        return {'numItems' : session["saved"]}
+        return {'numItems': session["saved"]}

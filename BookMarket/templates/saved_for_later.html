@@ -21,7 +21,7 @@
             {% if posts|length == 0 %}
             <div class="container no-results">
                 <h1 class="pt-3 pb-3">There's no items in your bag :(</h1>
-                <a href="#" class="genric-btn primary-border circle arrow">Start Exploring<span
+                <a href="{{url_for('shop')}}" class="genric-btn primary-border circle arrow">Start Exploring<span
                         class="lnr lnr-arrow-right"></span></a>
             </div>
             {% else %}
