@@ -8,7 +8,7 @@
                 <h1>{{class1.class_name}}</h1>
                 <nav class="d-flex align-items-center">
                     <a href="{{url_for('home')}}">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="{{url_for('shop')}}">Shop<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="{{url_for('shop_api.shop')}}">Shop<span class="lnr lnr-arrow-right"></span></a>
                     <a href="{{url_for('shop_api.items_for_department', department_id=class1.parent.id)}}">
                         {{class1.parent.department_name}}<span class="lnr lnr-arrow-right"></span>
                     </a>
