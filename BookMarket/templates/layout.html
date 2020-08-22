@@ -76,9 +76,9 @@
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
             <ul class="nav navbar-nav menu_nav ml-auto">
               <li class="nav-item {% if title == 'Home' %}active{% endif %}"><a class="nav-link" href="{{ url_for('home')}}">Home</a></li>
-              <li class="nav-item {% if title == 'Shop' %}active{% endif %}"><a class="nav-link" href="{{ url_for('shop')}}">shop</a></li>
+              <li class="nav-item {% if title == 'Shop' %}active{% endif %}"><a class="nav-link" href="{{ url_for('shop_api.shop')}}">shop</a></li>
               {% if current_user.is_authenticated %}
-              <li class="nav-item"><a class="nav-link" href="{{ url_for('logout')}}">Logout</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{ url_for('userAuth.logout')}}">Logout</a></li>
               <li class="nav-item submenu dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                   aria-expanded="false">User</a>
@@ -89,8 +89,8 @@
                 </ul>
               </li>
               {% else %}
-              <li class="nav-item {% if title == 'Login' %}active{% endif %}"><a class="nav-link" href="{{ url_for('login')}}">Login</a></li>
-              <li class="nav-item {% if title == 'Register' %}active{% endif %}"><a class="nav-link" href="{{ url_for('register')}}">Register</a></li>
+              <li class="nav-item {% if title == 'Login' %}active{% endif %}"><a class="nav-link" href="{{ url_for('userAuth.login')}}">Login</a></li>
+              <li class="nav-item {% if title == 'Register' %}active{% endif %}"><a class="nav-link" href="{{ url_for('userAuth.register')}}">Register</a></li>
               {% endif %}
               <li class="nav-item {% if title == 'Sell' %}active{% endif %}"><a class="nav-link" href="{{ url_for('new_item')}}">Sell</a></li>
             </ul>

@@ -9,7 +9,7 @@
                 <nav class="d-flex align-items-center">
                     <a href="{{url_for('home')}}">Home<span class="lnr lnr-arrow-right"></span></a>
                     <a href="{{url_for('shop')}}">Shop<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="{{url_for('items_for_department', department_id=class1.parent.id)}}">
+                    <a href="{{url_for('shop_api.items_for_department', department_id=class1.parent.id)}}">
                         {{class1.parent.department_name}}<span class="lnr lnr-arrow-right"></span>
                     </a>
                     <a href="">{{class1.class_name}}</a>
@@ -127,7 +127,7 @@
         var a = document.createElement("a");
         //set date descending sort for front end
         a.textContent = "Newest to Oldest";
-        var url = "{{url_for('items_for_class', class_id=class1.id ,order = 'desc', per_page = request.args.get('per_page'))}}"
+        var url = "{{url_for('shop_api.items_for_class', class_id=class1.id ,order = 'desc', per_page = request.args.get('per_page'))}}"
             .replace('&amp;', '&')
         options[0].innerHTML = "";
         a.setAttribute('href', url);
@@ -139,7 +139,7 @@
         var b = document.createElement("a");
         b.textContent = options[1].innerHTML;
         options[1].innerHTML = "";
-        var url = "{{url_for('items_for_class', class_id=class1.id, order = 'asc', per_page = request.args.get('per_page'))}}"
+        var url = "{{url_for('shop_api.items_for_class', class_id=class1.id, order = 'asc', per_page = request.args.get('per_page'))}}"
             .replace('&amp;', '&')
         b.setAttribute('href', url);
         b.setAttribute('style', 'color:rgb(119, 119, 119)')
@@ -150,7 +150,7 @@
         var b = document.createElement("a");
         b.textContent = options[2].innerHTML;
         options[2].innerHTML = "";
-        var url = "{{url_for('items_for_class', class_id=class1.id, order='asc', per_page=request.args.get('per_page'))}}".replace('&amp;', '&')
+        var url = "{{url_for('shop_api.items_for_class', class_id=class1.id, order='asc', per_page=request.args.get('per_page'))}}".replace('&amp;', '&')
         b.setAttribute('href', url);
         b.setAttribute('style', 'color:rgb(119, 119, 119)')
         b.setAttribute('class', 'persist-link li-link')
@@ -164,7 +164,7 @@
             var b = document.createElement("a");
             b.textContent = `Show ${(index - 2) * 3}`;
             options[i].innerHTML = "";
-            var url = "{{url_for('items_for_class', class_id=class1.id, order=request.args.get('order'))}}".replace('&amp;', '&')
+            var url = "{{url_for('shop_api.items_for_class', class_id=class1.id, order=request.args.get('order'))}}".replace('&amp;', '&')
             url += `?&per_page=${(index - 2) * 3}`;
             console.log(url);
             url = url.replace(/(\?[^\?]*)\?/g, '$1');

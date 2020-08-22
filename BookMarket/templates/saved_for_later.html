@@ -21,7 +21,7 @@
             {% if posts|length == 0 %}
             <div class="container no-results">
                 <h1 class="pt-3 pb-3">There's no items in your bag :(</h1>
-                <a href="{{url_for('shop')}}" class="genric-btn primary-border circle arrow">Start Exploring<span
+                <a href="{{url_for('shop_api.shop')}}" class="genric-btn primary-border circle arrow">Start Exploring<span
                         class="lnr lnr-arrow-right"></span></a>
             </div>
             {% else %}
@@ -46,9 +46,9 @@
                             <div class="single-product">
                                 <div class="product-details">
                                     <h6 class="hover-line"><a
-                                            href="{{url_for('item', item_id=post.id)}}">{{post.name}}</a></h6>
+                                            href="{{url_for('shop_api.item', item_id=post.id)}}">{{post.name}}</a></h6>
                                     <div class="prd-bottom">
-                                        <a href="{{url_for('item', item_id=post.id)}}">
+                                        <a href="{{url_for('shop_api.item', item_id=post.id)}}">
                                             <p class="hover-line">View more</p>
                                         </a>
                                         <a data-toggle="modal" data-target="#deleteModal{{loop.index}}"
