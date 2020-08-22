@@ -384,4 +384,4 @@ def inject_num_items():
     elif session.get('saved'):
         return {'numItems': session["saved"]}
     else:
-        return {'numItems': 0}
+        return {'numItems': []}
