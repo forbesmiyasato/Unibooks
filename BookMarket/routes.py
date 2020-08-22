@@ -381,5 +381,7 @@ def inject_num_items():
     if (current_user.is_authenticated):
         return {'numItems': db.session.query(SaveForLater.item_id).filter_by(
             user_id=current_user.id).order_by(SaveForLater.id.desc()).all()}
-    else:
+    elif session["saved"] is not None:
         return {'numItems': session["saved"]}
+    else:
+        return {'numItems': 0}
