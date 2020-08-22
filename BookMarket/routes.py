@@ -14,7 +14,7 @@ from flask_mail import Message
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    return render_template('home.html', title="Home")
 
 
 @app.route('/about')
@@ -106,7 +106,7 @@ def new_item():
         db.session.commit()
         flash('Your post has been created!', 'success')
         return redirect(url_for('home'))
-    return render_template('create_post.html', title='New Item', form=form, legend='New')
+    return render_template('create_post.html', title='Sell', form=form, legend='New')
 
 
 @app.route('/class/<department>')

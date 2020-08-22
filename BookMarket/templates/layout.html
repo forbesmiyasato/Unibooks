@@ -75,8 +75,8 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
             <ul class="nav navbar-nav menu_nav ml-auto">
-              <li class="nav-item active"><a class="nav-link" href="{{ url_for('home')}}">Home</a></li>
-              <li class="nav-item"><a class="nav-link" href="{{ url_for('shop')}}">shop</a></li>
+              <li class="nav-item {% if title == 'Home' %}active{% endif %}"><a class="nav-link" href="{{ url_for('home')}}">Home</a></li>
+              <li class="nav-item {% if title == 'Shop' %}active{% endif %}"><a class="nav-link" href="{{ url_for('shop')}}">shop</a></li>
               {% if current_user.is_authenticated %}
               <li class="nav-item"><a class="nav-link" href="{{ url_for('logout')}}">Logout</a></li>
               <li class="nav-item submenu dropdown">
@@ -89,14 +89,14 @@
                 </ul>
               </li>
               {% else %}
-              <li class="nav-item"><a class="nav-link" href="{{ url_for('login')}}">Login</a></li>
-              <li class="nav-item"><a class="nav-link" href="{{ url_for('register')}}">Register</a></li>
+              <li class="nav-item {% if title == 'Login' %}active{% endif %}"><a class="nav-link" href="{{ url_for('login')}}">Login</a></li>
+              <li class="nav-item {% if title == 'Register' %}active{% endif %}"><a class="nav-link" href="{{ url_for('register')}}">Register</a></li>
               {% endif %}
-              <li class="nav-item"><a class="nav-link" href="{{ url_for('new_item')}}">Sell</a></li>
+              <li class="nav-item {% if title == 'Sell' %}active{% endif %}"><a class="nav-link" href="{{ url_for('new_item')}}">Sell</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li class="nav-item"><a href="{{url_for('saved_for_later')}}" class="cart">
-                <span class="ti-bag"><span class="bag-icon" style="padding-right:.4em; padding-left:.4em; font-size:.8rem; margin-left:.4em; 
+              <li class="nav-item active"><a href="{{url_for('saved_for_later')}}" class="cart">
+                <span class="ti-bag {% if title == 'Saved' %}ti-bag-active{% endif %}"><span class="bag-icon" style="padding-right:.4em; padding-left:.4em; font-size:.8rem; margin-left:.4em; 
                   border-radius:10rem; background-color: orange; font-family: Roboto;">{{ numItems|length }}</span></span></a></li>
               <li class="nav-item">
                 <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
