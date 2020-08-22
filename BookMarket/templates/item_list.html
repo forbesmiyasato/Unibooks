@@ -68,8 +68,14 @@
 
         $.post(url, null, (data, status) => {
             console.log(data);
-            location.reload();
-        })    
+            console.log(status);
+            // location.reload();
+            console.log(data.added);
+            if (data.added) {
+            let bagIcon = document.getElementsByClassName("bag-icon")[0];
+            bagIcon.innerHTML = parseInt(bagIcon.innerHTML) + 1;
+            }
+        })
     }
 </script>
 {% endblock %}

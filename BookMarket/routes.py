@@ -214,6 +214,7 @@ def user_posts(username):
 def add_to_bag():
     user = request.args.get('user')
     item = request.args.get('item')
+    added = False
     if current_user.is_authenticated is True:
         exist = SaveForLater.query.filter_by(
             item_id=item, user_id=user).first()
@@ -221,9 +222,10 @@ def add_to_bag():
             new = SaveForLater(item_id=item, user_id=user)
             db.session.add(new)
             db.session.commit()
-        user_saved_items = SaveForLater.query.filter_by(user_id=user).count()
+            added = True
+        # user_saved_items = SaveForLater.query.filter_by(user_id=user).count()
     else:
-        user_saved_items = 1
+        # user_saved_items = 1
         print(session.get('saved'))
         if session.get('saved') is None:
             session["saved"] = []
@@ -233,7 +235,9 @@ def add_to_bag():
             saved_items.append(item)
             session["saved"] = saved_items
             session.modified = True
-    return jsonify({'num_saved': user_saved_items})
+            added = True
+    # return jsonify({'num_saved': user_saved_items})
+    return jsonify({'added': added})
 
 
 @app.route('/saved')
