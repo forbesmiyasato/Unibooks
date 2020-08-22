@@ -1143,14 +1143,8 @@ h6 {
       @media (max-width: 991px) {
         .header_area .navbar .nav.navbar-nav.navbar-right li {
           margin-left: 0px; } }
-      .header_area .navbar .nav.navbar-nav.navbar-right li:first-child {
-        margin-left: 35px; }
-        @media (max-width: 991px) {
-          .header_area .navbar .nav.navbar-nav.navbar-right li:first-child {
-            display: none; } }
       .header_area .navbar .nav.navbar-nav.navbar-right li span {
         color: #222222;
-        line-height: 80px;
         font-weight: 500; }
     .header_area .navbar .nav.navbar-nav.navbar-right .search {
       background: transparent;

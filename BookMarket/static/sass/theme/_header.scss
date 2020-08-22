@@ -177,15 +177,15 @@
 				@media (max-width: 991px) {
 					margin-left: 0px;
 				}
-				&:first-child {
-					margin-left: 35px;
-					@media (max-width: 991px) {
-						display: none;
-					}
-				}
+				// &:first-child {
+				// 	margin-left: 35px;
+				// 	@media (max-width: 991px) {
+				// 		display: none;
+				// 	}
+				// }
 				span {
 					color: $title-color;
-					line-height: 80px;
+					// line-height: 80px;
 					font-weight: 500;
 				}
 			}

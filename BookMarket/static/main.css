@@ -208,3 +208,8 @@ li.options {
   color: white !important;
   border-radius: 20px;
 }
+
+a.nav-link {
+    width: 100%;
+    height: 100%;
+}
