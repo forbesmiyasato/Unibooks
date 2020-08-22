@@ -353,3 +353,11 @@ def delete_images_s3(item_id):
 #     s3.Bucket(S3_BUCKET).download_file(file_name, output)
 
 #     return output
+
+@app.context_processor
+def inject_num_items():
+    if (current_user.is_authenticated):
+        return {'numItems' : db.session.query(SaveForLater.item_id).filter_by(
+            user_id=current_user.id).order_by(SaveForLater.id.desc()).all()}
+    else:
+        return {'numItems' : session["saved"]}

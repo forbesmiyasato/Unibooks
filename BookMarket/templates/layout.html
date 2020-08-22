@@ -95,8 +95,9 @@
               <li class="nav-item"><a class="nav-link" href="{{ url_for('new_item')}}">Sell</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li class="nav-item"><a href="{{url_for('saved_for_later')}}" class="cart"><span
-                    class="ti-bag"></span></a></li>
+              <li class="nav-item"><a href="{{url_for('saved_for_later')}}" class="cart">
+                <span class="ti-bag"><span class="bag-icon" style="padding-right:.4em; padding-left:.4em; font-size:.8rem; margin-left:.4em; 
+                  border-radius:10rem; background-color: orange; font-family: Roboto;">{{ numItems|length }}</span></span></a></li>
               <li class="nav-item">
                 <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
               </li>
