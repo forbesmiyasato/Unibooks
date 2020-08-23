@@ -46,16 +46,19 @@ def item(item_id):
         mail.send(msg)
     elif request.method == 'POST':
         images = request.files.getlist("files[]")
-        print(images)
-        delete_images_from_s3_and_db(item_id)
-        save_images_to_db_and_s3(images, item_id)
-        item.name = edit_form.name.data
-        item.description = edit_form.description.data
-        item.user_id = current_user.id
-        item.price = edit_form.price.data
-        item.class_id = edit_form.item_class.data
-        item.department_id = edit_form.item_department.data
-        db.session.commit()
+        if images:
+            print(images)
+            delete_images_from_s3_and_db(item_id)
+            thumbnail = save_images_to_db_and_s3(images, item_id)
+            if thumbnail:
+                item.thumbnail = thumbnail
+            item.name = edit_form.name.data
+            item.description = edit_form.description.data
+            item.user_id = current_user.id
+            item.price = edit_form.price.data
+            item.class_id = edit_form.item_class.data
+            item.department_id = edit_form.item_department.data
+            db.session.commit()
     images = ItemImage.query.filter_by(item_id=item_id).all()
     item_class = ItemClass.query.get(item.class_id)
     department = ItemDepartment.query.get(item.department_id)
