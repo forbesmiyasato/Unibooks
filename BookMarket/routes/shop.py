@@ -1,5 +1,6 @@
 from flask import render_template, request, Blueprint
 from flask_login import current_user
+from flask_mail import Message
 from ..models import Item, ItemClass, ItemDepartment, ItemImage
 from ..forms import EditForm, MessageForm
 from .. import app, db, mail
@@ -38,7 +39,7 @@ def item(item_id):
         print(item.owner.email)
         msg = Message("Message regarding " + "\"" + item.name + "\"",
                       sender="pacificubooks@gmail.com",
-                      recipients=[item.owner.email], html=render_template("email.html", name=item.name, email=message_form.email.data, body=message_form.message.data))
+                      recipients=[item.owner.email], html=render_template("message_email.html", name=item.name, email=message_form.email.data, body=message_form.message.data))
         mail.send(msg)
     elif request.method == 'POST':
         item.name = edit_form.name.data

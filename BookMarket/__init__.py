@@ -51,7 +51,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager = LoginManager(app)
-login_manager.login_view = 'login'
+login_manager.login_view = 'userAuth.login'
 login_manager.login_message_category = 'info'
 
 

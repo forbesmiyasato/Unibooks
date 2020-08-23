@@ -4,7 +4,7 @@ import boto3
 # from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session, Markup
 from flask_login import current_user, login_required
-from .models import User, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater
+from .models import Users, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater
 from .forms import UpdateAccountForm, PostForm
 from . import app, db, S3_BUCKET
 from .routes.userAuth import userAuth

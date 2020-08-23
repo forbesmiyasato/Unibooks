@@ -3,7 +3,7 @@ from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, MultipleFileField, SelectField, DecimalField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, InputRequired
-from BookMarket.models import User
+from .models import Users
 
 
 class RegistrationForm(FlaskForm):
@@ -19,7 +19,7 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Sign Up')
 
     def validate_email(self, email):
-        user = User.query.filter_by(email=email.data).first()
+        user = Users.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError(
                 'That email is taken. Please Choose a different one')
@@ -43,7 +43,7 @@ class UpdateAccountForm(FlaskForm):
 
     def validate_email(self, email):
         if email.data != current_user.email:
-            user = User.query.filter_by(email=email.data).first()
+            user = Users.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError(
                     'That email is taken. Please Choose a different one')

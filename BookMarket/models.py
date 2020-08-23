@@ -5,10 +5,10 @@ from flask_login import UserMixin
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return Users.query.get(int(user_id))
 
 
-class User(db.Model, UserMixin):
+class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -16,9 +16,9 @@ class User(db.Model, UserMixin):
                            default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     items = db.relationship('Item', backref='owner', lazy=True)
-
+    confirmed = db.Column(db.Boolean, default=False, nullable=False)
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+        return f"Users('{self.username}', '{self.email}', '{self.image_file}')"
 
 
 class ItemClass(db.Model):
@@ -44,7 +44,7 @@ class Item(db.Model):
     price = db.Column(db.DECIMAL(10, 2), nullable=False)
     thumbnail = db.Column(db.String, nullable=False,
                           default='No_picture_available.png')
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     class_id = db.Column(db.Integer, db.ForeignKey('itemclass.id'), nullable=False)
     department_id = db.Column(db.Integer, db.ForeignKey('itemdepartment.id'), nullable=False)
     images = db.relationship('ItemImage', cascade="all,delete", backref='owner', lazy=True)
@@ -64,7 +64,7 @@ class SaveForLater(db.Model):
     __tablename__ = 'saveforlater'
     id = db.Column(db.Integer, primary_key=True)
     item_id = db.Column(db.Integer, db.ForeignKey('item.id', ondelete='CASCADE'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
 
 # class PastItem(db.Model):
