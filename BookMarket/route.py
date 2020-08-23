@@ -9,6 +9,7 @@ from .forms import UpdateAccountForm, PostForm
 from . import app, db, S3_BUCKET
 from .routes.userAuth import userAuth
 from .routes.shop import shop_api
+from .utility_funcs import save_images_to_db_and_s3, delete_images_from_s3_and_db
 # from werkzeug.utils import secure_filename
 
 app.register_blueprint(userAuth)
@@ -59,7 +60,8 @@ def new_item():
     form.item_department.choices = department_list
     if request.method == 'POST':
         # images = form.images.data  # without plugin
-        images = request.files.getlist("images[]")
+        images = request.files.getlist("files[]")
+        print(images)
         post = Item(name=form.name.data, description=form.description.data, user_id=current_user.id,
                     price=form.price.data, class_id=form.item_class.data, department_id=form.item_department.data)
         db.session.add(post)
@@ -67,7 +69,7 @@ def new_item():
         db.session.refresh(post)
         newId = post.id
         if images:
-            thumbnail = save_picture(images, newId)
+            thumbnail = save_images_to_db_and_s3(images, newId)
             if thumbnail:
                 item = Item.query.filter_by(id=newId).first()
                 item.thumbnail = thumbnail
@@ -181,7 +183,7 @@ def delete_saved():
 def delete_item():
     item = request.args.get('item_id')
     deleting_item = Item.query.get_or_404(item)
-    delete_images_s3(item)
+    delete_images_from_s3_and_db(item)
     item_name = deleting_item.name
     db.session.delete(deleting_item)
     db.session.commit()
@@ -196,45 +198,6 @@ def listings():
     print(listings)
     return render_template('user_listings.html', listings=listings)
 
-
-# Utility functions
-def save_picture(form_images, item_id):
-    thumbnail = None
-    for index, images in enumerate(form_images):
-        if images:
-            random_hex = secrets.token_hex(8)
-            _, f_ext = os.path.splitext(images.filename)
-            picture_fn = random_hex + f_ext
-            if (index == 0):
-                thumbnail = picture_fn
-            # picture_path = os.path.join(
-            #     app.root_path, 'static/item_pics', picture_fn)
-            # output_size = (183, 195)
-            # # output_resolution = (1000, 1000)
-            # resizedImage = Image.open(images)
-            # # resizedImage.thumbnail(output_resolution)
-            # resizedImage = resizedImage.resize(output_size, Image.ANTIALIAS)
-            # resizedImage.save(picture_path)
-            s3_resource = boto3.resource('s3')
-            my_bucket = s3_resource.Bucket(S3_BUCKET)
-            my_bucket.Object(picture_fn).put(Body=images)
-            newImage = ItemImage(item_id=item_id, image_file=picture_fn)
-            db.session.add(newImage)
-            db.session.commit()
-    return thumbnail
-    # #remove use previous profile pic in file system so it doesn't get overloaded
-    # if (current_user.image_file != 'default.jpg'):
-    #     current_picture_path = os.path.join(app.root_path, 'static/profile_pics', current_user.image_file)
-    #     if os.path.exists(current_picture_path):
-    #         os.remove(current_picture_path)
-
-
-def delete_images_s3(item_id):
-    s3_resource = boto3.resource('s3')
-    my_bucket = s3_resource.Bucket(S3_BUCKET)
-    images = ItemImage.query.filter_by(item_id=item_id).all()
-    for image in images:
-        my_bucket.Object(image.image_file).delete()
 # def download_file(file_name):
 #     """
 #     Function to download a given file from an S3 bucket

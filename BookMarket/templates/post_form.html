@@ -79,21 +79,24 @@
                     {% endif %}
                 </div>
                 <br style="clear: both" />
+            
+                
                 <div class="form-group">
-                    {{ form.images.label(class="form-control-label") }}
-                    {% if form.images.errors %}
-                    {{ form.images(class="form-control-file is-invalid") }}
+                    {{ form.files.label(class="form-control-label") }}
+                    {% if form.files.errors %}
+                    {{ form.files(class="form-control-file is-invalid") }}
                     <div class="invalid-feedback">
-                        {% for error in form.images.errors %}
+                        {% for error in form.files.errors %}
                         <span>{{error}}</span>
                         {% endfor %}
                     </div>
                     {% else %}
                     <div>
-                        {{ form.images(class="files form-control-file") }}
+                        {{ form.files(class="files form-control-file") }}
                     </div>
                     {% endif %}
                 </div>
+
             </fieldset>
             <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info", onclick="history.replaceState(null, null, ' ');")}}
@@ -127,21 +130,22 @@
         });
     }
 </script>
+
 <script type="text/javascript">
     $(document).ready(function () {
-        $('input.files').fileuploader({
-            theme: 'default',
-            limit: 9,
-            // files: [{
-            //     "name": "test1",
-            //     "type": "image\/jpeg",
-            //     "size": 5100000,
-            //     "file": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/e8085b0f9d9778c8.jpg",
-            //     "data": {
-            //         "thumbnail": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/e8085b0f9d9778c8.jpg",
-            //         "readerForce":true
-            //     }
-            // }]
+        $('input.files').fileuploader({	
+            theme: 'default',	
+            limit: 9,	
+            // files: [{	
+            //     "name": "test1",	
+            //     "type": "image\/jpeg",	
+            //     "size": 5100000,	
+            //     "file": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/e8085b0f9d9778c8.jpg",	
+            //     "data": {	
+            //         "thumbnail": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/e8085b0f9d9778c8.jpg",	
+            //         "readerForce":true	
+            //     }	
+            // }]	
         });
     });
 </script>

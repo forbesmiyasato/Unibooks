@@ -4,8 +4,11 @@ from flask_mail import Message
 from ..models import Item, ItemClass, ItemDepartment, ItemImage
 from ..forms import EditForm, MessageForm
 from .. import app, db, mail
+from ..utility_funcs import delete_images_from_s3_and_db, save_images_to_db_and_s3
 
-shop_api = Blueprint('shop_api', __name__, static_folder="../static", template_folder="../template")
+shop_api = Blueprint('shop_api', __name__,
+                     static_folder="../static", template_folder="../template")
+
 
 @shop_api.route("/shop")
 def shop():
@@ -42,6 +45,10 @@ def item(item_id):
                       recipients=[item.owner.email], html=render_template("message_email.html", name=item.name, email=message_form.email.data, body=message_form.message.data))
         mail.send(msg)
     elif request.method == 'POST':
+        images = request.files.getlist("files[]")
+        print(images)
+        delete_images_from_s3_and_db(item_id)
+        save_images_to_db_and_s3(images, item_id)
         item.name = edit_form.name.data
         item.description = edit_form.description.data
         item.user_id = current_user.id
