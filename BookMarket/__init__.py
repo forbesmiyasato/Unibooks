@@ -6,6 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from dotenv import load_dotenv
 from flask_mail import Mail
+from apscheduler.schedulers.background import BackgroundScheduler
 # from flask.ext.session import Session
 
 app = Flask(__name__)
@@ -22,7 +23,7 @@ app.config['MAIL_DEFAULT_SENDER'] = 'pacificubooks@gmail.com'
 # app.config['MAIL_SUPPRESS_SEND'] =
 # app.config['MAIL_ASCII_ATTACHMENTS'] =
 mail = Mail(app)
-
+scheduler = BackgroundScheduler()
 # Session(app)
 
 # S3 configurations
@@ -54,5 +55,6 @@ login_manager = LoginManager = LoginManager(app)
 login_manager.login_view = 'userAuth.login'
 login_manager.login_message_category = 'info'
 
+scheduler.start()
 
 from . import route
