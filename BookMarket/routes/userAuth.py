@@ -38,14 +38,15 @@ def register():
 @userAuth.route('/confirm_email/<token>')
 def confirm_email(token):
     try:
-        email = serializer.loads(token, salt=salt, max_age=20)
+        email = serializer.loads(token, salt=salt, max_age=60)
         print(email)
     except SignatureExpired:
         return '<h1>The token is expired!<h1>'
     except BadTimeSignature:
         return '<h1>Invalid Token!<h1>'
     flash(f'Email confirmed! Welcome!', 'success')
-    # user = User.query.filter_by(email=form.email.data).first()
+    user = Users.query.filter_by(email=email).first()
+    login_user(user)
     return render_template('home.html')
 
 
@@ -53,7 +54,7 @@ def confirm_email(token):
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = Users.query.filter_by(email=form.email.data).first()
         if (user and bcrypt.check_password_hash(user.password, form.password.data)):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
