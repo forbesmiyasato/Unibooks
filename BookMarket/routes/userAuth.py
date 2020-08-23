@@ -1,14 +1,16 @@
 from flask import render_template, url_for, flash, request, redirect, Blueprint
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user, login_required
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
 from flask_mail import Message
 from ..forms import RegistrationForm, LoginForm
 from .. import app, db, bcrypt, mail
 from ..models import Users
 
-userAuth = Blueprint('userAuth', __name__, static_folder="../static", template_folder="../template")
+userAuth = Blueprint('userAuth', __name__,
+                     static_folder="../static", template_folder="../template")
 serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 salt = "email_confirm"
+
 
 @userAuth.route("/register", methods=['GET', 'POST'])
 def register():
@@ -18,12 +20,12 @@ def register():
         hashed_password = bcrypt.generate_password_hash(
             form.password.data).decode('utf-8')
         user = Users(username=form.username.data,
-                    email=email, password=hashed_password)
+                     email=email, password=hashed_password)
 
-        token = serializer.dumps(email, salt=salt) #salt is optional
+        token = serializer.dumps(email, salt=salt)  # salt is optional
         link = url_for('userAuth.confirm_email', token=token, _external=True)
         msg = Message('Confirm Email', sender="pacificubooks@gmail.com", recipients=[email],
-        html=render_template('confirmation_email.html', email=email, link=link))
+                      html=render_template('confirmation_email.html', email=email, link=link))
 
         mail.send(msg)
 
@@ -33,6 +35,20 @@ def register():
             f'Hi {form.username.data}! Your account has been created, you can now login!', 'success')
         return redirect(url_for('userAuth.login'))
     return render_template('register.html', title='Register', form=form)
+
+
+@userAuth.route('/confirm_email/send/')
+@login_required
+def send_confirm_email():
+    email = current_user.email
+    token = serializer.dumps(email, salt=salt)  # salt is optional
+    link = url_for('userAuth.confirm_email', token=token, _external=True)
+    msg = Message('Confirm Email', sender="pacificubooks@gmail.com", recipients=[email],
+                  html=render_template('confirmation_email.html', email=email, link=link))
+    mail.send(msg)
+    flash(
+        f'Confirmation email sent to {current_user.email}', 'success')
+    return redirect(url_for('account'))
 
 
 @userAuth.route('/confirm_email/<token>')
@@ -47,6 +63,8 @@ def confirm_email(token):
     flash(f'Email confirmed! Welcome!', 'success')
     user = Users.query.filter_by(email=email).first()
     login_user(user)
+    user.confirmed = True
+    db.session.commit()
     return render_template('home.html')
 
 
