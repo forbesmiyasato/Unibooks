@@ -2,11 +2,12 @@
 <html lang="en">
 
 	<head>
-		<title>Custom file name and ajax example - Fileuploader - innostudio.de</title>
+		<title>Custom file name and ajax example - fileuploader - Innostudio.de</title>
 		
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Custom file name and ajax example - Fileuploader - innostudio.de">
+        <meta name="description" content="Custom file name and ajax example - fileuploader - Innostudio.de">
+        <meta name="robots" content="noindex">
         
         <link rel="shortcut icon" href="https://innostudio.de/fileuploader/images/favicon.ico">
 
@@ -31,17 +32,32 @@
 				background-color: #fff;
 
 				margin: 0;
-				padding: 20px;
 			}
+            
+            form {
+                margin: 15px;
+            }
             
             .fileuploader {
                 max-width: 560px;
+            }
+            
+            input#custom_file_name {
+                display: block;
+                padding: 8px;
+                border-radius: 6px;
+                border: 1px solid #ddd;
             }
 		</style>
 	</head>
 
 	<body>
-        <!-- file input -->
-        <input type="file" name="files">
+		<form action="php/form_upload.php" method="post" enctype="multipart/form-data">
+            <label>New file name:</label>
+            <input type="text" id="custom_file_name">
+            
+            <!-- file input -->
+			<input type="file" name="files">
+		</form>
     </body>
 </html>
