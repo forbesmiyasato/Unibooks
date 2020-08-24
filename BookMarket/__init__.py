@@ -7,6 +7,8 @@ from flask_login import LoginManager
 from dotenv import load_dotenv
 from flask_mail import Mail
 from apscheduler.schedulers.background import BackgroundScheduler
+from .background import query_for_reminder
+# from .background import test
 # from flask.ext.session import Session
 
 app = Flask(__name__)
@@ -55,6 +57,7 @@ login_manager = LoginManager = LoginManager(app)
 login_manager.login_view = 'userAuth.login'
 login_manager.login_message_category = 'info'
 
+job = scheduler.add_job(query_for_reminder, 'interval', minutes=1)
 scheduler.start()
 
 from . import route

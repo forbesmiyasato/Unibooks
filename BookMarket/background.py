@@ -1,13 +1,12 @@
 from datetime import date, timedelta
 from sqlalchemy import extract
-from BookMarket import S3_BUCKET, mail, db, scheduler
-from BookMarket.models import Users, Item
 from flask_mail import Message
 from flask.templating import render_template
 from flask.helpers import url_for
 
-@scheduler.interval_schedule(minutes=1)
 def query_for_reminder():
+    from . import scheduler, db, mail
+    from .models import Users, Item
     print("Running job...")
     #Set date from initial posting date to send reminder email
     expire_date = date.today() #- timedelta(days=1)
