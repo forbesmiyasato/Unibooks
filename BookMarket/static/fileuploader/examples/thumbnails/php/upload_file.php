@@ -1,5 +1,5 @@
 <?php
-    include('../../../src/php/class.fileuploader.php');
+    include('./class.fileuploader.php');
 	
 	// initialize FileUploader
     $FileUploader = new FileUploader('files', array(
@@ -12,7 +12,7 @@
         'title' => 'name',
 		'replace' => false,
         'listInput' => true,
-        'files' => null
+        'files' => null this is your upload file?
     ));
 	
 	// call to upload the files
@@ -33,4 +33,5 @@
 	// export to js
     header('Content-Type: application/json');
 	echo json_encode($data);
-	exit;
+    exit;
+?>

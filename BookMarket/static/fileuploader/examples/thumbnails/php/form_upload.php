@@ -1,5 +1,5 @@
 <?php
-    include('../../../src/php/class.fileuploader.php');
+    include('./class.fileuploader.php');
 	
 	// initialize FileUploader
     $FileUploader = new FileUploader('files', array(
@@ -51,3 +51,4 @@
 	echo '<pre>';
 	print_r($fileList);
 	echo '</pre>';
+	?>

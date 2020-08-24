@@ -55,6 +55,18 @@ def account():
     return render_template('account.html', title='Account', confirmed=current_user.confirmed)
 
 
+@app.route("/files/<int:userid>", methods=['POST'])
+def post_item_files(userid):
+    if request.method == "POST":
+        images = request.files
+        print(images)
+        if images:
+            thumbnail = save_images_to_db_and_s3(images, newId)
+            if thumbnail:
+                item = Item.query.filter_by(id=newId).first()
+                item.thumbnail = thumbnail
+    return jsonify({'added': 'added'})
+
 @app.route("/item/new", methods=['GET', 'POST'])
 @login_required
 def new_item():
@@ -68,10 +80,10 @@ def new_item():
     form.item_department.choices = department_list
     if request.method == 'POST':
         # images = form.images.data  # without plugin
-        images = request.files.getlist("files[]")
+        images = request.files.getlist('files[]')
         print(images)
-        post = Item(name=form.name.data, description=form.description.data, user_id=current_user.id,
-                    price=form.price.data, class_id=form.item_class.data, department_id=form.item_department.data)
+        post = Item(name=request.form.get('name'), description=request.form.get('description'), user_id=current_user.id,
+                    price=request.form.get('price'), class_id=request.form.get('item_class'), department_id=request.form.get('item_department'))
         db.session.add(post)
         db.session.commit()
         db.session.refresh(post)
@@ -82,8 +94,10 @@ def new_item():
                 item = Item.query.filter_by(id=newId).first()
                 item.thumbnail = thumbnail
         db.session.commit()
-        flash('Your post has been created!', 'success')
-        return redirect(url_for('home'))
+        # flash('Your post has been created!', 'success')
+        # return redirect(url_for('home'))
+        result = {'url': url_for('shop_api.item', item_id=post.id)}
+        return jsonify(result)
     return render_template('create_post.html', title='Sell', form=form, legend='New')
 
 

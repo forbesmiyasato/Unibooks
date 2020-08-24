@@ -167,7 +167,9 @@ li.options {
 }
 
 @media (max-width: 992px) {
-    .alert.alert-info {
+    .alert.alert-info,
+    .alert.alert-success,
+    .alert.alert-error {
         /* position: absolute; */
         margin-bottom: -10px;
         top: 60px;
@@ -219,5 +221,5 @@ a.nav-link {
 }
 
 .fileuploader.fileuploader-theme-thumbnails {
-    margin-top: 0; 
+    margin-top: 0;
 }
