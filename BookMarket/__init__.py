@@ -57,7 +57,7 @@ login_manager = LoginManager = LoginManager(app)
 login_manager.login_view = 'userAuth.login'
 login_manager.login_message_category = 'info'
 
-# job = scheduler.add_job(query_for_reminder, 'interval', minutes=1)
+# job = scheduler.add_job(query_for_reminder, 'interval', seconds=5)
 scheduler.start()
 
 from . import route

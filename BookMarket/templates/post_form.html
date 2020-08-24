@@ -1,7 +1,7 @@
 {% block body_content %}
 <div class="container {{'mt-3' if legend == 'New'}}">
     <div class="content-section">
-        <form method="POST" action="" enctype="multipart/form-data">
+        <form method="POST" id="post-form" action="" enctype="multipart/form-data">
             {{form.hidden_tag()}}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">
@@ -78,8 +78,6 @@
                     {% endif %}
                 </div>
                 <br style="clear: both" />
-            
-                
                 <div class="form-group">
                     {{ form.files.label(class="form-control-label") }}
                     {% if form.files.errors %}
@@ -91,7 +89,7 @@
                     </div>
                     {% else %}
                     <div>
-                        {{ form.files(type="file") }}
+                        {{ form.files(id="files", type="file") }}
                     </div>
                     {% endif %}
                 </div>
@@ -129,181 +127,146 @@
         });
     }
 
-    function add () {
-        fileInput = document.querySelector("input[name='files[]']");
-        console.log(fileInput)
-    }
+    $(document).ready(function () {
 
-    function removeFile () {
-        fileInput = document.querySelector("input[name='files[]']");
-        console.log(fileInput)
-        console.log(fileInput.value)
+        // enable fileuploader plugin
+        $('input[name="files"]').fileuploader({
+            extensions: null,
+            changeInput: ' ',
+            theme: 'thumbnails',
+            enableApi: true,
+            addMore: true,
+            thumbnails: {
+                box: '<div class="fileuploader-items">' +
+                    '<ul class="fileuploader-items-list">' +
+                    '<li class="fileuploader-thumbnails-input"><div class="fileuploader-thumbnails-input-inner"><i>+</i></div></li>' +
+                    '</ul>' +
+                    '</div>',
+                item: '<li class="fileuploader-item">' +
+                    '<div class="fileuploader-item-inner">' +
+                    '<div class="type-holder">${extension}</div>' +
+                    '<div class="actions-holder">' +
+                    '<button type="button" class="fileuploader-action fileuploader-action-remove" title="${captions.remove}"><i class="fileuploader-icon-remove"></i></button>' +
+                    '</div>' +
+                    '<div class="thumbnail-holder">' +
+                    '${image}' +
+                    '<span class="fileuploader-action-popup"></span>' +
+                    '</div>' +
+                    '<div class="content-holder"><h5>${name}</h5><span>${size2}</span></div>' +
+                    '<div class="progress-holder">${progressBar}</div>' +
+                    '</div>' +
+                    '</li>',
+                item2: '<li class="fileuploader-item">' +
+                    '<div class="fileuploader-item-inner">' +
+                    '<div class="type-holder">${extension}</div>' +
+                    '<div class="actions-holder">' +
+                    '<a href="${file}" class="fileuploader-action fileuploader-action-download" title="${captions.download}" download><i class="fileuploader-icon-download"></i></a>' +
+                    '<button type="button" class="fileuploader-action fileuploader-action-remove" title="${captions.remove}"><i class="fileuploader-icon-remove"></i></button>' +
+                    '</div>' +
+                    '<div class="thumbnail-holder">' +
+                    '${image}' +
+                    '<span class="fileuploader-action-popup"></span>' +
+                    '</div>' +
+                    '<div class="content-holder"><h5 title="${name}">${name}</h5><span>${size2}</span></div>' +
+                    '<div class="progress-holder">${progressBar}</div>' +
+                    '</div>' +
+                    '</li>',
+                startImageRenderer: true,
+                canvasImage: false,
+                _selectors: {
+                    list: '.fileuploader-items-list',
+                    item: '.fileuploader-item',
+                    start: '.fileuploader-action-start',
+                    retry: '.fileuploader-action-retry',
+                    remove: '.fileuploader-action-remove'
+                },
+                onItemShow: function (item, listEl, parentEl, newInputEl, inputEl) {
+                    var plusInput = listEl.find('.fileuploader-thumbnails-input'),
+                        api = $.fileuploader.getInstance(inputEl.get(0));
 
-        files1 = $('#files').get(0).files
-        console.log(files1)
-        files1.foreach((e) => {
-            console.log(e);
-        })
-    }
+                    plusInput.insertAfter(item.html)[api.getOptions().limit && api.getChoosedFiles().length >= api.getOptions().limit ? 'hide' : 'show']();
 
-    $(document).ready(function() {
-	
-	// enable fileuploader plugin
-	$('input[name="files"]').fileuploader({
-        extensions: null,
-		changeInput: ' ',
-		theme: 'thumbnails',
-        enableApi: true,
-		addMore: true,
-		thumbnails: {
-			box: '<div class="fileuploader-items">' +
-                      '<ul class="fileuploader-items-list">' +
-					      '<li class="fileuploader-thumbnails-input"><div class="fileuploader-thumbnails-input-inner"><i>+</i></div></li>' +
-                      '</ul>' +
-                  '</div>',
-			item: '<li class="fileuploader-item">' +
-				       '<div class="fileuploader-item-inner">' +
-                           '<div class="type-holder">${extension}</div>' +
-                           '<div class="actions-holder">' +
-						   	   '<button type="button" class="fileuploader-action fileuploader-action-remove" title="${captions.remove}"><i class="fileuploader-icon-remove"></i></button>' +
-                           '</div>' +
-                           '<div class="thumbnail-holder">' +
-                               '${image}' +
-                               '<span class="fileuploader-action-popup"></span>' +
-                           '</div>' +
-                           '<div class="content-holder"><h5>${name}</h5><span>${size2}</span></div>' +
-                       	   '<div class="progress-holder">${progressBar}</div>' +
-                       '</div>' +
-                  '</li>',
-			item2: '<li class="fileuploader-item">' +
-				       '<div class="fileuploader-item-inner">' +
-                           '<div class="type-holder">${extension}</div>' +
-                           '<div class="actions-holder">' +
-						   	   '<a href="${file}" class="fileuploader-action fileuploader-action-download" title="${captions.download}" download><i class="fileuploader-icon-download"></i></a>' +
-						   	   '<button type="button" class="fileuploader-action fileuploader-action-remove" title="${captions.remove}"><i class="fileuploader-icon-remove"></i></button>' +
-                           '</div>' +
-                           '<div class="thumbnail-holder">' +
-                               '${image}' +
-                               '<span class="fileuploader-action-popup"></span>' +
-                           '</div>' +
-                           '<div class="content-holder"><h5 title="${name}">${name}</h5><span>${size2}</span></div>' +
-                       	   '<div class="progress-holder">${progressBar}</div>' +
-                       '</div>' +
-                   '</li>',
-			startImageRenderer: true,
-            canvasImage: false,
-			_selectors: {
-				list: '.fileuploader-items-list',
-				item: '.fileuploader-item',
-				start: '.fileuploader-action-start',
-				retry: '.fileuploader-action-retry',
-				remove: '.fileuploader-action-remove'
-			},
-			onItemShow: function(item, listEl, parentEl, newInputEl, inputEl) {
-				var plusInput = listEl.find('.fileuploader-thumbnails-input'),
-                    api = $.fileuploader.getInstance(inputEl.get(0));
-				
-                plusInput.insertAfter(item.html)[api.getOptions().limit && api.getChoosedFiles().length >= api.getOptions().limit ? 'hide' : 'show']();
-				
-				if(item.format == 'image') {
-					item.html.find('.fileuploader-item-icon').hide();
+                    if (item.format == 'image') {
+                        item.html.find('.fileuploader-item-icon').hide();
+                    }
+                },
+                onItemRemove: function (html, listEl, parentEl, newInputEl, inputEl) {
+                    var plusInput = listEl.find('.fileuploader-thumbnails-input'),
+                        api = $.fileuploader.getInstance(inputEl.get(0));
+
+                    html.children().animate({ 'opacity': 0 }, 200, function () {
+                        html.remove();
+
+                        if (api.getOptions().limit && api.getChoosedFiles().length - 1 < api.getOptions().limit)
+                            plusInput.show();
+                    });
                 }
-                
-                removeFile()
-			},
-            onItemRemove: function(html, listEl, parentEl, newInputEl, inputEl) {
+            },
+            dragDrop: {
+                container: '.fileuploader-thumbnails-input'
+            },
+            afterRender: function (listEl, parentEl, newInputEl, inputEl) {
                 var plusInput = listEl.find('.fileuploader-thumbnails-input'),
-				    api = $.fileuploader.getInstance(inputEl.get(0));
-            
-                html.children().animate({'opacity': 0}, 200, function() {
-                    html.remove();
-                    
-                    if (api.getOptions().limit && api.getChoosedFiles().length - 1 < api.getOptions().limit)
-                        plusInput.show();
+                    api = $.fileuploader.getInstance(inputEl.get(0));
+
+                plusInput.on('click', function () {
+                    api.open();
                 });
-                removeFile()
-            }
-		},
-        dragDrop: {
-			container: '.fileuploader-thumbnails-input'
-		},
-		afterRender: function(listEl, parentEl, newInputEl, inputEl) {
-			var plusInput = listEl.find('.fileuploader-thumbnails-input'),
-				api = $.fileuploader.getInstance(inputEl.get(0));
-		
-			plusInput.on('click', function() {
-				api.open();
-			});
-            
-            api.getOptions().dragDrop.container = plusInput;
-		},
-		
-		// while using upload option, please set
-		// startImageRenderer: false
-		// for a better effect
-		// upload: {
-		// 	url: './php/upload_file.php',
-        //     data: null,
-        //     type: 'POST',
-        //     enctype: 'multipart/form-data',
-        //     start: true,
-        //     synchron: true,
-        //     beforeSend: null,
-        //     startImageRenderer: false,
-        //     onSuccess: function(result, item) {
-		// 		var data = {};
-				
-		// 		if (result && result.files)
-        //             data = result;
-        //         else
-		// 			data.hasWarnings = true;
-                
-		// 		// if success
-        //         if (data.isSuccess && data.files.length) {
-        //             item.name = data.files[0].name;
-		// 			item.html.find('.content-holder > h5').text(item.name).attr('title', item.name);
-        //         }
-				
-		// 		// if warnings
-		// 		if (data.hasWarnings) {
-		// 			for (var warning in data.warnings) {
-		// 				alert(data.warnings[warning]);
-		// 			}
-					
-		// 			item.html.removeClass('upload-successful').addClass('upload-failed');
-		// 			return this.onError ? this.onError(item) : null;
-		// 		}
-				
-        //         item.html.find('.fileuploader-action-remove').addClass('fileuploader-action-success');
-                
-		// 		setTimeout(function() {
-		// 			item.html.find('.progress-holder').hide();
-		// 			item.renderThumbnail();
-                    
-        //             item.html.find('.fileuploader-action-popup, .fileuploader-item-image').show();
-		// 		}, 400);
-        //     },
-        //     onError: function(item) {
-		// 		item.html.find('.progress-holder, .fileuploader-action-popup, .fileuploader-item-image').hide();
-        //     },
-        //     onProgress: function(data, item) {
-        //         var progressBar = item.html.find('.progress-holder');
-				
-        //         if(progressBar.length > 0) {
-        //             progressBar.show();
-        //             progressBar.find('.fileuploader-progressbar .bar').width(data.percentage + "%");
-        //         }
-                
-        //         item.html.find('.fileuploader-action-popup, .fileuploader-item-image').hide();
-        //     }
-        // },
-		// onRemove: function(item) {
-		// 	$.post('php/upload_remove.php', {
-		// 		file: item.name
-		// 	});
-		// }
+
+                api.getOptions().dragDrop.container = plusInput;
+            },
+
+
+        });
+
+
+        var $form = $('#post-form');
+
+        // form submit
+        $form.on('submit', function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(),
+                _fileuploaderFields = [];
+
+            // append inputs to FormData
+            $.each($form.serializeArray(), function (key, field) {
+                formData.append(field.name, field.value);
+            });
+            // append file inputs to FormData
+            $.each($form.find("input:file"), function (index, input) {
+                var $input = $(input),
+                    name = $input.attr('name'),
+                    files = $input.prop('files'),
+                    api = $.fileuploader.getInstance($input);
+
+
+                // add fileuploader files to the formdata
+                if (api) {
+                    if ($.inArray(name, _fileuploaderFields) > -1)
+                        return;
+                    files = api.getChoosedFiles();
+                    _fileuploaderFields.push($input);
+                }
+
+                for (var i = 0; i < files.length; i++) {
+                    formData.append(name, (files[i].file ? files[i].file : files[i]), (files[i].name ? files[i].name : false));
+                }
+            });
+
+            console.log(formData)
+
+            $.ajax({
+                url: `{{url_for('post_item_files', current_user.id)}}` || '#',
+                data: formData,
+                type: $form.attr('method') || 'POST',
+                enctype: $form.attr('enctype') || 'multipart/form-data',
+                cache: false,
+                contentType: false,
+                processData: false,
+            });
+        });
     });
-});
 </script>
 
 {% endblock %}

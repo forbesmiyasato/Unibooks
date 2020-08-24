@@ -5,3 +5,4 @@ if (isset($_POST['file'])) {
     if(file_exists($file))
 		unlink($file);
 }
+?>

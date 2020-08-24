@@ -13,6 +13,7 @@ from .utility_funcs import save_images_to_db_and_s3, delete_images_from_s3_and_d
 app.register_blueprint(userAuth)
 app.register_blueprint(shop_api)
 
+
 @app.route('/')
 @app.route('/home')
 def home():
@@ -45,6 +46,18 @@ def account():
     return render_template('account.html', title='Account', confirmed=current_user.confirmed)
 
 
+@app.route("/files/<int:id>", methods=['POST'])
+def post_item_files(id):
+    if request.method == "POST":
+        images = request.files
+        print(images)
+        if images:
+            thumbnail = save_images_to_db_and_s3(images, newId)
+            if thumbnail:
+                item = Item.query.filter_by(id=newId).first()
+                item.thumbnail = thumbnail
+    return jsonify({'added': 'added'})
+
 @app.route("/item/new", methods=['GET', 'POST'])
 @login_required
 def new_item():
@@ -58,19 +71,18 @@ def new_item():
     form.item_department.choices = department_list
     if request.method == 'POST':
         # images = form.images.data  # without plugin
-        images = request.files.getlist("files[]")
-        print(images)
+        # images = request.files.getlist("files[]")
         post = Item(name=form.name.data, description=form.description.data, user_id=current_user.id,
                     price=form.price.data, class_id=form.item_class.data, department_id=form.item_department.data)
         db.session.add(post)
         db.session.commit()
         db.session.refresh(post)
         newId = post.id
-        if images:
-            thumbnail = save_images_to_db_and_s3(images, newId)
-            if thumbnail:
-                item = Item.query.filter_by(id=newId).first()
-                item.thumbnail = thumbnail
+        # if images:
+        #     thumbnail = save_images_to_db_and_s3(images, newId)
+        #     if thumbnail:
+        #         item = Item.query.filter_by(id=newId).first()
+        #         item.thumbnail = thumbnail
         db.session.commit()
         flash('Your post has been created!', 'success')
         return redirect(url_for('home'))
