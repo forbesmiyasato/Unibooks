@@ -260,8 +260,11 @@
             //     console.log(value);
             // }
 
+            console.log('{{legend}}')
+            post_url = '{{legend}}' === "New" ? "{{url_for('new_item')}}" : "{{url_for('shop_api.item', item_id=item.id)}}" 
+            console.log(post_url)
             $.ajax({
-                url: "{{url_for('new_item')}}" || '#',
+                url: post_url || '#',
                 data: formData,
                 type: $form.attr('method') || 'POST',
                 enctype: $form.attr('enctype') || 'multipart/form-data',

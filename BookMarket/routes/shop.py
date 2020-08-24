@@ -1,4 +1,4 @@
-from flask import render_template, request, Blueprint
+from flask import render_template, request, Blueprint, jsonify, url_for
 from flask_login import current_user
 from flask_mail import Message
 from ..models import Item, ItemClass, ItemDepartment, ItemImage
@@ -52,13 +52,16 @@ def item(item_id):
             thumbnail = save_images_to_db_and_s3(images, item_id)
             if thumbnail:
                 item.thumbnail = thumbnail
-            item.name = edit_form.name.data
-            item.description = edit_form.description.data
-            item.user_id = current_user.id
-            item.price = edit_form.price.data
-            item.class_id = edit_form.item_class.data
-            item.department_id = edit_form.item_department.data
-            db.session.commit()
+        item.name = request.form.get('name')
+        item.description = request.form.get('description')
+        item.user_id = current_user.id
+        item.price = request.form.get('price')
+        item.class_id = request.form.get('item_class')
+        item.department_id = request.form.get('item_department')
+        db.session.commit()
+        print(item_id)
+        result = {'url': url_for('shop_api.item', item_id=item_id)}
+        return jsonify(result)
     images = ItemImage.query.filter_by(item_id=item_id).all()
     item_class = ItemClass.query.get(item.class_id)
     department = ItemDepartment.query.get(item.department_id)

@@ -23,6 +23,7 @@ def init_scheduler():
     scheduler.start()
     atexit.register(lambda: scheduler.shutdown())
 
+
 @app.route('/')
 @app.route('/home')
 def home():
