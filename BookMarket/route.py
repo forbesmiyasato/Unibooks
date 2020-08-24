@@ -1,4 +1,5 @@
 import os
+import atexit
 # from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session, Markup
 from flask_login import current_user, login_required
@@ -8,10 +9,19 @@ from . import app, db
 from .routes.userAuth import userAuth
 from .routes.shop import shop_api
 from .utility_funcs import save_images_to_db_and_s3, delete_images_from_s3_and_db
+from apscheduler.schedulers.background import BackgroundScheduler
+from .background import query_for_reminder
 # from werkzeug.utils import secure_filename
 
 app.register_blueprint(userAuth)
 app.register_blueprint(shop_api)
+
+@app.before_first_request
+def init_scheduler():
+    scheduler = BackgroundScheduler()
+    job = scheduler.add_job(query_for_reminder, 'interval', kwargs={'app':app}, minutes=1)
+    scheduler.start()
+    atexit.register(lambda: scheduler.shutdown())
 
 @app.route('/')
 @app.route('/home')
