@@ -227,14 +227,16 @@
             e.preventDefault();
 
             var formData = new FormData(),
-                _fileuploaderFields = [];
-
+                _fileuploaderFields = [];     
+            
             // append inputs to FormData
             $.each($form.serializeArray(), function (key, field) {
                 formData.append(field.name, field.value);
             });
+
+            input = document.querySelector('input[name="files[]"')
+
             // append file inputs to FormData
-            $.each($form.find("input:file"), function (index, input) {
                 var $input = $(input),
                     name = $input.attr('name'),
                     files = $input.prop('files'),
@@ -252,18 +254,28 @@
                 for (var i = 0; i < files.length; i++) {
                     formData.append(name, (files[i].file ? files[i].file : files[i]), (files[i].name ? files[i].name : false));
                 }
-            });
 
-            console.log(formData)
+            // // Display the values
+            // for (var value of formData.values()) {
+            //     console.log(value);
+            // }
 
             $.ajax({
-                url: `{{url_for('post_item_files', current_user.id)}}` || '#',
+                url: "{{url_for('new_item')}}" || '#',
                 data: formData,
                 type: $form.attr('method') || 'POST',
                 enctype: $form.attr('enctype') || 'multipart/form-data',
                 cache: false,
                 contentType: false,
                 processData: false,
+                success: function(data) {
+                    console.log("success")
+                    window.location.href = data['url']
+                }
+            });
+
+            $('form').submit(function () {
+                $(this).find(':submit').attr('disabled', 'disabled');
             });
         });
     });
