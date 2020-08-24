@@ -211,7 +211,7 @@ def delete_item():
     db.session.delete(deleting_item)
     db.session.commit()
     flash(f'Post "{item_name}" has been deleted', 'success')
-    return redirect(request.referrer)
+    return redirect(url_for('shop_api.shop'))
 
 
 @app.route('/listings')
