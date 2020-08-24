@@ -19,7 +19,7 @@ app.register_blueprint(shop_api)
 @app.before_first_request
 def init_scheduler():
     scheduler = BackgroundScheduler()
-    job = scheduler.add_job(query_for_reminder, 'interval', kwargs={'app':app}, minutes=1)
+    job = scheduler.add_job(query_for_reminder, 'interval', kwargs={'app':app}, hours=24)
     scheduler.start()
     atexit.register(lambda: scheduler.shutdown())
 
@@ -219,10 +219,13 @@ def listings():
 
 @app.context_processor
 def inject_num_items():
-    if (current_user.is_authenticated):
-        return {'numItems': db.session.query(SaveForLater.item_id).filter_by(
-            user_id=current_user.id).order_by(SaveForLater.id.desc()).all()}
-    elif session.get('saved'):
-        return {'numItems': session["saved"]}
+    if current_user:
+        if (current_user.is_authenticated):
+            return {'numItems': db.session.query(SaveForLater.item_id).filter_by(
+                user_id=current_user.id).order_by(SaveForLater.id.desc()).all()}
+        elif session.get('saved'):
+            return {'numItems': session["saved"]}
+        else:
+            return {'numItems': []}
     else:
         return {'numItems': []}

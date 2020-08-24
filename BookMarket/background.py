@@ -10,7 +10,7 @@ def query_for_reminder(app):
     print("Running reminder job...")
     with app.app_context():
         #Set date from initial posting date to send reminder email
-        expire_date = date.today() #- timedelta(days=1)
+        expire_date = date.today() - timedelta(days=30)
     
         #Query for all item owners whose posts are older than expire_date (force correct datetime conversion)
         expiring_item_ids = db.session.query(Item.id).filter(
@@ -23,5 +23,7 @@ def query_for_reminder(app):
         if expiring_item_ids:
             for item_id in expiring_item_ids:
                 item = Item.query.get_or_404(item_id)
-                msg = Message('Post Will Expire Soon', sender="pacificubooks@gmail.com", recipients=[item.owner.email], body="Your post will expire soon")
+                #msg = Message('Post Will Expire Soon', sender="pacificubooks@gmail.com", recipients=[item.owner.email], body="Your post will expire soon")
+                msg = Message("Post Will Expire Soon", sender="pacificubooks@gmail.com", recipients=[item.owner.email], html=render_template("message_email.html", name=item.name, email="pacificubooks@gmail.com", 
+                    body="You have an item for sale that will expire soon."))
                 mail.send(msg)
