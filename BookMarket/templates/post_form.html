@@ -261,7 +261,7 @@
             // }
 
             console.log('{{legend}}')
-            post_url = '{{legend}}' === "New" ? "{{url_for('new_item')}}" : "{{url_for('shop_api.item', item_id=item.id)}}" 
+            post_url = '{{legend}}' === "New" ? "{{url_for('new_item')}}" : '{{item}}' ? "{{url_for('shop_api.item', item_id=item_id)}}" : null
             console.log(post_url)
             $.ajax({
                 url: post_url || '#',

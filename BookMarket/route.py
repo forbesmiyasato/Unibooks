@@ -99,7 +99,7 @@ def new_item():
         # return redirect(url_for('home'))
         result = {'url': url_for('shop_api.item', item_id=post.id)}
         return jsonify(result)
-    return render_template('create_post.html', title='Sell', form=form, legend='New')
+    return render_template('create_post.html', title='Sell', form=form, legend='New', item_id=0)
 
 
 @app.route('/class/<department>')

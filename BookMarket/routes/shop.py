@@ -77,7 +77,7 @@ def item(item_id):
         message_form.email.data = current_user.email
     return render_template('single_product.html', title=item.name, item=item, images=images,
                            item_class=item_class, department=department, form=edit_form, legend="Edit",
-                           message_form=message_form)
+                           message_form=message_form, item_id=item_id)
 
 
 @shop_api.route("/shop/class/<int:class_id>")
