@@ -58,7 +58,12 @@
                     </div>
                     {% else %}
                     <div>
-                        {{ form.item_department(id="department", class="form-control form-control-sm") }}
+                        {{ form.item_department(list="department_list", id="department", class="form-control form-control-sm") }}
+                        <datalist id='department_list'>
+                            {% for department in departments %}
+                            <option data-value='{{ department.id }}' value='{{department.department_name}}'></option>
+                            {% endfor %}
+                        </datalist>
                     </div>
                     {% endif %}
                 </div>
@@ -107,13 +112,23 @@
     let department_select = document.getElementById('department');
     let class_select = document.getElementById('class');
 
+
     class_select.required = true;
     department_select.required = true;
 
     department_select.selectedIndex = -1;
     department_select.onchange = function () {
-        department = department_select.value;
+        // console.log(department.dataValue)
+        let selectedDepartment = $('#department_list option').filter((a, b) => {
+            console.log(b.value)
+            return b.value === department_select.value
+        });
 
+        let department = selectedDepartment[0].dataset.value
+
+        department_select.value = department
+
+        console.log(department_select.value)
         fetch('/class/' + department).then(function (response) {
             response.json().then(function (data) {
                 let optionHTML = '';
@@ -228,8 +243,8 @@
             e.preventDefault();
 
             var formData = new FormData(),
-                _fileuploaderFields = [];     
-            
+                _fileuploaderFields = [];
+
             // append inputs to FormData
             $.each($form.serializeArray(), function (key, field) {
                 formData.append(field.name, field.value);
@@ -238,23 +253,23 @@
             input = document.querySelector('input[name="files[]"')
 
             // append file inputs to FormData
-                var $input = $(input),
-                    name = $input.attr('name'),
-                    files = $input.prop('files'),
-                    api = $.fileuploader.getInstance($input);
+            var $input = $(input),
+                name = $input.attr('name'),
+                files = $input.prop('files'),
+                api = $.fileuploader.getInstance($input);
 
 
-                // add fileuploader files to the formdata
-                if (api) {
-                    if ($.inArray(name, _fileuploaderFields) > -1)
-                        return;
-                    files = api.getChoosedFiles();
-                    _fileuploaderFields.push($input);
-                }
+            // add fileuploader files to the formdata
+            if (api) {
+                if ($.inArray(name, _fileuploaderFields) > -1)
+                    return;
+                files = api.getChoosedFiles();
+                _fileuploaderFields.push($input);
+            }
 
-                for (var i = 0; i < files.length; i++) {
-                    formData.append(name, (files[i].file ? files[i].file : files[i]), (files[i].name ? files[i].name : false));
-                }
+            for (var i = 0; i < files.length; i++) {
+                formData.append(name, (files[i].file ? files[i].file : files[i]), (files[i].name ? files[i].name : false));
+            }
 
             // // Display the values
             // for (var value of formData.values()) {
@@ -272,7 +287,7 @@
                 cache: false,
                 contentType: false,
                 processData: false,
-                success: function(data) {
+                success: function (data) {
                     console.log("success")
                     window.location.href = data['url']
                 }
