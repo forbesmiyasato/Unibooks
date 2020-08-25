@@ -1,9 +1,11 @@
+from .models import Users
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, InputRequired, NumberRange
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, MultipleFileField, SelectField, DecimalField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, InputRequired
-from .models import Users
+from wtforms import (
+    DecimalField, StringField, PasswordField, SubmitField, BooleanField,
+    TextAreaField, SelectField, MultipleFileField)
 
 
 class RegistrationForm(FlaskForm):
@@ -52,9 +54,11 @@ class UpdateAccountForm(FlaskForm):
 class PostForm(FlaskForm):
     name = StringField('Item', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
-    price = DecimalField('Price', validators=[InputRequired()])
-    files = MultipleFileField('Upload item images', validators=[FileAllowed(['jpg', 'png'])])
-    item_department = SelectField('Department', coerce=int, validators=[InputRequired()])
+    price = DecimalField('Price', validators=[DataRequired()])
+    files = MultipleFileField('Upload item images', validators=[
+                              FileAllowed(['jpg', 'png'])])
+    item_department = SelectField(
+        'Department', coerce=int, validators=[InputRequired()])
     item_class = SelectField('Class', choices=[], validators=[InputRequired()])
     submit = SubmitField('Post')
 
@@ -63,8 +67,10 @@ class EditForm(FlaskForm):
     name = StringField('Item', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
     price = DecimalField('Price', validators=[InputRequired()])
-    files = MultipleFileField('Upload item images', validators=[FileAllowed(['jpg', 'png'])])
-    item_department = SelectField('Department', coerce=int, validators=[InputRequired()])
+    files = MultipleFileField('Upload item images', validators=[
+                              FileAllowed(['jpg', 'png'])])
+    item_department = SelectField(
+        'Department', coerce=int, validators=[InputRequired()])
     item_class = SelectField('Class', choices=[], validators=[InputRequired()])
     submit = SubmitField('Edit')
 

@@ -56,29 +56,21 @@ def account():
     return render_template('account.html', title='Account', confirmed=current_user.confirmed)
 
 
-@app.route("/files/<int:userid>", methods=['POST'])
-def post_item_files(userid):
-    if request.method == "POST":
-        images = request.files
-        print(images)
-        if images:
-            thumbnail = save_images_to_db_and_s3(images, newId)
-            if thumbnail:
-                item = Item.query.filter_by(id=newId).first()
-                item.thumbnail = thumbnail
-    return jsonify({'added': 'added'})
+# @app.route("/files/<int:userid>", methods=['POST'])
+# def post_item_files(userid):
+#     if request.method == "POST":
+#         images = request.files
+#         print(images)
+#         if images:
+#             thumbnail = save_images_to_db_and_s3(images, newId)
+#             if thumbnail:
+#                 item = Item.query.filter_by(id=newId).first()
+#                 item.thumbnail = thumbnail
+#     return jsonify({'added': 'added'})
 
 @app.route("/item/new", methods=['GET', 'POST'])
 @login_required
 def new_item():
-    if current_user.confirmed is False:
-        flash("You must confirm your email address before selling!", 'info')
-        return redirect(url_for('account'))
-    form = PostForm()
-    # form.item_class.choices = class_list
-    departments = db.session.query(ItemDepartment).all()
-    department_list = [(i.id, i.department_name) for i in departments]
-    form.item_department.choices = department_list
     if request.method == 'POST':
         # images = form.images.data  # without plugin
         images = request.files.getlist('files[]')
@@ -99,6 +91,14 @@ def new_item():
         # return redirect(url_for('home'))
         result = {'url': url_for('shop_api.item', item_id=post.id)}
         return jsonify(result)
+    if current_user.confirmed is False:
+        flash("You must confirm your email address before selling!", 'info')
+        return redirect(url_for('account'))
+    form = PostForm()
+    # form.item_class.choices = class_list
+    departments = db.session.query(ItemDepartment).all()
+    department_list = [(i.id, i.department_name) for i in departments]
+    form.item_department.choices = department_list
     return render_template('create_post.html', title='Sell', form=form, legend='New', item_id=0)
 
 

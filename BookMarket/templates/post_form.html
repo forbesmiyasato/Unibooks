@@ -43,7 +43,8 @@
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{ form.price(class="form-control form-control-lg") }}
+                    {{ form.price(class="form-control form-control-lg", pattern="^\d{0,5}(\.\d{0,2})?$",
+                    oninvalid="setCustomValidity('Must be a decimal number between 0 and 99999')", oninput="setCustomValidity('')") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
