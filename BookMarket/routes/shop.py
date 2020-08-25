@@ -116,3 +116,23 @@ def items_for_department(department_id):
         posts = Item.query.filter_by(department_id=department_id).order_by(
             date_sorted).paginate(page=page, per_page=per_page)
     return render_template('shop_department.html', title='Shop', posts=posts, departments=departments, department=department)
+
+@shop_api.context_processor
+def get_totals_depts():
+    items = db.session.query(Item).all()
+    depObj = {}
+    classObj = {}
+
+    if items:
+        for item in items:
+            if item.department_id not in depObj:
+                depObj[item.department_id] = 1
+            else:
+                depObj[item.department_id] += 1
+
+            if item.class_id not in classObj:
+                classObj[item.class_id] = 1
+            else:
+                classObj[item.class_id] += 1
+
+    return {'depObj': depObj, 'classObj': classObj}
