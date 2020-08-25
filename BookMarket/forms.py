@@ -59,7 +59,7 @@ class PostForm(FlaskForm):
                               FileAllowed(['jpg', 'png'])])
     item_department = StringField(
         'Department', validators=[InputRequired()])
-    item_class = SelectField('Class', choices=[], validators=[InputRequired()])
+    item_class = StringField('Class', validators=[InputRequired()])
     submit = SubmitField('Post')
 
 

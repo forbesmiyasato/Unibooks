@@ -58,7 +58,8 @@
                     </div>
                     {% else %}
                     <div>
-                        {{ form.item_department(list="department_list", id="department", class="form-control form-control-sm") }}
+                        {{ form.item_department(placeholder="Select Department",
+                        list="department_list", id="department", class="form-control form-control-sm", type="search") }}
                         <datalist id='department_list'>
                             {% for department in departments %}
                             <option data-value='{{ department.id }}' value='{{department.department_name}}'></option>
@@ -79,7 +80,10 @@
                     </div>
                     {% else %}
                     <div>
-                        {{ form.item_class(id="class", class="form-control form-control-sm") }}
+                        {{ form.item_class(placeholder="Please select the department", 
+                        list="class_list", id="class", class="form-control form-control-sm") }}
+                        <datalist id='class_list'>
+                        </datalist>
                     </div>
                     {% endif %}
                 </div>
@@ -109,36 +113,39 @@
 </div>
 
 <script>
-    let department_select = document.getElementById('department');
-    let class_select = document.getElementById('class');
+    let department_input = document.getElementById('department');
+    let class_input = document.getElementById('class');
+    let class_select = document.getElementById('class_list');
 
 
     class_select.required = true;
-    department_select.required = true;
+    department_input.required = true;
 
-    department_select.selectedIndex = -1;
-    department_select.onchange = function () {
+    department_input.selectedIndex = -1;
+    department_input.onchange = function () {
         // console.log(department.dataValue)
         let selectedDepartment = $('#department_list option').filter((a, b) => {
             console.log(b.value)
-            return b.value === department_select.value
+            return b.value === department_input.value
         });
 
         let department = selectedDepartment[0].dataset.value
 
-        department_select.value = department
+        // department_input.value = department
 
-        console.log(department_select.value)
+        console.log(department_input.value)
         fetch('/class/' + department).then(function (response) {
             response.json().then(function (data) {
+                class_input.value = ''
+                console.log(data)
                 let optionHTML = '';
                 // optionHTML += '<option data-display="Select Class">Select</option>'
                 for (let item_class of data.classes) {
-                    optionHTML += '<option value="' + item_class.id + '">'
-                        + item_class.class_name + '</option>';
+                    optionHTML += `<option value="${item_class.class_name}"
+                        data-value="${item_class.id}" />`;
                 }
                 class_select.innerHTML = optionHTML;
-                $('select').niceSelect('update');
+                class_input.placeholder = 'Select Course'
             })
         });
     }
