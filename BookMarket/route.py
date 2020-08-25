@@ -97,9 +97,9 @@ def new_item():
     form = PostForm()
     # form.item_class.choices = class_list
     departments = db.session.query(ItemDepartment).all()
-    department_list = [(i.id, i.department_name) for i in departments]
-    form.item_department.choices = department_list
-    return render_template('create_post.html', title='Sell', form=form, legend='New', item_id=0)
+    # department_list = [(i.id, i.department_name) for i in departments]
+    print(departments)
+    return render_template('create_post.html', title='Sell', form=form, legend='New', item_id=0, departments=departments)
 
 
 @app.route('/class/<department>')

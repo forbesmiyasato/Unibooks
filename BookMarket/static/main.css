@@ -232,3 +232,11 @@ a.nav-link {
 .s_product_text.product-info-container {
     margin-top: 0;
 }
+
+.class-form, .department-form {
+    display:inline-block
+}
+
+.department-form {
+    margin-right: 5px
+}

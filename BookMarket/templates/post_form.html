@@ -47,7 +47,8 @@
                     oninvalid="setCustomValidity('Must be a decimal number between 0 and 99999')", oninput="setCustomValidity('')") }}
                     {% endif %}
                 </div>
-                <div class="form-group">
+                <div>
+                <div class="form-group department-form">
                     {{ form.item_department.label(class="form-control-label") }}
                     {% if form.item_department.errors %}
                     {{ form.item_department(id="department", class="form-control form-control-lg is-invalid") }}
@@ -58,12 +59,17 @@
                     </div>
                     {% else %}
                     <div>
-                        {{ form.item_department(id="department", class="form-control form-control-sm") }}
+                        {{ form.item_department(type="search", placeholder="Select Department",
+                        list="department_list", id="department", class="form-control form-control-sm") }}
+                        <datalist id='department_list'>
+                            {% for department in departments %}
+                            <option data-value='{{ department.id }}' value='{{department.department_name}}'></option>
+                            {% endfor %}
+                        </datalist>
                     </div>
                     {% endif %}
                 </div>
-                <br style="clear: both" />
-                <div class="form-group">
+                <div class="form-group class-form">
                     {{ form.item_class.label(class="form-control-label") }}
                     {% if form.item_class.errors %}
                     {{ form.item_class(id="class", class="form-control form-control-lg is-invalid") }}
@@ -74,11 +80,14 @@
                     </div>
                     {% else %}
                     <div>
-                        {{ form.item_class(id="class", class="form-control form-control-sm") }}
+                        {{ form.item_class(placeholder="Please select department", 
+                        list="class_list", id="class", class="form-control form-control-sm") }}
+                        <datalist id='class_list'>
+                        </datalist>
                     </div>
                     {% endif %}
                 </div>
-                <br style="clear: both" />
+                </div>
                 <div class="form-group">
                     {{ form.files.label(class="form-control-label") }}
                     {% if form.files.errors %}
@@ -104,28 +113,54 @@
 </div>
 
 <script>
-    let department_select = document.getElementById('department');
-    let class_select = document.getElementById('class');
+    let department_input = document.getElementById('department');
+    let class_input = document.getElementById('class');
+    let class_select = document.getElementById('class_list');
+    let department;
+    let course;
 
     class_select.required = true;
-    department_select.required = true;
+    department_input.required = true;
 
-    department_select.selectedIndex = -1;
-    department_select.onchange = function () {
-        department = department_select.value;
+    department_input.selectedIndex = -1;
+    department_input.onchange = function () {
+        // console.log(department.dataValue)
+        let selectedDepartment = $('#department_list option').filter((a, b) => {
+            console.log(b.value)
+            return b.value === department_input.value
+        });
 
+        department = selectedDepartment[0].dataset.value
+
+        // department_input.value = department
+
+        console.log(department_input.value)
         fetch('/class/' + department).then(function (response) {
             response.json().then(function (data) {
+                class_input.value = ''
+                console.log(data)
                 let optionHTML = '';
                 // optionHTML += '<option data-display="Select Class">Select</option>'
                 for (let item_class of data.classes) {
-                    optionHTML += '<option value="' + item_class.id + '">'
-                        + item_class.class_name + '</option>';
+                    optionHTML += `<option value="${item_class.class_name}"
+                        data-value="${item_class.id}" />`;
                 }
                 class_select.innerHTML = optionHTML;
-                $('select').niceSelect('update');
+                class_input.placeholder = 'Select Course'
             })
         });
+    }
+
+    class_input.onchange = function () {
+        // console.log(department.dataValue)
+        let selectedClass = $('#class_list option').filter((a, b) => {
+            console.log(b.value)
+            return b.value === class_input.value
+        });
+
+        console.log(selectedClass)
+        course = selectedClass[0].dataset.value
+        console.log(course);
     }
 
     $(document).ready(function () {
@@ -228,33 +263,41 @@
             e.preventDefault();
 
             var formData = new FormData(),
-                _fileuploaderFields = [];     
-            
+                _fileuploaderFields = [];
+
             // append inputs to FormData
             $.each($form.serializeArray(), function (key, field) {
+                if (field.name === 'item_department') {
+                    field.value = department
+                } else if (field.name === 'item_class') {
+                    field.value = course
+                }
+
+                console.log(field.name, field.value)
+
                 formData.append(field.name, field.value);
             });
 
             input = document.querySelector('input[name="files[]"')
 
             // append file inputs to FormData
-                var $input = $(input),
-                    name = $input.attr('name'),
-                    files = $input.prop('files'),
-                    api = $.fileuploader.getInstance($input);
+            var $input = $(input),
+                name = $input.attr('name'),
+                files = $input.prop('files'),
+                api = $.fileuploader.getInstance($input);
 
 
-                // add fileuploader files to the formdata
-                if (api) {
-                    if ($.inArray(name, _fileuploaderFields) > -1)
-                        return;
-                    files = api.getChoosedFiles();
-                    _fileuploaderFields.push($input);
-                }
+            // add fileuploader files to the formdata
+            if (api) {
+                if ($.inArray(name, _fileuploaderFields) > -1)
+                    return;
+                files = api.getChoosedFiles();
+                _fileuploaderFields.push($input);
+            }
 
-                for (var i = 0; i < files.length; i++) {
-                    formData.append(name, (files[i].file ? files[i].file : files[i]), (files[i].name ? files[i].name : false));
-                }
+            for (var i = 0; i < files.length; i++) {
+                formData.append(name, (files[i].file ? files[i].file : files[i]), (files[i].name ? files[i].name : false));
+            }
 
             // // Display the values
             // for (var value of formData.values()) {
@@ -272,7 +315,7 @@
                 cache: false,
                 contentType: false,
                 processData: false,
-                success: function(data) {
+                success: function (data) {
                     console.log("success")
                     window.location.href = data['url']
                 }
