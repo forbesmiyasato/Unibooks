@@ -1,62 +1,77 @@
 {% block body_content %}
-<section class="lattest-product-area pb-40 category-list">
+<section class="lattest-product-area pb-40 category-list" id="react-container">
     <div class="row">
-        {% for post in posts.items %}
-        <!-- single product -->
-        <div class="col-lg-4 col-md-6">
-            <div class="single-product">
-                <img class="img-thumbnail list-image"
-                    src="https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{post.thumbnail}}" alt="">
-                <div class="product-details">
-                    <h6 class="hover-line"><a href="{{url_for('shop_api.item', item_id=post.id)}}">{{post.name}}</a></h6>
-                    <div class="price">
-                        <h6>{{post.price}}</h6>
-                    </div>
-                    <div class="prd-bottom">
-                        <a href="{{url_for('shop_api.item', item_id=post.id)}}" class="social-info">
-                            <span class="lnr lnr-move"></span>
-                            <p class="hover-text">View more</p>
-                        </a>
-                        {% if current_user.id == post.user_id %}
-                        <a data-toggle="modal" data-target="#deleteModal{{loop.index}}" href="javascript:void(0)" class="social-info">
-                            <span class="lnr lnr-trash"></span>
-                            <p class="hover-text">Delete</p>
-                        </a>
-                        {% else %}
-                        <a onclick="addToBag({{post.id}}, {{current_user.id}})" href="javascript:void(0)"
-                            class="social-info">
-                            <span class="ti-bag"></span>
-                            <p class="hover-text">add to bag</p>
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="deleteModal{{loop.index}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <!-- <div class="modal-body">
-      Are you sure you want to delete the post?
-    </div> -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <form action="{{url_for('delete_item', item_id=post.id)}}" method="POST">
-                            <input type="submit" class="btn btn-danger" value="Delete">
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
+        <!-- <div id="one">
+        </div> -->
+
+        <!-- Load React. -->
+        <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+        <script>
+            'use strict';
+
+            const e = React.createElement;
+
+            class LikeButton extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.state = { liked: false, posts: 0 };
+                }
+
+                componentDidMount() {
+                    fetch('{{url_for("shop_api.shop_get_list", curPage=page)}}').then(response => response.json()).then(data => this.setState({ posts: data }))
+                }
+
+                render() {
+                    if (this.state.posts.posts && this.state.posts.posts.length > 0) {
+                        return e('div', { className: 'row' }, null, [
+                            this.state.posts.posts.map((item, i) =>
+                                e("div", { className: 'col-lg-4 col-md-6' }, null, [
+                                    e("div", { className: 'single-product' }, null, [
+                                        e("img", {
+                                            className: "img-thumbnail list-image",
+                                            src: `https://book-advertisement-site.s3-us-west-2.amazonaws.com/${item.thumbnail}`
+                                        }),
+                                        e("div", { className: "product-details" }, null, [
+                                            e("h6", { className: "hover-line" }, [
+                                                e("a", { href: `/shop/${item.id}` }, null, item.name)
+                                            ]),
+                                            e("div", { className: "price" }, null, [
+                                                e("h6", null, item.price)
+                                            ]),
+                                            e("div", { className: "prd-bottom" }, null, [
+                                                e("a", { className: "social-info", href: `/shop/${item.id}` }, [
+                                                    e("span", { className: "lnr lnr-move" }, null),
+                                                    e("p", { className: "hover-text" }, null, 'View More')
+                                                ]),
+                                                item.isOwner ?
+                                                    e('a', { dataToggle: "modal", dataTarget: `#deleteModal${i}`, href: "javascript:void(0)", className: "social-info" }, null, [
+                                                        e('span', { className: 'lnr lnr-trash' }, null),
+                                                        e('p', { className: 'hover-text' }, null, 'Delete')
+                                                    ])
+                                                    :
+                                                    e('a', {onClick: addToBag(`${item.id}`, '{{current_user.id}}'), href: "javascript:void(0)", className: "social-info"}, null, [
+                                                        e('span', {className: "ti-bag"}, null),
+                                                        e('p', {className: "hover-text"}, null, 'Add to Bag')
+                                                    ])
+                                            ]),
+
+                                        ])
+                                    ])
+                                ])
+                            )
+                        ]);
+                    } else {
+                        return e('div', null, '')
+                    }
+                }
+            }
+
+            const domContainer = document.querySelector('#react-container');
+            ReactDOM.render(e(LikeButton), domContainer);
+        </script>
     </div>
 </section>
 
@@ -72,8 +87,8 @@
             // location.reload();
             console.log(data.added);
             if (data.added) {
-            let bagIcon = document.getElementsByClassName("bag-icon")[0];
-            bagIcon.innerHTML = parseInt(bagIcon.innerHTML) + 1;
+                let bagIcon = document.getElementsByClassName("bag-icon")[0];
+                bagIcon.innerHTML = parseInt(bagIcon.innerHTML) + 1;
             }
         })
     }

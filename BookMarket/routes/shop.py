@@ -1,3 +1,4 @@
+import json
 from flask import render_template, request, Blueprint, jsonify, url_for
 from flask_login import current_user
 from flask_mail import Message
@@ -9,28 +10,82 @@ from ..utility_funcs import delete_images_from_s3_and_db, save_images_to_db_and_
 shop_api = Blueprint('shop_api', __name__,
                      static_folder="../static", template_folder="../template")
 
+@shop_api.route("/shop/get-list/<int:curPage>")
+@shop_api.route("/shop/get-list/<int:curPage>/<searchTerm>")
+@shop_api.route("/shop/get-list/<int:curPage>/<searchTerm>/<show>")
+def shop_get_list(curPage, searchTerm=None, show=None):
+    search_term = searchTerm
+    page = curPage
+    # per_page = request.args.get('per_page', 6, type=int)
+    per_page = 9
+    if show == "all":
+        per_page = db.session.query(Item).count()
+        print(per_page)
+    if search_term:
+        search_term = '%{0}%'.format(search_term)
+        posts = Item.query.filter(Item.name.ilike(search_term)).paginate(
+            page=page, per_page=per_page)
+    else:
+        posts = Item.query.paginate(page=page, per_page=per_page)
+    # json_posts = []
+    # for task in posts.items:
+    #     json_posts.append(dict(task))
+    json_posts = []
+    for x in posts.items:
+        print(x.date_posted.strftime("%m/%d/%Y, %H:%M:%S"))
+        d = {}
+        d['id'] = x.id
+        d['name'] = x.name
+        d['date_posted'] = str(x.date_posted)
+        d['description'] = x.description
+        d['price'] = x.price
+        d['thumbnail'] = x.thumbnail
+        d['user_id'] = x.user_id
+        d['class_id'] = x.class_id
+        d['department_id'] = x.department_id
+        d['isOwner'] = current_user.id == x.user_id
+        json_posts.append(d)
+    print(json_posts)
+    return jsonify({'posts' : json_posts})
+
 
 @shop_api.route("/shop")
 def shop():
     search_term = request.args.get('search')
     page = request.args.get('page', 1, type=int)
-    per_page = request.args.get('per_page', 6, type=int)
-    order = request.args.get('order', 'desc')
-    date_sorted = getattr(Item.date_posted, order)()
+    # per_page = request.args.get('per_page', 6, type=int)
+    per_page = 9
+
+    # order = request.args.get('order', 'desc')
+    # date_sorted = getattr(Item.date_posted, order)()
     departments = db.session.query(ItemDepartment).all()
+
     # for department in departments:
     #     # classObj = {}
     #     classes = ItemClass.query.filter_by(department_id=department.id).all()
     #     department['classes'] = classes
-
     if search_term:
         search_term = '%{0}%'.format(search_term)
-        posts = Item.query.filter(Item.name.ilike(search_term)).order_by(
-            date_sorted).paginate(page=page, per_page=per_page)
+        length = Item.query.filter(Item.name.ilike(search_term)).paginate(
+            page=page, per_page=per_page).total
+        hasPrev = Item.query.filter(Item.name.ilike(search_term)).paginate(
+            page=page, per_page=per_page).has_prev
+        hasNext = Item.query.filter(Item.name.ilike(search_term)).paginate(
+            page=page, per_page=per_page).has_next
+        iter_pages = Item.query.filter(Item.name.ilike(search_term)).paginate(page=page, per_page=per_page).iter_pages(
+            left_edge=1, right_edge=1, left_current=1, right_current=2)
+        page = Item.query.filter(Item.name.ilike(search_term)).paginate(
+            page=page, per_page=per_page).page
     else:
-        posts = Item.query.order_by(
-            date_sorted).paginate(page=page, per_page=per_page)
-    return render_template('shop.html', title='Shop', posts=posts, departments=departments)
+        length = Item.query.paginate(page=page, per_page=per_page).total
+        hasPrev = Item.query.paginate(page=page, per_page=per_page).has_prev
+        hasNext = Item.query.paginate(page=page, per_page=per_page).has_next
+        iter_pages = Item.query.paginate(page=page, per_page=per_page).iter_pages(
+            left_edge=1, right_edge=1, left_current=1, right_current=2)
+        page = Item.query.paginate(page=page, per_page=per_page).page
+
+    return render_template('shop.html', title='Shop', num=length, has_prev=hasPrev, has_next=hasNext,
+                           iter_pages=iter_pages, departments=departments, page=page, search_term=search_term)
 
 
 @shop_api.route("/shop/<int:item_id>", methods=['GET', 'POST'])

@@ -1,7 +1,7 @@
 from . import db, login_manager
 from datetime import datetime
 from flask_login import UserMixin
-
+from marshmallow_sqlalchemy import ModelSchema
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -17,6 +17,7 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     items = db.relationship('Item', backref='owner', lazy=True)
     confirmed = db.Column(db.Boolean, default=False, nullable=False)
+
     def __repr__(self):
         return f"Users('{self.username}', '{self.email}', '{self.image_file}')"
 
@@ -25,7 +26,8 @@ class ItemClass(db.Model):
     __tablename__ = 'itemclass'
     id = db.Column(db.Integer, primary_key=True)
     class_name = db.Column(db.String(100), nullable=False)
-    department_id = db.Column(db.Integer, db.ForeignKey('itemdepartment.id'), nullable=False)
+    department_id = db.Column(db.Integer, db.ForeignKey(
+        'itemdepartment.id'), nullable=False)
 
 
 class ItemDepartment(db.Model):
@@ -45,13 +47,30 @@ class Item(db.Model):
     thumbnail = db.Column(db.String, nullable=False,
                           default='No_picture_available.png')
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    class_id = db.Column(db.Integer, db.ForeignKey('itemclass.id'), nullable=False)
-    department_id = db.Column(db.Integer, db.ForeignKey('itemdepartment.id'), nullable=False)
-    images = db.relationship('ItemImage', cascade="all,delete", backref='owner', lazy=True)
-    saved_by = db.relationship('SaveForLater', cascade="all, delete", passive_deletes=True)
+    class_id = db.Column(db.Integer, db.ForeignKey(
+        'itemclass.id'), nullable=False)
+    department_id = db.Column(db.Integer, db.ForeignKey(
+        'itemdepartment.id'), nullable=False)
+    images = db.relationship(
+        'ItemImage', cascade="all,delete", backref='owner', lazy=True)
+    saved_by = db.relationship(
+        'SaveForLater', cascade="all, delete", passive_deletes=True)
 
     def __repr__(self):
         return f"Post('{self.name}', '{self.date_posted}')"
+
+     ## Making the sql alchemy object JSON serailizable
+    def JSONSerializableObj(self):
+        class BaseSchema(ModelSchema): 
+            def on_bind_field(self, field_name, field_obj):
+                field_obj.allow_none = True
+
+        class ObjectSchema(BaseSchema): 
+            class Meta:
+                model = self
+
+        object_schema = ObjectSchema()
+        return object_schema.dump(self).data
 
 
 class ItemImage(db.Model):
@@ -63,7 +82,8 @@ class ItemImage(db.Model):
 class SaveForLater(db.Model):
     __tablename__ = 'saveforlater'
     id = db.Column(db.Integer, primary_key=True)
-    item_id = db.Column(db.Integer, db.ForeignKey('item.id', ondelete='CASCADE'), nullable=False)
+    item_id = db.Column(db.Integer, db.ForeignKey(
+        'item.id', ondelete='CASCADE'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
 

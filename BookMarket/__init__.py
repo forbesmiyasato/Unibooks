@@ -1,4 +1,6 @@
 import os
+import json
+from decimal import Decimal
 import boto3
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -9,7 +11,17 @@ from flask_mail import Mail
 # from .background import test
 # from flask.ext.session import Session
 
+
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, decimal.Decimal):
+            return {'__Decimal__': str(obj)}
+        # Let the base class default method raise the TypeError
+        return json.JSONEncoder.default(self, obj)
+
 app = Flask(__name__)
+
+# app.json_encoder = DecimalEncoder
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
