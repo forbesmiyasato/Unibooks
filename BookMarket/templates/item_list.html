@@ -24,43 +24,104 @@
                     fetch('{{url_for("shop_api.shop_get_list", curPage=page)}}').then(response => response.json()).then(data => this.setState({ posts: data }))
                 }
 
+                addToBag = (item_id, user_id) => {
+                    var url = "{{url_for('add_to_bag', item='tempItem', user='tempUser')}}"
+                        .replace('tempItem', item_id).replace('tempUser', user_id).replace('&amp;', '&')
+                    console.log(url);
+
+                    $.post(url, null, (data, status) => {
+                        console.log(data);
+                        console.log(status);
+                        // location.reload();
+                        console.log(data.added);
+                        if (data.added) {
+                            let bagIcon = document.getElementsByClassName("bag-icon")[0];
+                            bagIcon.innerHTML = parseInt(bagIcon.innerHTML) + 1;
+                        }
+                    })
+                }
+
+                deleteItem = (item_id) => {
+                    url = `/post/delete?item_id=${item.id}`
+                    console.log("delete")
+                    $.post(url, null, (data, status) => {
+                        console.log(data);
+                        console.log(status);
+                        // location.reload();
+                        console.log(data.added);
+                        if (data.added) {
+                            let bagIcon = document.getElementsByClassName("bag-icon")[0];
+                            bagIcon.innerHTML = parseInt(bagIcon.innerHTML) + 1;
+                        }
+                    })
+                }
+
                 render() {
                     if (this.state.posts.posts && this.state.posts.posts.length > 0) {
                         return e('div', { className: 'row' }, null, [
-                            this.state.posts.posts.map((item, i) =>
-                                e("div", { className: 'col-lg-4 col-md-6' }, null, [
-                                    e("div", { className: 'single-product' }, null, [
+                            this.state.posts.posts.map((item, i) => (
+                                e("div", { key: `1${i}`, className: 'col-lg-4 col-md-6' }, null, [
+                                    e("div", { className: 'single-product', key: `3${i}` }, null, [
                                         e("img", {
-                                            className: "img-thumbnail list-image",
+                                            className: "img-thumbnail list-image", key: `4${i}`,
                                             src: `https://book-advertisement-site.s3-us-west-2.amazonaws.com/${item.thumbnail}`
                                         }),
-                                        e("div", { className: "product-details" }, null, [
-                                            e("h6", { className: "hover-line" }, [
-                                                e("a", { href: `/shop/${item.id}` }, null, item.name)
+                                        e("div", { className: "product-details", key: `5${i}` }, null, [
+                                            e("h6", { className: "hover-line", key: `6${i}` }, [
+                                                e("a", { href: `/shop/${item.id}`, key: `7${i}` }, null, item.name)
                                             ]),
-                                            e("div", { className: "price" }, null, [
-                                                e("h6", null, item.price)
+                                            e("div", { className: "price", key: `8${i}` }, null, [
+                                                e("h6", { key: `9${i}` }, null, item.price)
                                             ]),
-                                            e("div", { className: "prd-bottom" }, null, [
-                                                e("a", { className: "social-info", href: `/shop/${item.id}` }, [
-                                                    e("span", { className: "lnr lnr-move" }, null),
-                                                    e("p", { className: "hover-text" }, null, 'View More')
+                                            e("div", { className: "prd-bottom", key: `20${i}` }, null, [
+                                                e("a", { className: "social-info", href: `/shop/${item.id}`, key: `19${i}` }, [
+                                                    e("span", { className: "lnr lnr-move", key: `10${i}` }, null),
+                                                    e("p", { className: "hover-text", key: `11${i}` }, null, 'View More')
                                                 ]),
                                                 item.isOwner ?
-                                                    e('a', { dataToggle: "modal", dataTarget: `#deleteModal${i}`, href: "javascript:void(0)", className: "social-info" }, null, [
-                                                        e('span', { className: 'lnr lnr-trash' }, null),
-                                                        e('p', { className: 'hover-text' }, null, 'Delete')
-                                                    ])
+                                                    e('a', {
+                                                        'data-toggle': "modal", 'data-target': `#deleteModal${i}`, href: "javascript:void(0)",
+                                                        key: `14${i}`, className: "social-info"
+                                                    }, null, [
+                                                        e('span', { className: 'lnr lnr-trash', key: `12${i}` }, null),
+                                                        e('p', { className: 'hover-text', key: `13${i}` }, null, 'Delete')
+                                                    ],
+                                                        e('div', {
+                                                            className: "modal fade", id: `deleteModal${i}`, tableindex: '-1', role: 'dialog', 'aria-labelledby': "deleteModalLabel",
+                                                            'aria-hidden': 'true', key: `2${i}`
+                                                        }, null, [
+                                                            e('div', { className: 'modal-dialog', role: "document", key: `26${i}` }, null, [
+                                                                e('div', { className: 'modal-content', key: `25${i}` }, null, [
+                                                                    e('div', { className: 'modal-header', key: `24${i}` }, null, [
+                                                                        e('h5', { className: 'modal-title', id: 'deleteModalLabel', key: `23${i}` }, null, 'Delete Post?'),
+                                                                        e('button', { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': "Close", key: `22${i}` }, null, [
+                                                                            e('span', { 'aria-hidden': 'true', key: `21${i}` }, null, "\u00D7")
+                                                                        ])
+                                                                    ]),
+                                                                    e('div', {className: 'modal-body', key: `30${i}`}, null, 'Are you sure you want to delete the post?'),
+                                                                    e('div', {className: 'modal-footer', key: `31${i}`}, null, [
+                                                                        e('button', {type: 'button', className: 'btn btn-secondary',
+                                                                        'data-dismiss': 'modal', key: `32${i}`}, null, 'Close'),
+                                                                        e('form', {onSubmit: this.deleteItem.bind(item.id), key: `33${i}`} , null, [
+                                                                            e('input', {type: 'submit', className: 'btn btn-danger', value: "Delete", key: `34${i}`})
+                                                                        ])
+                                                                    ])
+                                                                ])
+                                                            ])
+                                                        ]))
                                                     :
-                                                    e('a', {onClick: addToBag(`${item.id}`, '{{current_user.id}}'), href: "javascript:void(0)", className: "social-info"}, null, [
-                                                        e('span', {className: "ti-bag"}, null),
-                                                        e('p', {className: "hover-text"}, null, 'Add to Bag')
+                                                    e('a', {
+                                                        onClick: this.addToBag.bind(this, `${item.id}`, '{{current_user.id}}'), href: "javascript:void(0)",
+                                                        key: `15${i}`, className: "social-info"
+                                                    }, null, [
+                                                        e('span', { className: "ti-bag", key: `16${i}` }, null),
+                                                        e('p', { className: "hover-text", key: `17${i}` }, null, 'Add to Bag')
                                                     ])
                                             ]),
-
                                         ])
                                     ])
                                 ])
+                            )
                             )
                         ]);
                     } else {
