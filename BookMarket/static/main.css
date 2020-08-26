@@ -252,3 +252,17 @@ a.nav-link {
 #undefined-sticky-wrapper {
     height: 80px !important;
 }
+
+.dropdown-top {
+    margin-top: 10px;
+    display: inherit;
+}
+
+@media (max-width: 768px) {
+    .dropdown-top {
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: row;
+        width: 100%;
+    }
+}
