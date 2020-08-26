@@ -234,7 +234,8 @@ a.nav-link {
 }
 
 .class-form, .department-form {
-    display:inline-block
+    display:inline-block;
+    width: 20%;
 }
 
 .department-form {

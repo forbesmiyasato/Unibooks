@@ -57,9 +57,9 @@ class PostForm(FlaskForm):
     price = DecimalField('Price', validators=[DataRequired()])
     files = MultipleFileField('Upload item images', validators=[
                               FileAllowed(['jpg', 'png'])])
-    item_department = StringField(
+    item_department = SelectField(
         'Department', validators=[InputRequired()])
-    item_class = StringField('Class', validators=[InputRequired()])
+    item_class = SelectField('Class', validators=[InputRequired()])
     submit = SubmitField('Post')
 
 

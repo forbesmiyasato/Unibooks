@@ -47,7 +47,6 @@
                     oninvalid="setCustomValidity('Must be a decimal number between 0 and 99999')", oninput="setCustomValidity('')") }}
                     {% endif %}
                 </div>
-                <div>
                 <div class="form-group department-form">
                     {{ form.item_department.label(class="form-control-label") }}
                     {% if form.item_department.errors %}
@@ -59,13 +58,12 @@
                     </div>
                     {% else %}
                     <div>
-                        {{ form.item_department(type="search", placeholder="Select Department",
-                        list="department_list", id="department", class="form-control form-control-sm") }}
-                        <datalist id='department_list'>
+                        <select name="department_id" id='department_list' placeholder="Select Department">
+                            <option value="">Select Department</option>
                             {% for department in departments %}
-                            <option data-value='{{ department.id }}' value='{{department.department_name}}'></option>
+                            <option value='{{ department.id }}'>{{department.department_name}}</option>
                             {% endfor %}
-                        </datalist>
+                        </select>
                     </div>
                     {% endif %}
                 </div>
@@ -80,13 +78,10 @@
                     </div>
                     {% else %}
                     <div>
-                        {{ form.item_class(placeholder="Please select department", 
-                        list="class_list", id="class", class="form-control form-control-sm") }}
-                        <datalist id='class_list'>
-                        </datalist>
+                        <select name="class_id" id='class_list' placeholder="Select Course">
+                        </select>
                     </div>
                     {% endif %}
-                </div>
                 </div>
                 <div class="form-group">
                     {{ form.files.label(class="form-control-label") }}
@@ -113,57 +108,73 @@
 </div>
 
 <script>
-    let department_input = document.getElementById('department');
-    let class_input = document.getElementById('class');
     let class_select = document.getElementById('class_list');
+    let department_select = document.getElementById('department_list')
     let department;
-    let course;
 
     class_select.required = true;
-    department_input.required = true;
+    department_select.required = true;
 
-    department_input.selectedIndex = -1;
-    department_input.onchange = function () {
-        // console.log(department.dataValue)
-        let selectedDepartment = $('#department_list option').filter((a, b) => {
-            console.log(b.value)
-            return b.value === department_input.value
-        });
+    console.log(department_select)
 
-        department = selectedDepartment[0].dataset.value
+    department_select.onchange = function () {
+        var $select = $(document.getElementById('class_list'))
+        var selectize = $select[0].selectize;
+        department = department_select.value
+        selectize.clear();
+        if (department) {
+            fetch('/class/' + department).then(function (response) {
+                response.json().then(function (data) {
+                    let optionHTML = '';
+                    selectize.clearOptions();
+                    // optionHTML += '<option data-display="Select Class">Select</option>'
+                    for (let item_class of data.classes) {
+                        // optionHTML += `<option value="${item_class.id}">${item_class.class_name}</option>`;
+                        selectize.addOption({ value: item_class.id, text: item_class.class_name });
+                        selectize.refreshOptions()
+                    }
+                    class_select.innerHTML = optionHTML;
+                    class_select.disabled = false;
+                })
+            });
+        }
+        let department_input = document.getElementById('department_list-selectized');
+        //     let class_input = document.getElementById('class_list-selectized');
+        // if (department_input) { department_input.setCustomValidity("Please Select Department") }
+        // if (class_input) { class_input.setCustomValidity("Please Select Course") }
 
-        // department_input.value = department
+        department_input.setCustomValidity('')
 
-        console.log(department_input.value)
-        fetch('/class/' + department).then(function (response) {
-            response.json().then(function (data) {
-                class_input.value = ''
-                console.log(data)
-                let optionHTML = '';
-                // optionHTML += '<option data-display="Select Class">Select</option>'
-                for (let item_class of data.classes) {
-                    optionHTML += `<option value="${item_class.class_name}"
-                        data-value="${item_class.id}" />`;
-                }
-                class_select.innerHTML = optionHTML;
-                class_input.placeholder = 'Select Course'
-            })
-        });
+        console.log(!department_input.checkValidity())
+        if (!department_input.checkValidity()) {
+            department_input.setCustomValidity("Please Select Department")
+        } else {
+            department_input.setCustomValidity('')
+        }
     }
 
-    class_input.onchange = function () {
-        // console.log(department.dataValue)
-        let selectedClass = $('#class_list option').filter((a, b) => {
-            console.log(b.value)
-            return b.value === class_input.value
-        });
+    class_select.onchange = function () {
+        let class_input = document.getElementById('class_list-selectized');
+        class_input.setCustomValidity('')
 
-        console.log(selectedClass)
-        course = selectedClass[0].dataset.value
-        console.log(course);
+        console.log(!class_input.checkValidity())
+        if (!class_input.checkValidity()) {
+            class_input.setCustomValidity("Please Select Course")
+        } else {
+            class_input.setCustomValidity('')
+        }
     }
 
     $(document).ready(function () {
+
+        $('select').selectize({
+            sortField: 'text'
+        });
+
+        let department_input = document.getElementById('department_list-selectized');
+        let class_input = document.getElementById('class_list-selectized');
+        if (department_input) { department_input.setCustomValidity("Please Select Department") }
+        if (class_input) { class_input.setCustomValidity("Please Select Course") }
 
         // enable fileuploader plugin
         $('input[name="files"]').fileuploader({
@@ -267,16 +278,19 @@
 
             // append inputs to FormData
             $.each($form.serializeArray(), function (key, field) {
-                if (field.name === 'item_department') {
-                    field.value = department
-                } else if (field.name === 'item_class') {
-                    field.value = course
-                }
-
                 console.log(field.name, field.value)
-
                 formData.append(field.name, field.value);
             });
+
+            console.log(department_select.value)
+            // formData.append('department_id', department_select.value)
+            // formData.append('department_id', department_select.value)
+            // formData.append('class_id', class_select.value)
+
+            // Display the values
+            for (var value of formData.values()) {
+                console.log(value);
+            }
 
             input = document.querySelector('input[name="files[]"')
 
@@ -299,14 +313,7 @@
                 formData.append(name, (files[i].file ? files[i].file : files[i]), (files[i].name ? files[i].name : false));
             }
 
-            // // Display the values
-            // for (var value of formData.values()) {
-            //     console.log(value);
-            // }
-
-            console.log('{{legend}}')
             post_url = '{{legend}}' === "New" ? "{{url_for('new_item')}}" : '{{item}}' ? "{{url_for('shop_api.item', item_id=item_id)}}" : null
-            console.log(post_url)
             $.ajax({
                 url: post_url || '#',
                 data: formData,

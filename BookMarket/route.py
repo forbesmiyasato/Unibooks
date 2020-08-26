@@ -76,7 +76,7 @@ def new_item():
         images = request.files.getlist('files[]')
         print(images)
         post = Item(name=request.form.get('name'), description=request.form.get('description'), user_id=current_user.id,
-                    price=request.form.get('price'), class_id=request.form.get('item_class'), department_id=request.form.get('item_department'))
+                    price=request.form.get('price'), class_id=request.form.get('class_id'), department_id=request.form.get('department_id'))
         db.session.add(post)
         db.session.commit()
         db.session.refresh(post)
