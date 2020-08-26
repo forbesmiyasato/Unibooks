@@ -48,7 +48,8 @@
                         <li><a class="active"
                                 href="{{url_for('shop_api.items_for_department', department_id=item.department_id)}}"><span>Department</span>
                                 : {{department.department_name}}</a></li>
-                        <li><a href="{{url_for('shop_api.items_for_class', class_id=item.class_id)}}"><span>Class</span> :
+                        <li><a href="{{url_for('shop_api.items_for_class', class_id=item.class_id)}}"><span>Class</span>
+                                :
                                 {{item_class.class_name}}</a></li>
                     </ul>
                     <p>{{item.description}}</p>
@@ -147,24 +148,35 @@
     });
 
     function editClicked(item_class, item_department) {
-        console.log(item_class)
+        console.log("test", item_class)
         console.log(item_department)
-        window.location.hash = 'update';
-        $('#department').val(item_department);
-        // $('#class').val(item_class);
-        fetch('/class/' + item_department).then(function (response) {
-            response.json().then(function (data) {
-                let optionHTML = '';
-                // optionHTML += '<option data-display="Select Class">Select</option>'
-                for (let item_class of data.classes) {
-                    optionHTML += '<option value="' + item_class.id + '">'
-                        + item_class.class_name + '</option>';
-                }
-                class_select.innerHTML = optionHTML;
-                $('#class').val(item_class);
-                $('select').niceSelect('update');
-            })
-        });
+        //     window.location.hash = 'update';
+        let class_select = document.getElementById('class_list');
+        let department_select = document.getElementById('department_list')
+        console.log(class_select)
+        class_select.value = item_class
+        department_select.value = item_department
+
+        var $department_select = $(document.getElementById('department_list'))
+        var department_selectize = $department_select[0].selectize;
+        department_selectize.setValue(item_department);
+
+        var $class_select = $(document.getElementById('class_list'))
+        var class_selectize = $class_select[0].selectize;
+        class_selectize.setValue(item_class);
+        //     fetch('/class/' + item_department).then(function (response) {
+        //         response.json().then(function (data) {
+        //             let optionHTML = '';
+        //             // optionHTML += '<option data-display="Select Class">Select</option>'
+        //             for (let item_class of data.classes) {
+        //                 optionHTML += '<option value="' + item_class.id + '">'
+        //                     + item_class.class_name + '</option>';
+        //             }
+        //             class_select.innerHTML = optionHTML;
+        //             $('#class').val(item_class);
+        //             $('select').niceSelect('update');
+        //         })
+        //     });
     };
 
     function addToBag(item_id, user_id) {
@@ -173,8 +185,8 @@
 
         $.post(url, null, (data, status) => {
             if (data.added) {
-            let bagIcon = document.getElementsByClassName("bag-icon")[0];
-            bagIcon.innerHTML = parseInt(bagIcon.innerHTML) + 1;
+                let bagIcon = document.getElementsByClassName("bag-icon")[0];
+                bagIcon.innerHTML = parseInt(bagIcon.innerHTML) + 1;
             }
         })
     }

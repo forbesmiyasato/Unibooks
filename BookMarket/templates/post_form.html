@@ -112,6 +112,9 @@
     let department_select = document.getElementById('department_list')
     let department;
 
+    // class_select.value = {{ item_class }}
+    // department_select.value = {{ item_department }}
+
     class_select.required = true;
     department_select.required = true;
 
@@ -135,6 +138,14 @@
                     }
                     class_select.innerHTML = optionHTML;
                     class_select.disabled = false;
+                }).then(function () {
+                    {% if item_class is defined %}
+                    if ('{{ item_class.id }}') {
+                        console.log("!!!")
+                        selectize.setValue('{{item_class.id}}')
+                        selectize.refreshItems()	
+                    }
+                    {% endif %}
                 })
             });
         }
@@ -155,6 +166,7 @@
 
     class_select.onchange = function () {
         let class_input = document.getElementById('class_list-selectized');
+
         class_input.setCustomValidity('')
 
         console.log(!class_input.checkValidity())
@@ -183,26 +195,42 @@
             theme: 'thumbnails',
             enableApi: true,
             addMore: true,
-            thumbnails: {
-                box: '<div class="fileuploader-items">' +
-                    '<ul class="fileuploader-items-list">' +
-                    '<li class="fileuploader-thumbnails-input"><div class="fileuploader-thumbnails-input-inner"><i>+</i></div></li>' +
-                    '</ul>' +
-                    '</div>',
-                item: '<li class="fileuploader-item">' +
-                    '<div class="fileuploader-item-inner">' +
-                    '<div class="type-holder">${extension}</div>' +
-                    '<div class="actions-holder">' +
-                    '<button type="button" class="fileuploader-action fileuploader-action-remove" title="${captions.remove}"><i class="fileuploader-icon-remove"></i></button>' +
-                    '</div>' +
-                    '<div class="thumbnail-holder">' +
-                    '${image}' +
-                    '<span class="fileuploader-action-popup"></span>' +
-                    '</div>' +
-                    '<div class="content-holder"><h5>${name}</h5><span>${size2}</span></div>' +
-                    '<div class="progress-holder">${progressBar}</div>' +
-                    '</div>' +
-                    '</li>',
+            limit: 8,
+            {% if item and(images | length > 0) %}
+            files: [
+        {% for image in images %}
+    {
+        "name": "30335_49.jpg",
+            "file": "s3://book-advertisement-site/{{image.image_file}}",
+                "type": "image/png",
+                    "size": 26162,
+                        "data": {
+            "thumbnail": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
+        }
+    },
+    {% endfor %}
+        ],
+    {% endif %}
+    thumbnails: {
+        box: '<div class="fileuploader-items">' +
+            '<ul class="fileuploader-items-list">' +
+            '<li class="fileuploader-thumbnails-input"><div class="fileuploader-thumbnails-input-inner"><i>+</i></div></li>' +
+            '</ul>' +
+            '</div>',
+            item: '<li class="fileuploader-item">' +
+                '<div class="fileuploader-item-inner">' +
+                '<div class="type-holder">${extension}</div>' +
+                '<div class="actions-holder">' +
+                '<button type="button" class="fileuploader-action fileuploader-action-remove" title="${captions.remove}"><i class="fileuploader-icon-remove"></i></button>' +
+                '</div>' +
+                '<div class="thumbnail-holder">' +
+                '${image}' +
+                '<span class="fileuploader-action-popup"></span>' +
+                '</div>' +
+                '<div class="content-holder"><h5>${name}</h5><span>${size2}</span></div>' +
+                '<div class="progress-holder">${progressBar}</div>' +
+                '</div>' +
+                '</li>',
                 item2: '<li class="fileuploader-item">' +
                     '<div class="fileuploader-item-inner">' +
                     '<div class="type-holder">${extension}</div>' +
@@ -218,120 +246,119 @@
                     '<div class="progress-holder">${progressBar}</div>' +
                     '</div>' +
                     '</li>',
-                startImageRenderer: true,
-                canvasImage: false,
-                _selectors: {
-                    list: '.fileuploader-items-list',
-                    item: '.fileuploader-item',
+                    startImageRenderer: true,
+                        canvasImage: false,
+                            _selectors: {
+            list: '.fileuploader-items-list',
+                item: '.fileuploader-item',
                     start: '.fileuploader-action-start',
-                    retry: '.fileuploader-action-retry',
-                    remove: '.fileuploader-action-remove'
-                },
-                onItemShow: function (item, listEl, parentEl, newInputEl, inputEl) {
-                    var plusInput = listEl.find('.fileuploader-thumbnails-input'),
-                        api = $.fileuploader.getInstance(inputEl.get(0));
+                        retry: '.fileuploader-action-retry',
+                            remove: '.fileuploader-action-remove'
+        },
+        onItemShow: function (item, listEl, parentEl, newInputEl, inputEl) {
+            var plusInput = listEl.find('.fileuploader-thumbnails-input'),
+                api = $.fileuploader.getInstance(inputEl.get(0));
 
-                    plusInput.insertAfter(item.html)[api.getOptions().limit && api.getChoosedFiles().length >= api.getOptions().limit ? 'hide' : 'show']();
+            plusInput.insertAfter(item.html)[api.getOptions().limit && api.getChoosedFiles().length >= api.getOptions().limit ? 'hide' : 'show']();
 
-                    if (item.format == 'image') {
-                        item.html.find('.fileuploader-item-icon').hide();
-                    }
-                },
-                onItemRemove: function (html, listEl, parentEl, newInputEl, inputEl) {
-                    var plusInput = listEl.find('.fileuploader-thumbnails-input'),
-                        api = $.fileuploader.getInstance(inputEl.get(0));
+            if (item.format == 'image') {
+                item.html.find('.fileuploader-item-icon').hide();
+            }
+        },
+        onItemRemove: function (html, listEl, parentEl, newInputEl, inputEl) {
+            var plusInput = listEl.find('.fileuploader-thumbnails-input'),
+                api = $.fileuploader.getInstance(inputEl.get(0));
 
-                    html.children().animate({ 'opacity': 0 }, 200, function () {
-                        html.remove();
+            html.children().animate({ 'opacity': 0 }, 200, function () {
+                html.remove();
 
-                        if (api.getOptions().limit && api.getChoosedFiles().length - 1 < api.getOptions().limit)
-                            plusInput.show();
-                    });
-                }
-            },
-            dragDrop: {
-                container: '.fileuploader-thumbnails-input'
-            },
-            afterRender: function (listEl, parentEl, newInputEl, inputEl) {
-                var plusInput = listEl.find('.fileuploader-thumbnails-input'),
-                    api = $.fileuploader.getInstance(inputEl.get(0));
+                if (api.getOptions().limit && api.getChoosedFiles().length - 1 < api.getOptions().limit)
+                    plusInput.show();
+            });
+        }
+    },
+    dragDrop: {
+        container: '.fileuploader-thumbnails-input'
+    },
+    afterRender: function (listEl, parentEl, newInputEl, inputEl) {
+        var plusInput = listEl.find('.fileuploader-thumbnails-input'),
+            api = $.fileuploader.getInstance(inputEl.get(0));
 
-                plusInput.on('click', function () {
-                    api.open();
-                });
+        plusInput.on('click', function () {
+            api.open();
+        });
 
-                api.getOptions().dragDrop.container = plusInput;
-            },
-
-
+        api.getOptions().dragDrop.container = plusInput;
+    },
         });
 
 
-        var $form = $('#post-form');
+    var $form = $('#post-form');
 
-        // form submit
-        $form.on('submit', function (e) {
-            e.preventDefault();
+    // form submit
+    $form.on('submit', function (e) {
+        e.preventDefault();
 
-            var formData = new FormData(),
-                _fileuploaderFields = [];
+        var formData = new FormData(),
+            _fileuploaderFields = [];
 
-            // append inputs to FormData
-            $.each($form.serializeArray(), function (key, field) {
-                console.log(field.name, field.value)
-                formData.append(field.name, field.value);
-            });
-
-            console.log(department_select.value)
-            // formData.append('department_id', department_select.value)
-            // formData.append('department_id', department_select.value)
-            // formData.append('class_id', class_select.value)
-
-            // Display the values
-            for (var value of formData.values()) {
-                console.log(value);
-            }
-
-            input = document.querySelector('input[name="files[]"')
-
-            // append file inputs to FormData
-            var $input = $(input),
-                name = $input.attr('name'),
-                files = $input.prop('files'),
-                api = $.fileuploader.getInstance($input);
-
-
-            // add fileuploader files to the formdata
-            if (api) {
-                if ($.inArray(name, _fileuploaderFields) > -1)
-                    return;
-                files = api.getChoosedFiles();
-                _fileuploaderFields.push($input);
-            }
-
-            for (var i = 0; i < files.length; i++) {
-                formData.append(name, (files[i].file ? files[i].file : files[i]), (files[i].name ? files[i].name : false));
-            }
-
-            post_url = '{{legend}}' === "New" ? "{{url_for('new_item')}}" : '{{item}}' ? "{{url_for('shop_api.item', item_id=item_id)}}" : null
-            $.ajax({
-                url: post_url || '#',
-                data: formData,
-                type: $form.attr('method') || 'POST',
-                enctype: $form.attr('enctype') || 'multipart/form-data',
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                    console.log("success")
-                    window.location.href = data['url']
-                }
-            });
-
-            $('form').submit(function () {
-                $(this).find(':submit').attr('disabled', 'disabled');
-            });
+        // append inputs to FormData
+        $.each($form.serializeArray(), function (key, field) {
+            console.log(field.name, field.value)
+            formData.append(field.name, field.value);
         });
+
+        input = document.querySelector('input[name="files[]"')
+
+        // append file inputs to FormData
+        var $input = $(input),
+            name = $input.attr('name'),
+            files = $input.prop('files'),
+            api = $.fileuploader.getInstance($input);
+
+
+        // Display the values
+        for (var value of formData.values()) {
+            console.log(value);
+        }
+
+        // add fileuploader files to the formdata
+        if (api) {
+            if ($.inArray(name, _fileuploaderFields) > -1)
+                return;
+            files = api.getChoosedFiles();
+            _fileuploaderFields.push($input);
+        }
+
+        console.log(files);
+        for (var i = 0; i < files.length; i++) {
+            formData.append(name, (files[i].file ? files[i].file : files[i]), (files[i].name ? files[i].name : false));
+        }
+
+        // Display the values
+        for (var value of formData.values()) {
+            console.log(value);
+        }
+
+        post_url = '{{legend}}' === "New" ? "{{url_for('new_item')}}" : '{{item}}' ? "{{url_for('shop_api.item', item_id=item_id)}}" : null
+        $.ajax({
+            url: post_url || '#',
+            data: formData,
+            type: $form.attr('method') || 'POST',
+            enctype: $form.attr('enctype') || 'multipart/form-data',
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log("success")
+                // window.location.href = data['url']
+            }
+        });
+
+        $('form').submit(function () {
+            $(this).find(':submit').attr('disabled', 'disabled');
+        });
+    });
     });
 </script>
 
