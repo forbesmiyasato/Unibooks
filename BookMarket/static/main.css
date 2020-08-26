@@ -155,6 +155,12 @@ li.options {
         height: 150px !important;
         width: 150px !important;
     }
+
+    .main_menu,
+    .header_area.sticky-header,
+    .navbar.navbar-expand-lg.navbar-light.main_box {
+        height: 80px;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -233,11 +239,16 @@ a.nav-link {
     margin-top: 0;
 }
 
-.class-form, .department-form {
-    display:inline-block;
+.class-form,
+.department-form {
+    display: inline-block;
     width: 20%;
 }
 
 .department-form {
-    margin-right: 5px
+    margin-right: 5px;
+}
+
+#undefined-sticky-wrapper {
+    height: 80px !important;
 }
