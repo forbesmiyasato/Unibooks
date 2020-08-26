@@ -112,6 +112,9 @@
     let department_select = document.getElementById('department_list')
     let department;
 
+    // class_select.value = {{ item_class }}
+    // department_select.value = {{ item_department }}
+
     class_select.required = true;
     department_select.required = true;
 
@@ -135,6 +138,13 @@
                     }
                     class_select.innerHTML = optionHTML;
                     class_select.disabled = false;
+                }).then(function () {
+                    console.log(`{{item_class.id|safe}}`)
+                    if ('{{ item_class.id }}') {
+                        console.log("!!!")
+                        selectize.setValue('{{item_class.id}}')
+                        selectize.refreshItems()	
+                    }
                 })
             });
         }
@@ -190,12 +200,11 @@
         {% for image in images %}
     {
         "name": "30335_49.jpg",
-            "file": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
-                "type": "image/jpeg",
+            "file": "s3://book-advertisement-site/{{image.image_file}}",
+                "type": "image/png",
                     "size": 26162,
                         "data": {
             "thumbnail": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
-                "file_id": 49
         }
     },
     {% endfor %}
@@ -320,6 +329,7 @@
             _fileuploaderFields.push($input);
         }
 
+        console.log(files);
         for (var i = 0; i < files.length; i++) {
             formData.append(name, (files[i].file ? files[i].file : files[i]), (files[i].name ? files[i].name : false));
         }
