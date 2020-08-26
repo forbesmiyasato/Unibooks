@@ -85,86 +85,86 @@
         return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
     }
 
-    $('document').ready(function () {
-        var persistedQueryParam = getParameterByName('per_page');
+    // $('document').ready(function () {
+    //     var persistedQueryParam = getParameterByName('per_page');
 
-        if (persistedQueryParam && persistedQueryParam.length > 0) {
-            $('a.persist-link').each(function () {
-                var elem = $(this);
-                var href = elem.attr('href');
-                elem.attr('href', href + (href.indexOf('?') != -1 ? '&' : '?') + 'per_page=' + persistedQueryParam);
-            });
-        }
+    //     if (persistedQueryParam && persistedQueryParam.length > 0) {
+    //         $('a.persist-link').each(function () {
+    //             var elem = $(this);
+    //             var href = elem.attr('href');
+    //             elem.attr('href', href + (href.indexOf('?') != -1 ? '&' : '?') + 'per_page=' + persistedQueryParam);
+    //         });
+    //     }
 
-        var persistedQueryParam = getParameterByName('order');
+    //     var persistedQueryParam = getParameterByName('order');
 
-        if (persistedQueryParam && persistedQueryParam.length > 0) {
-            $('a.persist-link').each(function () {
-                var elem = $(this);
-                var href = elem.attr('href');
-                elem.attr('href', href + (href.indexOf('?') != -1 ? '&' : '?') + 'order=' + persistedQueryParam);
-            });
-        }
-    });
+    //     if (persistedQueryParam && persistedQueryParam.length > 0) {
+    //         $('a.persist-link').each(function () {
+    //             var elem = $(this);
+    //             var href = elem.attr('href');
+    //             elem.attr('href', href + (href.indexOf('?') != -1 ? '&' : '?') + 'order=' + persistedQueryParam);
+    //         });
+    //     }
+    // });
 
-    document.addEventListener('DOMContentLoaded', function (event) {
-        var options = document.getElementsByClassName('option');
-        var a = document.createElement("a");
-        //set date descending sort for front end
-        a.textContent = "Newest to Oldest";
-        var url = "{{url_for('shop_api.shop', order='desc', per_page=request.args.get('per_page'))}}".replace('&amp;', '&')
-        options[0].innerHTML = "";
-        a.setAttribute('href', url);
-        a.setAttribute('style', 'color:rgb(119, 119, 119)')
-        a.setAttribute('class', 'persist-link li-link')
-        options[0].appendChild(a);
+    // document.addEventListener('DOMContentLoaded', function (event) {
+    //     var options = document.getElementsByClassName('option');
+    //     var a = document.createElement("a");
+    //     //set date descending sort for front end
+    //     a.textContent = "Newest to Oldest";
+    //     var url = "{{url_for('shop_api.shop', order='desc', per_page=request.args.get('per_page'))}}".replace('&amp;', '&')
+    //     options[0].innerHTML = "";
+    //     a.setAttribute('href', url);
+    //     a.setAttribute('style', 'color:rgb(119, 119, 119)')
+    //     a.setAttribute('class', 'persist-link li-link')
+    //     options[0].appendChild(a);
 
-        //set date ascending sort for front end
-        var b = document.createElement("a");
-        b.textContent = options[1].innerHTML;
-        options[1].innerHTML = "";
-        var url = "{{url_for('shop_api.shop', order='asc', per_page=request.args.get('per_page'))}}".replace('&amp;', '&')
-        b.setAttribute('href', url);
-        b.setAttribute('style', 'color:rgb(119, 119, 119)')
-        b.setAttribute('class', 'persist-link li-link')
-        options[1].appendChild(b);
+    //     //set date ascending sort for front end
+    //     var b = document.createElement("a");
+    //     b.textContent = options[1].innerHTML;
+    //     options[1].innerHTML = "";
+    //     var url = "{{url_for('shop_api.shop', order='asc', per_page=request.args.get('per_page'))}}".replace('&amp;', '&')
+    //     b.setAttribute('href', url);
+    //     b.setAttribute('style', 'color:rgb(119, 119, 119)')
+    //     b.setAttribute('class', 'persist-link li-link')
+    //     options[1].appendChild(b);
 
-        //set date ascending sort for front end
-        var b = document.createElement("a");
-        b.textContent = options[2].innerHTML;
-        options[2].innerHTML = "";
-        var url = "{{url_for('shop_api.shop', order='asc', per_page=request.args.get('per_page'))}}".replace('&amp;', '&')
-        b.setAttribute('href', url);
-        b.setAttribute('style', 'color:rgb(119, 119, 119)')
-        b.setAttribute('class', 'persist-link li-link')
-        options[2].appendChild(b);
+    //     //set date ascending sort for front end
+    //     var b = document.createElement("a");
+    //     b.textContent = options[2].innerHTML;
+    //     options[2].innerHTML = "";
+    //     var url = "{{url_for('shop_api.shop', order='asc', per_page=request.args.get('per_page'))}}".replace('&amp;', '&')
+    //     b.setAttribute('href', url);
+    //     b.setAttribute('style', 'color:rgb(119, 119, 119)')
+    //     b.setAttribute('class', 'persist-link li-link')
+    //     options[2].appendChild(b);
 
-        var index = 3;
-        for (var i = 3; i < options.length; i++) {
-            if ((index - 2) % 4 == 0) {
-                index = 3;
-            }
-            var b = document.createElement("a");
-            b.textContent = `Show ${(index - 2) * 3}`;
-            options[i].innerHTML = "";
-            var url = "{{url_for('shop_api.shop', order=request.args.get('order'))}}".replace('&amp;', '&')
-            url += `?&per_page=${(index - 2) * 3}`;
-            console.log(url);
-            url = url.replace(/(\?[^\?]*)\?/g, '$1');
-            console.log(url);
-            b.setAttribute('href', url);
-            b.setAttribute('style', 'color:rgb(119, 119, 119)')
-            b.setAttribute('class', 'persist-link li-link')
-            // b.onclick(() => {
-            //     window.location.href = 'newPage.html';
-            // });
-            options[i].appendChild(b);
-            index++;
-        }
+    //     var index = 3;
+    //     for (var i = 3; i < options.length; i++) {
+    //         if ((index - 2) % 4 == 0) {
+    //             index = 3;
+    //         }
+    //         var b = document.createElement("a");
+    //         b.textContent = `Show ${(index - 2) * 3}`;
+    //         options[i].innerHTML = "";
+    //         var url = "{{url_for('shop_api.shop', order=request.args.get('order'))}}".replace('&amp;', '&')
+    //         url += `?&per_page=${(index - 2) * 3}`;
+    //         console.log(url);
+    //         url = url.replace(/(\?[^\?]*)\?/g, '$1');
+    //         console.log(url);
+    //         b.setAttribute('href', url);
+    //         b.setAttribute('style', 'color:rgb(119, 119, 119)')
+    //         b.setAttribute('class', 'persist-link li-link')
+    //         // b.onclick(() => {
+    //         //     window.location.href = 'newPage.html';
+    //         // });
+    //         options[i].appendChild(b);
+    //         index++;
+    //     }
 
-        $('li.option').addClass('options');
+    //     $('li.option').addClass('options');
 
-    });
+    // });
 </script>
 <!-- End related-product Area -->
 {% endblock content %}

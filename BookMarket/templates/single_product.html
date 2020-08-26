@@ -149,22 +149,22 @@
     function editClicked(item_class, item_department) {
         console.log(item_class)
         console.log(item_department)
-        window.location.hash = 'update';
-        $('#department').val(item_department);
-        // $('#class').val(item_class);
-        fetch('/class/' + item_department).then(function (response) {
-            response.json().then(function (data) {
-                let optionHTML = '';
-                // optionHTML += '<option data-display="Select Class">Select</option>'
-                for (let item_class of data.classes) {
-                    optionHTML += '<option value="' + item_class.id + '">'
-                        + item_class.class_name + '</option>';
-                }
-                class_select.innerHTML = optionHTML;
-                $('#class').val(item_class);
-                $('select').niceSelect('update');
-            })
-        });
+    //     window.location.hash = 'update';
+    //     $('#department').val(item_department);
+    //     // $('#class').val(item_class);
+    //     fetch('/class/' + item_department).then(function (response) {
+    //         response.json().then(function (data) {
+    //             let optionHTML = '';
+    //             // optionHTML += '<option data-display="Select Class">Select</option>'
+    //             for (let item_class of data.classes) {
+    //                 optionHTML += '<option value="' + item_class.id + '">'
+    //                     + item_class.class_name + '</option>';
+    //             }
+    //             class_select.innerHTML = optionHTML;
+    //             $('#class').val(item_class);
+    //             $('select').niceSelect('update');
+    //         })
+    //     });
     };
 
     function addToBag(item_id, user_id) {

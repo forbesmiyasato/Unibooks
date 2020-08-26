@@ -70,8 +70,8 @@ class EditForm(FlaskForm):
     files = MultipleFileField('Upload item images', validators=[
                               FileAllowed(['jpg', 'png'])])
     item_department = SelectField(
-        'Department', coerce=int, validators=[InputRequired()])
-    item_class = SelectField('Class', choices=[], validators=[InputRequired()])
+        'Department', validators=[InputRequired()])
+    item_class = SelectField('Class', validators=[InputRequired()])
     submit = SubmitField('Edit')
 
 

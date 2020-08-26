@@ -46,6 +46,7 @@ def item(item_id):
         mail.send(msg)
     elif request.method == 'POST':
         images = request.files.getlist("files[]")
+        print(images)
         if images:
             print(images)
             delete_images_from_s3_and_db(item_id)
@@ -56,8 +57,8 @@ def item(item_id):
         item.description = request.form.get('description')
         item.user_id = current_user.id
         item.price = request.form.get('price')
-        item.class_id = request.form.get('item_class')
-        item.department_id = request.form.get('item_department')
+        item.class_id = request.form.get('class_id')
+        item.department_id = request.form.get('department_id')
         db.session.commit()
         print(item_id)
         result = {'url': url_for('shop_api.item', item_id=item_id)}
@@ -67,17 +68,17 @@ def item(item_id):
     department = ItemDepartment.query.get(item.department_id)
     # for updating
     departments = db.session.query(ItemDepartment).all()
-    department_list = [(i.id, i.department_name) for i in departments]
-    edit_form.item_department.choices = department_list
     edit_form.name.data = item.name
     edit_form.description.data = item.description
     edit_form.price.data = item.price
+    # edit_form.item_class = item_class
+    # edit_form.item_department = department
     # for messaging
     if current_user.is_authenticated:
         message_form.email.data = current_user.email
     return render_template('single_product.html', title=item.name, item=item, images=images,
                            item_class=item_class, department=department, form=edit_form, legend="Edit",
-                           message_form=message_form, item_id=item_id)
+                           message_form=message_form, item_id=item_id, departments=departments)
 
 
 @shop_api.route("/shop/class/<int:class_id>")
@@ -116,6 +117,7 @@ def items_for_department(department_id):
         posts = Item.query.filter_by(department_id=department_id).order_by(
             date_sorted).paginate(page=page, per_page=per_page)
     return render_template('shop_department.html', title='Shop', posts=posts, departments=departments, department=department)
+
 
 @shop_api.context_processor
 def get_totals_depts():

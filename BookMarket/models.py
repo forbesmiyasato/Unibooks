@@ -56,8 +56,9 @@ class Item(db.Model):
 
 class ItemImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    image_file = db.Column(db.String(20), nullable=False)
+    image_file = db.Column(db.String(40), nullable=False)
     item_id = db.Column(db.Integer, db.ForeignKey('item.id'), nullable=False)
+    # item_name = db.Column(db.String(100), nullable=False)
 
 
 class SaveForLater(db.Model):
