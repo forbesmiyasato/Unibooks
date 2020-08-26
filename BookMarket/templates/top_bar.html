@@ -1,28 +1,29 @@
 {% block body_content %}
 <div class="filter-bar d-flex flex-wrap align-items-center">
     <div class="dropdown-top">
-        <div class="dropdown">
+        <div class="dropdown dropdown-sort">
             <button class="btn btn-light" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                Dropdown button <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
-
+                Sort By <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
+                <a class="dropdown-item" href="#">Newest-Oldest</a>
+                <a class="dropdown-item" href="#">Oldest-Newest</a>
+                <a class="dropdown-item" href="#">Price: Low-High</a>
+                <a class="dropdown-item" href="#">Price: High-Low</a>
             </div>
         </div>
-        <div class="dropdown">
+        <div class="dropdown dropdown-filter">
             <button class="btn btn-outline-light" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                Dropdown button <i class="fas fa-sliders-h"></i>
-
+                Filter By <i class="fas fa-sliders-h"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
+                <a class="dropdown-item" href="#">$0 - $25</a>
+                <a class="dropdown-item" href="#">$25 - $50</a>
+                <a class="dropdown-item" href="#">$50 - $100</a>
+                <a class="dropdown-item" href="#">$100 - $150</a>
+                <a class="dropdown-item" href="#">Over $150</a>
             </div>
         </div>
     </div>

@@ -141,6 +141,10 @@ li.options {
         height: 150px !important;
         width: 150px !important;
     }
+
+    .dropdown-sort {
+        margin-right: 10px;
+    }
 }
 
 @media (min-width: 768px) {
@@ -267,6 +271,9 @@ a.nav-link {
     }
 }
 
+.fas.fa-sliders-h {
+    color: white;
+}
 
 .content-section form fieldset div.department-form,
 .content-section form fieldset div.class-form {
