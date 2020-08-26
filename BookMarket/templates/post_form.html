@@ -139,12 +139,13 @@
                     class_select.innerHTML = optionHTML;
                     class_select.disabled = false;
                 }).then(function () {
-                    console.log(`{{item_class.id|safe}}`)
+                    {% if item_class is defined %}
                     if ('{{ item_class.id }}') {
                         console.log("!!!")
                         selectize.setValue('{{item_class.id}}')
                         selectize.refreshItems()	
                     }
+                    {% endif %}
                 })
             });
         }

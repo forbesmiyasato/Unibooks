@@ -266,3 +266,9 @@ a.nav-link {
         width: 100%;
     }
 }
+
+
+.content-section form fieldset div.department-form,
+.content-section form fieldset div.class-form {
+    width: 30%;
+}
