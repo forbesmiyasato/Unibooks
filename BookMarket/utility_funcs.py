@@ -40,5 +40,19 @@ def delete_images_from_s3_and_db(item_id):
     my_bucket = s3_resource.Bucket(S3_BUCKET)
     images = ItemImage.query.filter_by(item_id=item_id).all()
     for image in images:
+        print(image)
+        print(image.image_file)
         db.session.delete(image)
         my_bucket.Object(image.image_file).delete()
+
+def delete_non_remaining_images_from_s3_and_db(item_id, remains):
+    print(remains)
+    s3_resource = boto3.resource('s3')
+    my_bucket = s3_resource.Bucket(S3_BUCKET)
+    images = ItemImage.query.filter_by(item_id=item_id).all()
+    for image in images:
+        print(image)
+        print(image.image_file)
+        if image.image_file not in remains:
+            db.session.delete(image)
+            my_bucket.Object(image.image_file).delete()

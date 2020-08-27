@@ -334,7 +334,7 @@
 
         var blob = null;
 
-
+        let remainingFiles = []
 
         for (var i = 3; i < fileArray.length; i += 4) {
             // console.log(fileArray[i])
@@ -345,52 +345,31 @@
                 let image_name = fileArray[i].split('/').pop()
                 console.log(image_name)
                 console.log(type);
-                var xhr = new XMLHttpRequest();
-                xhr.addEventListener('loadend', () => {
-                    // formData.append(name, blob);
-                    console.log("end", blob)
-                });
-                xhr.open("GET", fileArray[i]);
-                xhr.responseType = "blob";//force the HTTP response, response-type header to be blob
-                xhr.onload = function () {
-                    let randomString = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-                    blob = new File([xhr.response], image_name, { type: `image/${type}` });//xhr.response is now a blob object\
-                    // blob = new File([blob], "test")
-                    // console.log("TEST", blob)
-                    console.log(blob)
-                    formData.append(name, blob);
-                }
-                xhr.send();
-                // console.log('2', blob)
-                // formData.append(name, blob);
+                remainingFiles.push(image_name);
             }
         }
 
-
-        // formData.append(name, blob);
-        const wait = () => {
-            // Display the values
-            for (var value of formData.values()) {
-                console.log("1", value);
-            }
-
-            post_url = '{{legend}}' === "New" ? "{{url_for('new_item')}}" : '{{item}}' ? "{{url_for('shop_api.item', item_id=item_id)}}" : null
-            $.ajax({
-                url: post_url || '#',
-                data: formData,
-                type: $form.attr('method') || 'POST',
-                enctype: $form.attr('enctype') || 'multipart/form-data',
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                    console.log("success")
-                    window.location.href = data['url']
-                }
-            });
+        formData.append('remaining_files', remainingFiles);
+        // Display the values
+        for (var value of formData.values()) {
+            console.log("1", value);
         }
 
-        setTimeout(wait, 3000);
+        post_url = '{{legend}}' === "New" ? "{{url_for('new_item')}}" : '{{item}}' ? "{{url_for('shop_api.item', item_id=item_id)}}" : null
+        $.ajax({
+            url: post_url || '#',
+            data: formData,
+            type: $form.attr('method') || 'POST',
+            enctype: $form.attr('enctype') || 'multipart/form-data',
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log("success")
+                window.location.href = data['url']
+            }
+        });
+
 
         $('form').submit(function () {
             $(this).find(':submit').attr('disabled', 'disabled');
