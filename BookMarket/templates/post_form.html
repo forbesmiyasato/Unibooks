@@ -207,7 +207,6 @@
     }
 
     $(document).ready(function () {
-
         $('select').selectize({
             sortField: 'text'
         });
@@ -301,13 +300,15 @@
         onItemRemove: function (html, listEl, parentEl, newInputEl, inputEl) {
             var plusInput = listEl.find('.fileuploader-thumbnails-input'),
                 api = $.fileuploader.getInstance(inputEl.get(0));
-
+                console.log(inputEl)
             html.children().animate({ 'opacity': 0 }, 200, function () {
                 html.remove();
 
                 if (api.getOptions().limit && api.getChoosedFiles().length - 1 < api.getOptions().limit)
                     plusInput.show();
             });
+
+            deleted = true;
         }
     },
     dragDrop: {

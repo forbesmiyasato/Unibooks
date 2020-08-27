@@ -16,7 +16,9 @@
     </div>
 </section>
 <!-- End Banner Area -->
-
+<script>
+    var deleted = false;
+</script>
 <!--================Single Product Area =================-->
 <div class="product_image_area pb-5">
     <div class="container">
@@ -135,6 +137,8 @@
 </div>
 
 <script>
+    // window.location.reload(false);
+
     $(document).ready(function () {
         var numImages = document.getElementsByClassName('single-prd-item').length;
 
@@ -149,6 +153,33 @@
                 dots: false
             });
         }
+    });
+
+    $('#editModal').on("hidden.bs.modal", function () {
+        // console.log("Hidden")
+        console.log(deleted)
+        if (deleted) {
+        location.reload();
+        }
+        // window.location = window.location
+        // input = document.querySelector('input[name="files[]"')
+        // var $input = $(input),
+        //     api = $.fileuploader.getInstance($input);
+        // console.log(api)
+        // if (api) {
+
+        //     api.reset();
+        //     api.enable();
+        //     {% if item and(images | length > 0) %}
+        //     {% for image in images %}
+        //     console.log("add")
+        //     api.add("https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}", "image/png", "")
+        //     {% endfor %}
+        //     {% endif %}
+
+        //     api.updateFileList();
+
+        // }
     });
 
     function editClicked(item_class, item_department) {
@@ -181,6 +212,25 @@
         //             $('select').niceSelect('update');
         //         })
         //     });
+        {% if item and(images | length > 0) %}
+
+        console.log("!!!!!!!!!!!!!!!!")
+        $('input[name="files"]').fileuploader({
+            files: [
+                {% for image in images %}
+    {
+                "name": "",
+                "file": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
+                "type": "image/png",
+                "size": 26162,
+                "data": {
+                    "thumbnail": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
+                }
+            },
+            {% endfor %}
+        ],
+        })
+    {% endif %}
     };
 
     function addToBag(item_id, user_id) {
