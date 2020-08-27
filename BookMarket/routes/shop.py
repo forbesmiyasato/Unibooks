@@ -4,7 +4,7 @@ from flask_mail import Message
 from ..models import Item, ItemClass, ItemDepartment, ItemImage
 from ..forms import EditForm, MessageForm
 from .. import app, db, mail
-from ..utility_funcs import delete_images_from_s3_and_db, save_images_to_db_and_s3
+from ..utility_funcs import delete_images_from_s3_and_db, save_images_to_db_and_s3, delete_non_remaining_images_from_s3_and_db
 
 shop_api = Blueprint('shop_api', __name__,
                      static_folder="../static", template_folder="../template")
@@ -45,11 +45,12 @@ def item(item_id):
                       recipients=[item.owner.email], html=render_template("message_email.html", name=item.name, email=message_form.email.data, body=message_form.message.data))
         mail.send(msg)
     elif request.method == 'POST':
+        remains = request.form.get('remaining_files')
         images = request.files.getlist("files[]")
         print(images)
+        delete_non_remaining_images_from_s3_and_db(item_id, remains)
         if images:
             print(images)
-            delete_images_from_s3_and_db(item_id)
             thumbnail = save_images_to_db_and_s3(images, item_id)
             if thumbnail:
                 item.thumbnail = thumbnail
