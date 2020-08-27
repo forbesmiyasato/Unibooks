@@ -51,6 +51,10 @@
                         <li><a href="{{url_for('shop_api.items_for_class', class_id=item.class_id)}}"><span>Class</span>
                                 :
                                 {{item_class.class_name}}</a></li>
+                        <li><a><span>Author</span>
+                                : {{item.author}} </li></a>
+                        <li><a><span>ISBN</span>
+                                : {{item.isbn}} </li></a>
                     </ul>
                     <p>{{item.description}}</p>
                     <div class="card_area d-flex align-items-center">

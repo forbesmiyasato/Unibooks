@@ -56,6 +56,9 @@ def item(item_id):
                 item.thumbnail = thumbnail
         item.name = request.form.get('name')
         item.description = request.form.get('description')
+        print(request.form.get('author'))
+        item.isbn = request.form.get('isbn')
+        item.author = request.form.get('author')
         item.user_id = current_user.id
         item.price = request.form.get('price')
         item.class_id = request.form.get('class_id')
@@ -72,8 +75,10 @@ def item(item_id):
     edit_form.name.data = item.name
     edit_form.description.data = item.description
     edit_form.price.data = item.price
-    # edit_form.item_class = item_class
-    # edit_form.item_department = department
+    edit_form.isbn.data = item.isbn
+    edit_form.author.data = item.author
+    edit_form.item_class.data = item_class
+    edit_form.item_department.data = department
     # for messaging
     if current_user.is_authenticated:
         message_form.email.data = current_user.email

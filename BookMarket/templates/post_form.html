@@ -18,7 +18,7 @@
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{ form.name(class="form-control form-control-lg", required='required') }}
+                    {{ form.name(class="form-control form-control-lg", required='required', maxlength="100") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
@@ -31,7 +31,7 @@
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{ form.isbn(class="form-control form-control-lg") }}
+                    {{ form.isbn(class="form-control form-control-lg", title="ISBN number must be 13 digits", pattern="^\d{13}$") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
@@ -44,7 +44,7 @@
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{ form.author(class="form-control form-control-lg") }}
+                    {{ form.author(class="form-control form-control-lg", maxlength="50") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
@@ -57,7 +57,7 @@
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{ form.description(class="form-control form-control-lg") }}
+                    {{ form.description(class="form-control form-control-lg", maxlength="400") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
@@ -70,7 +70,7 @@
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{ form.price(class="form-control form-control-lg", pattern="^\d{0,5}(\.\d{0,2})?$",
+                    {{ form.price(maxlength="9", class="form-control form-control-lg", pattern="^\d{0,5}(\.\d{0,2})?$",
                     oninvalid="setCustomValidity('Must be a decimal number between 0 and 99999')", oninput="setCustomValidity('')") }}
                     {% endif %}
                 </div>
@@ -181,6 +181,8 @@
             selectize.disable()
         }
 
+        let department_input = document.getElementById('department_list-selectized');
+
         department_input.setCustomValidity('')
 
         console.log(!department_input.checkValidity())
@@ -214,6 +216,11 @@
         let class_input = document.getElementById('class_list-selectized');
         if (department_input) { department_input.setCustomValidity("Please Select Department") }
         if (class_input) { class_input.setCustomValidity("Please Select Course") }
+        department_input.value = '{{department|safe}}'
+        {% if item_class is defined %}
+        class_input.value = '{{item_class.class_name|safe}}'
+        {% endif %}
+
         // enable fileuploader plugin
         $('input[name="files"]').fileuploader({
             extensions: null,

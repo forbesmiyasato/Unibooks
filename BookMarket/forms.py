@@ -52,10 +52,10 @@ class UpdateAccountForm(FlaskForm):
 
 
 class ItemForm(FlaskForm):
-    name = StringField('Item', validators=[DataRequired(), Length(max=30)])
+    name = StringField('Item', validators=[DataRequired(), Length(max=100)])
     isbn = StringField('ISBN Number(optional)', validators=[Length(max=13)])
-    author = StringField('Author (optional)', validators=[Length(max=20)])
-    description = TextAreaField('Description (optional)', validators=[Length(max=150)])
+    author = StringField('Author (optional)', validators=[Length(max=50)])
+    description = TextAreaField('Description (optional)', validators=[Length(max=400)])
     price = DecimalField('Price', validators=[DataRequired()])
     files = MultipleFileField('Upload item images', validators=[
                               FileAllowed(['jpg', 'png'])])
