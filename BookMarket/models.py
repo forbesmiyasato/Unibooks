@@ -12,7 +12,7 @@ class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    image_file = db.Column(db.String(20), nullable=False,
+    image_file = db.Column(db.String(50), nullable=False,
                            default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     items = db.relationship('Item', backref='owner', lazy=True)
@@ -49,6 +49,8 @@ class Item(db.Model):
     department_id = db.Column(db.Integer, db.ForeignKey('itemdepartment.id'), nullable=False)
     images = db.relationship('ItemImage', cascade="all,delete", backref='owner', lazy=True)
     saved_by = db.relationship('SaveForLater', cascade="all, delete", passive_deletes=True)
+    # isbn = db.Column(db.String(15), nullable=False)
+    # author = db.Column(db.String(30), nullable=False)
 
     def __repr__(self):
         return f"Post('{self.name}', '{self.date_posted}')"
@@ -58,7 +60,7 @@ class ItemImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image_file = db.Column(db.String(40), nullable=False)
     item_id = db.Column(db.Integer, db.ForeignKey('item.id'), nullable=False)
-    # item_name = db.Column(db.String(100), nullable=False)
+    # image_name = db.Column(db.String(20), nullable=False)
 
 
 class SaveForLater(db.Model):
