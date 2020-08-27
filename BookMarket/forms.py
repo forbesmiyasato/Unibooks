@@ -14,7 +14,7 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
     password = PasswordField('Password',
-                             validators=[DataRequired()])
+                             validators=[DataRequired(), Length(min=8, max=50)])
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(),
                                                  EqualTo('password')])
@@ -51,9 +51,11 @@ class UpdateAccountForm(FlaskForm):
                     'That email is taken. Please Choose a different one')
 
 
-class PostForm(FlaskForm):
-    name = StringField('Item', validators=[DataRequired()])
-    description = TextAreaField('Description', validators=[DataRequired()])
+class ItemForm(FlaskForm):
+    name = StringField('Item', validators=[DataRequired(), Length(max=30)])
+    isbn = StringField('ISBN Number(optional)', validators=[Length(max=13)])
+    author = StringField('Author (optional)', validators=[Length(max=20)])
+    description = TextAreaField('Description (optional)', validators=[Length(max=150)])
     price = DecimalField('Price', validators=[DataRequired()])
     files = MultipleFileField('Upload item images', validators=[
                               FileAllowed(['jpg', 'png'])])
@@ -78,5 +80,5 @@ class EditForm(FlaskForm):
 class MessageForm(FlaskForm):
     email = StringField('Your Email',
                         validators=[DataRequired(), Email()])
-    message = TextAreaField('Message', validators=[DataRequired()])
+    message = TextAreaField('Message', validators=[DataRequired(), Length(max=150)])
     message_submit = SubmitField('Send')

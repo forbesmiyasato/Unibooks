@@ -1,3 +1,4 @@
+{% from "form_required_macro.html" import form_field %}
 {% block body_content %}
 <div class="container {{'mt-3' if legend == 'New'}}">
     <div class="content-section">
@@ -8,7 +9,7 @@
                     {{legend}} Post
                 </legend>
                 <div class="form-group">
-                    {{ form.name.label(class="form-control-label") }}
+                    {{ form_field(form.name) }}
                     {% if form.name.errors %}
                     {{ form.name(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
@@ -17,7 +18,33 @@
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{ form.name(class="form-control form-control-lg") }}
+                    {{ form.name(class="form-control form-control-lg", required='required') }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.isbn.label(class="form-control-label") }}
+                    {% if form.isbn.errors %}
+                    {{ form.isbn(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.isbn.errors %}
+                        <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.isbn(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.author.label(class="form-control-label") }}
+                    {% if form.author.errors %}
+                    {{ form.author(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.author.errors %}
+                        <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.author(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
@@ -34,7 +61,7 @@
                     {% endif %}
                 </div>
                 <div class="form-group">
-                    {{ form.price.label(class="form-control-label") }}
+                    {{ form_field(form.price) }}
                     {% if form.price.errors %}
                     {{ form.price(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
@@ -48,7 +75,7 @@
                     {% endif %}
                 </div>
                 <div class="form-group department-form">
-                    {{ form.item_department.label(class="form-control-label") }}
+                    {{ form_field(form.item_department) }}
                     {% if form.item_department.errors %}
                     {{ form.item_department(id="department", class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
@@ -68,7 +95,7 @@
                     {% endif %}
                 </div>
                 <div class="form-group class-form">
-                    {{ form.item_class.label(class="form-control-label") }}
+                    {{ form_field(form.item_class) }}
                     {% if form.item_class.errors %}
                     {{ form.item_class(id="class", class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
@@ -114,6 +141,7 @@
 
     // class_select.value = {{ item_class }}
     // department_select.value = {{ item_department }}
+    class_select.setAttribute("disabled", "disabled");
 
     class_select.required = true;
     department_select.required = true;
@@ -124,6 +152,7 @@
         var $select = $(document.getElementById('class_list'))
         var selectize = $select[0].selectize;
         department = department_select.value
+        selectize.enable()
         selectize.clear();
         if (department) {
             fetch('/class/' + department).then(function (response) {
@@ -137,7 +166,7 @@
                         selectize.refreshOptions()
                     }
                     class_select.innerHTML = optionHTML;
-                    class_select.disabled = false;
+                    // class_select.removeAttribute("disabled");
                 }).then(function () {
                     {% if item_class is defined %}
                     if ('{{ item_class.id }}') {
@@ -148,11 +177,9 @@
                     {% endif %}
                 })
             });
+        } else {
+            selectize.disable()
         }
-        let department_input = document.getElementById('department_list-selectized');
-        //     let class_input = document.getElementById('class_list-selectized');
-        // if (department_input) { department_input.setCustomValidity("Please Select Department") }
-        // if (class_input) { class_input.setCustomValidity("Please Select Course") }
 
         department_input.setCustomValidity('')
 
@@ -187,7 +214,6 @@
         let class_input = document.getElementById('class_list-selectized');
         if (department_input) { department_input.setCustomValidity("Please Select Department") }
         if (class_input) { class_input.setCustomValidity("Please Select Course") }
-
         // enable fileuploader plugin
         $('input[name="files"]').fileuploader({
             extensions: null,

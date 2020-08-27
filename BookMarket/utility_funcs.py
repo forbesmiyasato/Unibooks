@@ -8,9 +8,12 @@ def save_images_to_db_and_s3(form_images, item_id):
     thumbnail = None
     for index, images in enumerate(form_images):
         if images:
+            print(images)
+            print(images.name)
             random_hex = secrets.token_hex(8)
             _, f_ext = os.path.splitext(images.filename)
             picture_fn = random_hex + f_ext
+            picture_fn = picture_fn[:100] #only get the first 100 chars, db limit for image_file is 100
             if (index == 0):
                 thumbnail = picture_fn
             # picture_path = os.path.join(

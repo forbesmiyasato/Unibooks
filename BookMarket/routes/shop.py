@@ -2,7 +2,7 @@ from flask import render_template, request, Blueprint, jsonify, url_for
 from flask_login import current_user
 from flask_mail import Message
 from ..models import Item, ItemClass, ItemDepartment, ItemImage
-from ..forms import EditForm, MessageForm
+from ..forms import ItemForm, MessageForm
 from .. import app, db, mail
 from ..utility_funcs import delete_images_from_s3_and_db, save_images_to_db_and_s3, delete_non_remaining_images_from_s3_and_db
 
@@ -36,7 +36,7 @@ def shop():
 @shop_api.route("/shop/<int:item_id>", methods=['GET', 'POST'])
 def item(item_id):
     item = Item.query.get_or_404(item_id)
-    edit_form = EditForm()
+    edit_form = ItemForm()
     message_form = MessageForm()
     if message_form.validate_on_submit and message_form.message_submit.data:
         print(item.owner.email)

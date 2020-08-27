@@ -279,3 +279,8 @@ a.nav-link {
 .content-section form fieldset div.class-form {
     width: 30%;
 }
+
+label.field-required::after {
+    content: "*" ;
+    color: red ;
+}

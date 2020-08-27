@@ -4,7 +4,7 @@ import atexit
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session, Markup
 from flask_login import current_user, login_required
 from .models import Users, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater
-from .forms import UpdateAccountForm, PostForm
+from .forms import UpdateAccountForm, ItemForm
 from . import app, db
 from .routes.userAuth import userAuth
 from .routes.shop import shop_api
@@ -94,7 +94,7 @@ def new_item():
     if current_user.confirmed is False:
         flash("You must confirm your email address before selling!", 'info')
         return redirect(url_for('account'))
-    form = PostForm()
+    form = ItemForm()
     # form.item_class.choices = class_list
     departments = db.session.query(ItemDepartment).all()
     # department_list = [(i.id, i.department_name) for i in departments]

@@ -40,7 +40,7 @@ class Item(db.Model):
     name = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.utcnow)
-    description = db.Column(db.Text, nullable=False)
+    description = db.Column(db.Text, nullable=True)
     price = db.Column(db.DECIMAL(10, 2), nullable=False)
     thumbnail = db.Column(db.String, nullable=False,
                           default='No_picture_available.png')
@@ -49,8 +49,8 @@ class Item(db.Model):
     department_id = db.Column(db.Integer, db.ForeignKey('itemdepartment.id'), nullable=False)
     images = db.relationship('ItemImage', cascade="all,delete", backref='owner', lazy=True)
     saved_by = db.relationship('SaveForLater', cascade="all, delete", passive_deletes=True)
-    # isbn = db.Column(db.String(15), nullable=False)
-    # author = db.Column(db.String(30), nullable=False)
+    isbn = db.Column(db.String(15), nullable=True)
+    author = db.Column(db.String(30), nullable=True)
 
     def __repr__(self):
         return f"Post('{self.name}', '{self.date_posted}')"
@@ -58,9 +58,9 @@ class Item(db.Model):
 
 class ItemImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    image_file = db.Column(db.String(40), nullable=False)
+    image_file = db.Column(db.String(100), nullable=False)
     item_id = db.Column(db.Integer, db.ForeignKey('item.id'), nullable=False)
-    # image_name = db.Column(db.String(20), nullable=False)
+    image_name = db.Column(db.String(20), nullable=True)
 
 
 class SaveForLater(db.Model):
