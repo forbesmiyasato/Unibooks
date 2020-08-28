@@ -228,14 +228,15 @@
             enableApi: true,
             addMore: true,
             limit: 8,
+            extensions: ['jpg', 'png'],
             {% if item and(images | length > 0) %}
             files: [
         {% for image in images %}
     {
-        "name": "",
+        "name": "{{image.image_name}}",
             "file": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
-                "type": "image/png",
-                    "size": 26162,
+                "type": "image/",
+                    "size": '{{image.image_size}}',
                         "data": {
             "thumbnail": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
         }
@@ -400,7 +401,7 @@
             processData: false,
             success: function (data) {
                 console.log("success")
-                window.location.href = data['url']
+                // window.location.href = data['url']
             }
         });
 

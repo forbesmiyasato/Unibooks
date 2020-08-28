@@ -9,7 +9,8 @@ def save_images_to_db_and_s3(form_images, item_id):
     for index, images in enumerate(form_images):
         if images:
             print(images)
-            print(images.name)
+            print(images.filename)
+            # print(images.filesize)
             random_hex = secrets.token_hex(8)
             _, f_ext = os.path.splitext(images.filename)
             picture_fn = random_hex + f_ext
@@ -27,7 +28,11 @@ def save_images_to_db_and_s3(form_images, item_id):
             s3_resource = boto3.resource('s3')
             my_bucket = s3_resource.Bucket(S3_BUCKET)
             my_bucket.Object(picture_fn).put(Body=images)
-            newImage = ItemImage(item_id=item_id, image_file=picture_fn)
+            image_name = images.filename[:30]
+            images.seek(0, os.SEEK_END)
+            size = images.tell()
+            print(size)
+            newImage = ItemImage(item_id=item_id, image_file=picture_fn, image_name=image_name, image_size=size)
             db.session.add(newImage)
             db.session.commit()
     return thumbnail

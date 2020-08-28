@@ -60,8 +60,8 @@ class ItemImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image_file = db.Column(db.String(100), nullable=False)
     item_id = db.Column(db.Integer, db.ForeignKey('item.id'), nullable=False)
-    image_name = db.Column(db.String(20), nullable=True)
-
+    image_name = db.Column(db.String(30), nullable=True)
+    image_size = db.Column(db.String(20), nullable=True)
 
 class SaveForLater(db.Model):
     __tablename__ = 'saveforlater'
