@@ -87,7 +87,7 @@ def getPosts():
             sort_by)
     elif department_id:
         posts = Item.query.filter_by(department_id=department_id).order_by(
-            sort_by).filter(Item.price >= low).filter(Item.price <= high)
+            sort_by)
     else:
         posts = Item.query.order_by(
             sort_by)

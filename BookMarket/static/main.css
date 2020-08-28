@@ -280,3 +280,7 @@ label.field-required::after {
     content: "*" ;
     color: red ;
 }
+
+.form-spinner-modal {
+    color: blue;
+}
