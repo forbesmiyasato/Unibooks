@@ -3,6 +3,9 @@
     <div class="sidebar-categories">
         <div class="head">Browse Categories</div>
         <ul class="main-categories">
+            <li class="main-nav-list">
+                <a href="javascript:getAll()">All</a>
+            </li>
             {% for department in departments %}
             <li class="main-nav-list">
                 <a aria-expanded="false" {% if department.classes|length > 0 %}data-toggle="collapse"

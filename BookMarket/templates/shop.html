@@ -99,6 +99,14 @@
         return strToSearch.substring(0, n) + strToInsert + strToSearch.substring(n);
     }
 
+    const getAll = () => {
+        var url = window.location.href.split('?')[0] + '/data';
+
+        history.replaceState(null, '', 'shop');
+
+        getData(url)
+    }
+
     const getFromPage = (page_num) => {
         let url
         if (window.location.href.includes('?')) {
