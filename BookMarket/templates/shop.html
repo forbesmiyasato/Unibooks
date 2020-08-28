@@ -88,7 +88,7 @@
                 $("#items-list").show();
             },
             error: function (xhr) {
-                //Do Something to handle error
+                getAll() // return to main shop page on invalid query caused by user messing with url params
             }
         });
     }

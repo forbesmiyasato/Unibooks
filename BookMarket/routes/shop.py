@@ -78,7 +78,7 @@ def getPosts():
         sort_term = "desc"
         sort_by = getattr(Item.date_posted, sort_term)()
     page = request.args.get('page', 1, type=int)
-    per_page = request.args.get('per_page', 6, type=int)
+    per_page = request.args.get('per_page', 9, type=int)
     print(sort_term)
 
     print(page)
@@ -106,6 +106,8 @@ def getPosts():
         posts = posts.filter(Item.price >= low).filter(Item.price <= high)
     print(posts)
     posts = posts.paginate(page=page, per_page=per_page)
+    print("passed")
+    print(posts)
     return render_template("shop-main.html", posts=posts)
 
 
