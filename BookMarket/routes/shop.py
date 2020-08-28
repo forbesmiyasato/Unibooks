@@ -49,6 +49,7 @@ def shop():
 
 @shop_api.route("/shop/data")
 def getPosts():
+    class_id = request.args.get('class')
     search_term = request.args.get('search')
     sort_term = request.args.get('sort', 'newest')
     if sort_term == "lowest":
@@ -71,6 +72,9 @@ def getPosts():
     if search_term:
         search_term = '%{0}%'.format(search_term)
         posts = Item.query.filter(Item.name.ilike(search_term)).order_by(
+            sort_by).paginate(page=page, per_page=per_page)
+    elif class_id:
+        posts = Item.query.filter_by(class_id=class_id).order_by(
             sort_by).paginate(page=page, per_page=per_page)
     else:
         posts = Item.query.order_by(

@@ -91,8 +91,30 @@
         return strToSearch.substring(0, n) + strToInsert + strToSearch.substring(n);
     }
 
+    const filterByClass = (class_id) => {
+        let url
+        if (window.location.href.includes('?')) {
+            url = new URL(insertBeforeLastOccurrence(window.location.href, "?", '/data'))
+        } else {
+            url = new URL(window.location.href + '/data')
+        }
+        let search_params = url.searchParams;
+
+        search_params.set('class', class_id)
+
+        url.search = search_params.toString();
+
+        console.log(url.toString());
+        getData(url.toString());
+    }
+
     const sort = (order) => {
-        let url = new URL(insertBeforeLastOccurrence(window.location.href, "?", '/data'))
+        let url
+        if (window.location.href.includes('?')) {
+            url = new URL(insertBeforeLastOccurrence(window.location.href, "?", '/data'))
+        } else {
+            url = new URL(window.location.href + '/data')
+        }
         let search_params = url.searchParams;
 
         search_params.set('sort', order)
@@ -101,43 +123,6 @@
 
         console.log(url.toString());
         getData(url.toString());
-    }
-
-    const oldToNew = () => {
-        console.log("OLD", insertBeforeLastOccurrence(window.location.href, "?", '/data'))
-        let url = new URL(insertBeforeLastOccurrence(window.location.href, "?", '/data'))
-        let search_params = url.searchParams;
-
-        search_params.set('sort', 'oldest')
-
-        url.search = search_params.toString();
-
-        console.log(url.toString());
-        getData(url.toString());
-    }
-
-    const lowestToHighest = () => {
-        let url = new URL(window.location.href)
-        let search_params = url.searchParams;
-
-        search_params.set('sort', 'lowest')
-
-        url.search = search_params.toString();
-
-        console.log(url.toString());
-        window.location.href = url.toString();
-    }
-
-    const highestToLowest = () => {
-        let url = new URL(window.location.href)
-        let search_params = url.searchParams;
-
-        search_params.set('sort', 'highest')
-
-        url.search = search_params.toString();
-
-        console.log(url.toString());
-        window.location.href = url.toString();
     }
 
     $('document').ready(function () {
