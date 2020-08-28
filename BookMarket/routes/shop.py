@@ -70,6 +70,7 @@ def getPosts():
     per_page = request.args.get('per_page', 6, type=int)
     print(sort_term)
 
+    print(page)
     if search_term:
         search_term = '%{0}%'.format(search_term)
         posts = Item.query.filter(Item.name.ilike(search_term)).order_by(
