@@ -55,6 +55,7 @@ def getPosts():
     search_term = request.args.get('search')
     sort_term = request.args.get('sort', 'newest')
     filter_term = request.args.get('filter', '0+99999')
+    show_term = request.args.get('show', None)
     low = None
     high = None
     print(filter_term)
@@ -71,17 +72,12 @@ def getPosts():
         sort_term = "desc"
         sort_by = getattr(Item.price, sort_term)()
     elif sort_term == "oldest":
-        print("!!!")
         sort_term = "asc"
         sort_by = getattr(Item.date_posted, sort_term)()
     else:
         sort_term = "desc"
         sort_by = getattr(Item.date_posted, sort_term)()
     page = request.args.get('page', 1, type=int)
-    per_page = request.args.get('per_page', 9, type=int)
-    print(sort_term)
-
-    print(page)
     if search_term:
         search_term = '%{0}%'.format(search_term)
         posts = Item.query.filter(Item.name.ilike(search_term)).order_by(
@@ -95,19 +91,14 @@ def getPosts():
     else:
         posts = Item.query.order_by(
             sort_by)
-
-    print(posts)
     if low and high:
-        print("Matched2")
-        print(low)
-        print(high)
         low = int(low)
         high = int(high)
         posts = posts.filter(Item.price >= low).filter(Item.price <= high)
-    print(posts)
+    per_page = 9
+    if show_term == 'all':
+        per_page = posts.count()
     posts = posts.paginate(page=page, per_page=per_page)
-    print("passed")
-    print(posts)
     return render_template("shop-main.html", posts=posts)
 
 

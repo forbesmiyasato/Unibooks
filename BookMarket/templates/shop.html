@@ -99,6 +99,29 @@
         return strToSearch.substring(0, n) + strToInsert + strToSearch.substring(n);
     }
 
+    const show = (term) => {
+        let url
+        if (window.location.href.includes('?')) {
+            url = new URL(insertBeforeLastOccurrence(window.location.href, "?", '/data'))
+        } else {
+            url = new URL(window.location.href + '/data')
+        }
+        let search_params = url.searchParams;
+
+        if (term === 'all') {
+            search_params.set('show', 'all')
+        } else {
+            search_params.delete('show')
+        }
+
+        url.search = search_params.toString();
+        let params = url.toString().replace('/data', '');
+        params = params.substring(params.lastIndexOf("/") + 1);
+        history.pushState(null, '', params);
+        console.log(url.toString());
+        getData(url.toString());
+    }
+
     const filterByPrice = (min, max) => {
         let url
         if (window.location.href.includes('?')) {

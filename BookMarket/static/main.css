@@ -141,10 +141,6 @@ li.options {
         height: 150px !important;
         width: 150px !important;
     }
-
-    .dropdown-sort {
-        margin-right: 10px;
-    }
 }
 
 @media (min-width: 768px) {

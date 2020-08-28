@@ -1,7 +1,7 @@
 {% block body_content %}
 <div class="filter-bar d-flex flex-wrap align-items-center">
     <div class="dropdown-top">
-        <div class="dropdown dropdown-sort">
+        <div class="dropdown dropdown-sort mr-2">
             <button class="btn btn-light" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 Sort By <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
@@ -13,7 +13,7 @@
                 <a class="dropdown-item" href="javascript:sort('highest')">Price: High-Low</a>
             </div>
         </div>
-        <div class="dropdown dropdown-filter">
+        <div class="dropdown dropdown-filter mr-2">
             <button class="btn btn-light" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 Filter By <i class="fas fa-sliders-h"></i>
@@ -24,6 +24,16 @@
                 <a class="dropdown-item" href="javascript:filterByPrice(50, 100)">$50 - $100</a>
                 <a class="dropdown-item" href="javascript:filterByPrice(100, 150)">$100 - $150</a>
                 <a class="dropdown-item" href="javascript:filterByPrice(150, 99999)">Over $150</a>
+            </div>
+        </div>
+        <div class="dropdown dropdown-filter">
+            <button class="btn btn-light" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Show All <i class="fas fa-angle-down"></i>
+            </button>
+            <div class="dropdown-menu dropdown-show" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="javascript:show('all')">Show All</a>
+                <a class="dropdown-item" href="javascript:show('default')">Default</a>
             </div>
         </div>
     </div>
