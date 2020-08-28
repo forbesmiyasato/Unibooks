@@ -18,7 +18,7 @@
 <div class="container">
     <div class="row">
         {% include "side_bar.html" %}
-        <div class="col-xl-9 col-lg-8 col-md-7" id="item-list">
+        <div class="col-xl-9 col-lg-8 col-md-7" id="posts-section">
         </div>
     </div>
 </div>
@@ -77,7 +77,15 @@
             type: "get",
             data: null,
             success: function (response) {
-                $("#item-list").html(response);
+                $("#posts-section").html(response);
+            },
+            beforeSend: function () {
+                $("#items-list").hide();
+                $("#posts-spinner").show();
+            },
+            complete: function () {
+                $("#posts-spinner").hide();
+                $("#items-list").show();
             },
             error: function (xhr) {
                 //Do Something to handle error
@@ -105,7 +113,7 @@
         url.search = search_params.toString();
         let params = url.toString().replace('/data', '');
         params = params.substring(params.lastIndexOf("/") + 1);
-        history.pushState(null, '', params);    
+        history.pushState(null, '', params);
 
         console.log(url.toString());
         getData(url.toString());
@@ -124,7 +132,7 @@
 
         url.search = search_params.toString();
 
-        history.pushState(null, '', `?class=${class_id}`);    
+        history.pushState(null, '', `?class=${class_id}`);
 
         console.log(url.toString());
         getData(url.toString());
@@ -143,7 +151,7 @@
 
         url.search = search_params.toString();
 
-        history.pushState(null, '', `?department=${department_id}`);    
+        history.pushState(null, '', `?department=${department_id}`);
 
         console.log(url.toString());
         getData(url.toString());
@@ -163,13 +171,14 @@
         url.search = search_params.toString();
         let params = url.toString().replace('/data', '');
         params = params.substring(params.lastIndexOf("/") + 1);
-        history.pushState(null, '', params);    
+        history.pushState(null, '', params);
 
         console.log(url.toString());
         getData(url.toString());
     }
 
     $('document').ready(function () {
+        $("#posts-spinner").show();
         getData('{{url_for("shop_api.getPosts")}}');
     })
     // $('document').ready(function () {
