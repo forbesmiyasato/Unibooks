@@ -4,7 +4,7 @@
         <div class="head">Browse Categories</div>
         <ul class="main-categories">
             <li class="main-nav-list">
-                <a href="javascript:getAll()">All</a>
+                <a href="javascript:getAll()">All<span class="number">{{ items|length }}</span></a>
             </li>
             {% for department in departments %}
             <li class="main-nav-list">
