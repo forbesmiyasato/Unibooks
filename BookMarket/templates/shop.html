@@ -129,6 +129,7 @@
         let search_params = url.searchParams;
 
         search_params.set('class', class_id)
+        search_params.delete('department')
 
         url.search = search_params.toString();
 
@@ -148,7 +149,7 @@
         let search_params = url.searchParams;
 
         search_params.set('department', department_id)
-
+        search_params.delete('class')
         url.search = search_params.toString();
 
         history.pushState(null, '', `?department=${department_id}`);
@@ -179,7 +180,16 @@
 
     $('document').ready(function () {
         $("#posts-spinner").show();
-        getData('{{url_for("shop_api.getPosts")}}');
+
+        let url
+        if (window.location.href.includes('?')) {
+            url = new URL(insertBeforeLastOccurrence(window.location.href, "?", '/data'))
+        } else {
+            url = new URL(window.location.href + '/data')
+        }
+
+        console.log(url.toString());
+        getData(url.toString());
     })
     // $('document').ready(function () {
     //     var persistedQueryParam = getParameterByName('per_page');
