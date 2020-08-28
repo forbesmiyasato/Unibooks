@@ -199,7 +199,7 @@ li.options {
 }
 
 .ti-bag-active:before {
-    color: #ffba00 !important;
+    color: #70a9da !important;
     content: "\e655";
 }
 
@@ -208,7 +208,7 @@ li.options {
 } */
 
 .ti-bag:hover {
-    color: #ffba00 !important;
+    color: #70a9da !important;
 }
 
 .lnr.lnr-magnifier {
@@ -217,7 +217,7 @@ li.options {
 
 .lnr.lnr-magnifier:hover {
     padding: 3px;
-    background-color: #ffba00;
+    background-color: #70a9da;
     color: white !important;
     border-radius: 20px;
 }
@@ -278,7 +278,7 @@ a.nav-link {
 
 label.field-required::after {
     content: "*" ;
-    color: red ;
+    color: #70a9da ;
 }
 
 .form-spinner-modal {
