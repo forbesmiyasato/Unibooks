@@ -104,6 +104,27 @@
 
         url.search = search_params.toString();
 
+        history.pushState(null, '', `?class=${class_id}`);    
+
+        console.log(url.toString());
+        getData(url.toString());
+    }
+
+    const filterByDepartment = (department_id) => {
+        let url
+        if (window.location.href.includes('?')) {
+            url = new URL(insertBeforeLastOccurrence(window.location.href, "?", '/data'))
+        } else {
+            url = new URL(window.location.href + '/data')
+        }
+        let search_params = url.searchParams;
+
+        search_params.set('department', department_id)
+
+        url.search = search_params.toString();
+
+        history.pushState(null, '', `?department=${department_id}`);    
+
         console.log(url.toString());
         getData(url.toString());
     }
