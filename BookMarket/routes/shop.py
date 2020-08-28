@@ -1,3 +1,4 @@
+import re
 from flask import render_template, request, Blueprint, jsonify, url_for
 from flask_login import current_user
 from flask_mail import Message
@@ -53,6 +54,16 @@ def getPosts():
     class_id = request.args.get('class')
     search_term = request.args.get('search')
     sort_term = request.args.get('sort', 'newest')
+    filter_term = request.args.get('filter', '0+99999')
+    low = None
+    high = None
+    print(filter_term)
+    if filter_term and re.match("(^0\\+25$|^25\\+50$|^50\\+100$|^100\\+150$|^150\\+99999$)", filter_term):
+        print("matched")
+        split = filter_term.split('+')
+        low = split[0]
+        high = split[1]
+
     if sort_term == "lowest":
         sort_term = "asc"
         sort_by = getattr(Item.price, sort_term)()
@@ -74,16 +85,27 @@ def getPosts():
     if search_term:
         search_term = '%{0}%'.format(search_term)
         posts = Item.query.filter(Item.name.ilike(search_term)).order_by(
-            sort_by).paginate(page=page, per_page=per_page)
+            sort_by)
     elif class_id:
         posts = Item.query.filter_by(class_id=class_id).order_by(
-            sort_by).paginate(page=page, per_page=per_page)
+            sort_by)
     elif department_id:
         posts = Item.query.filter_by(department_id=department_id).order_by(
-            sort_by).paginate(page=page, per_page=per_page)
+            sort_by).filter(Item.price >= low).filter(Item.price <= high)
     else:
         posts = Item.query.order_by(
-            sort_by).paginate(page=page, per_page=per_page)
+            sort_by)
+
+    print(posts)
+    if low and high:
+        print("Matched2")
+        print(low)
+        print(high)
+        low = int(low)
+        high = int(high)
+        posts = posts.filter(Item.price >= low).filter(Item.price <= high)
+    print(posts)
+    posts = posts.paginate(page=page, per_page=per_page)
     return render_template("shop-main.html", posts=posts)
 
 
