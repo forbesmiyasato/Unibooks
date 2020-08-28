@@ -212,4 +212,4 @@ def get_totals_depts():
             else:
                 classObj[item.class_id] += 1
 
-    return {'depObj': depObj, 'classObj': classObj}
+    return {'depObj': depObj, 'classObj': classObj, 'items': items}
