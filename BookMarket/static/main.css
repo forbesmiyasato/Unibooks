@@ -284,3 +284,13 @@ label.field-required::after {
 .form-spinner-modal {
     color: blue;
 }
+
+.bag-icon {
+    padding-right:.4em; 
+    padding-left:.4em; 
+    font-size:.8rem; 
+    margin-left:.4em; 
+    border-radius:10rem; 
+    background-color: #70a9da; 
+    font-family: Roboto;
+}
