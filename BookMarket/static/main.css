@@ -294,3 +294,7 @@ label.field-required::after {
     background-color: #70a9da; 
     font-family: Roboto;
 }
+
+.number {
+    float: right;
+}
