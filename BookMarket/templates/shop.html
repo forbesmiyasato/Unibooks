@@ -22,6 +22,9 @@
     <div class="row">
         {% include "side_bar.html" %}
         <div class="col-xl-9 col-lg-8 col-md-7" id="posts-section">
+            {% include "top_bar.html" %}
+            <div id="reloading-content">
+            </div>
         </div>
     </div>
 </div>
@@ -78,7 +81,7 @@
                     $("#nav-department").html('')
                     $("#nav-course").html('')
                 }
-                $("#posts-section").html(response.html);
+                $("#reloading-content").html(response.html);
             },
             beforeSend: function () {
                 $("#items-list").hide();
@@ -102,6 +105,7 @@
 
     const show = (ele, term) => {
         let url
+        ele.classList.toggle("active")
         if (window.location.href.includes('?')) {
             url = new URL(insertBeforeLastOccurrence(window.location.href, "?", '/data'))
         } else {
