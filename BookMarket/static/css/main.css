@@ -54,7 +54,7 @@
 
 /* Start Gradient Area css
 ============================================================================================ */
-.gradient-bg, .primary-btn, .add-bag .add-btn, .single-product .product-details .prd-bottom .social-info span:after, .grid-btn:hover, .list-btn:hover, .grid-btn.active, .list-btn.active, .pagination a.active, .pagination a:hover, .s_Product_carousel .owl-dots div.active, .s_product_text .card_area .icon_btn:after, .product_description_area .nav.nav-tabs li a.active, .blog-pagination .page-item.active .page-link, .single-footer-widget .click-btn {
+.gradient-bg, .primary-btn, .add-bag .add-btn, .single-product .product-details .prd-bottom .social-info span:after, .grid-btn:hover, .list-btn:hover, .grid-btn.active, .list-btn.active, .pagination a:last-child:hover, .pagination a.active, .pagination a:not(:last-child):hover, .s_Product_carousel .owl-dots div.active, .s_product_text .card_area .icon_btn:after, .product_description_area .nav.nav-tabs li a.active, .blog-pagination .page-item.active .page-link, .single-footer-widget .click-btn {
   background: -webkit-linear-gradient(90deg, #70a9da 0%, #b7b7b7 100%);
   background: -moz-linear-gradient(90deg, #70a9da 0%, #b7b7b7 100%);
   background: -o-linear-gradient(90deg, #70a9da 0%, #b7b7b7 100%);
@@ -3176,30 +3176,35 @@ label {
 
 .pagination {
   margin-top: 10px;
-  border-left: 1px solid #eee;
-  border-radius: 0px; }
+  border-radius: 5px;
+  background-color: #f8f9fa; }
+  .pagination a:last-child {
+    border-right: none;
+    border-radius: 0 5px 5px 0; }
+    .pagination a:last-child:hover {
+      color: #fff; }
+      .pagination a:last-child:hover > i {
+        color: #fff; }
   .pagination a {
     width: 40px;
     line-height: 40px;
     text-align: center;
     display: inline-block;
-    background: #fff; }
+    border-right: 1px solid #dee2e6; }
     .pagination a.active {
       color: #fff; }
-    .pagination a:hover {
+    .pagination a:not(:last-child):hover {
       color: #fff; }
-  .pagination .dot-dot {
-    width: auto;
-    background: transparent;
-    border-top: 0px;
-    border-bottom: 0px;
-    color: #cccccc;
-    padding: 0 5px; }
-    .pagination .dot-dot:hover {
-      background: transparent;
-      border: 0px;
-      border-right: 1px solid #eee;
-      color: #cccccc; }
+      .pagination a:not(:last-child):hover > i {
+        color: #fff; }
+  .pagination .ellipsis {
+    width: 40px;
+    text-align: center;
+    display: inline-block;
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6; }
+    .pagination .ellipsis i {
+      padding: 13px 0; }
 
 .single-organic-product-list {
   padding: 30px 0;

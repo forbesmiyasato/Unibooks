@@ -1189,35 +1189,47 @@
 }
 .pagination {
 	margin-top: 10px;
-	border-left: 1px solid #eee;
-	border-radius: 0px;
+	border-radius: 5px;
+	background-color: #f8f9fa;
+	a:last-child {
+		border-right: none;
+		border-radius: 0 5px 5px 0;
+		&:hover {
+			// border-right: none;
+			@extend .gradient-bg;
+			color: $white;
+			& > i {
+				color: $white;
+			}
+		}
+	}
 	a {
 		width: 40px;
 		line-height: 40px;
 		text-align: center;
 		display: inline-block;
-		background: $white;
+		border-right: 1px solid #dee2e6;
 		&.active {
 			@extend .gradient-bg;
 			color: $white;	
 		}
-		&:hover {
+		&:not(:last-child):hover {
+			// border-right: none;
 			@extend .gradient-bg;
-			color: $white;	
+			color: $white;
+			& > i {
+				color: $white;
+			}
 		}
 	}
-	.dot-dot {
-		width: auto;
-		background: transparent;
-		border-top: 0px;
-		border-bottom: 0px;
-		color: #cccccc;
-		padding: 0 5px;
-		&:hover {
-			background: transparent;
-			border: 0px;
-			border-right: 1px solid #eee;
-			color: #cccccc;
+	.ellipsis {
+		width: 40px;
+		text-align: center;
+		display: inline-block;
+		background-color: #f8f9fa;
+		border-right: 1px solid #dee2e6;
+		i {
+			padding: 13px 0;
 		}
 	}
 }

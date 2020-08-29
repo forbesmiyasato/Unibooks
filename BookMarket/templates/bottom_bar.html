@@ -14,7 +14,7 @@
         <a href="javascript:getFromPage({{page_num}})" class="persist-link"> {{page_num}} </a>
         {% endif %}
         {% else %}
-        <a class="dot-dot"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+        <div class="ellipsis"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></div>
         {% endif %}
         {% endfor %}
         {% if posts.has_next %}
