@@ -100,7 +100,7 @@
         return strToSearch.substring(0, n) + strToInsert + strToSearch.substring(n);
     }
 
-    const show = (term) => {
+    const show = (ele, term) => {
         let url
         if (window.location.href.includes('?')) {
             url = new URL(insertBeforeLastOccurrence(window.location.href, "?", '/data'))
@@ -114,7 +114,7 @@
         } else {
             search_params.delete('show')
         }
-
+        search_params.delete('page')
         url.search = search_params.toString();
         let params = url.toString().replace('/data', '');
         params = params.substring(params.lastIndexOf("/") + 1);
@@ -123,7 +123,8 @@
         getData(url.toString());
     }
 
-    const filterByPrice = (min, max) => {
+    const filterByPrice = (ele, min, max) => {
+        console.log(ele)
         let url
         if (window.location.href.includes('?')) {
             url = new URL(insertBeforeLastOccurrence(window.location.href, "?", '/data'))
@@ -133,7 +134,7 @@
         let search_params = url.searchParams;
 
         search_params.set('filter', `${min}+${max}`)
-
+        search_params.delete('page')
         url.search = search_params.toString();
         let params = url.toString().replace('/data', '');
         params = params.substring(params.lastIndexOf("/") + 1);
@@ -211,7 +212,7 @@
         getData(url.toString());
     }
 
-    const sort = (order) => {
+    const sort = (ele, order) => {
         let url
         if (window.location.href.includes('?')) {
             url = new URL(insertBeforeLastOccurrence(window.location.href, "?", '/data'))
@@ -221,7 +222,7 @@
         let search_params = url.searchParams;
 
         search_params.set('sort', order)
-
+        search_params.delete('page')
         url.search = search_params.toString();
         let params = url.toString().replace('/data', '');
         params = params.substring(params.lastIndexOf("/") + 1);

@@ -7,10 +7,10 @@
                 Sort By <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="javascript:sort('newest')">Newest-Oldest</a>
-                <a class="dropdown-item" href="javascript:sort('oldest')">Oldest-Newest</a>
-                <a class="dropdown-item" href="javascript:sort('lowest')">Price: Low-High</a>
-                <a class="dropdown-item" href="javascript:sort('highest')">Price: High-Low</a>
+                <a class="dropdown-item" onclick="sort(this, 'newest')">Newest-Oldest</a>
+                <a class="dropdown-item" onclick="sort(this, 'oldest')">Oldest-Newest</a>
+                <a class="dropdown-item" onclick="sort(this, 'lowest')">Price: Low-High</a>
+                <a class="dropdown-item" onclick="sort(this, 'highest')">Price: High-Low</a>
             </div>
         </div>
         <div class="dropdown dropdown-filter mr-2">
@@ -19,11 +19,11 @@
                 Filter By <i class="fas fa-sliders-h"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="javascript:filterByPrice(0, 25)">$0 - $25</a>
-                <a class="dropdown-item" href="javascript:filterByPrice(25, 50)">$25 - $50</a>
-                <a class="dropdown-item" href="javascript:filterByPrice(50, 100)">$50 - $100</a>
-                <a class="dropdown-item" href="javascript:filterByPrice(100, 150)">$100 - $150</a>
-                <a class="dropdown-item" href="javascript:filterByPrice(150, 99999)">Over $150</a>
+                <a class="dropdown-item" onclick="filterByPrice(this, 0, 25)">$0 - $25</a>
+                <a class="dropdown-item" onclick="filterByPrice(this, 25, 50)">$25 - $50</a>
+                <a class="dropdown-item" onclick="filterByPrice(this, 50, 100)">$50 - $100</a>
+                <a class="dropdown-item" onclick="filterByPrice(this, 100, 150)">$100 - $150</a>
+                <a class="dropdown-item" onclick="filterByPrice(this, 150, 99999)">Over $150</a>
             </div>
         </div>
         <div class="dropdown dropdown-filter">
@@ -32,8 +32,8 @@
                 Show All <i class="fas fa-angle-down"></i>
             </button>
             <div class="dropdown-menu dropdown-show" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="javascript:show('all')">Show All</a>
-                <a class="dropdown-item" href="javascript:show('default')">Default</a>
+                <a class="dropdown-item" onclick="show(this, 'all')">Show All</a>
+                <a class="dropdown-item" onclick="show(this, 'default')">Default</a>
             </div>
         </div>
     </div>
