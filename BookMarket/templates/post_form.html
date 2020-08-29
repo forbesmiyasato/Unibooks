@@ -134,12 +134,18 @@
     </div>
 </div>
 <!-- Modal -->
-<div id="form-spinner" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true" style="z-index: 2000;">
-    <div class="modal-dialog modal-dialog-centered form-spinner-modal" role="document">
-        Sending Please Wait...
-        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Loading...</span>
+<!-- Modal -->
+<div class="modal fade" id="form-spinner" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content bg-light">
+            <div class="modal-body">
+                <div class="spinner-border mr-3" style="float: left; width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <h5>Just one second</h5>
+                <p class="mb-0">We're posting the item for you.</p>
+            </div>
         </div>
     </div>
 </div>
@@ -415,13 +421,13 @@
                 window.location.href = data['url']
             },
             beforeSend: function () {
-                $('#form-spinner').modal({backdrop: 'static', keyboard: false})
+                $('#form-spinner').modal({ backdrop: 'static', keyboard: false })
                 $('#form-spinner').modal('show')
-                $('#editModal').modal('hide') 
+                $('#editModal').modal('hide')
                 $('#form-spinner').modal('show')
             },
             complete: function () {
-                
+
             }
         });
 
