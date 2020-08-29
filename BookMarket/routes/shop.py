@@ -51,7 +51,9 @@ def shop():
 @shop_api.route("/shop/data")
 def getPosts():
     department_id = request.args.get('department')
+    department = None
     class_id = request.args.get('class')
+    course = None
     search_term = request.args.get('search')
     sort_term = request.args.get('sort', 'newest')
     filter_term = request.args.get('filter', '0+99999')
@@ -85,9 +87,16 @@ def getPosts():
     elif class_id:
         posts = Item.query.filter_by(class_id=class_id).order_by(
             sort_by)
+        course = ItemClass.query.filter_by(id=class_id).first()
+        department = ItemDepartment.query.filter_by(
+            id=course.department_id).first()
+        course = {"name": course.class_name, "id": course.id}
+        department = {"name": department.department_name, "id": department.id}
     elif department_id:
         posts = Item.query.filter_by(department_id=department_id).order_by(
             sort_by)
+        department = ItemDepartment.query.filter_by(id=department_id).first()
+        department = {"name": department.department_name, "id": department.id}
     else:
         posts = Item.query.order_by(
             sort_by)
@@ -99,7 +108,8 @@ def getPosts():
     if show_term == 'all':
         per_page = posts.count()
     posts = posts.paginate(page=page, per_page=per_page)
-    return render_template("shop-main.html", posts=posts)
+    return jsonify(html=render_template("shop-main.html", posts=posts),
+                   department=department, course=course)
 
 
 @shop_api.route("/shop/<int:item_id>", methods=['GET', 'POST'])

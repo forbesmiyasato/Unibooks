@@ -298,3 +298,10 @@ label.field-required::after {
 .number {
     float: right;
 }
+
+.banner-arrow {
+    color: white;
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+}

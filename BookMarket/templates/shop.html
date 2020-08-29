@@ -6,9 +6,12 @@
         <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
             <div class="col-first">
                 <h1>Shop page</h1>
-                <nav class="d-flex align-items-center">
-                    <a href="{{url_for('home')}}">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="">Shop</span></a>
+                <nav class="d-flex align-items-center" id="banner-navigation">
+                    <a href="{{url_for('home')}}">Home</a><span class="lnr lnr-arrow-right banner-arrow"></span>
+                    <a href="{{url_for('shop_api.shop')}}">Shop</span>
+                    </a>
+                    <div id="nav-department"></div>
+                    <div id="nav-course"></div>
                 </nav>
             </div>
         </div>
@@ -77,7 +80,27 @@
             type: "get",
             data: null,
             success: function (response) {
-                $("#posts-section").html(response);
+                console.log(response)
+                let course = response.course
+                let department = response.department
+                if (course) {
+                    $("#nav-department").html
+                        ('<span class="lnr lnr-arrow-right banner-arrow"></span>' +
+                            `<a href="javascript:getData('{{url_for('shop_api.getPosts')}}?department=${department.id}')">${department.name}</a>`);
+                    $("#nav-course").html
+                        ('<span class="lnr lnr-arrow-right banner-arrow"></span>' +
+                            `<a class="text-white">${course.name}</a>`);
+                } else if (department) {
+                    $("#nav-department").html
+                        ('<span class="lnr lnr-arrow-right banner-arrow"></span>' +
+                            `<a class="text-white">${department.name}</a>`);
+                    $("#nav-course").html('')
+
+                } else {
+                    $("#nav-department").html('')
+                    $("#nav-course").html('')
+                }
+                $("#posts-section").html(response.html);
             },
             beforeSend: function () {
                 $("#items-list").hide();
@@ -170,7 +193,7 @@
         getData(url.toString());
     }
 
-    const filterByClass = (class_id) => {
+    const filterByClass = (class_id, class_name, department_id, department_name) => {
         let url
         if (window.location.href.includes('?')) {
             url = new URL(insertBeforeLastOccurrence(window.location.href, "?", '/data'))
@@ -186,8 +209,15 @@
 
         history.pushState(null, '', `?class=${class_id}`);
 
+        console.log(class_id, class_name, department_name, department_id)
         console.log(url.toString());
         getData(url.toString());
+        // $("#nav-department").html
+        //     ('<span class="lnr lnr-arrow-right banner-arrow"></span>' +
+        //         `<a href="javascript:getData('{{url_for('shop_api.getPosts')}}?department=${department_id}')">${department_name}</a>`);
+        // $("#nav-course").html
+        //     ('<span class="lnr lnr-arrow-right banner-arrow"></span>' +
+        //     `<a class="text-white">${class_name}</a>`);
     }
 
     const filterByDepartment = (department_id) => {

@@ -21,7 +21,8 @@
                     </li>
                     {% for class in department.classes %}
                     <li class="main-nav-list child"><a
-                            href="javascript:filterByClass({{class.id}})">{{class.class_name}}<span
+                            href="javascript:filterByClass({{class.id}}, '{{class.class_name}}',
+                            '{{department.id}}', '{{department.department_name}}')">{{class.class_name}}<span
                                 class="number" id="class_total{{ class.id }}">{{ classObj[class.id] }}</span></a>
                     </li>
                     {% endfor %}
