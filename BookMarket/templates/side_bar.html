@@ -1,8 +1,12 @@
 {% block body_content %}
 <div class="col-xl-3 col-lg-4 col-md-5">
     <div class="sidebar-categories">
-        <div class="head">Browse Categories</div>
-        <ul class="main-categories">
+        <a aria-expanded="false" data-toggle="collapse" href="#main-categories"
+            aria-controls="">
+            <div class="head">Browse Categories</div>
+        </a>
+        <ul class="main-categories collapse show" id="main-categories" data-toggle="collapse" aria-expanded="false"
+            aria-controls="">
             <li class="main-nav-list">
                 <a href="javascript:getAll()">All<span class="number">{{ items|length }}</span></a>
             </li>
@@ -11,17 +15,17 @@
                 <a aria-expanded="false" {% if department.classes|length > 0 %}data-toggle="collapse"
                     href="#nav{{department.id}}" {% endif %} aria-controls="{{department_id}}"><span
                         class="lnr lnr-arrow-right"></span>
-                    {{department.department_name}}<span class="number" id="dep{{ department.id }}">{{ depObj[department.id] }}</span>
+                    {{department.department_name}}<span class="number"
+                        id="dep{{ department.id }}">{{ depObj[department.id] }}</span>
                 </a>
                 <ul class="collapse" id="nav{{department.id}}" data-toggle="collapse" aria-expanded="false"
                     aria-controls="{{department_id}}">
-                    <li class="main-nav-list child"><a
-                            href="javascript:filterByDepartment({{department.id}})">All in
-                            {{department.department_name}}<span class="number" id="dep_total{{ department.id }}">{{ depObj[department.id] }}</span></a>
+                    <li class="main-nav-list child"><a href="javascript:filterByDepartment({{department.id}})">All in
+                            {{department.department_name}}<span class="number"
+                                id="dep_total{{ department.id }}">{{ depObj[department.id] }}</span></a>
                     </li>
                     {% for class in department.classes %}
-                    <li class="main-nav-list child"><a
-                            href="javascript:filterByClass({{class.id}}, '{{class.class_name}}',
+                    <li class="main-nav-list child"><a href="javascript:filterByClass({{class.id}}, '{{class.class_name}}',
                             '{{department.id}}', '{{department.department_name}}')">{{class.class_name}}<span
                                 class="number" id="class_total{{ class.id }}">{{ classObj[class.id] }}</span></a>
                     </li>
