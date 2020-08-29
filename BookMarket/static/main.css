@@ -174,7 +174,7 @@ li.options {
     text-decoration: underline;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 991px) {
     .alert.alert-info,
     .alert.alert-success,
     .alert.alert-error {
@@ -185,6 +185,11 @@ li.options {
     }
     .s_product_text.product-info-container {
         margin-top: 65px !important;
+    }
+
+    .breadcrumb-banner .col-first {
+        padding-right: 0 !important;
+        padding-top: 40px;
     }
 }
 
@@ -305,3 +310,4 @@ label.field-required::after {
     margin-left: 5px;
     margin-right: 5px;
 }
+
