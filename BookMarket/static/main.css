@@ -111,6 +111,17 @@ li.options {
     .top-align {
         margin-bottom: 50px !important;
     }
+
+    .slide-default h1{
+        font-size: 2rem !important;
+        font-weight: 700 !important;
+    }
+    
+    .slide-default h5 {
+        font-size: 1rem !important;
+        font-weight: 500 !important;
+        color: white;
+    }
 }
 
 @media (min-width: 768px) {
@@ -119,6 +130,17 @@ li.options {
     }
     .top-align {
         margin-bottom: 150px !important;
+    }
+
+    .slide-default h1{
+        font-size: 3rem !important;
+        font-weight: 700 !important;
+    }
+    
+    .slide-default h5 {
+        font-size: 1rem !important;
+        font-weight: 500 !important;
+        color: white;
     }
 }
 
@@ -129,11 +151,33 @@ li.options {
     .top-align {
         margin-bottom: 300px !important;
     }
+ 
+    .slide-default h1{
+        font-size: 4rem !important;
+        font-weight: 700 !important;
+    }
+    
+    .slide-default h5 {
+        font-size: 1rem !important;
+        font-weight: 500 !important;
+        color: white;
+    }
 }
 
 @media (min-width: 1200px) {
     .list-image {
         height: 255px !important;
+    }
+
+    .slide-default h1{
+        font-size: 5rem !important;
+        font-weight: 700 !important;
+    }
+    
+    .slide-default h5 {
+        font-size: 1.5rem !important;
+        font-weight: 500 !important;
+        color: white;
     }
 }
 
@@ -328,17 +372,18 @@ label.field-required::after {
     margin-right: 5px;
 }
 
+/* Home page carousel slides */
 .home-carousel {
     margin: auto;
 }
 
 .slide-default h1{
-    font-size: 4vw;
+    font-size: 2rem;
     font-weight: 700;
 }
 
 .slide-default h5 {
-    font-size: 1vw;
+    font-size: 1rem;
     font-weight: 500;
     color: white;
 }
