@@ -58,7 +58,7 @@
             type: "get",
             data: null,
             success: function (response) {
-                console.log(response)
+                // console.log(response)
                 let course = response.course
                 let department = response.department
                 if (course) {
@@ -105,6 +105,7 @@
 
     const show = (ele, term) => {
         let url
+        console.log(ele)
         ele.classList.toggle("active")
         if (window.location.href.includes('?')) {
             url = new URL(insertBeforeLastOccurrence(window.location.href, "?", '/data'))
@@ -129,6 +130,7 @@
 
     const filterByPrice = (ele, min, max) => {
         console.log(ele)
+        ele.classList.toggle("active")
         let url
         if (window.location.href.includes('?')) {
             url = new URL(insertBeforeLastOccurrence(window.location.href, "?", '/data'))
@@ -217,6 +219,8 @@
     }
 
     const sort = (ele, order) => {
+        console.log(ele)
+        ele.classList.toggle("active")
         let url
         if (window.location.href.includes('?')) {
             url = new URL(insertBeforeLastOccurrence(window.location.href, "?", '/data'))
