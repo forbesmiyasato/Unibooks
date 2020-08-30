@@ -155,6 +155,24 @@
         });
     }
 
+    function clearAllActiveSelections () {
+        let sortActive = document.getElementsByClassName("sort dropdown-item active");
+        let filterActive = document.getElementsByClassName("filter dropdown-item active");
+        let showActive = document.getElementsByClassName("show dropdown-item active");
+
+        if (sortActive.length > 0) {
+            sortActive[0].classList.remove("active");
+            sortSwitch("default")
+        }
+        if (filterActive.length > 0) {
+            filterActive[0].classList.remove("active");
+            filterSwitch("default")
+        }
+        if (showActive.length > 0) {
+            showActive[0].classList.remove("active");
+            showSwitch("default")
+        }
+    }
     function insertBeforeLastOccurrence(strToSearch, strToFind, strToInsert) {
         var n = strToSearch.lastIndexOf(strToFind);
         if (n < 0) return strToSearch;
@@ -285,6 +303,10 @@
 
         search_params.set('class', class_id)
         search_params.delete('department')
+        search_params.delete('show')
+        search_params.delete('filter')
+        search_params.delete('sort')
+        clearAllActiveSelections()
 
         url.search = search_params.toString();
 
@@ -304,8 +326,17 @@
         }
         let search_params = url.searchParams;
 
+        console.log(url);
+
         search_params.set('department', department_id)
         search_params.delete('class')
+        search_params.delete('show')
+        search_params.delete('filter')
+        search_params.delete('sort')
+        clearAllActiveSelections()
+
+        console.log(url);
+
         url.search = search_params.toString();
 
         history.pushState(null, '', `?department=${department_id}`);
