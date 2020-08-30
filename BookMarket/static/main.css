@@ -109,17 +109,26 @@ li.options {
     .list-image {
         height: 510px !important;
     }
+    .top-align {
+        margin-bottom: 50px !important;
+    }
 }
 
 @media (min-width: 768px) {
     .list-image {
         height: 180px !important;
     }
+    .top-align {
+        margin-bottom: 150px !important;
+    }
 }
 
 @media (min-width: 992px) {
     .list-image {
         height: 183.3px !important;
+    }
+    .top-align {
+        margin-bottom: 300px !important;
     }
 }
 
@@ -313,6 +322,30 @@ label.field-required::after {
     margin-left: 5px;
     margin-right: 5px;
 }
+
+.home-carousel {
+    margin: auto;
+}
+
+.slide-default h1{
+    font-size: 60px;
+    font-weight: 700;
+}
+
+.feature-area{
+    text-align: center;
+    background-color: #eaeef1;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.feature-btn {
+    margin-bottom: 20px;
+}
+
+.featurette-area{
+    text-align: center;
+    margin-top: 60px;
 
 .dropdown-item {
     cursor: pointer;
