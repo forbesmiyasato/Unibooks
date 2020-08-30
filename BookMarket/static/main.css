@@ -294,7 +294,8 @@ a.nav-link {
 
 label.field-required::after {
     content: "*";
-    color: #70a9da;
+    /* color: #70a9da; */
+    color: red;
 }
 
 .form-spinner-modal {
@@ -345,4 +346,11 @@ label.field-required::after {
 .featurette-area{
     text-align: center;
     margin-top: 60px;
+
+.dropdown-item {
+    cursor: pointer;
+}
+
+.dropdown-item.disabled {
+    color: #888 !important;
 }

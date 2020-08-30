@@ -55,7 +55,7 @@ def getPosts():
     class_id = request.args.get('class')
     course = None
     search_term = request.args.get('search')
-    sort_term = request.args.get('sort', 'newest')
+    sort_term = request.args.get('sort', 'none')
     filter_term = request.args.get('filter', '0+99999')
     show_term = request.args.get('show', None)
     low = None
@@ -66,6 +66,8 @@ def getPosts():
         split = filter_term.split('+')
         low = split[0]
         high = split[1]
+
+    original_sort_term = sort_term
 
     if sort_term == "lowest":
         sort_term = "asc"
@@ -109,7 +111,7 @@ def getPosts():
         per_page = posts.count()
     posts = posts.paginate(page=page, per_page=per_page)
     return jsonify(html=render_template("shop-main.html", posts=posts),
-                   department=department, course=course)
+                   department=department, course=course, sort=original_sort_term, filter=filter_term, show=show_term)
 
 
 @shop_api.route("/shop/<int:item_id>", methods=['GET', 'POST'])
