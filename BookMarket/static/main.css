@@ -334,10 +334,17 @@ label.field-required::after {
 }
 
 .slide-default h1{
-    font-size: 60px;
+    font-size: 4vw;
     font-weight: 700;
 }
 
+.slide-default h5 {
+    font-size: 1vw;
+    font-weight: 500;
+    color: white;
+}
+
+/* Feature area (below carousel) */
 .feature-area{
     text-align: center;
     background-color: #eaeef1;
@@ -359,6 +366,7 @@ label.field-required::after {
     margin-top: 60px;
 }
 
+/* Dropdown */
 .dropdown-item {
     cursor: pointer;
 }
@@ -377,6 +385,7 @@ label.field-required::after {
     margin-top: 25px;
 }
 
+/* Form control */
 input.form-control:focus:invalid {
     border-bottom: 3px solid #ff7730;
 }
@@ -385,6 +394,7 @@ input.form-control:focus {
     border-bottom: 3px solid #7ed56f;
 }
 
+/* Fade in animation */
 .animation-element {
     position: relative;
     width: 100%;
