@@ -283,8 +283,14 @@ a.nav-link {
         justify-content: space-evenly;
         flex-direction: row;
         width: 100%;
+        /* overflow-x: auto;
+        white-space: nowrap; */
     }
 
+    /* .dropdown-top::-webkit-scrollbar {
+        display: none;
+    } */
+}
     .class-form,
     .department-form {
         display: inline-block;
@@ -346,6 +352,7 @@ label.field-required::after {
 .featurette-area{
     text-align: center;
     margin-top: 60px;
+}
 
 .dropdown-item {
     cursor: pointer;
@@ -353,4 +360,14 @@ label.field-required::after {
 
 .dropdown-item.disabled {
     color: #888 !important;
+}
+
+.dropdown-item.active {
+    background-color: #70a9da !important;
+    color: white !important; 
+}
+
+.head > i.fa-angle-down {
+    float: right;
+    margin-top: 25px;
 }

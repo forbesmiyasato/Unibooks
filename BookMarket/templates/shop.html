@@ -273,6 +273,7 @@
 
     var disabled;
     const sort = (ele, order) => {
+        let reclicked = false;
         let active = document.getElementsByClassName("sort dropdown-item active");
         console.log(active)
         if (active.length > 0 && (ele != active[0])) {
@@ -284,11 +285,15 @@
             disabled = ele
         } else {
             console.log(ele)
-            ele.classList.toggle("active");
+            if (ele.classList.contains("active")) {
+                ele.classList.remove("active");
+                reclicked = true;
+            } else {
+                ele.classList.add("active");
+            }
             if (disabled) disabled.classList.remove("disabled");
-            console.log(ele)
         }
-        
+
         sortSwitch(order)
         let url
         if (window.location.href.includes('?')) {
@@ -298,7 +303,11 @@
         }
         let search_params = url.searchParams;
 
-        search_params.set('sort', order)
+        if (reclicked) {
+            search_params.delete('sort');
+        } else {
+            search_params.set('sort', order)
+        }
         search_params.delete('page')
         url.search = search_params.toString();
         let params = url.toString().replace('/data', '');
