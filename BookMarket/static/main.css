@@ -121,6 +121,12 @@ li.options {
     .list-image {
         height: 183.3px !important;
     }
+    .top-align {
+        margin-bottom: 250px;
+    }
+    .slide-2 {
+        margin-bottom: 300px;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -311,4 +317,18 @@ label.field-required::after {
     display: inline-block;
     margin-left: 5px;
     margin-right: 5px;
+}
+
+.home-carousel {
+    margin: auto;
+}
+
+.slide-default h1{
+    font-size: 60px;
+    font-weight: 700;
+}
+
+.feature-area{
+    text-align: center;
+    margin-top: 60px;
 }
