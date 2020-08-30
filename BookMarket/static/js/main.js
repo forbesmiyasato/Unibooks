@@ -559,7 +559,23 @@ $(document).ready(function () {
     });
   }
 
+  $('#buy_img').hover(function () {
+    $(this).attr("src", "../static/img/features/buy-hover.png");
+  }, function () {
+    $(this).attr("src", "../static/img/features/buy.png")
+  });
 
+  $('#sell_img').hover(function () {
+    $(this).attr("src", "../static/img/features/sell-hover.png");
+  }, function () {
+    $(this).attr("src", "../static/img/features/sell.png")
+  });
+
+  $('#trade_img').hover(function () {
+    $(this).attr("src", "../static/img/features/trade-hover.png");
+  }, function () {
+    $(this).attr("src", "../static/img/features/trade.png")
+  });
 
 
 });
