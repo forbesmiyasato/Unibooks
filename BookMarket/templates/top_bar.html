@@ -4,19 +4,19 @@
         <div class="dropdown dropdown-sort mr-2">
             <button class="btn btn-light" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                Sort By <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                <span id="sort-button-text">Sort By</span> <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" onclick="sort(this, 'newest')">Newest-Oldest</a>
-                <a class="dropdown-item" onclick="sort(this, 'oldest')">Oldest-Newest</a>
-                <a class="dropdown-item" onclick="sort(this, 'lowest')">Price: Low-High</a>
-                <a class="dropdown-item" onclick="sort(this, 'highest')">Price: High-Low</a>
+                <a class="sort dropdown-item" onclick="sort(this, 'newest')">Newest-Oldest</a>
+                <a class="sort dropdown-item" onclick="sort(this, 'oldest')">Oldest-Newest</a>
+                <a class="sort dropdown-item" onclick="sort(this, 'lowest')">Price: Low-High</a>
+                <a class="sort dropdown-item" onclick="sort(this, 'highest')">Price: High-Low</a>
             </div>
         </div>
         <div class="dropdown dropdown-filter mr-2">
             <button class="btn btn-light" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                Filter By <i class="fas fa-sliders-h"></i>
+                <span id="filter-button-text">Filter By</span> <i class="fas fa-sliders-h"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" onclick="filterByPrice(this, 0, 25)">$0 - $25</a>
@@ -29,7 +29,7 @@
         <div class="dropdown dropdown-filter">
             <button class="btn btn-light" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                Show All <i class="fas fa-angle-down"></i>
+                <span id="show-button-text">Show All</span> <i class="fas fa-angle-down"></i>
             </button>
             <div class="dropdown-menu dropdown-show" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" onclick="show(this, 'all')">Show All</a>
