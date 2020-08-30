@@ -371,3 +371,11 @@ label.field-required::after {
     float: right;
     margin-top: 25px;
 }
+
+input.form-control:focus:invalid {
+    border-bottom: 3px solid #ff7730;
+}
+
+input.form-control:focus {
+    border-bottom: 3px solid #7ed56f;
+}
