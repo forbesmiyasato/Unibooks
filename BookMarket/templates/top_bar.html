@@ -19,21 +19,21 @@
                 <span id="filter-button-text">Filter By</span> <i class="fas fa-sliders-h"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" onclick="filterByPrice(this, 0, 25)">$0 - $25</a>
-                <a class="dropdown-item" onclick="filterByPrice(this, 25, 50)">$25 - $50</a>
-                <a class="dropdown-item" onclick="filterByPrice(this, 50, 100)">$50 - $100</a>
-                <a class="dropdown-item" onclick="filterByPrice(this, 100, 150)">$100 - $150</a>
-                <a class="dropdown-item" onclick="filterByPrice(this, 150, 99999)">Over $150</a>
+                <a class="filter dropdown-item" onclick="filterByPrice(this, 0, 25)">$0 - $25</a>
+                <a class="filter dropdown-item" onclick="filterByPrice(this, 25, 50)">$25 - $50</a>
+                <a class="filter dropdown-item" onclick="filterByPrice(this, 50, 100)">$50 - $100</a>
+                <a class="filter dropdown-item" onclick="filterByPrice(this, 100, 150)">$100 - $150</a>
+                <a class="filter dropdown-item" onclick="filterByPrice(this, 150, 99999)">Over $150</a>
             </div>
         </div>
-        <div class="dropdown dropdown-filter">
+        <div class="dropdown dropdown-show">
             <button class="btn btn-light" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <span id="show-button-text">Show All</span> <i class="fas fa-angle-down"></i>
             </button>
             <div class="dropdown-menu dropdown-show" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" onclick="show(this, 'all')">Show All</a>
-                <a class="dropdown-item" onclick="show(this, 'default')">Default</a>
+                <a class="show dropdown-item" onclick="show(this, 'all')">Show All</a>
+                <a class="show dropdown-item" onclick="show(this, 'default')">Default</a>
             </div>
         </div>
     </div>

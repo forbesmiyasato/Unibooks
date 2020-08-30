@@ -52,12 +52,13 @@
     }
 
     const showSwitch = (show_term) => {
+        console.log(show_term)
         switch (show_term) {
             case 'all':
                 $("#show-button-text").html("Showing All")
                 break;
             default:
-                $("#filter-button-text").html("Show All")
+                $("#show-button-text").html("Show All")
                 break;
         }
     }
@@ -79,6 +80,9 @@
             case '150+99999':
                 $("#filter-button-text").html("Filter By: Over $150")
                 break;
+            default:
+                $("#filter-button-text").html("Filter By")
+                break;
         }
     }
     const sortSwitch = (sort_term) => {
@@ -94,6 +98,9 @@
                 break;
             case 'highest':
                 $("#sort-button-text").html("Sort By: Price: High-Low")
+                break;
+            default:
+                $("#sort-button-text").html("Sort By")
                 break;
         }
     }
@@ -155,10 +162,24 @@
     }
 
     const show = (ele, term) => {
+        let reclicked = false;
+        let active = document.getElementsByClassName("show dropdown-item active");
+        console.log(active)
+        if (active.length > 0 && (ele != active[0])) {
+            console.log(active[0])
+            active[0].classList.remove("active");
+        }
+
+        console.log(ele)
+        if (ele.classList.contains("active")) {
+            ele.classList.remove("active");
+            reclicked = true;
+        } else {
+            ele.classList.add("active");
+        }
+
         let url
         console.log(ele)
-        ele.classList.toggle("active")
-        showSwitch(term)
         if (window.location.href.includes('?')) {
             url = new URL(insertBeforeLastOccurrence(window.location.href, "?", '/data'))
         } else {
@@ -166,11 +187,13 @@
         }
         let search_params = url.searchParams;
 
-        if (term === 'all') {
+        if (term === 'all' && !reclicked) {
             search_params.set('show', 'all')
         } else {
             search_params.delete('show')
+            term = "default"
         }
+        showSwitch(term)
         search_params.delete('page')
         url.search = search_params.toString();
         let params = url.toString().replace('/data', '');
@@ -181,9 +204,22 @@
     }
 
     const filterByPrice = (ele, min, max) => {
+        let reclicked = false;
+        let active = document.getElementsByClassName("filter dropdown-item active");
+        console.log(active)
+        if (active.length > 0 && (ele != active[0])) {
+            console.log(active[0])
+            active[0].classList.remove("active");
+        }
+
         console.log(ele)
-        ele.classList.toggle("active")
-        filterSwitch(`${min}+${max}`);
+        if (ele.classList.contains("active")) {
+            ele.classList.remove("active");
+            reclicked = true;
+        } else {
+            ele.classList.add("active");
+        }
+
         let url
         if (window.location.href.includes('?')) {
             url = new URL(insertBeforeLastOccurrence(window.location.href, "?", '/data'))
@@ -191,8 +227,15 @@
             url = new URL(window.location.href + '/data')
         }
         let search_params = url.searchParams;
+        let filter;
+        if (reclicked) {
+            search_params.delete('filter');
+        } else {
+            search_params.set('filter', `${min}+${max}`)
+            filter = `${min}+${max}`
+        }
+        filterSwitch(filter);
 
-        search_params.set('filter', `${min}+${max}`)
         search_params.delete('page')
         url.search = search_params.toString();
         let params = url.toString().replace('/data', '');
@@ -294,7 +337,6 @@
             if (disabled) disabled.classList.remove("disabled");
         }
 
-        sortSwitch(order)
         let url
         if (window.location.href.includes('?')) {
             url = new URL(insertBeforeLastOccurrence(window.location.href, "?", '/data'))
@@ -305,9 +347,11 @@
 
         if (reclicked) {
             search_params.delete('sort');
+            order = "default";
         } else {
             search_params.set('sort', order)
         }
+        sortSwitch(order)
         search_params.delete('page')
         url.search = search_params.toString();
         let params = url.toString().replace('/data', '');
