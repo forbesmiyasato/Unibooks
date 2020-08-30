@@ -296,7 +296,7 @@ a.nav-link {
         display: inline-block;
         width: 48%;
     }
-}
+
 
 label.field-required::after {
     content: "*";
