@@ -349,6 +349,11 @@ label.field-required::after {
     margin-bottom: 20px;
 }
 
+.feature-btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
 .featurette-area{
     text-align: center;
     margin-top: 60px;
