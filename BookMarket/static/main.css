@@ -109,11 +109,17 @@ li.options {
     .list-image {
         height: 510px !important;
     }
+    .top-align {
+        margin-bottom: 50px !important;
+    }
 }
 
 @media (min-width: 768px) {
     .list-image {
         height: 180px !important;
+    }
+    .top-align {
+        margin-bottom: 150px !important;
     }
 }
 
@@ -122,10 +128,7 @@ li.options {
         height: 183.3px !important;
     }
     .top-align {
-        margin-bottom: 250px;
-    }
-    .slide-2 {
-        margin-bottom: 300px;
+        margin-bottom: 300px !important;
     }
 }
 
@@ -329,6 +332,17 @@ label.field-required::after {
 }
 
 .feature-area{
+    text-align: center;
+    background-color: #eaeef1;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.feature-btn {
+    margin-bottom: 20px;
+}
+
+.featurette-area{
     text-align: center;
     margin-top: 60px;
 }
