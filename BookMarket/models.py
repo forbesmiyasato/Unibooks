@@ -10,13 +10,13 @@ def load_user(user_id):
 
 class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
+    email = db.Column(db.String(320), unique=True, nullable=False)
     image_file = db.Column(db.String(50), nullable=False,
                            default='default.jpg')
-    password = db.Column(db.String(60), nullable=False)
+    password = db.Column(db.String(100), nullable=False)
     items = db.relationship('Item', backref='owner', lazy=True)
     confirmed = db.Column(db.Boolean, default=False, nullable=False)
+    listings = db.Column(db.Integer, default=0)
     def __repr__(self):
         return f"Users('{self.username}', '{self.email}', '{self.image_file}')"
 

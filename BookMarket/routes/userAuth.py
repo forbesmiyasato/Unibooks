@@ -50,6 +50,7 @@ def send_confirm_email():
         f'Confirmation email sent to {current_user.email}', 'success')
     return redirect(url_for('account'))
 
+@userAuth.route('/for')
 
 @userAuth.route('/confirm_email/<token>')
 def confirm_email(token):
@@ -76,7 +77,6 @@ def login():
         if (user and bcrypt.check_password_hash(user.password, form.password.data)):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            flash(f'Welcome {user.username}!', 'success')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check email and password',

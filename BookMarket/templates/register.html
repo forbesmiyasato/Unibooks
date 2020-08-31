@@ -24,19 +24,6 @@
                     Join Today
                 </legend>
                 <div class="form-group">
-                    {{ form.username.label(class="form-control-label") }}
-                    {% if form.username.errors %}
-                    {{ form.username(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.username.errors %}
-                        <span>{{error}}</span>
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    {{ form.username(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class="form-group">
                     {{ form.email.label(class="form-control-label") }}
                     {% if form.email.errors %}
                     {{ form.email(class="form-control form-control-lg is-invalid") }}
@@ -59,7 +46,7 @@
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{ form.password(class="form-control form-control-lg") }}
+                    {{ form.password(class="form-control form-control-lg", maxlength="30", minlength="8") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
@@ -72,7 +59,7 @@
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{ form.confirm_password(class="form-control form-control-lg") }}
+                    {{ form.confirm_password(class="form-control form-control-lg", maxlength="30", minlength="8") }}
                     {% endif %}
                 </div>
             </fieldset>

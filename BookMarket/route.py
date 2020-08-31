@@ -16,10 +16,12 @@ from .background import query_for_reminder
 app.register_blueprint(userAuth)
 app.register_blueprint(shop_api)
 
+
 @app.before_first_request
 def init_scheduler():
     scheduler = BackgroundScheduler()
-    job = scheduler.add_job(query_for_reminder, 'interval', kwargs={'app':app}, hours=24)
+    job = scheduler.add_job(query_for_reminder, 'interval',
+                            kwargs={'app': app}, hours=24)
     scheduler.start()
     atexit.register(lambda: scheduler.shutdown())
 
@@ -87,6 +89,7 @@ def new_item():
             if thumbnail:
                 item = Item.query.filter_by(id=newId).first()
                 item.thumbnail = thumbnail
+        current_user.listings = current_user.listings + 1
         db.session.commit()
         # flash('Your post has been created!', 'success')
         # return redirect(url_for('home'))
@@ -95,6 +98,10 @@ def new_item():
     if current_user.confirmed is False:
         flash("You must confirm your email address before selling!", 'info')
         return redirect(url_for('account'))
+    if current_user.listings > 10:
+        print(current_user.listings)
+        flash("There is a max of 10 listings at a time! Please wait or delete listings before selling.", 'error')
+        return redirect(url_for('listings'))
     form = ItemForm()
     # form.item_class.choices = class_list
     departments = db.session.query(ItemDepartment).all()
@@ -209,6 +216,7 @@ def delete_item():
     deleting_item = Item.query.get_or_404(item)
     delete_images_from_s3_and_db(item)
     item_name = deleting_item.name
+    current_user.listings = current_user.listings - 1
     db.session.delete(deleting_item)
     db.session.commit()
     flash(f'Post "{item_name}" has been deleted', 'success')
