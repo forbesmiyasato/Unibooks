@@ -102,7 +102,7 @@
               <li class="nav-item"><a class="nav-link {% if title == 'Home' %}active{% endif %}"
                   onclick="linkClicked(this, '{{ url_for('home')}}')">Home</a></li>
               <li class="nav-item"><a class="nav-link {% if title == 'Shop' %}active{% endif %}"
-                onclick="linkClicked(this, '{{ url_for('shop_api.shop')}}')">shop</a></li>
+                  onclick="linkClicked(this, '{{ url_for('shop_api.shop')}}')">shop</a></li>
               {% if current_user.is_authenticated %}
               <li class="nav-item"><a class="nav-link" href="{{ url_for('userAuth.logout')}}">Logout</a></li>
               <li class="nav-item submenu dropdown">
@@ -227,6 +227,7 @@
     // }
 
     let active = document.getElementsByClassName('nav-link active')[0];
+    var call;
     const linkClicked = (ele, url) => {
       console.log(active)
       if (active) {
@@ -236,8 +237,10 @@
         ele.classList.add('active');
         active = ele;
       }
+
+      if (call) call.abort()
       history.pushState(null, null, url)
-      $.ajax({
+      call = $.ajax({
         url: url,
         type: "get",
         data: { standalone: 'true' },
