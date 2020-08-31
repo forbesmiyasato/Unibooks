@@ -484,3 +484,10 @@ input.form-control:focus {
     padding-right: 0 !important;
     overflow: auto !important;
 }
+
+.deleted-item {
+    height: 178.4px;
+    text-align: center;
+    vertical-align: middle !important;
+    font-size: 2rem;
+}

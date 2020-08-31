@@ -37,7 +37,7 @@
                 <tbody>
 
                     {% for post in posts %}
-                    <tr>
+                    <tr id="row-{{loop.index}}">
                         <th scope="row">{{loop.index}}</th>
                         <td><img class="img-thumbnail listing-image"
                                 src="https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{post.thumbnail}}"
@@ -51,8 +51,7 @@
                                         <a href="{{url_for('shop_api.item', item_id=post.id)}}">
                                             <p class="hover-line">View more</p>
                                         </a>
-                                        <a data-toggle="modal" data-target="#deleteModal{{loop.index}}"
-                                            href="javascript:void(0)">
+                                        <a onclick="onDelete('{{loop.index}}', '{{post.name}}', '{{post.id}}', '{{url_for('delete_saved', item_name=post.name, item_id=post.id, user_id=current_user.id)}}')" href="javascript:void(0)">
                                             <p class="hover-line">Delete</p>
                                         </a>
                                     </div>
@@ -66,7 +65,7 @@
                         </td>
                     </tr>
                     <!-- Modal -->
-                    <div class="modal fade" id="deleteModal{{loop.index}}" tabindex="-1" role="dialog"
+                    <!-- <div class="modal fade" id="deleteModal{{loop.index}}" tabindex="-1" role="dialog"
                         aria-labelledby="deleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -76,9 +75,6 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <!-- <div class="modal-body">
-  Are you sure you want to delete the post?
-</div> -->
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     <form
@@ -89,7 +85,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     {% endfor %}
                     
                 </tbody>
@@ -98,4 +94,16 @@
         </div>
     </div>
 </div>
+
+<script>
+    const onDelete = (index, name, id, url) => {
+        const deletedRow = $(`#row-${index}`)
+        console.log(url)
+        deletedRow.html(`<td colspan='4' class='deleted-item'>Deleted <a href="/shop/${id}">${name}</a> from your bag</td>`)
+        $.ajax({
+            url: url,
+            type: "post"
+        })
+    }
+</script>
 {% endblock content %}
