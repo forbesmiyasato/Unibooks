@@ -491,3 +491,16 @@ input.form-control:focus {
     vertical-align: middle !important;
     font-size: 2rem;
 }
+
+.active {
+    color: #70a9da !important;
+}
+
+a.footer-item {
+    color: #777777;
+    cursor: pointer;
+}
+
+.nav-link {
+    cursor: pointer;
+}

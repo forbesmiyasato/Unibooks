@@ -14,6 +14,7 @@ salt = "email_confirm"
 
 @userAuth.route("/register", methods=['GET', 'POST'])
 def register():
+    standalone = request.args.get('standalone')
     form = RegistrationForm()
     if form.validate_on_submit():
         email = form.email.data
@@ -34,7 +35,7 @@ def register():
         flash(
             f'Hi {form.username.data}! Your account has been created, you can now login!', 'success')
         return redirect(url_for('userAuth.login'))
-    return render_template('register.html', title='Register', form=form)
+    return render_template('register.html', title='Register', form=form, standalone=standalone)
 
 
 @userAuth.route('/confirm_email/send/')
@@ -81,6 +82,7 @@ def confirm_email(token):
 
 @userAuth.route("/login", methods=['GET', 'POST'])
 def login():
+    standalone = request.args.get('standalone')
     form = LoginForm()
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
@@ -91,7 +93,7 @@ def login():
         else:
             flash('Login Unsuccessful. Please check email and password',
                   'danger')
-    return render_template('login.html', title='Login', form=form)
+    return render_template('login.html', title='Login', form=form, standalone=standalone)
 
 
 @userAuth.route("/logout")

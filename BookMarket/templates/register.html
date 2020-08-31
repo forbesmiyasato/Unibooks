@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% if not standalone %} {% extends "layout.html" %} {% endif %}
 {% block content %}
 <!-- Start Banner Area -->
 <section class="banner-area organic-breadcrumb">

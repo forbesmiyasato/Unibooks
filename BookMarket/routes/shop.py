@@ -13,6 +13,7 @@ shop_api = Blueprint('shop_api', __name__,
 
 @shop_api.route("/shop")
 def shop():
+    standalone = request.args.get('standalone')
     # search_term = request.args.get('search')
     # sort_term = request.args.get('sort', 'newest')
     # if sort_term == "lowest":
@@ -45,7 +46,7 @@ def shop():
     #         sort_by).paginate(page=page, per_page=per_page)
     departments = db.session.query(ItemDepartment).all()
 
-    return render_template('shop.html', title='Shop', departments=departments)
+    return render_template('shop.html', title='Shop', departments=departments, standalone=standalone)
 
 
 @shop_api.route("/shop/data")
