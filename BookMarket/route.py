@@ -29,7 +29,8 @@ def init_scheduler():
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('home.html', title="Home")
+    standalone = request.args.get('standalone')
+    return render_template('home.html', title="Home", standalone=standalone)
 
 
 @app.route('/about')
@@ -233,7 +234,11 @@ def listings():
 
 @app.route('/aboutus')
 def about_us():
-    return render_template('about_us.html')
+    standalone = request.args.get('standalone')
+    print(standalone)
+    # if standalone != "true":
+    #     standalone = False
+    return render_template('about_us.html', standalone=standalone)
 # def download_file(file_name):
 #     """
 #     Function to download a given file from an S3 bucket

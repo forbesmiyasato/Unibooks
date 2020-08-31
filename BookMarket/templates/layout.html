@@ -83,7 +83,7 @@
 
 <body>
   <!-- Start Header Area -->
-  <header class="header_area sticky-header">
+  <header id="sticky" class="header_area sticky-header">
     <div class="main_menu">
       <nav class="navbar navbar-expand-lg navbar-light main_box">
         <div class="container">
@@ -100,7 +100,7 @@
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
             <ul class="nav navbar-nav menu_nav ml-auto">
               <li class="nav-item {% if title == 'Home' %}active{% endif %}"><a class="nav-link"
-                  href="{{ url_for('home')}}">Home</a></li>
+                  onclick="linkClicked('{{ url_for('home')}}')">Home</a></li>
               <li class="nav-item {% if title == 'Shop' %}active{% endif %}"><a class="nav-link"
                   href="{{ url_for('shop_api.shop')}}">shop</a></li>
               {% if current_user.is_authenticated %}
@@ -155,7 +155,9 @@
   {% endfor %}
   {% endif %}
   {% endwith %}
-  {% block content %}{% endblock %}
+  <div id="block-content">
+    {% block content %}{% endblock %}
+  </div>
   </div>
   </div>
 
@@ -167,7 +169,7 @@
           <div class="single-footer-widget">
             <h6>Bookmark<span class="it">it</span></h6>
             <p>
-              <a class="footer-item" href="{{url_for('about_us')}}">About Us</a>
+              <a class="footer-item" onclick="linkClicked('{{url_for('about_us')}}')">About Us</a>
             </p>
             <p style="font-size: 16px">
               Made by Forbes & Thomas
@@ -210,6 +212,33 @@
     }
 
     search_form.addEventListener("submit", search);
+
+    // const shopClicked = (url) => {
+    //   console.log(url)
+    //   history.pushState(null, '11', url)
+    //   $.ajax({
+    //     url: url,
+    //     type: "get",
+    //     data: null,
+    //     success: function (response) {
+    //       $('#block-content').html(response);
+    //     }
+    //   })
+    // }
+
+      const linkClicked = (url) => {
+      console.log(url)
+      history.pushState(null, '11', url)
+      $.ajax({
+        url: url,
+        type: "get",
+        data: {standalone: 'true'},
+        async: true,
+        success: function (response) {
+          $('#block-content').html(response);
+        }
+      })
+    }
   </script>
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -236,7 +265,7 @@
   <script src="{{ url_for('static', filename='js/owl.carousel.min.js')}}"></script>
   <!--gmaps Js-->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
-  <script src="{{ url_for('static', filename='js/gmaps.min.js')}}"></script>
+  <!-- <script src="{{ url_for('static', filename='js/gmaps.min.js')}}"></script> -->
   <script src="{{ url_for('static', filename='js/main.js')}}"></script>
 </body>
 
