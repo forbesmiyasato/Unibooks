@@ -54,7 +54,7 @@
 
 /* Start Gradient Area css
 ============================================================================================ */
-.gradient-bg, .primary-btn, .add-bag .add-btn, .single-product .product-details .prd-bottom .social-info span:after, .grid-btn:hover, .list-btn:hover, .grid-btn.active, .list-btn.active, .pagination a:last-child:hover, .pagination a.active, .pagination a:not(:last-child):hover, .s_Product_carousel .owl-dots div.active, .s_product_text .card_area .icon_btn:after, .product_description_area .nav.nav-tabs li a.active, .blog-pagination .page-item.active .page-link, .single-footer-widget .click-btn {
+.gradient-bg, .primary-btn, .add-bag .add-btn, .single-product .product-details .prd-bottom .social-info span:after, .grid-btn:hover, .list-btn:hover, .grid-btn.active, .list-btn.active, .pagination a:last-child:hover, .pagination a.active, .pagination a:not(:last-child):hover, .s_Product_carousel .owl-dots div.active, .s_product_text .card_area .icon_btn:after, .product_description_area .nav.nav-tabs li a.active, .blog-pagination .page-item.active .page-link {
   background: -webkit-linear-gradient(90deg, #70a9da 0%, #d4e5f3 100%);
   background: -moz-linear-gradient(90deg, #70a9da 0%, #d4e5f3 100%);
   background: -o-linear-gradient(90deg, #70a9da 0%, #d4e5f3 100%);
@@ -66,7 +66,7 @@
   background: -o-linear-gradient(270deg, #70a9da 0%, #d4e5f3 100%);
   background: linear-gradient(270deg, #70a9da 0%, #d4e5f3 100%); }
 
-.gradient-color, .s_product_text h2, .s_product_text .list li a.active, .product_description_area .tab-content .total_rate .box_total h4, .single-footer-widget .bb-btn {
+.gradient-color, .s_product_text h2, .s_product_text .list li a.active, .product_description_area .tab-content .total_rate .box_total h4 {
   background: -webkit-linear-gradient(90deg, #70a9da 0%, #d4e5f3 100%);
   background: -moz-linear-gradient(90deg, #70a9da 0%, #d4e5f3 100%);
   background: -o-linear-gradient(90deg, #70a9da 0%, #d4e5f3 100%);
@@ -5738,23 +5738,11 @@ label {
   .footer-area h6 {
     color: #fff;
     margin-bottom: 25px;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 600; }
     @media (max-width: 767px) {
       .footer-area h6 {
         margin-bottom: 15px; } }
-
-.copy-right-text i,
-.copy-right-text a {
-  color: #70a9da; }
-
-.instafeed {
-  margin: -5px; }
-  .instafeed li {
-    overflow: hidden;
-    width: 25%; }
-    .instafeed li img {
-      margin: 5px; }
 
 .footer-social a {
   padding-right: 25px;
@@ -5775,59 +5763,6 @@ label {
 @media (max-width: 991px) {
   .single-footer-widget {
     margin-bottom: 40px; } }
-
-.single-footer-widget .form-inline {
-  display: inline-block;
-  width: 100%; }
-
-.single-footer-widget input {
-  border: none;
-  width: 80% !important;
-  font-weight: 300;
-  background: #fff;
-  color: #777;
-  padding-left: 20px;
-  border-radius: 0;
-  font-size: 14px; }
-  .single-footer-widget input:focus {
-    outline: none;
-    box-shadow: none; }
-  .single-footer-widget input.placeholder {
-    color: #ccc; }
-  .single-footer-widget input:-moz-placeholder {
-    color: #ccc; }
-  .single-footer-widget input::-moz-placeholder {
-    color: #ccc; }
-  .single-footer-widget input::-webkit-input-placeholder {
-    color: #ccc; }
-
-.single-footer-widget .bb-btn {
-  color: #fff;
-  font-weight: 300;
-  border-radius: 0;
-  z-index: 9999;
-  cursor: pointer; }
-
-.single-footer-widget .info {
-  position: absolute;
-  margin-top: 5%;
-  color: #fff;
-  font-size: 12px; }
-  .single-footer-widget .info.valid {
-    color: green; }
-  .single-footer-widget .info.error {
-    color: red; }
-
-.single-footer-widget .click-btn {
-  color: #fff;
-  border-radius: 0;
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-  padding: 6px 12px;
-  border: 0; }
-  .single-footer-widget .click-btn:focus {
-    outline: none;
-    box-shadow: none; }
 
 .single-footer-widget ::-moz-selection {
   /* Code for Firefox */
@@ -5873,3 +5808,18 @@ label {
   .footer-text a,
   .footer-text i {
     color: #70a9da; }
+
+.footer-item {
+  display: inline-block;
+  font-size: 16px; }
+  .footer-item:link, .footer-item:visited {
+    text-decoration: none;
+    color: #777777; }
+  .footer-item:hover, .footer-item:active {
+    color: #70a9da;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
+    transform: rotate(5deg) scale(1.3);
+    padding: 0 5px; }
+
+.it {
+  color: #70a9da; }

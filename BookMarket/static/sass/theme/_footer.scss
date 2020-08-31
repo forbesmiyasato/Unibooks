@@ -6,28 +6,10 @@
 	h6 {
 		color: #fff;
 		margin-bottom: 25px;
-		font-size: 18px;
+		font-size: 24px;
 		font-weight: 600;
 		@media (max-width: 767px) {
 			margin-bottom: 15px;
-		}
-	}
-}
-
-.copy-right-text {
-	i,
-	a {
-		color: $primary-color;
-	}
-}
-
-.instafeed {
-	margin: -5px;
-	li {
-		overflow: hidden;
-		width: 25%;
-		img {
-			margin: 5px;
 		}
 	}
 }
@@ -52,63 +34,6 @@
 .single-footer-widget {
 	@media (max-width: 991px) {
 		margin-bottom: 40px;
-	}
-	.form-inline {
-		display: inline-block;
-		width: 100%;
-	}
-	input {
-		border: none;
-		width: 80% !important;
-		font-weight: 300;
-		background: #fff;
-		color: #777;
-		padding-left: 20px;
-		border-radius: 0;
-		font-size: 14px;
-		&:focus {
-			outline: none;
-			box-shadow: none;
-		}
-		@include placeholder{
-			color: #ccc;
-		}
-	}
-
-	.bb-btn {
-		@extend .gradient-color;
-		color: #fff;
-		font-weight: 300;
-		border-radius: 0;
-		z-index: 9999;
-		cursor: pointer;
-	}
-
-	.info {
-		position: absolute;
-		margin-top: 5%;
-		color: #fff;
-		font-size: 12px;
-		&.valid {
-			color: green;
-		}
-		&.error {
-			color: red;
-		}
-	}
-
-	.click-btn {
-		@extend .gradient-bg;
-		color: #fff;
-		border-radius: 0;
-		border-top-left-radius: 0px;
-		border-bottom-left-radius: 0px;
-		padding: 6px 12px;
-		border: 0;
-		&:focus {
-			outline: none;
-			box-shadow: none;
-		}
 	}
 
 	::-moz-selection {
@@ -160,4 +85,25 @@
 	}
 }
 
+.footer-item {
+	display: inline-block;
+	font-size: 16px;
+	&:link,
+	&:visited {
+		text-decoration: none;
+		color: #777777;
+	}
+
+	&:hover,
+	&:active {
+		color: $primary-color;
+		box-shadow: 0 1rem 2rem rgba($black, 0.4);
+		transform: rotate(5deg) scale(1.3);
+		padding: 0 5px;
+	}
+}
+
+.it {
+	color: $primary-color;
+}
 //--------- end footer Area -------------//

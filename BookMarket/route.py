@@ -231,6 +231,9 @@ def listings():
     print(listings)
     return render_template('user_listings.html', listings=listings, legend='Edit', form=form, item_id=1, item=None)
 
+@app.route('/aboutus')
+def about_us():
+    return render_template('about_us.html')
 # def download_file(file_name):
 #     """
 #     Function to download a given file from an S3 bucket

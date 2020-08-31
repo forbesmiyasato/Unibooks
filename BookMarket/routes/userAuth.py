@@ -50,7 +50,17 @@ def send_confirm_email():
         f'Confirmation email sent to {current_user.email}', 'success')
     return redirect(url_for('account'))
 
-@userAuth.route('/for')
+@userAuth.route('/password_rest/send')
+def send_reset_password_email():
+    email = current_user.email
+    token = serializer.dumps(email, salt=salt)  # salt is optional
+    link = url_for('userAuth.confirm_email', token=token, _external=True)
+    msg = Message('Confirm Email', sender="pacificubooks@gmail.com", recipients=[email],
+                  html=render_template('confirmation_email.html', email=email, link=link))
+    mail.send(msg)
+    flash(
+        f'Confirmation email sent to {current_user.email}', 'success')
+    return redirect(url_for('account'))
 
 @userAuth.route('/confirm_email/<token>')
 def confirm_email(token):
