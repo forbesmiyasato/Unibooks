@@ -216,7 +216,7 @@
         url.search = search_params.toString();
         let params = url.toString().replace('/data', '');
         params = params.substring(params.lastIndexOf("/") + 1);
-        history.pushState(null, '', params);
+        history.replaceState(null, '', params);
         console.log(url.toString());
         getData(url.toString());
     }
@@ -258,7 +258,7 @@
         url.search = search_params.toString();
         let params = url.toString().replace('/data', '');
         params = params.substring(params.lastIndexOf("/") + 1);
-        history.pushState(null, '', params);
+        history.replaceState(null, '', params);
 
         console.log(url.toString());
         getData(url.toString());
@@ -286,7 +286,7 @@
         url.search = search_params.toString();
         let params = url.toString().replace('/data', '');
         params = params.substring(params.lastIndexOf("/") + 1);
-        history.pushState(null, '', params);
+        history.replaceState(null, '', params);
 
         console.log(url.toString());
         getData(url.toString());
@@ -310,7 +310,7 @@
 
         url.search = search_params.toString();
 
-        history.pushState(null, '', `?class=${class_id}`);
+        history.replaceState(null, '', `?class=${class_id}`);
 
         console.log(class_id, class_name, department_name, department_id)
         console.log(url.toString());
@@ -339,7 +339,7 @@
 
         url.search = search_params.toString();
 
-        history.pushState(null, '', `?department=${department_id}`);
+        history.replaceState(null, '', `?department=${department_id}`);
 
         console.log(url.toString());
         getData(url.toString());
@@ -387,7 +387,7 @@
         url.search = search_params.toString();
         let params = url.toString().replace('/data', '');
         params = params.substring(params.lastIndexOf("/") + 1);
-        history.pushState(null, '', params);
+        history.replaceState(null, '', params);
 
         console.log(url.toString());
         getData(url.toString());
