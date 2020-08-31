@@ -110,8 +110,8 @@
                   aria-expanded="false">User</a>
                 <ul class="dropdown-menu">
                   <li class="nav-item"><a class="nav-link" href="{{url_for('account')}}">Account</a></li>
-                  <li class="nav-item"><a class="nav-link" href="{{url_for('listings')}}">Listings</a></li>
-                  <li class="nav-item"><a class="nav-link" href="{{url_for('saved_for_later')}}">Saved</a></li>
+                  <li class="nav-item"><a class="nav-link" onclick="linkClicked(this, '{{ url_for('listings')}}')"">Listings</a></li>
+                  <li class="nav-item"><a class="nav-link" onclick="linkClicked(this, '{{ url_for('saved_for_later')}}')"">Saved</a></li>
                 </ul>
               </li>
               {% else %}
@@ -121,10 +121,10 @@
                   onclick="linkClicked(this, '{{ url_for('userAuth.register')}}')">Register</a></li>
               {% endif %}
               <li class="nav-item"><a class="nav-link {% if title == 'Sell' %}active{% endif %}"
-                  href="{{ url_for('new_item')}}">Sell</a></li>
+                href="{{url_for('new_item')}}"">Sell</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li class="nav-item"><a href="{{url_for('saved_for_later')}}" class="cart">
+              <li class="nav-item"><a onclick="linkClicked(this, '{{ url_for('saved_for_later')}}')" class="cart">
                   <span class="ti-bag {% if title == 'Saved' %}ti-bag-active{% endif %}"><span
                       class="bag-icon">{{ numItems|length }}</span></span></a></li>
               <li class="nav-item">
@@ -175,7 +175,7 @@
               Made by Forbes & Thomas
             </p>
             <!-- <p>
-              <a class="footer-item" href="{{url_for('about_us')}}">Meet the founders</a>
+              <a class="footer-item"href ="{{url_for('about_us')}}">Meet the founders</a>
             </p> -->
           </div>
         </div>

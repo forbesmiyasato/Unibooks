@@ -74,6 +74,7 @@ def account():
 @app.route("/item/new", methods=['GET', 'POST'])
 @login_required
 def new_item():
+    standalone = request.args.get('standalone')
     if request.method == 'POST':
         # images = form.images.data  # without plugin
         images = request.files.getlist('files[]')
@@ -102,13 +103,14 @@ def new_item():
     if current_user.listings > 10:
         print(current_user.listings)
         flash("There is a max of 10 listings at a time! Please wait or delete listings before selling.", 'error')
-        return redirect(url_for('listings'))
+        return redirect(url_for('listings', standalone=standalone))
     form = ItemForm()
     # form.item_class.choices = class_list
     departments = db.session.query(ItemDepartment).all()
     # department_list = [(i.id, i.department_name) for i in departments]
     print(departments)
-    return render_template('create_post.html', title='Sell', form=form, legend='New', item_id=0, departments=departments)
+    return render_template('create_post.html', title='Sell', form=form, legend='New', item_id=0, departments=departments,
+                           standalone=standalone)
 
 
 @app.route('/class/<department>')
@@ -166,6 +168,7 @@ def add_to_bag():
 @app.route('/saved')
 # @login_required
 def saved_for_later():
+    standalone = request.args.get('standalone')
     items_ids = None
     if current_user.is_authenticated:
         items_ids = db.session.query(SaveForLater.item_id).filter_by(
@@ -183,7 +186,7 @@ def saved_for_later():
             if item:
                 items.append(item)
     print(items)
-    return render_template('saved_for_later.html', title='Saved', posts=items)
+    return render_template('saved_for_later.html', title='Saved', posts=items, standalone=standalone)
 
 
 @app.route('/saved/delete', methods=['POST'])
@@ -227,10 +230,12 @@ def delete_item():
 @app.route('/listings')
 @login_required
 def listings():
+    standalone = request.args.get('standalone')
     listings = Item.query.filter_by(user_id=current_user.id).all()
     form = ItemForm()
     print(listings)
-    return render_template('user_listings.html', listings=listings, legend='Edit', form=form, item_id=1, item=None)
+    return render_template('user_listings.html', listings=listings, legend='Edit', form=form, item_id=1, item=None, standalone=standalone)
+
 
 @app.route('/aboutus')
 def about_us():
