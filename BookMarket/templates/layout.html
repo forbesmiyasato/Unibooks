@@ -99,38 +99,40 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
             <ul class="nav navbar-nav menu_nav ml-auto">
-              <li class="nav-item"><a class="nav-link {% if title == 'Home' %}active{% endif %}"
+              <li class="nav-item"><a id="home" class="nav-link {% if title == 'Home' %}active{% endif %}"
                   onclick="linkClicked(this, '{{ url_for('home')}}')">Home</a></li>
-              <li class="nav-item"><a class="nav-link {% if title == 'Shop' %}active{% endif %}"
+              <li class="nav-item"><a id="shop" class="nav-link {% if title == 'Shop' %}active{% endif %}"
                   onclick="linkClicked(this, '{{ url_for('shop_api.shop')}}')">shop</a></li>
               {% if current_user.is_authenticated %}
               <li class="nav-item"><a class="nav-link" href="{{ url_for('userAuth.logout')}}">Logout</a></li>
               <li class="nav-item submenu dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                  aria-expanded="false">User</a>
+                <a href="#" id="user" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                  aria-haspopup="true" aria-expanded="false">User</a>
                 <ul class="dropdown-menu">
                   <li class="nav-item"><a class="nav-link" href="{{url_for('account')}}">Account</a></li>
                   <li class="nav-item"><a class="nav-link" onclick="linkClicked(this, '{{ url_for('listings')}}')"">Listings</a></li>
-                  <li class="nav-item"><a class="nav-link" onclick="linkClicked(this, '{{ url_for('saved_for_later')}}')"">Saved</a></li>
+                  <li class=" nav-item"><a class="nav-link"
+                        onclick="linkClicked(this, '{{ url_for('saved_for_later')}}')"">Saved</a></li>
                 </ul>
               </li>
               {% else %}
-              <li class="nav-item {% if title == 'Login' %}active{% endif %}"><a class="nav-link"
-                  onclick="linkClicked(this, '{{ url_for('userAuth.login')}}')">Login</a></li>
-              <li class="nav-item {% if title == 'Register' %}active{% endif %}"><a class="nav-link"
-                  onclick="linkClicked(this, '{{ url_for('userAuth.register')}}')">Register</a></li>
-              {% endif %}
-              <li class="nav-item"><a class="nav-link {% if title == 'Sell' %}active{% endif %}"
-                href="{{url_for('new_item')}}"">Sell</a></li>
+              <li class=" nav-item"><a id="login" class="nav-link {% if title == 'Login' %}active{% endif %}"
+                          onclick="linkClicked(this, '{{ url_for('userAuth.login')}}')">Login</a></li>
+                  <li class="nav-item"><a id="register" class="nav-link {% if title == 'Login' %}active{% endif %}"
+                      onclick="linkClicked(this, '{{ url_for('userAuth.register')}}')">Register</a></li>
+                  {% endif %}
+                  <li class="nav-item"><a id="sell" class="nav-link {% if title == 'Sell' %}active{% endif %}"
+                      href="{{url_for('new_item')}}"">Sell</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li class="nav-item"><a onclick="linkClicked(this, '{{ url_for('saved_for_later')}}')" class="cart">
-                  <span class="ti-bag {% if title == 'Saved' %}ti-bag-active{% endif %}"><span
-                      class="bag-icon">{{ numItems|length }}</span></span></a></li>
-              <li class="nav-item">
-                <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
-              </li>
-            </ul>
+            <ul class=" nav navbar-nav navbar-right">
+                  <li class="nav-item"><a id="shopping-cart"
+                      onclick="linkClicked(this, '{{ url_for('saved_for_later')}}')" class="cart">
+                      <span class="ti-bag {% if title == 'Saved' %}ti-bag-active{% endif %}"><span
+                          class="bag-icon">{{ numItems|length }}</span></span></a></li>
+                  <li class="nav-item">
+                    <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
+                  </li>
+                </ul>
           </div>
         </div>
       </nav>
@@ -227,19 +229,30 @@
     // }
 
     let active = document.getElementsByClassName('nav-link active')[0];
+
     var call;
     const linkClicked = (ele, url) => {
       console.log(active)
+      console.log(ele)
       if (active) {
         active.classList.remove('active');
       }
       if (!ele.classList.contains('footer-item')) {
+        prevActive = active;
         ele.classList.add('active');
         active = ele;
       }
 
+      let alerts1 = document.getElementsByClassName('alert');
+      console.log(alerts1);
+
+
+      // setTimeout(function () {
+      //   $('.alert')[0].fadeOut('fast');
+      // }, 30000); // <-- time in milliseconds
+      console.log(ele.id)
       if (call) call.abort()
-      history.pushState(null, null, url)
+      history.pushState({ element: ele.id }, null, url)
       call = $.ajax({
         url: url,
         type: "get",
@@ -249,7 +262,40 @@
           $('#block-content').html(response);
         }
       })
+      // $('#block-content').load(url + "?standalone=true")
     }
+
+    window.addEventListener('popstate', (event) => {
+      active.classList.remove('active');
+      const prevActive = document.getElementById(event.state.element);
+      prevActive.classList.add('active');
+      active = prevActive;
+      $.ajax({
+        url: location.href,
+        type: "get",
+        data: { standalone: 'true' },
+        async: true,
+        success: function (response) {
+          $('#block-content').html(response);
+        }
+      })
+    });
+    // $(window).on('popstate', function (event) {
+    //   // location.reload();
+    //   console.log(event.state)
+    //   console.log(event)
+    //   console.log(prevActive)
+    //   console.log(active)
+    //   $.ajax({
+    //     url: location.href,
+    //     type: "get",
+    //     data: { standalone: 'true' },
+    //     async: true,
+    //     success: function (response) {
+    //       $('#block-content').html(response);
+    //     }
+    //   })
+    // });
   </script>
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

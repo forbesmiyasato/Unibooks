@@ -410,5 +410,5 @@
         getData(url.toString());
     })
 </script> -->
-<script src="{{ url_for('static', filename='js/shop.js')}}"></script>
+<script>{% include "shop.js" %} </script>
 {% endblock content %}
