@@ -268,23 +268,10 @@
                 window.location.href = data['url']
             },
             beforeSend: function () {
-                $('#form-spinner').modal({ backdrop: 'static', keyboard: false })
-                $('#editModal').modal({ backdrop: 'static', keyboard: false })
-                $('#form-spinner').modal('show')
-                $('#editModal').html(`<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-        <div class="modal-content bg-light">
-            <div class="modal-body">
-                <div class="spinner-border mr-3" style="float: left; width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
-                <h5>Just one second</h5>
-                <span class="mb-0">We're posting the item for you.</span>
-            </div>
-        </div>
-    </div>`)
+                $("body").toggleClass("loading");
             },
             complete: function () {
-
+                $("body").toggleClass("loading");
             }
         });
 

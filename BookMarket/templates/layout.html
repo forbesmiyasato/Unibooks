@@ -164,10 +164,13 @@
     {% endwith %}
   </header>
   <!-- End Header Area -->
+  <div class="overlay">
+    <div class="loader">Loading...</div>
+  </div>
+
   <div id="block-content">
-    {% block content %}{% endblock %}
-  </div>
-  </div>
+    {% block content %}
+    {% endblock %}
   </div>
 
   <!-- start footer Area -->
@@ -268,6 +271,12 @@
         async: true,
         success: function (response) {
           $('#block-content').html(response);
+        },
+        beforeSend: function () {
+          $("body").toggleClass("loading");
+        },
+        complete: function () {
+          $("body").toggleClass("loading");
         }
       })
       // $('#block-content').load(url + "?standalone=true")
@@ -275,7 +284,9 @@
 
     window.addEventListener('popstate', (event) => {
       console.log(event)
-      active.classList.remove('active');
+      if (active) {
+        active.classList.remove('active');
+      }
       // if (event.state) {
       //   prevActive = document.getElementById(event.state.element);
       //   prevActive.classList.add('active');
@@ -285,8 +296,10 @@
       // active = prevActive;
       let path = window.location.pathname.split('/')[1];
       active = document.getElementById(path);
-      active.classList.add('active');
-      
+      if (active) {
+        active.classList.add('active');
+      }
+
       console.log(path)
       $.ajax({
         url: location.href,
@@ -295,6 +308,12 @@
         async: true,
         success: function (response) {
           $('#block-content').html(response);
+        },
+        beforeSend: function () {
+          $("body").toggleClass("loading");
+        },
+        complete: function () {
+          $("body").toggleClass("loading");
         }
       })
     });
@@ -303,6 +322,14 @@
       $('.collapse').collapse("toggle")
     }
 
+    // $(document).on({
+    //   ajaxStart: function () {
+    //     $("body").toggleClass("loading");
+    //   },
+    //   ajaxStop: function () {
+    //     $("body").toggleClass("loading");
+    //   }
+    // });
     // $(window).on('popstate', function (event) {
     //   // location.reload();
     //   console.log(event.state)
