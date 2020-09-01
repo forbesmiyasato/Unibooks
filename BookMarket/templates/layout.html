@@ -243,6 +243,7 @@
 
     var call;
     const linkClicked = (ele, url) => {
+      console.log(url);
       if (document.documentElement.clientWidth < 992) {
         navbarCollapse();
       }
@@ -279,6 +280,7 @@
           $("body").toggleClass("loading");
         }
       })
+      $(window).scrollTop(0);
       // $('#block-content').load(url + "?standalone=true")
     }
 
@@ -319,7 +321,9 @@
     });
 
     const navbarCollapse = () => {
-      $('.collapse').collapse("toggle")
+      if ($('#navbarSupportedContent')[0].classList.contains('show') === true) {
+        $('.collapse').collapse("toggle")
+      }
     }
 
     // $(document).on({
