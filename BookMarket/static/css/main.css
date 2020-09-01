@@ -1025,6 +1025,34 @@ h6 {
     -moz-transition: all 0.3s ease 0s;
     -o-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s; }
+  .header_area .alert {
+    margin: 0px auto 0;
+    max-width: 1200px;
+    width: 100%;
+    -webkit-animation: slideIn 1s forwards;
+    -moz-animation: slideIn 1s forwards;
+    animation: slideIn 1s forwards; }
+    @media (max-width: 992px) {
+      .header_area .alert {
+        position: absolute; } }
+
+@-webkit-keyframes slideIn {
+  0% {
+    transform: translateX(-100%); }
+  100% {
+    transform: translateX(0); } }
+
+@-moz-keyframes slideIn {
+  0% {
+    transform: translateX(-100%); }
+  100% {
+    transform: translateX(0); } }
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-100%); }
+  100% {
+    transform: translateX(0); } }
   .header_area .navbar {
     background: #fff;
     padding: 0px;
@@ -1088,7 +1116,7 @@ h6 {
             height: 0;
             border-style: solid;
             border-width: 10px 10px 0 10px;
-            border-color: #eeeeee transparent transparent transparent;
+            border-color: #eeeeee transparent transparent transparent;
             position: absolute;
             right: 24px;
             top: 45px;
@@ -1284,7 +1312,7 @@ h6 {
 .organic-breadcrumb {
   background: url(../img/banner/common-banner.jpg) center no-repeat;
   background-size: cover;
-  padding-top: 130px; }
+  padding-top: 160px; }
   @media (max-width: 991px) {
     .organic-breadcrumb {
       padding-top: 80px; } }

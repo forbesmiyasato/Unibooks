@@ -41,6 +41,7 @@ def about():
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
+    standalone = request.args.get('standalone')
     # form = UpdateAccountForm()
     # if form.validate_on_submit():
     #     if form.picture.data:
@@ -56,7 +57,7 @@ def account():
     #     form.email.data = current_user.email
     # image_file = url_for(
     #     'static', filename='profile_pics/' + current_user.image_file)
-    return render_template('account.html', title='Account', confirmed=current_user.confirmed)
+    return render_template('account.html', title='Account', confirmed=current_user.confirmed, standalone=standalone)
 
 
 # @app.route("/files/<int:userid>", methods=['POST'])
