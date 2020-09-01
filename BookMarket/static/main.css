@@ -311,8 +311,8 @@ a.nav-link {
     margin-right: 5px;
 }
 
-#undefined-sticky-wrapper {
-    height: 80px !important;
+#sticky-sticky-wrapper {
+    width: 100vw;
 }
 
 .dropdown-top {

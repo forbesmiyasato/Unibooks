@@ -235,7 +235,8 @@ def listings():
     listings = Item.query.filter_by(user_id=current_user.id).all()
     form = ItemForm()
     print(listings)
-    return render_template('user_listings.html', listings=listings, legend='Edit', form=form, item_id=1, item=None, standalone=standalone)
+    return render_template('user_listings.html', title="listings", listings=listings,
+                           legend='Edit', form=form, item_id=1, item=None, standalone=standalone)
 
 
 @app.route('/aboutus')

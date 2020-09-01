@@ -79,6 +79,8 @@
   <!-- Latest compiled and minified JavaScript -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.15/dist/js/bootstrap-select.min.js"></script> -->
 
+  <script src="{{ url_for('static', filename='js/shop.js')}}"></script>
+
 </head>
 
 <body>
@@ -106,8 +108,9 @@
               {% if current_user.is_authenticated %}
               <li class="nav-item"><a class="nav-link" href="{{ url_for('userAuth.logout')}}">Logout</a></li>
               <li class="nav-item submenu dropdown">
-                <a href="#" id="user" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                  aria-haspopup="true" aria-expanded="false">User</a>
+                <a href="#" id="user" class="nav-link dropdown-toggle 
+                {% if (title == 'listings' or title == 'account' or title == 'saved') %}active{% endif %}"
+                  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User</a>
                 <ul class="dropdown-menu">
                   <li class="nav-item"><a class="nav-link"
                       onclick="linkClicked(this, '{{ url_for('account')}}')">Account</a></li>
@@ -255,8 +258,14 @@
       }
       if (!ele.classList.contains('footer-item')) {
         prevActive = active;
-        ele.classList.add('active');
-        active = ele;
+        if (url === '/listings' || url === '/account' || url === '/saved') {
+          let user = document.getElementById('user');
+          user.classList.add('active')
+          active = user;
+        } else {
+          ele.classList.add('active');
+          active = ele;
+        }
       }
 
       let alerts1 = document.getElementsByClassName('alert');
@@ -285,6 +294,7 @@
     }
 
     window.addEventListener('popstate', (event) => {
+      console.log(active)
       console.log(event)
       if (active) {
         active.classList.remove('active');
@@ -297,12 +307,16 @@
       // }
       // active = prevActive;
       let path = window.location.pathname.split('/')[1];
-      active = document.getElementById(path);
+      console.log(path)
+      if (path === 'listings' || path === 'account' || path === 'saved') {
+        active = document.getElementById('user');
+      } else {
+        active = document.getElementById(path);
+      }
       if (active) {
-        active.classList.add('active');
+          active.classList.add('active');
       }
 
-      console.log(path)
       $.ajax({
         url: location.href,
         type: "get",
@@ -316,6 +330,9 @@
         },
         complete: function () {
           $("body").toggleClass("loading");
+          // if (path === 'shop') {
+          //   initializeShopPage();
+          // }
         }
       })
     });

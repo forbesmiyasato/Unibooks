@@ -7,10 +7,10 @@
                 <span id="sort-button-text">Sort By</span> <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="sort dropdown-item" onclick="sort(this, 'newest')">Newest-Oldest</a>
-                <a class="sort dropdown-item" onclick="sort(this, 'oldest')">Oldest-Newest</a>
-                <a class="sort dropdown-item" onclick="sort(this, 'lowest')">Price: Low-High</a>
-                <a class="sort dropdown-item" onclick="sort(this, 'highest')">Price: High-Low</a>
+                <a id="newest" class="sort dropdown-item" onclick="sort(this, 'newest', true)">Newest-Oldest</a>
+                <a id="oldest" class="sort dropdown-item" onclick="sort(this, 'oldest', true)">Oldest-Newest</a>
+                <a id="lowest" class="sort dropdown-item" onclick="sort(this, 'lowest', true)">Price: Low-High</a>
+                <a id="highest" class="sort dropdown-item" onclick="sort(this, 'highest', true)">Price: High-Low</a>
             </div>
         </div>
         <div class="dropdown dropdown-filter mr-2">
@@ -19,11 +19,11 @@
                 <span id="filter-button-text">Filter By</span> <i class="fas fa-sliders-h"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="filter dropdown-item" onclick="filterByPrice(this, 0, 25)">$0 - $25</a>
-                <a class="filter dropdown-item" onclick="filterByPrice(this, 25, 50)">$25 - $50</a>
-                <a class="filter dropdown-item" onclick="filterByPrice(this, 50, 100)">$50 - $100</a>
-                <a class="filter dropdown-item" onclick="filterByPrice(this, 100, 150)">$100 - $150</a>
-                <a class="filter dropdown-item" onclick="filterByPrice(this, 150, 99999)">Over $150</a>
+                <a id="0+25" class="filter dropdown-item" onclick="filterByPrice(this, '0+25', true)">$0 - $25</a>
+                <a id="25+50" class="filter dropdown-item" onclick="filterByPrice(this, '25+50', true)">$25 - $50</a>
+                <a id="50+100" class="filter dropdown-item" onclick="filterByPrice(this, '50+100', true)">$50 - $100</a>
+                <a id="100+150" class="filter dropdown-item" onclick="filterByPrice(this, '100+150', true)">$100 - $150</a>
+                <a id="150+99999" class="filter dropdown-item" onclick="filterByPrice(this, '150+99999', true)">Over $150</a>
             </div>
         </div>
         <div class="dropdown dropdown-show">
@@ -32,8 +32,8 @@
                 <span id="show-button-text">Show All</span> <i class="fas fa-angle-down"></i>
             </button>
             <div class="dropdown-menu dropdown-show" aria-labelledby="dropdownMenuButton">
-                <a class="show dropdown-item" onclick="show(this, 'all')">Show All</a>
-                <a class="show dropdown-item" onclick="show(this, 'default')">Default</a>
+                <a id="all" class="show dropdown-item" onclick="show(this, 'all', true)">Show All</a>
+                <a class="show dropdown-item" onclick="show(this, 'default', true)">Default</a>
             </div>
         </div>
     </div>
