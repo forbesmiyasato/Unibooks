@@ -101,38 +101,38 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
             <ul class="nav navbar-nav menu_nav ml-auto">
-              <li class="nav-item"><a id="home" class="nav-link {% if title == 'Home' %}active{% endif %}"
+              <li class="nav-item"><a id="home" class="nav-link activable {% if title == 'Home' %}active{% endif %}"
                   onclick="linkClicked(this, '{{ url_for('home')}}')">Home</a></li>
-              <li class="nav-item"><a id="shop" class="nav-link {% if title == 'Shop' %}active{% endif %}"
+              <li class="nav-item"><a id="shop" class="nav-link activable {% if title == 'Shop' %}active{% endif %}"
                   onclick="linkClicked(this, '{{ url_for('shop_api.shop')}}')">shop</a></li>
               {% if current_user.is_authenticated %}
               <li class="nav-item"><a class="nav-link" href="{{ url_for('userAuth.logout')}}">Logout</a></li>
               <li class="nav-item submenu dropdown">
-                <a href="#" id="user" class="nav-link dropdown-toggle 
+                <a href="#" id="user" class="nav-link activable dropdown-toggle 
                 {% if (title == 'listings' or title == 'account' or title == 'saved') %}active{% endif %}"
                   data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User</a>
                 <ul class="dropdown-menu">
-                  <li class="nav-item"><a class="nav-link"
+                  <li class="nav-item"><a class="nav-link activable"
                       onclick="linkClicked(this, '{{ url_for('account')}}')">Account</a></li>
-                  <li class="nav-item"><a class="nav-link"
+                  <li class="nav-item"><a class="nav-link activable"
                       onclick="linkClicked(this, '{{ url_for('listings')}}')">Listings</a></li>
                   <li class=" nav-item"><a class="nav-link"
                       onclick="linkClicked(this, '{{ url_for('saved_for_later')}}')">Saved</a></li>
                 </ul>
               </li>
               {% else %}
-              <li class=" nav-item"><a id="login" class="nav-link {% if title == 'Login' %}active{% endif %}"
+              <li class=" nav-item"><a id="login" class="nav-link activable {% if title == 'Login' %}active{% endif %}"
                   onclick="linkClicked(this, '{{ url_for('userAuth.login')}}')">Login</a></li>
-              <li class="nav-item"><a id="register" class="nav-link {% if title == 'Register' %}active{% endif %}"
+              <li class="nav-item"><a id="register" class="nav-link activable {% if title == 'Register' %}active{% endif %}"
                   onclick="linkClicked(this, '{{ url_for('userAuth.register')}}')">Register</a></li>
               {% endif %}
-              <li class="nav-item"><a id="sell" class="nav-link {% if title == 'Sell' %}active{% endif %}"
-                  href="{{url_for('new_item')}}"">Sell</a></li>
+              <li class="nav-item"><a id="sell" class="nav-link activable {% if title == 'Sell' %}active{% endif %}"
+                  href="{{url_for('new_item')}}">Sell</a></li>
             </ul>
             <ul class=" nav navbar-nav navbar-right">
-              <li class="nav-item"><a id="shopping-cart" onclick="linkClicked(this, '{{ url_for('saved_for_later')}}')"
-                  class="cart">
-                  <span class="ti-bag {% if title == 'Saved' %}ti-bag-active{% endif %}"><span
+              <li class="nav-item"><a id="shopping-cart" onclick="linkClicked(this, '{{ url_for('saved_for_later')}}?cart')"
+                  class="cart activable {% if title == 'Saved?cart' %}active{% endif %}">
+                  <span class="ti-bag"><span
                       class="bag-icon">{{ numItems|length }}</span></span></a></li>
               <li class="nav-item">
                 <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
@@ -241,7 +241,7 @@
     //   })
     // }
 
-    let active = document.getElementsByClassName('nav-link active')[0];
+    let active = document.getElementsByClassName('activable active')[0];
     let prevActive
 
     var call;
@@ -258,7 +258,12 @@
       }
       if (!ele.classList.contains('footer-item')) {
         prevActive = active;
-        if (url === '/listings' || url === '/account' || url === '/saved') {
+        if (url === '/saved?cart') {
+          let cart = document.getElementById('shopping-cart');
+          cart.classList.add('active')
+          active = cart
+        }
+        else if (url === '/listings' || url === '/account' || url === '/saved') {
           let user = document.getElementById('user');
           user.classList.add('active')
           active = user;
@@ -306,9 +311,11 @@
       //   prevActive = document.getElementById('home').classList.add('active');
       // }
       // active = prevActive;
-      let path = window.location.pathname.split('/')[1];
+      let path = (window.location.pathname + location.search).split('/')[1];
       console.log(path)
-      if (path === 'listings' || path === 'account' || path === 'saved') {
+      if (path === 'saved?cart') {
+        active = document.getElementById('shopping-cart');
+      } else if (path === 'listings' || path === 'account' || path === 'saved') {
         active = document.getElementById('user');
       } else {
         active = document.getElementById(path);

@@ -169,7 +169,10 @@ def add_to_bag():
 @app.route('/saved')
 # @login_required
 def saved_for_later():
+    title = 'Saved'
     standalone = request.args.get('standalone')
+    if 'cart' in request.args:
+        title = 'Saved?cart'
     items_ids = None
     if current_user.is_authenticated:
         items_ids = db.session.query(SaveForLater.item_id).filter_by(
@@ -187,7 +190,7 @@ def saved_for_later():
             if item:
                 items.append(item)
     print(items)
-    return render_template('saved_for_later.html', title='Saved', posts=items, standalone=standalone)
+    return render_template('saved_for_later.html', title=title, posts=items, standalone=standalone)
 
 
 @app.route('/saved/delete', methods=['POST'])

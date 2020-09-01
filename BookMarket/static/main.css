@@ -584,3 +584,7 @@ body.loading .overlay {
         box-shadow: 0 2.5em 0 0;
     }
 }
+
+#shopping-cart.active > .ti-bag {
+    color: #70a9da;
+}
