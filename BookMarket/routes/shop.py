@@ -132,6 +132,10 @@ def item_html(item_id, standalone=None):
         print(images)
         print(remains)
         delete_non_remaining_images_from_s3_and_db(item_id, remains)
+        print("11111", _item.images)
+        print("2222", _item.thumbnail)
+        if not _item.images:
+            _item.thumbnail = "No_picture_available.png"
         if images:
             print(images)
             thumbnail = save_images_to_db_and_s3(images, item_id)

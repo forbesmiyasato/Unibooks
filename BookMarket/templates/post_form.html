@@ -335,6 +335,7 @@
     $form.on('submit', function (e) {
         e.preventDefault();
 
+        post = true;
         var formData = new FormData(),
             _fileuploaderFields = [];
 
@@ -371,6 +372,8 @@
         var blob = null;
 
         let remainingFiles = []
+
+        console.log(remainingFiles);
 
         for (var i = 3; i < fileArray.length; i += 4) {
             // console.log(fileArray[i])
