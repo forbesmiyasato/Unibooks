@@ -15,10 +15,10 @@
         <!-- single product -->
         <div class="col-lg-4 col-md-6">
             <div class="single-product">
-                <img class="img-thumbnail list-image"
-                    src="https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{post.thumbnail}}" alt="">
+                <a><img class="img-thumbnail list-image"
+                    src="https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{post.thumbnail}}" alt=""></a>
                 <div class="product-details">
-                    <h6 class="hover-line"><a href="{{url_for('shop_api.item', item_id=post.id)}}">{{post.name}}</a>
+                    <h6 class="hover-line"><a href="javascript:onItemClick('{{url_for('shop_api.item', item_id=post.id)}}')">{{post.name}}</a>
                     </h6>
                     <div class="price">
                         <h6>{{post.price}}</h6>
@@ -74,6 +74,28 @@
 </section>
 
 <script>
+    function onItemClick(url) {
+        history.pushState(null, null, url);
+        $.ajax({
+        url: url,
+        type: "get",
+        data: { standalone: 'true' },
+        async: true,
+        success: function (response) {
+          $('#block-content').html(response);
+        },
+        beforeSend: function () {
+          $("body").toggleClass("loading");
+        },
+        complete: function () {
+          $("body").toggleClass("loading");
+          // if (path === 'shop') {
+          //   initializeShopPage();
+          // }
+        }
+      })
+    }
+
     function addToBag(ele, item_id, user_id) {
         let text = ele.children[1]
         text.innerHTML = 'Added!'

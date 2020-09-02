@@ -97,6 +97,7 @@ const getData = (url) => {
             $("#reloading-content").html(response.html);
         },
         beforeSend: function () {
+            console.log("item list before send")
             $("#items-list").hide();
             $("#posts-spinner").show();
         },
