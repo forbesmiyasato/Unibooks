@@ -97,7 +97,7 @@ const getData = (url) => {
             $("#reloading-content").html(response.html);
         },
         beforeSend: function () {
-            console.log("item list before send")
+            console.log("item list before send");
             $("#items-list").hide();
             $("#posts-spinner").show();
         },
@@ -451,7 +451,7 @@ const onSavedDelete = (index, name, id, url) => {
 };
 
 const initializeSingleProductPage = () => {
-    console.log("invoked")
+    console.log("invoked");
     var numImages = document.getElementsByClassName("single-prd-item").length;
 
     if (numImages <= 1) {
@@ -466,7 +466,7 @@ const initializeSingleProductPage = () => {
         });
     } else {
         $(".s_Product_carousel").owlCarousel({
-            items: 1
+            items: 1,
         });
     }
 };
@@ -475,24 +475,33 @@ const initializeSingleProductPage = () => {
 //    initializeSingleProductPage();
 // })
 
-onItemDelete = (url) => {
+onItemDelete = (url, name, num) => {
     $.ajax({
         url: url,
         type: "post",
-        data: { standalone: 'true' },
+        data: { standalone: "true" },
         async: true,
         success: function (response) {
-            location.reload();
+            // location.reload();
+            $("#block-content").html(response.html);
+            toastr.options = {
+                positionClass: "toast-top-left",
+                closeButton: true,
+            };
+            toastr.success(`Post ${name} Deleted!`);
         },
         beforeSend: function () {
             $("body").toggleClass("loading");
+            $(`#deleteModal${num}`).modal('hide');
+            $("#loader-text").html (`Deleting "${name}"...`)
         },
         complete: function () {
             $("body").toggleClass("loading");
+            $("#loader-text").html ('Loading...')
             // if (path === 'shop') {
             //   initializeShopPage();
             // }
-        }
-    })
-    console.log(url)
-}
+        },
+    });
+    console.log(url);
+};

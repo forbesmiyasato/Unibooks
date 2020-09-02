@@ -63,7 +63,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <input type="submit" class="btn btn-danger" value="Delete"
-                            onclick="onItemDelete('{{url_for('delete_item', item_id=post.id)}}')">
+                            onclick="onItemDelete('{{url_for('delete_item', item_id=post.id)}}', '{{post.name}}', '{{loop.index}}')">
                     </div>
                 </div>
             </div>
