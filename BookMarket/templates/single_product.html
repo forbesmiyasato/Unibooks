@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% if not standalone %} {% extends "layout.html" %} {% endif %}
 {% block content %}
 <!-- Start Banner Area -->
 <section class="banner-area organic-breadcrumb">
@@ -138,28 +138,13 @@
 
 <script>
     // window.location.reload(false);
-
-    $(document).ready(function () {
-        var numImages = document.getElementsByClassName('single-prd-item').length;
-
-        if (numImages <= 1) {
-            console.log(numImages);
-            $(".s_Product_carousel").owlCarousel({
-                items: 1,
-                autoplay: false,
-                autoplayTimeout: 5000,
-                loop: false,
-                nav: false,
-                dots: false
-            });
-        }
-    });
+    initializeSingleProductPage();
 
     $('#editModal').on("hidden.bs.modal", function () {
         // console.log("Hidden")
         console.log(deleted)
         if (deleted) {
-        location.reload();
+            location.reload();
         }
         // window.location = window.location
         // input = document.querySelector('input[name="files[]"')

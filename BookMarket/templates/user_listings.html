@@ -87,16 +87,16 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <form action="{{url_for('delete_item', item_id=post.id)}}" method="POST">
-                                        <input type="submit" class="btn btn-danger" value="Delete">
+                                    <input type="submit" class="btn btn-danger" value="Delete"
+                                        onclick="deleteClicked('{{url_for('delete_item', item_id=post.id)}}')">
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- Edit Modal -->
-                    <div class="modal fade" id="editModal{{loop.index}}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
-                        aria-hidden="true">
+                    <div class="modal fade" id="editModal{{loop.index}}" tabindex="-1" role="dialog"
+                        aria-labelledby="editModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -116,6 +116,26 @@
     </div>
 </div>
 <script>
-
+    deleteClicked = (url) => {
+        $.ajax({
+            url: url,
+            type: "post",
+            data: { standalone: 'true' },
+            async: true,
+            success: function (response) {
+                location.reload();
+            },
+            beforeSend: function () {
+                $("body").toggleClass("loading");
+            },
+            complete: function () {
+                $("body").toggleClass("loading");
+                // if (path === 'shop') {
+                //   initializeShopPage();
+                // }
+            }
+        })
+        console.log(url)
+    }
 </script>
 {% endblock content %}

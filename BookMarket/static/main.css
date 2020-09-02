@@ -3,6 +3,7 @@
 body {
     background: #fafafa;
     color: #333333;
+    width: 100vw;
 }
 
 h1,
@@ -482,7 +483,7 @@ input.form-control:focus {
 
 .modal-open {
     padding-right: 0 !important;
-    overflow: auto !important;
+    /* overflow: auto !important; */
 }
 
 .deleted-item {
@@ -492,7 +493,7 @@ input.form-control:focus {
     font-size: 2rem;
 }
 
-.active {
+.activable.active {
     color: #70a9da !important;
 }
 
@@ -588,3 +589,7 @@ body.loading .overlay {
 #shopping-cart.active > .ti-bag {
     color: #70a9da;
 }
+
+/* .modal-open {
+    overflow: hidden;
+} */

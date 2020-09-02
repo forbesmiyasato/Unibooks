@@ -115,16 +115,19 @@ def getPosts():
                    department=department, course=course, sort=original_sort_term, filter=filter_term, show=show_term)
 
 
-@shop_api.route("/shop/<int:item_id>", methods=['GET', 'POST'])
-def item(item_id):
-    item = Item.query.get_or_404(item_id)
+def item_html(item_id, _standalone=None):
+    if _standalone is not None:
+        standalone = "standalone"
+    else:
+        standalone = request.args.get('standalone')
+    _item = Item.query.get_or_404(item_id)
     edit_form = ItemForm()
     message_form = MessageForm()
     if message_form.validate_on_submit and message_form.message_submit.data:
-        print(item.owner.email)
-        msg = Message("Message regarding " + "\"" + item.name + "\"",
+        print(_item.owner.email)
+        msg = Message("Message regarding " + "\"" + _item.name + "\"",
                       sender="pacificubooks@gmail.com",
-                      recipients=[item.owner.email], html=render_template("message_email.html", name=item.name, email=message_form.email.data, body=message_form.message.data))
+                      recipients=[_item.owner.email], html=render_template("message_email.html", name=_item.name, email=message_form.email.data, body=message_form.message.data))
         mail.send(msg)
     elif request.method == 'POST':
         remains = request.form.get('remaining_files')
@@ -135,38 +138,42 @@ def item(item_id):
             print(images)
             thumbnail = save_images_to_db_and_s3(images, item_id)
             if thumbnail:
-                item.thumbnail = thumbnail
-        item.name = request.form.get('name')
-        item.description = request.form.get('description')
+                _item.thumbnail = thumbnail
+        _item.name = request.form.get('name')
+        _item.description = request.form.get('description')
         print(request.form.get('author'))
-        item.isbn = request.form.get('isbn')
-        item.author = request.form.get('author')
-        item.user_id = current_user.id
-        item.price = request.form.get('price')
-        item.class_id = request.form.get('class_id')
-        item.department_id = request.form.get('department_id')
+        _item.isbn = request.form.get('isbn')
+        _item.author = request.form.get('author')
+        _item.user_id = current_user.id
+        _item.price = request.form.get('price')
+        _item.class_id = request.form.get('class_id')
+        _item.department_id = request.form.get('department_id')
         db.session.commit()
         print(item_id)
         result = {'url': url_for('shop_api.item', item_id=item_id)}
-        return jsonify(result)
     images = ItemImage.query.filter_by(item_id=item_id).all()
-    item_class = ItemClass.query.get(item.class_id)
-    department = ItemDepartment.query.get(item.department_id)
+    item_class = ItemClass.query.get(_item.class_id)
+    department = ItemDepartment.query.get(_item.department_id)
     # for updating
     departments = db.session.query(ItemDepartment).all()
-    edit_form.name.data = item.name
-    edit_form.description.data = item.description
-    edit_form.price.data = item.price
-    edit_form.isbn.data = item.isbn
-    edit_form.author.data = item.author
+    edit_form.name.data = _item.name
+    edit_form.description.data = _item.description
+    edit_form.price.data = _item.price
+    edit_form.isbn.data = _item.isbn
+    edit_form.author.data = _item.author
     edit_form.item_class.data = item_class
     edit_form.item_department.data = department
     # for messaging
     if current_user.is_authenticated:
         message_form.email.data = current_user.email
-    return render_template('single_product.html', title=item.name, item=item, images=images,
+    return render_template('single_product.html', title=_item.name, item=_item, images=images,
                            item_class=item_class, department=department, form=edit_form, legend="Edit",
-                           message_form=message_form, item_id=item_id, departments=departments)
+                           message_form=message_form, item_id=item_id, departments=departments, standalone=standalone)
+
+
+@shop_api.route("/shop/<int:item_id>", methods=['GET', 'POST'])
+def item(item_id):
+    return item_html(item_id)
 
 
 @shop_api.route("/shop/class/<int:class_id>")

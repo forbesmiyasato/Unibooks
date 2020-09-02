@@ -1,13 +1,13 @@
 import os
 import atexit
 # from PIL import Image
-from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session, Markup
+from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session, Markup, make_response
 from flask_login import current_user, login_required
 from .models import Users, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater
 from .forms import UpdateAccountForm, ItemForm
 from . import app, db
 from .routes.userAuth import userAuth
-from .routes.shop import shop_api
+from .routes.shop import shop_api, item_html
 from .utility_funcs import save_images_to_db_and_s3, delete_images_from_s3_and_db
 from apscheduler.schedulers.background import BackgroundScheduler
 from .background import query_for_reminder
@@ -96,8 +96,8 @@ def new_item():
         db.session.commit()
         # flash('Your post has been created!', 'success')
         # return redirect(url_for('home'))
-        result = {'url': url_for('shop_api.item', item_id=post.id)}
-        return jsonify(result)
+        # result = {'url': url_for('shop_api.item', item_id=post.id)}
+        return jsonify({'html':(item_html(post.id, 'standalone')), 'url':url_for('shop_api.item', item_id=post.id)})
     if current_user.confirmed is False:
         flash("You must confirm your email address before selling!", 'info')
         return redirect(url_for('account'))

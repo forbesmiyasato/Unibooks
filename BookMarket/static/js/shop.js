@@ -426,7 +426,9 @@ function initializeShopPage() {
 
 const browseCollapse = () => {
     if (document.documentElement.clientWidth < 768) {
-        if ($("#browse-categories")[0].classList.contains("collapsed") !== true) {
+        if (
+            $("#browse-categories")[0].classList.contains("collapsed") !== true
+        ) {
             $(".browse-collapse").collapse("toggle");
         }
     }
@@ -434,3 +436,41 @@ const browseCollapse = () => {
 // $('document').ready(function () {
 //    initializeShopPage();
 // })
+
+const onDelete = (index, name, id, url) => {
+    const deletedRow = $(`#row-${index}`);
+    console.log(url);
+    deletedRow.html(
+        `<td colspan='4' class='deleted-item'>Deleted <a href="/shop/${id}">${name}</a> from your bag</td>`
+    );
+    $.ajax({
+        url: url,
+        type: "post",
+    });
+};
+
+const initializeSingleProductPage = () => {
+    console.log("invoked")
+    var numImages = document.getElementsByClassName("single-prd-item").length;
+
+    if (numImages <= 1) {
+        console.log(numImages);
+        $(".s_Product_carousel").owlCarousel({
+            items: 1,
+            autoplay: false,
+            autoplayTimeout: 5000,
+            loop: false,
+            nav: false,
+            dots: false,
+        });
+    } else {
+        $(".s_Product_carousel").owlCarousel({
+            items: 1
+        });
+    }
+};
+
+$('document').ready(function () {
+   initializeSingleProductPage();
+})
+

@@ -400,13 +400,13 @@
             cache: false,
             contentType: false,
             processData: false,
-            success: function (data) {
+            success: function (response) {
                 console.log("success")
-                window.location.href = data['url']
+                history.pushState(null, null, response.url)
+                $('#block-content').html(response.html);
             },
             beforeSend: function () {
                 $("body").toggleClass("loading");
-
             },
             complete: function () {
                 $("body").toggleClass("loading");
