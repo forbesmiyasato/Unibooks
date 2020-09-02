@@ -405,16 +405,23 @@
             processData: false,
             success: function (response) {
                 console.log("success")
-                history.pushState(null, null, response.url)
-                $('#block-content').html(response.html);
+                toastr.options = { "positionClass": "toast-top-left", "closeButton": true}
                 if ($('#editModal').length) {
                     $('#editModal').modal('hide')
+                    toastr.success("Updated Post!");
+                } else {
+                    toastr.success("Post created!");
                 }
+                history.pushState(null, null, response.url)
+                $('#block-content').html(response.html);
             },
             beforeSend: function () {
                 $("body").toggleClass("loading");
                 if ($('#editModal').length) {
                     $('#editModal').modal('hide')
+                    $("#loader-text").html ('Updating Post...')
+                } else {
+                    $("#loader-text").html ('Creating Post...')
                 }
             },
             complete: function () {
@@ -422,6 +429,7 @@
                 if ($('#editModal').length) {
                     $('#editModal').modal('hide')
                 }
+                $("#loader-text").html ('Loading...')
             }
         });
 

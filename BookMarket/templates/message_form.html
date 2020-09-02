@@ -1,9 +1,9 @@
 {% block body_content %}
 
 <div class="container">
-    
+
     <div class="content-section">
-        <form method="POST" action="" enctype="multipart/form-data">
+        <form method="POST" id="message-form" action="" enctype="multipart/form-data">
             {{message_form.hidden_tag()}}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">
@@ -42,4 +42,67 @@
         </form>
     </div>
 </div>
+
+<script>
+    //  function onItemClick(url) {
+    //     history.pushState(null, null, url);
+    //     $.ajax({
+    //     url: url,
+    //     type: "get",
+    //     data: { standalone: 'true' },
+    //     async: true,
+    //     success: function (response) {
+    //       $('#block-content').html(response);
+    //     },
+    //     beforeSend: function () {
+    //       $("body").toggleClass("loading");
+    //     },
+    //     complete: function () {
+    //       $("body").toggleClass("loading");
+    //     }
+    //   })
+    // }
+    var $form = $('#message-form');
+
+    $form.on('submit', function (e) {
+        e.preventDefault();
+        console.log("SUBMITTED")
+
+        var formData = new FormData()
+        // append inputs to FormData
+        $.each($form.serializeArray(), function (key, field) {
+            console.log(field.name, field.value)
+            formData.append(field.name, field.value);
+        });
+
+        for (var value of formData.values()) {
+            console.log("1", value);
+        }
+
+        $.ajax({
+            url: window.location.href,
+            type: $form.attr('method') || 'POST',
+            enctype: $form.attr('enctype') || 'multipart/form-data',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: formData,
+            async: true,
+            success: function (response) {
+                $('#block-content').html(response.html);
+                toastr.options = {"positionClass": "toast-top-left", "closeButton": true}
+                toastr.success("Message Sent! The seller will contact you soon!");
+            },
+            beforeSend: function () {
+                $("body").toggleClass("loading");
+                $('#messageModal').modal('hide')
+                $("#loader-text").html ('Sending Message...')
+            },
+            complete: function () {
+                $("body").toggleClass("loading");
+                $("#loader-text").html ('Loading...')
+            }
+        })
+    })
+</script>
 {% endblock %}

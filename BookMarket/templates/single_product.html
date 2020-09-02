@@ -106,8 +106,7 @@
                             </div>
                         </div>
                         {% else %}
-                        <a class="primary-btn" href="javascript:void(0)" data-toggle="modal" data-target="#messageModal"
-                            onclick="window.location.hash = 'message';">
+                        <a class="primary-btn" href="javascript:void(0)" data-toggle="modal" data-target="#messageModal">
                             Message Seller <i class="lnr lnr-envelope"></i></a>
                         <a class="icon_btn" onclick="addToBag({{item.id}}, {{current_user.id}})"
                             href="javascript:void(0)"><span class="ti-bag"></span>
@@ -118,7 +117,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <button onclick="history.replaceState(null, null, ' ');" type="button"
+                                        <button type="button"
                                             class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>

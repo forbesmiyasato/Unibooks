@@ -1,5 +1,5 @@
 import re
-from flask import render_template, request, Blueprint, jsonify, url_for
+from flask import render_template, request, Blueprint, jsonify, url_for, flash
 from flask_login import current_user
 from flask_mail import Message
 from ..models import Item, ItemClass, ItemDepartment, ItemImage
@@ -119,12 +119,17 @@ def item_html(item_id, standalone=None):
     _item = Item.query.get_or_404(item_id)
     edit_form = ItemForm()
     message_form = MessageForm()
-    if message_form.validate_on_submit and message_form.message_submit.data:
+    print(request.form.get('email'))
+    if request.method == 'POST' and request.form.get('email'):
         print(_item.owner.email)
+        standalone = "standalone"
         msg = Message("Message regarding " + "\"" + _item.name + "\"",
                       sender="pacificubooks@gmail.com",
-                      recipients=[_item.owner.email], html=render_template("message_email.html", name=_item.name, email=message_form.email.data, body=message_form.message.data))
+                      recipients=[_item.owner.email], html=render_template("message_email.html", name=_item.name,
+                                                                           email=request.form.get('email'), body=request.form.get('message')))
         mail.send(msg)
+        # flash(
+        # f'Message sent! The seller will contact you soon.', 'success')
     elif request.method == 'POST' and standalone != 'notfromnewitem':
         standalone = "standalone"
         remains = request.form.get('remaining_files')
@@ -178,9 +183,8 @@ def item(item_id):
     standalone = request.args.get('standalone', None)
     if request.method == 'POST':
         print("YES!")
-        return jsonify({'html':(item_html(item_id, standalone)), 'url':url_for('shop_api.item', item_id=item_id)})
+        return jsonify({'html': (item_html(item_id, standalone)), 'url': url_for('shop_api.item', item_id=item_id)})
     return item_html(item_id, standalone)
-
 
 
 @shop_api.route("/shop/class/<int:class_id>")

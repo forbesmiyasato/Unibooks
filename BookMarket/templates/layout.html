@@ -81,6 +81,9 @@
   <script src="{{ url_for('static', filename='js/owl.carousel.min.js')}}"></script>
   <script src="{{ url_for('static', filename='js/shop.js')}}"></script>
 
+  <!-- toastr -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+  
 </head>
 
 <body>
@@ -151,7 +154,7 @@
         </form>
       </div>
     </div>
-    {% with messages = get_flashed_messages(with_categories=true) %}
+    <!-- {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     {% for category, message in messages %}
     <div class='alert alert-{{ category }}'>
@@ -164,11 +167,12 @@
     </script>
     {% endfor %}
     {% endif %}
-    {% endwith %}
+    {% endwith %} -->
   </header>
   <!-- End Header Area -->
   <div class="overlay">
     <div class="loader">Loading...</div>
+    <h3 class="loader-text" id="loader-text">Loading...</h3>
   </div>
 
   <div id="block-content">
@@ -401,6 +405,7 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
   <!-- <script src="{{ url_for('static', filename='js/gmaps.min.js')}}"></script> -->
   <script src="{{ url_for('static', filename='js/main.js')}}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
 
 </html>
