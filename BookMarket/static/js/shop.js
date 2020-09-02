@@ -243,6 +243,7 @@ const filterByPrice = (ele, filter, push) => {
 const getAll = () => {
     var url = window.location.href.split("?")[0] + "/data";
 
+    browseCollapse();
     clearAllActiveSelections();
     history.pushState(null, "", "shop");
 
@@ -277,6 +278,8 @@ const filterByClass = (
     department_id,
     department_name
 ) => {
+    browseCollapse();
+
     let url;
     if (window.location.href.includes("?")) {
         url = new URL(
@@ -304,6 +307,7 @@ const filterByClass = (
 };
 
 const filterByDepartment = (department_id) => {
+    browseCollapse();
     let url;
     if (window.location.href.includes("?")) {
         url = new URL(
@@ -420,6 +424,13 @@ function initializeShopPage() {
     getData(url.toString());
 }
 
+const browseCollapse = () => {
+    if (document.documentElement.clientWidth < 768) {
+        if ($("#browse-categories")[0].classList.contains("collapsed") !== true) {
+            $(".browse-collapse").collapse("toggle");
+        }
+    }
+};
 // $('document').ready(function () {
 //    initializeShopPage();
 // })

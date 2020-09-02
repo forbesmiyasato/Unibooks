@@ -1,11 +1,10 @@
 {% block body_content %}
 <div class="col-xl-3 col-lg-4 col-md-5">
     <div class="sidebar-categories">
-        <a aria-expanded="false" data-toggle="collapse" href="#main-categories"
-            aria-controls="">
+        <a id="browse-categories" aria-expanded="false" data-toggle="collapse" href="#main-categories" aria-controls="">
             <div class="head">Browse Categories<i class="ml-2 fas fa-angle-down"></i></div>
         </a>
-        <ul class="main-categories collapse show" id="main-categories" data-toggle="collapse" aria-expanded="false"
+        <ul class="main-categories browse-collapse collapse show" id="main-categories" data-toggle="collapse" aria-expanded="false"
             aria-controls="">
             <li class="main-nav-list">
                 <a href="javascript:getAll()">All<span class="number">{{ items|length }}</span></a>
