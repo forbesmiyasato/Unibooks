@@ -75,7 +75,7 @@ const getData = (url) => {
                 $("#nav-header").html(course.name);
                 $("#nav-department").html(
                     '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
-                        `<a href="javascript:getData('{{url_for('shop_api.getPosts')}}?department=${department.id}')">${department.name}</a>`
+                        `<a href="javascript:filterByDepartment(${department.id})">${department.name}</a>`
                 );
                 $("#nav-course").html(
                     '<span class="lnr lnr-arrow-right banner-arrow"></span>' +

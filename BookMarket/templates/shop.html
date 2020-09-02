@@ -7,8 +7,8 @@
             <div class="col-first">
                 <h1 id="nav-header">All Categories</h1>
                 <nav class="d-flex align-items-center" id="banner-navigation">
-                    <a href="{{url_for('home')}}">Home</a><span class="lnr lnr-arrow-right banner-arrow"></span>
-                    <a href="{{url_for('shop_api.shop')}}">Shop</span>
+                    <a href="javascript:linkClicked(document.getElementById('home'), '/home')">Home</a><span class="lnr lnr-arrow-right banner-arrow"></span>
+                    <a href="javascript:getAll()">Shop</span>
                     </a>
                     <div id="nav-department"></div>
                     <div id="nav-course"></div>
