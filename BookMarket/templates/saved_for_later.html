@@ -51,7 +51,7 @@
                                         <a href="{{url_for('shop_api.item', item_id=post.id)}}">
                                             <p class="hover-line">View more</p>
                                         </a>
-                                        <a onclick="onDelete('{{loop.index}}', '{{post.name}}', '{{post.id}}', '{{url_for('delete_saved', item_name=post.name, item_id=post.id, user_id=current_user.id)}}')" href="javascript:void(0)">
+                                        <a onclick="onSavedDelete('{{loop.index}}', '{{post.name}}', '{{post.id}}', '{{url_for('delete_saved', item_name=post.name, item_id=post.id, user_id=current_user.id)}}')" href="javascript:void(0)">
                                             <p class="hover-line">Delete</p>
                                         </a>
                                     </div>

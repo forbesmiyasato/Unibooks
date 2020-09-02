@@ -438,7 +438,7 @@ const browseCollapse = () => {
 //    initializeShopPage();
 // })
 
-const onDelete = (index, name, id, url) => {
+const onSavedDelete = (index, name, id, url) => {
     const deletedRow = $(`#row-${index}`);
     console.log(url);
     deletedRow.html(
@@ -471,7 +471,28 @@ const initializeSingleProductPage = () => {
     }
 };
 
-$('document').ready(function () {
-   initializeSingleProductPage();
-})
+// $('document').ready(function () {
+//    initializeSingleProductPage();
+// })
 
+onItemDelete = (url) => {
+    $.ajax({
+        url: url,
+        type: "post",
+        data: { standalone: 'true' },
+        async: true,
+        success: function (response) {
+            location.reload();
+        },
+        beforeSend: function () {
+            $("body").toggleClass("loading");
+        },
+        complete: function () {
+            $("body").toggleClass("loading");
+            // if (path === 'shop') {
+            //   initializeShopPage();
+            // }
+        }
+    })
+    console.log(url)
+}
