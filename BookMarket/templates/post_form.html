@@ -404,12 +404,21 @@
                 console.log("success")
                 history.pushState(null, null, response.url)
                 $('#block-content').html(response.html);
+                if ($('#editModal').length) {
+                    $('#editModal').modal('hide')
+                }
             },
             beforeSend: function () {
                 $("body").toggleClass("loading");
+                if ($('#editModal').length) {
+                    $('#editModal').modal('hide')
+                }
             },
             complete: function () {
                 $("body").toggleClass("loading");
+                if ($('#editModal').length) {
+                    $('#editModal').modal('hide')
+                }
             }
         });
 

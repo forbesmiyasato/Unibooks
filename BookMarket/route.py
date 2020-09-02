@@ -88,7 +88,9 @@ def new_item():
         db.session.refresh(post)
         newId = post.id
         if images:
+            print('before break 1')
             thumbnail = save_images_to_db_and_s3(images, newId)
+            print('before break 2')
             if thumbnail:
                 item = Item.query.filter_by(id=newId).first()
                 item.thumbnail = thumbnail
@@ -97,7 +99,7 @@ def new_item():
         # flash('Your post has been created!', 'success')
         # return redirect(url_for('home'))
         # result = {'url': url_for('shop_api.item', item_id=post.id)}
-        return jsonify({'html':(item_html(post.id, 'standalone')), 'url':url_for('shop_api.item', item_id=post.id)})
+        return jsonify({'html':(item_html(post.id, 'notfromnewitem')), 'url':url_for('shop_api.item', item_id=post.id)})
     if current_user.confirmed is False:
         flash("You must confirm your email address before selling!", 'info')
         return redirect(url_for('account'))

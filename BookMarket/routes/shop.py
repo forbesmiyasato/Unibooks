@@ -115,11 +115,7 @@ def getPosts():
                    department=department, course=course, sort=original_sort_term, filter=filter_term, show=show_term)
 
 
-def item_html(item_id, _standalone=None):
-    if _standalone is not None:
-        standalone = "standalone"
-    else:
-        standalone = request.args.get('standalone')
+def item_html(item_id, standalone=None):
     _item = Item.query.get_or_404(item_id)
     edit_form = ItemForm()
     message_form = MessageForm()
@@ -129,10 +125,12 @@ def item_html(item_id, _standalone=None):
                       sender="pacificubooks@gmail.com",
                       recipients=[_item.owner.email], html=render_template("message_email.html", name=_item.name, email=message_form.email.data, body=message_form.message.data))
         mail.send(msg)
-    elif request.method == 'POST':
+    elif request.method == 'POST' and standalone != 'notfromnewitem':
+        standalone = "standalone"
         remains = request.form.get('remaining_files')
         images = request.files.getlist("files[]")
         print(images)
+        print(remains)
         delete_non_remaining_images_from_s3_and_db(item_id, remains)
         if images:
             print(images)
@@ -150,7 +148,7 @@ def item_html(item_id, _standalone=None):
         _item.department_id = request.form.get('department_id')
         db.session.commit()
         print(item_id)
-        result = {'url': url_for('shop_api.item', item_id=item_id)}
+        # result = {'url': url_for('shop_api.item', item_id=item_id)}
     images = ItemImage.query.filter_by(item_id=item_id).all()
     item_class = ItemClass.query.get(_item.class_id)
     department = ItemDepartment.query.get(_item.department_id)
@@ -173,7 +171,12 @@ def item_html(item_id, _standalone=None):
 
 @shop_api.route("/shop/<int:item_id>", methods=['GET', 'POST'])
 def item(item_id):
-    return item_html(item_id)
+    standalone = request.args.get('standalone', None)
+    if request.method == 'POST':
+        print("YES!")
+        return jsonify({'html':(item_html(item_id, standalone)), 'url':url_for('shop_api.item', item_id=item_id)})
+    return item_html(item_id, standalone)
+
 
 
 @shop_api.route("/shop/class/<int:class_id>")
