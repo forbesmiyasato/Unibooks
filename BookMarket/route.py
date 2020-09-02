@@ -99,7 +99,7 @@ def new_item():
         # flash('Your post has been created!', 'success')
         # return redirect(url_for('home'))
         # result = {'url': url_for('shop_api.item', item_id=post.id)}
-        return jsonify({'html':(item_html(post.id, 'notfromnewitem')), 'url':url_for('shop_api.item', item_id=post.id)})
+        return jsonify({'html': (item_html(post.id, 'notfromnewitem')), 'url': url_for('shop_api.item', item_id=post.id)})
     if current_user.confirmed is False:
         flash("You must confirm your email address before selling!", 'info')
         return redirect(url_for('account'))
@@ -223,25 +223,32 @@ def delete_saved():
 @login_required
 def delete_item():
     item = request.args.get('item_id')
+    standalone = request.form['standalone']
+    print(standalone)
     deleting_item = Item.query.get_or_404(item)
     delete_images_from_s3_and_db(item)
     item_name = deleting_item.name
     current_user.listings = current_user.listings - 1
     db.session.delete(deleting_item)
     db.session.commit()
-    flash(f'Post "{item_name}" has been deleted', 'success')
-    return redirect(url_for('shop_api.shop'))
+    # flash(f'Post "{item_name}" has been deleted', 'success')
+    if standalone == "listings":
+        print(standalone)
+        return jsonify(html=listings_html(standalone))
+    return jsonify({'result': 'deleted'})
+
+def listings_html(standalone=None):
+    _listings = Item.query.filter_by(user_id=current_user.id).all()
+    form = ItemForm()
+    return render_template('user_listings.html', title="listings", listings=_listings,
+                           legend='Edit', form=form, item_id=1, item=None, standalone=standalone)
 
 
 @app.route('/listings')
 @login_required
 def listings():
     standalone = request.args.get('standalone')
-    listings = Item.query.filter_by(user_id=current_user.id).all()
-    form = ItemForm()
-    print(listings)
-    return render_template('user_listings.html', title="listings", listings=listings,
-                           legend='Edit', form=form, item_id=1, item=None, standalone=standalone)
+    return listings_html(standalone)
 
 
 @app.route('/aboutus')

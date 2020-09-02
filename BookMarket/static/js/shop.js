@@ -475,15 +475,21 @@ const initializeSingleProductPage = () => {
 //    initializeSingleProductPage();
 // })
 
-onItemDelete = (url, name, num) => {
+onItemDelete = (url, name, num, origin) => {
+    console.log(origin)
     $.ajax({
         url: url,
         type: "post",
-        data: { standalone: "true" },
+        data: { standalone: origin },
         async: true,
         success: function (response) {
             // location.reload();
-            $("#block-content").html(response.html);
+            // $("#block-content").html(response.html);
+            if (origin === 'shop') {
+                initializeShopPage()
+            } else if (origin === 'listings') {
+                $("#block-content").html(response.html);
+            }
             toastr.options = {
                 positionClass: "toast-top-left",
                 closeButton: true,
