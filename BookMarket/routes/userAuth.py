@@ -99,4 +99,5 @@ def login():
 @userAuth.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    standalone = request.args.get('standalone')
+    return render_template('home.html', title="Home", standalone=standalone)

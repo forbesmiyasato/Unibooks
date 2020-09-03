@@ -15,7 +15,7 @@
         <!-- single product -->
         <div class="col-lg-4 col-md-6">
             <div class="single-product">
-                <a><img class="img-thumbnail list-image"
+                <a href="javascript:onItemClick('{{url_for('shop_api.item', item_id=post.id)}}')"><img class="img-thumbnail list-image"
                         src="https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{post.thumbnail}}" alt=""></a>
                 <div class="product-details">
                     <h6 class="hover-line"><a
@@ -25,7 +25,7 @@
                         <h6>{{post.price}}</h6>
                     </div>
                     <div class="prd-bottom">
-                        <a href="{{url_for('shop_api.item', item_id=post.id)}}" class="social-info">
+                        <a href="javascript:onItemClick('{{url_for('shop_api.item', item_id=post.id)}}')" class="social-info">
                             <span class="lnr lnr-move"></span>
                             <p class="hover-text">View more</p>
                         </a>

@@ -83,7 +83,8 @@
 
   <!-- toastr -->
   <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 </head>
 
 <body>
@@ -126,17 +127,18 @@
               {% else %}
               <li class=" nav-item"><a id="login" class="nav-link activable {% if title == 'Login' %}active{% endif %}"
                   onclick="linkClicked(this, '{{ url_for('userAuth.login')}}')">Login</a></li>
-              <li class="nav-item"><a id="register" class="nav-link activable {% if title == 'Register' %}active{% endif %}"
+              <li class="nav-item"><a id="register"
+                  class="nav-link activable {% if title == 'Register' %}active{% endif %}"
                   onclick="linkClicked(this, '{{ url_for('userAuth.register')}}')">Register</a></li>
               {% endif %}
               <li class="nav-item"><a id="sell" class="nav-link activable {% if title == 'Sell' %}active{% endif %}"
                   href="{{url_for('new_item')}}">Sell</a></li>
             </ul>
             <ul class=" nav navbar-nav navbar-right">
-              <li class="nav-item"><a id="shopping-cart" onclick="linkClicked(this, '{{ url_for('saved_for_later')}}?cart')"
+              <li class="nav-item"><a id="shopping-cart"
+                  onclick="linkClicked(this, '{{ url_for('saved_for_later')}}?cart')"
                   class="cart activable {% if title == 'Saved?cart' %}active{% endif %}">
-                  <span class="ti-bag"><span
-                      class="bag-icon">{{ numItems|length }}</span></span></a></li>
+                  <span class="ti-bag"><span class="bag-icon">{{ numItems|length }}</span></span></a></li>
               <li class="nav-item">
                 <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
               </li>
@@ -154,20 +156,16 @@
         </form>
       </div>
     </div>
-    <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     {% for category, message in messages %}
-    <div class='alert alert-{{ category }}'>
-      {{ message }}
-    </div>
     <script>
-      setTimeout(function () {
-        $('.alert').fadeOut('fast');
-      }, 5000);
+      toastr.options = { "positionClass": "toast-top-center", "closeButton": true, "timeOut": "6000" }
+      toastr.{{category}}("{{message}}");
     </script>
     {% endfor %}
     {% endif %}
-    {% endwith %} -->
+    {% endwith %}
   </header>
   <!-- End Header Area -->
   <div class="overlay">
@@ -325,7 +323,7 @@
         active = document.getElementById(path);
       }
       if (active) {
-          active.classList.add('active');
+        active.classList.add('active');
       }
 
       $.ajax({
@@ -405,7 +403,6 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
   <!-- <script src="{{ url_for('static', filename='js/gmaps.min.js')}}"></script> -->
   <script src="{{ url_for('static', filename='js/main.js')}}"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
 
 </html>

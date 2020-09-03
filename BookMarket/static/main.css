@@ -555,6 +555,7 @@ body.loading .overlay {
 
 .loader-text {
     color: #70a9da;
+    width: 100vw;
 }
 .loader:before,
 .loader:after {
@@ -598,3 +599,24 @@ body.loading .overlay {
 /* .modal-open {
     overflow: hidden;
 } */
+
+.toast-top-center {
+    width: 100vw !important;
+    /* margin-top: 120px; */
+    right: auto !important;
+}
+
+.toast-top-left {
+    width: 300px !important;
+}
+
+.toast {
+    max-width: 1200px;
+    width: 100% !important;
+}
+
+@media(max-width: 992px) {
+    .toast-top-center {
+        margin-top: 60px;
+    }
+}
