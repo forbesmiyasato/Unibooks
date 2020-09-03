@@ -261,9 +261,9 @@
       }
 
       //collapse user menu on click
-      const userDropdown = $('.dropdown-menu')[0]
+      const userDropdown = $('.dropdown-toggle')
       if (userDropdown) {
-        userDropdown.style.display = 'none'
+        $('.dropdown-toggle').dropdown('toggle')
       }
 
       console.log(active)
