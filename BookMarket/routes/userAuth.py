@@ -1,8 +1,8 @@
-from flask import render_template, url_for, flash, request, redirect, Blueprint
+from flask import render_template, url_for, flash, request, redirect, Blueprint, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
 from flask_mail import Message
-from ..forms import RegistrationForm, LoginForm
+from ..forms import RegistrationForm, LoginForm, PasswordResetForm
 from .. import app, db, bcrypt, mail
 from ..models import Users
 
@@ -51,17 +51,43 @@ def send_confirm_email():
         f'Confirmation email sent to {current_user.email}', 'success')
     return redirect(url_for('account'))
 
-@userAuth.route('/password_rest/send')
-def send_reset_password_email():
-    email = current_user.email
+
+@userAuth.route('/password_reset', methods=['POST'])
+def send_password_reset():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    email = request.form.get('email')
+    print("!!!!!!!!!!!!!!!!!!", email)
     token = serializer.dumps(email, salt=salt)  # salt is optional
-    link = url_for('userAuth.confirm_email', token=token, _external=True)
-    msg = Message('Confirm Email', sender="pacificubooks@gmail.com", recipients=[email],
-                  html=render_template('confirmation_email.html', email=email, link=link))
+    link = url_for('userAuth.reset_password', token=token, _external=True)
+    msg = Message('Password Reset', sender="pacificubooks@gmail.com", recipients=[email],
+                  html=render_template('password_email.html', link=link))
     mail.send(msg)
-    flash(
-        f'Confirmation email sent to {current_user.email}', 'success')
-    return redirect(url_for('account'))
+    # flash(
+    #     f'Confirmation email sent to {current_user.email}', 'success')
+    return jsonify({'result': 'success'})
+
+
+@userAuth.route('/password_reset/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    try:
+        email = serializer.loads(token, salt=salt, max_age=60)
+        print(email)
+    except SignatureExpired:
+        return '<h1>The token is expired!<h1>'
+    except BadTimeSignature:
+        return '<h1>Invalid Token!<h1>'
+    form = PasswordResetForm()
+    if form.validate_on_submit():
+        user = Users.query.filter_by(email=email).first()
+        hashed_password = bcrypt.generate_password_hash(
+            form.password.data).decode('utf-8')
+        user.password = hashed_password
+        db.session.commit()
+        flash('Password reset! You can now sign in with your new password', 'success')
+        return redirect(url_for('userAuth.login'))
+    return render_template('password_reset.html', form=form)
+
 
 @userAuth.route('/confirm_email/<token>')
 def confirm_email(token):
@@ -89,10 +115,11 @@ def login():
         if (user and bcrypt.check_password_hash(user.password, form.password.data)):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
+            flash('Welcome!', 'success')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check email and password',
-                  'danger')
+                  'error')
     return render_template('login.html', title='Login', form=form, standalone=standalone)
 
 
@@ -100,4 +127,6 @@ def login():
 def logout():
     logout_user()
     standalone = request.args.get('standalone')
+    flash('Logged out!',
+          'info')
     return render_template('home.html', title="Home", standalone=standalone)

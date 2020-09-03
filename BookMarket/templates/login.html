@@ -57,35 +57,36 @@
             <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info")}}
             </div>
-            <small class="text-muted ml-2">
-                <a href="" data-toggle="modal" data-target="#forgotModal">Forgot Password?</a>
-                <div class="modal fade" id="forgotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Account Password Reset</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="recipient-name" class="col-form-label">Email</label>
-                                        <input type="text" class="form-control" id="recipient-name">
-                                    </div>
+        </form>
+
+        <small class="text-muted ml-2">
+            <a href="" data-toggle="modal" data-target="#forgotModal">Forgot Password?</a>
+            <div class="modal fade" id="forgotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Account Password Reset</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <form id="forgot-form" method="POST" action="">
+                                    <label for="recipient-name" class="col-form-label">Email</label>
+                                    <input required type="email" class="form-control" id="recipient-name" name="email">
                                 </form>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Reset Password</button>
-                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" form="forgot-form" class="btn btn-primary">Reset Password</button>
                         </div>
                     </div>
                 </div>
-            </small>
-        </form>
+            </div>
+        </small>
     </div>
     <div class="border-top pt-3 mb-4">
         <small class="text-muted">
@@ -93,4 +94,50 @@
         </small>
     </div>
 </div>
+
+<script>
+    var $form = $('#forgot-form');
+
+    // form submit
+    $form.on('submit', function (e) {
+        e.preventDefault();
+
+        var formData = new FormData()
+
+        console.log("SUBMIT!!!!!!!!")
+
+        // append inputs to FormData
+        $.each($form.serializeArray(), function (key, field) {
+            console.log(field.name, field.value)
+            formData.append(field.name, field.value);
+        });
+
+        for (var value of formData.values()) {
+            console.log("1", value);
+        }
+
+        $.ajax({
+            url: "{{url_for('userAuth.send_password_reset')}}",
+            type: $form.attr('method') || 'POST',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: formData,
+            async: true,
+            success: function (response) {
+                toastr.options = {"positionClass": "toast-top-center", "closeButton": true}
+                toastr.success("Email Sent! Please change your password within 24 hours!");
+            },
+            beforeSend: function () {
+                $("body").toggleClass("loading");
+                $('#forgotModal').modal('hide')
+                $("#loader-text").html ('Sending Password Reset Email...')
+            },
+            complete: function () {
+                $("body").toggleClass("loading");
+                $("#loader-text").html ('Loading...')
+            }
+        })
+    })
+</script>
 {% endblock content %}
