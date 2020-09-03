@@ -631,3 +631,7 @@ body.loading .overlay {
         margin-top: 60px;
     }
 }
+
+.nav-no-href {
+    color: white !important;
+}
