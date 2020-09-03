@@ -222,12 +222,17 @@
   <!-- Optional JavaScript -->
   <script>
     search_form = document.getElementById('search_form');
-
     function search(event) {
       event.preventDefault();
       search_input = document.getElementById('search_input').value;
       console.log(search_input);
-      window.location = '/shop?search=' + search_input;
+      // window.location = '/shop?search=' + search_input;
+      const searchDropdown = $('.search_input')[0]
+      if (searchDropdown) {
+        searchDropdown.style.display = 'none'
+      }
+
+      linkClicked(document.getElementById('shop'), `/shop?search=${search_input}`, search_input)
     }
 
     search_form.addEventListener("submit", search);
@@ -249,7 +254,7 @@
     let prevActive
 
     var call;
-    const linkClicked = (ele, url) => {
+    const linkClicked = (ele, url, search_input) => {
       console.log(url);
       if (document.documentElement.clientWidth < 992) {
         navbarCollapse();
@@ -285,7 +290,6 @@
 
       let alerts1 = document.getElementsByClassName('alert');
       console.log(alerts1);
-
       console.log(ele.id)
       if (call) call.abort()
       history.pushState({ element: ele.id }, null, url)
@@ -298,10 +302,16 @@
           $('#block-content').html(response);
         },
         beforeSend: function () {
+          let loadText = "loading"
+          if (search_input) {
+            loadText = `Finding items with "${search_input}" in it's title`;
+          }
           $("body").toggleClass("loading");
+          $("#loader-text").html(loadText)
         },
         complete: function () {
           $("body").toggleClass("loading");
+          $("#loader-text").html ('Loading...')
         }
       })
       $(window).scrollTop(0);
