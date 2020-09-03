@@ -102,7 +102,7 @@ def new_item():
         return jsonify({'html': (item_html(post.id, 'notfromnewitem')), 'url': url_for('shop_api.item', item_id=post.id)})
     if current_user.confirmed is False:
         flash("You must confirm your email address before selling!", 'info')
-        return redirect(url_for('login', standalone=standalone))
+        return redirect(url_for('userAuth.login', standalone=standalone))
     if current_user.listings >= 10:
         print(current_user.listings)
         flash("There is a max of 10 listings at a time! Please wait or delete listings before selling.", 'error')
