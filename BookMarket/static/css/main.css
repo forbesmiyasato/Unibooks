@@ -1239,13 +1239,13 @@ h6 {
   position: relative; }
   @media (max-width: 767px) {
     .banner-area {
-      margin-top: 50px; } }
+      margin-top: 60px; } }
   @media (max-width: 570px) {
     .banner-area {
-      margin-top: 50px; } }
+      margin-top: 60px; } }
   @media (max-width: 480px) {
     .banner-area {
-      margin-top: 50px; } }
+      margin-top: 60px; } }
   @media (max-width: 768px) {
     .banner-area .fullscreen {
       height: 650px !important; } }
