@@ -141,7 +141,7 @@ def item_html(item_id, standalone=None):
         print("2222", _item.thumbnail)
         if not _item.images:
             _item.thumbnail = "No_picture_available.png"
-        if images:
+        if images and not _item.images:
             print(images)
             thumbnail = save_images_to_db_and_s3(images, item_id)
             if thumbnail:
