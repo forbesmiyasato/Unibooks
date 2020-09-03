@@ -142,9 +142,10 @@ def item_html(item_id, standalone=None):
         if not _item.images:
             _item.thumbnail = "No_picture_available.png"
         if images:
+            prevImageCount = _item.images
             print(images)
             thumbnail = save_images_to_db_and_s3(images, item_id)
-            if thumbnail and not _item.images:
+            if thumbnail and not prevImageCount:
                 _item.thumbnail = thumbnail
         _item.name = request.form.get('name')
         _item.description = request.form.get('description')
