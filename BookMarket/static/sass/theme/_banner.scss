@@ -4,6 +4,17 @@
 	background: url(../img/banner/banner-bg.jpg) center no-repeat;
 	background-size: cover;
 	position: relative;
+
+	@media (max-width: 767px) {
+		margin-top: 60px;
+	}
+	@media (max-width: 570px) {
+		margin-top: 60px;
+	}
+	@media (max-width: 480px) {
+		margin-top: 60px; 
+	}
+
 	.fullscreen {
 		@media (max-width: 768px) {
 			height: 650px !important;
