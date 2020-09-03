@@ -16,12 +16,15 @@ salt = "email_confirm"
 def register():
     standalone = request.args.get('standalone')
     form = RegistrationForm()
+    print (form.email.data)
+    print (form.password.data)
     if form.validate_on_submit():
+        print (form.email.data)
+        print (form.password.data)
         email = form.email.data
         hashed_password = bcrypt.generate_password_hash(
             form.password.data).decode('utf-8')
-        user = Users(username=form.username.data,
-                     email=email, password=hashed_password)
+        user = Users(email=email, password=hashed_password)
 
         token = serializer.dumps(email, salt=salt)  # salt is optional
         link = url_for('userAuth.confirm_email', token=token, _external=True)
@@ -33,7 +36,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash(
-            f'Hi {form.username.data}! Your account has been created, you can now login!', 'success')
+            f'Your account has been created, you can now login!', 'success')
         return redirect(url_for('userAuth.login'))
     return render_template('register.html', title='Register', form=form, standalone=standalone)
 
