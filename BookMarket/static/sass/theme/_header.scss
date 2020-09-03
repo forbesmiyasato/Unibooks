@@ -239,15 +239,21 @@
 
 #search_input_box {
     position: fixed;
-    left: 50%;
-    @include transform(translateX(-50%));
-    width: 100%;
-    max-width: 1200px;
+    // left: 50%;
+    // @include transform(translateX(-50%));
+    width: 100vw;
+    // max-width: 1200px;
     z-index: 999;
-    @extend .gradient-bg-reverse;
     text-align: center;
-    padding: 5px 20px;
+    // padding: 5px 20px;
     // @include transition();
+
+    .container-wrapper {
+        margin: 0px auto;
+        @extend .gradient-bg-reverse;
+        max-width: 1200px;
+        padding: 5px 20px;
+    }
     .form-control {
         background: transparent;
         border: 0;

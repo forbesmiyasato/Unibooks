@@ -60,7 +60,7 @@
   background: -o-linear-gradient(90deg, #70a9da 0%, #d4e5f3 100%);
   background: linear-gradient(90deg, #70a9da 0%, #d4e5f3 100%); }
 
-.gradient-bg-reverse, #search_input_box {
+.gradient-bg-reverse, #search_input_box .container-wrapper {
   background: -webkit-linear-gradient(270deg, #70a9da 0%, #d4e5f3 100%);
   background: -moz-linear-gradient(270deg, #70a9da 0%, #d4e5f3 100%);
   background: -o-linear-gradient(270deg, #70a9da 0%, #d4e5f3 100%);
@@ -1182,17 +1182,13 @@ h6 {
 
 #search_input_box {
   position: fixed;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  -moz-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  -o-transform: translateX(-50%);
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 1200px;
+  width: 100vw;
   z-index: 999;
-  text-align: center;
-  padding: 5px 20px; }
+  text-align: center; }
+  #search_input_box .container-wrapper {
+    margin: 0px auto;
+    max-width: 1200px;
+    padding: 5px 20px; }
   #search_input_box .form-control {
     background: transparent;
     border: 0;
