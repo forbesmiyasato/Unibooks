@@ -187,6 +187,17 @@ li.options {
         height: 100px !important;
         width: 110px !important;
     }
+
+    .slide-default h1 {
+        font-size: 28px !important;
+        font-weight: 700 !important;
+    }
+
+    .slide-default h5 {
+        font-size: 10px !important;
+        font-weight: 500 !important;
+        color: white;
+    }
 }
 
 @media (min-width: 576px) {
