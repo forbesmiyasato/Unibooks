@@ -100,10 +100,12 @@ const getData = (url) => {
             console.log("item list before send");
             $("#items-list").hide();
             $("#posts-spinner").show();
+            // $("body").toggleClass("loading");
         },
         complete: function () {
             $("#posts-spinner").hide();
             $("#items-list").show();
+            // $("body").toggleClass("loading");
         },
         error: function (xhr) {
             getAll(); // return to main shop page on invalid query caused by user messing with url params

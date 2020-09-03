@@ -161,7 +161,7 @@
     {% for category, message in messages %}
     <script>
       toastr.options = { "positionClass": "toast-top-center", "closeButton": true, "timeOut": "6000" }
-      toastr.{{category}}("{{message}}");
+      toastr.{ { category } } ("{{message}}");
     </script>
     {% endfor %}
     {% endif %}
@@ -252,6 +252,9 @@
       if (document.documentElement.clientWidth < 992) {
         navbarCollapse();
       }
+
+      //collapse user menu on click
+      $('.dropdown-menu')[0].style.display = 'none'
 
       console.log(active)
       console.log(ele)
