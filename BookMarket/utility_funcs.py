@@ -1,6 +1,8 @@
 import os
 import secrets
 import boto3
+import io
+from PIL import Image
 from .models import ItemImage
 from . import db, S3_BUCKET
 # Utility functions
@@ -9,6 +11,7 @@ def save_images_to_db_and_s3(form_images, item_id):
     for index, images in enumerate(form_images):
         if images:
             # print(images.filesize)
+            print(images)
             random_hex = secrets.token_hex(8)
             _, f_ext = os.path.splitext(images.filename)
             picture_fn = random_hex + f_ext
@@ -17,18 +20,24 @@ def save_images_to_db_and_s3(form_images, item_id):
                 thumbnail = picture_fn
             # picture_path = os.path.join(
             #     app.root_path, 'static/item_pics', picture_fn)
-            # output_size = (183, 195)
+            image = Image.open(images)
+            image_format = image.format
+            print(image.size)
+            if image.height > 600 or image.width > 600:
+                output_size = (600, 600)
+                image = image.resize(output_size, Image.ANTIALIAS)
+            in_mem_file = io.BytesIO()
+            image.save(in_mem_file, optimize=True, format=image_format)
             # # output_resolution = (1000, 1000)
             # resizedImage = Image.open(images)
             # # resizedImage.thumbnail(output_resolution)
-            # resizedImage = resizedImage.resize(output_size, Image.ANTIALIAS)
-            # resizedImage.save(picture_path)
             s3_resource = boto3.resource('s3')
             my_bucket = s3_resource.Bucket(S3_BUCKET)
-            my_bucket.Object(picture_fn).put(Body=images)
+            print(images)
+            my_bucket.Object(picture_fn).put(Body=in_mem_file.getvalue())
             image_name = images.filename[:30]
-            images.seek(0, os.SEEK_END)
-            size = images.tell()
+            # images.seek(0, os.SEEK_END)
+            size = in_mem_file.tell()
             print(size)
             newImage = ItemImage(item_id=item_id, image_file=picture_fn, image_name=image_name, image_size=size)
             db.session.add(newImage)
