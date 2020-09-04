@@ -25,7 +25,10 @@ def init_scheduler():
     scheduler.start()
     atexit.register(lambda: scheduler.shutdown())
 
-
+@app.errorhandler(404)
+def error404(error): 
+    flash("Page Not Found! Redirected back to home.", 'error')
+    return redirect(url_for('home'))
 @app.route('/')
 @app.route('/home')
 def home():

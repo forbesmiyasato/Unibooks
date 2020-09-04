@@ -77,9 +77,11 @@ def reset_password(token):
         email = serializer.loads(token, salt=salt, max_age=60)
         print(email)
     except SignatureExpired:
-        return '<h1>The token is expired!<h1>'
+        flash("The token is expired! Click \"Forgot password\" below to send another one.", 'error')
+        return redirect(url_for('userAuth.login'))
     except BadTimeSignature:
-        return '<h1>Invalid Token!<h1>'
+        flash("Invalid Token!", 'error')
+        return redirect(url_for('home'))
     form = PasswordResetForm()
     if form.validate_on_submit():
         user = Users.query.filter_by(email=email).first()
@@ -98,9 +100,12 @@ def confirm_email(token):
         email = serializer.loads(token, salt=salt, max_age=60)
         print(email)
     except SignatureExpired:
-        return '<h1>The token is expired!<h1>'
+        # return '<h1>The token is expired!<h1>'
+        flash("The token is expired! Login and go to accounts to send another one.", 'error')
+        return redirect(url_for('userAuth.login'))
     except BadTimeSignature:
-        return '<h1>Invalid Token!<h1>'
+        flash("Invalid Token!", 'error')
+        return redirect(url_for('home'))
     flash(f'Email confirmed! Welcome!', 'success')
     user = Users.query.filter_by(email=email).first()
     login_user(user)
