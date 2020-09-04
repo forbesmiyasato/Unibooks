@@ -67,10 +67,11 @@ const getData = (url) => {
             // console.log(response)
             let course = response.course;
             let department = response.department;
+            let search = response.search
+            let numResults = response.numResults;
             // let sort = response.sort
             // let filter = response.filter
             // let show = response.filter
-
             if (course) {
                 $("#nav-header").html(course.name);
                 $("#nav-department").html(
@@ -88,24 +89,29 @@ const getData = (url) => {
                         `<a class="text-white">${department.name}</a>`
                 );
                 $("#nav-course").html("");
+            } else if (search) {
+                $("#nav-header").html(`${numResults} results found for "${search}"`);
+                $("#nav-department").html(
+                    '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
+                        `<a class="text-white">"${search}"</a>`
+                );
+                $("#nav-course").html("");
             } else {
                 $("#nav-header").html("All Categories");
                 $("#nav-department").html("");
                 $("#nav-course").html("");
             }
+            $("#posts-spinner").toggleClass("loading");
 
             $("#reloading-content").html(response.html);
         },
         beforeSend: function () {
             console.log("item list before send");
+            $("#posts-spinner").toggleClass("loading");
             $("#items-list").hide();
-            $("#posts-spinner").show();
-            // $("body").toggleClass("loading");
         },
         complete: function () {
-            $("#posts-spinner").hide();
-            $("#items-list").show();
-            // $("body").toggleClass("loading");
+            // $("#posts-spinner").toggleClass("loading");
         },
         error: function (xhr) {
             getAll(); // return to main shop page on invalid query caused by user messing with url params
@@ -394,8 +400,6 @@ const sort = (ele, order, push) => {
 };
 
 function initializeShopPage() {
-    $("#posts-spinner").show();
-
     let url;
     if (window.location.href.includes("?")) {
         url = new URL(

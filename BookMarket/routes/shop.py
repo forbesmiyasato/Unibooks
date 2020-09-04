@@ -51,12 +51,14 @@ def shop():
 
 @shop_api.route("/shop/data")
 def getPosts():
+    num_results = 0
     department_id = request.args.get('department')
     department = None
     class_id = request.args.get('class')
     course = None
-    search_term = request.args.get('search')
+    search_term = request.args.get('search', None)
     sort_term = request.args.get('sort', 'none')
+    search = None
     filter_term = request.args.get('filter', '0+99999')
     show_term = request.args.get('show', None)
     low = None
@@ -84,9 +86,11 @@ def getPosts():
         sort_by = getattr(Item.date_posted, sort_term)()
     page = request.args.get('page', 1, type=int)
     if search_term:
+        search = search_term
         search_term = '%{0}%'.format(search_term)
         posts = Item.query.filter(Item.name.ilike(search_term)).order_by(
             sort_by)
+        num_results = posts.count()
     elif class_id:
         posts = Item.query.filter_by(class_id=class_id).order_by(
             sort_by)
@@ -112,7 +116,8 @@ def getPosts():
         per_page = posts.count()
     posts = posts.paginate(page=page, per_page=per_page)
     return jsonify(html=render_template("shop-main.html", posts=posts),
-                   department=department, course=course, sort=original_sort_term, filter=filter_term, show=show_term)
+                   department=department, course=course, sort=original_sort_term, filter=filter_term, show=show_term,
+                   search=search, numResults=num_results)
 
 
 def item_html(item_id, standalone=None):
