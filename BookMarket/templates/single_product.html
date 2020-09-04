@@ -81,9 +81,8 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
-                                        <form action="{{url_for('delete_item', item_id=item.id)}}" method="POST">
-                                            <input type="submit" class="btn btn-danger" value="Delete">
-                                        </form>
+                                            <input type="submit" class="btn btn-danger" value="Delete"
+                                            onclick="onItemDelete('{{url_for('delete_item', item_id=item.id)}}', '{{item.name}}', '', 'single')">
                                     </div>
                                 </div>
                             </div>
@@ -139,6 +138,7 @@
 <script>
     // window.location.reload(false);
     initializeSingleProductPage();
+    highlightNavLink();
 
     // departmentOnClick = (id) => {
     //     linkClicked(document.getElementById('shop'), `/shop?department=${id}`)

@@ -162,7 +162,7 @@
     {% if messages %}
     {% for category, message in messages %}
     <script>
-      toastr.options = { "positionClass": {% if message == 'Welcome!' or message == 'Logged out!' %} "toast-top-left" {% else %} "toast-top-center" {% endif %}
+      toastr.options = { "positionClass": {% if message == 'Logged in!' or message == 'Logged out!' %} "toast-top-left" {% else %} "toast-top-center" {% endif %}
       , "closeButton": true, "timeOut": "6000" }
       toastr.{{category}}("{{message}}");
     </script>
@@ -261,6 +261,7 @@
         navbarCollapse();
       }
 
+      highlightNavLink()
       //collapse user menu on click
       const userDropdown = $('.dropdown-toggle')
       if (userDropdown) {
@@ -322,6 +323,7 @@
     window.addEventListener('popstate', (event) => {
       console.log(active)
       console.log(event)
+      highlightNavLink()
       if (active) {
         active.classList.remove('active');
       }
@@ -352,6 +354,7 @@
         async: true,
         success: function (response) {
           $('#block-content').html(response);
+          highlightNavLink()
         },
         beforeSend: function () {
           $("body").toggleClass("loading");

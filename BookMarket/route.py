@@ -227,6 +227,7 @@ def delete_saved():
 def delete_item():
     item = request.args.get('item_id')
     standalone = request.form['standalone']
+    # standalone = "standlone"
     print(standalone)
     deleting_item = Item.query.get_or_404(item)
     delete_images_from_s3_and_db(item)

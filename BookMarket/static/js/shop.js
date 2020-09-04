@@ -500,6 +500,8 @@ onItemDelete = (url, name, num, origin) => {
                 initializeShopPage()
             } else if (origin === 'listings') {
                 $("#block-content").html(response.html);
+            } else if (origin === 'single') {
+                linkClicked(document.getElementById('shop'), '/shop');
             }
             toastr.options = {
                 positionClass: "toast-top-left",
@@ -509,6 +511,7 @@ onItemDelete = (url, name, num, origin) => {
         },
         beforeSend: function () {
             $("body").toggleClass("loading");
+            console.log(`#deleteModal${num}`);
             $(`#deleteModal${num}`).modal('hide');
             $("#loader-text").html (`Deleting "${name}"...`)
         },
@@ -543,4 +546,17 @@ function onItemClick(url) {
             // }
         }
     })
+}
+
+const highlightNavLink = () => {
+    let path = (window.location.pathname + location.search).split('/')[1];
+    let active = document.getElementById(path);
+    if (active) {
+        let prevActive = document.getElementsByClassName('activable active')[0]
+        console.log(prevActive)
+        if (prevActive) {
+            prevActive.classList.remove('active')
+        }
+        active.classList.add('active')
+    }
 }
