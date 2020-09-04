@@ -454,6 +454,10 @@ const onSavedDelete = (index, name, id, url) => {
     $.ajax({
         url: url,
         type: "post",
+        success: function() {
+            let bagIcon = document.getElementsByClassName("bag-icon")[0];
+            bagIcon.innerHTML = parseInt(bagIcon.innerHTML) - 1;
+        }
     });
 };
 
@@ -518,3 +522,25 @@ onItemDelete = (url, name, num, origin) => {
     });
     console.log(url);
 };
+
+function onItemClick(url) {
+    history.pushState(null, null, url);
+    $.ajax({
+        url: url,
+        type: "get",
+        data: { standalone: 'true' },
+        async: true,
+        success: function (response) {
+            $('#block-content').html(response);
+        },
+        beforeSend: function () {
+            $("body").toggleClass("loading");
+        },
+        complete: function () {
+            $("body").toggleClass("loading");
+            // if (path === 'shop') {
+            //   initializeShopPage();
+            // }
+        }
+    })
+}
