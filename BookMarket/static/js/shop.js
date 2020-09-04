@@ -232,6 +232,7 @@ const filterByPrice = (ele, filter, push) => {
     let search_params = url.searchParams;
     if (reclicked) {
         search_params.delete("filter");
+        filter = "default"
     } else {
         search_params.set("filter", filter);
     }
