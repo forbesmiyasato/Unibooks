@@ -25,10 +25,13 @@ def init_scheduler():
     scheduler.start()
     atexit.register(lambda: scheduler.shutdown())
 
+
 @app.errorhandler(404)
-def error404(error): 
+def error404(error):
     flash("Page Not Found! Redirected back to home.", 'error')
     return redirect(url_for('home'))
+
+
 @app.route('/')
 @app.route('/home')
 def home():
@@ -60,7 +63,7 @@ def account():
     #     form.email.data = current_user.email
     # image_file = url_for(
     #     'static', filename='profile_pics/' + current_user.image_file)
-    return jsonify({'html': render_template('account.html', title='Account', confirmed=current_user.confirmed, standalone=standalone)})
+    return render_template('account.html', title='Account', confirmed=current_user.confirmed, standalone=standalone)
 
 
 # @app.route("/files/<int:userid>", methods=['POST'])
@@ -109,19 +112,27 @@ def new_item():
             flash("You must sign in before selling!", 'info')
             return redirect(url_for('userAuth.login'))
     if current_user.confirmed is False:
-        flash("You must confirm your email address before selling!", 'info')
-        return redirect(url_for('account', standalone=standalone))
+        if standalone:
+            return jsonify({'html': render_template('account.html', title='Account', confirmed=current_user.confirmed, standalone=standalone),
+                            'state': "confirm-required"})
+        else:
+            flash("You must confirm your email address before selling!", 'info')
+            return redirect(url_for('account', standalone=standalone))
     if current_user.listings >= 10:
-        print(current_user.listings)
-        flash("There is a max of 10 listings at a time! Please wait or delete listings before selling.", 'error')
-        return redirect(url_for('listings', standalone=standalone))
+        if standalone:
+            return jsonify({'html': listings_html(standalone),
+                            'state': "max-listings"})
+        else:
+            print("!!!!!!!!!!!!")
+            flash("There is a max of 10 listings at a time! Please wait or delete listings before selling.", 'error')
+            return redirect(url_for('listings', standalone=standalone))
     form = ItemForm()
     # form.item_class.choices = class_list
     departments = db.session.query(ItemDepartment).all()
     # department_list = [(i.id, i.department_name) for i in departments]
     print(departments)
-    return jsonify({'html': render_template('create_post.html', title='Sell', form=form, legend='New', item_id=0, departments=departments,
-                           standalone=standalone)})
+    return render_template('create_post.html', title='Sell', form=form, legend='New', item_id=0, departments=departments,
+                           standalone=standalone)
 
 
 @app.route('/class/<department>')
@@ -200,7 +211,7 @@ def saved_for_later():
             if item:
                 items.append(item)
     print(items)
-    return jsonify({'html': render_template('saved_for_later.html', title=title, posts=items, standalone=standalone)})
+    return render_template('saved_for_later.html', title=title, posts=items, standalone=standalone)
 
 
 @app.route('/saved/delete', methods=['POST'])
@@ -246,6 +257,7 @@ def delete_item():
         return jsonify(html=listings_html(standalone))
     return jsonify({'result': 'deleted'})
 
+
 def listings_html(standalone=None):
     _listings = Item.query.filter_by(user_id=current_user.id).all()
     form = ItemForm()
@@ -257,7 +269,7 @@ def listings_html(standalone=None):
 @login_required
 def listings():
     standalone = request.args.get('standalone')
-    return jsonify({'html': listings_html(standalone)})
+    return listings_html(standalone)
 
 
 @app.route('/aboutus')
@@ -266,7 +278,7 @@ def about_us():
     print(standalone)
     # if standalone != "true":
     #     standalone = False
-    return jsonify({'html': render_template('about_us.html', standalone=standalone)})
+    return render_template('about_us.html', standalone=standalone)
 # def download_file(file_name):
 #     """
 #     Function to download a given file from an S3 bucket

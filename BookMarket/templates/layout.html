@@ -132,7 +132,7 @@
                   onclick="linkClicked(this, '{{ url_for('userAuth.register')}}')">Register</a></li>
               {% endif %}
               <li class="nav-item"><a id="sell" class="nav-link activable {% if title == 'Sell' %}active{% endif %}"
-                onclick="linkClicked(this, '{{ url_for('new_item')}}')">Sell</a></li>
+                  onclick="linkClicked(this, '{{ url_for('new_item')}}')">Sell</a></li>
             </ul>
             <ul class=" nav navbar-nav navbar-right">
               <li class="nav-item"><a id="shopping-cart"
@@ -303,9 +303,14 @@
         success: function (response) {
           console.log(response)
           if (response.state) {
-            if (response.state === 'login-required')
-            toastr.options = { "positionClass": "toast-top-center", "closeButton": true}
-            toastr.info("You must sign in before selling!!");
+            toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
+            if (response.state === 'login-required') {
+              toastr.info("You must sign in before selling!");
+            } else if (response.state === 'confirm-required') {
+              toastr.info("You must confirm your email address before selling!");
+            } else if (response.state === 'max-listings') {
+              toastr.error("There is a max of 10 listings at a time! Please wait or delete listings before selling.");
+            }
             $('#block-content').html(response.html);
           } else {
             $('#block-content').html(response);
