@@ -6,7 +6,7 @@ from flask_login import current_user, login_required
 from .models import Users, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater
 from .forms import UpdateAccountForm, ItemForm
 from . import app, db
-from .routes.userAuth import userAuth
+from .routes.userAuth import userAuth, login_html
 from .routes.shop import shop_api, item_html
 from .utility_funcs import save_images_to_db_and_s3, delete_images_from_s3_and_db
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -60,7 +60,7 @@ def account():
     #     form.email.data = current_user.email
     # image_file = url_for(
     #     'static', filename='profile_pics/' + current_user.image_file)
-    return render_template('account.html', title='Account', confirmed=current_user.confirmed, standalone=standalone)
+    return jsonify({'html': render_template('account.html', title='Account', confirmed=current_user.confirmed, standalone=standalone)})
 
 
 # @app.route("/files/<int:userid>", methods=['POST'])
@@ -76,9 +76,8 @@ def account():
 #     return jsonify({'added': 'added'})
 
 @app.route("/item/new", methods=['GET', 'POST'])
-@login_required
 def new_item():
-    standalone = request.args.get('standalone')
+    standalone = request.args.get('standalone', None)
     if request.method == 'POST':
         # images = form.images.data  # without plugin
         images = request.files.getlist('files[]')
@@ -103,6 +102,12 @@ def new_item():
         # return redirect(url_for('home'))
         # result = {'url': url_for('shop_api.item', item_id=post.id)}
         return jsonify({'html': (item_html(post.id, 'notfromnewitem')), 'url': url_for('shop_api.item', item_id=post.id)})
+    if current_user.is_authenticated is False:
+        if standalone:
+            return jsonify({'html': login_html('standalone'), 'state': "login-required"})
+        else:
+            flash("You must sign in before selling!", 'info')
+            return redirect(url_for('userAuth.login'))
     if current_user.confirmed is False:
         flash("You must confirm your email address before selling!", 'info')
         return redirect(url_for('account', standalone=standalone))
@@ -115,8 +120,8 @@ def new_item():
     departments = db.session.query(ItemDepartment).all()
     # department_list = [(i.id, i.department_name) for i in departments]
     print(departments)
-    return render_template('create_post.html', title='Sell', form=form, legend='New', item_id=0, departments=departments,
-                           standalone=standalone)
+    return jsonify({'html': render_template('create_post.html', title='Sell', form=form, legend='New', item_id=0, departments=departments,
+                           standalone=standalone)})
 
 
 @app.route('/class/<department>')
@@ -195,7 +200,7 @@ def saved_for_later():
             if item:
                 items.append(item)
     print(items)
-    return render_template('saved_for_later.html', title=title, posts=items, standalone=standalone)
+    return jsonify({'html': render_template('saved_for_later.html', title=title, posts=items, standalone=standalone)})
 
 
 @app.route('/saved/delete', methods=['POST'])
@@ -252,7 +257,7 @@ def listings_html(standalone=None):
 @login_required
 def listings():
     standalone = request.args.get('standalone')
-    return listings_html(standalone)
+    return jsonify({'html': listings_html(standalone)})
 
 
 @app.route('/aboutus')
@@ -261,7 +266,7 @@ def about_us():
     print(standalone)
     # if standalone != "true":
     #     standalone = False
-    return render_template('about_us.html', standalone=standalone)
+    return jsonify({'html': render_template('about_us.html', standalone=standalone)})
 # def download_file(file_name):
 #     """
 #     Function to download a given file from an S3 bucket
