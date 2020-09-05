@@ -7,7 +7,8 @@
             <div class="col-first">
                 <h1>Your Listings</h1>
                 <nav class="d-flex align-items-center">
-                    <a href="javascript:linkClicked(document.getElementById('home'), '/home')">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="javascript:linkClicked(document.getElementById('home'), '/home')">Home<span
+                            class="lnr lnr-arrow-right"></span></a>
                     <a class="nav-no-href">Listings</span></a>
                 </nav>
             </div>
@@ -46,9 +47,11 @@
                             <div class="single-product">
                                 <div class="product-details">
                                     <h6 class="hover-line"><a
-                                            href="javascript:onItemClick('{{url_for('shop_api.item', item_id=post.id)}}')">{{post.name}}</a></h6>
+                                            href="javascript:onItemClick('{{url_for('shop_api.item', item_id=post.id)}}')">{{post.name}}</a>
+                                    </h6>
                                     <div class="prd-bottom">
-                                        <a href="javascript:onItemClick('{{url_for('shop_api.item', item_id=post.id)}}')">
+                                        <a
+                                            href="javascript:onItemClick('{{url_for('shop_api.item', item_id=post.id)}}')">
                                             <p class="hover-line">View more</p>
                                         </a>
                                         <a data-toggle="modal" data-target="#deleteModal{{loop.index}}"
@@ -56,7 +59,7 @@
                                             <p class="hover-line">Delete</p>
                                         </a>
                                         <a data-toggle="modal" data-target="#editModal{{loop.index}}"
-                                            href="javascript:void(0)">
+                                            onclick="listingEditClicked({{post.id}}, '{{post.class_id}}', '{{post.department_id}}')">
                                             <p class="hover-line">Edit</p>
                                         </a>
                                     </div>
@@ -104,6 +107,8 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
+                                <div class="modal-body" id="modal-body-{{post.id}}">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -115,7 +120,45 @@
     </div>
 </div>
 <script>
-    deleteClicked = (url) => {
+    const listingEditClicked = (id, item_class, item_department) => {
+        let url = `/editform/${id}`
+        console.log(url)
+        $.ajax({
+            url: url,
+            type: 'GET',
+            async: true,
+            success: function (response) {
+                $(`#modal-body-${id}`).html(response)
+                console.log("test", item_class)
+                console.log(item_department)
+                //     window.location.hash = 'update';
+                let class_select = document.getElementById('class_list');
+                let department_select = document.getElementById('department_list')
+                console.log(class_select)
+                class_select.value = item_class
+                department_select.value = item_department
+
+                var $department_select = $(document.getElementById('department_list'))
+                var department_selectize = $department_select[0].selectize;
+                department_selectize.setValue(item_department);
+
+                var $class_select = $(document.getElementById('class_list'))
+                var class_selectize = $class_select[0].selectize;
+                class_selectize.setValue(item_class);
+            },
+            beforeSend: function () {
+                $("body").toggleClass("loading");
+            },
+            complete: function () {
+                $("body").toggleClass("loading");
+                // if (path === 'shop') {
+                //   initializeShopPage();
+                // }
+            }
+        })
+        console.log(url)
+    }
+    const deleteClicked = (url) => {
         $.ajax({
             url: url,
             type: "post",

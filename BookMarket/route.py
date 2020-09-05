@@ -8,7 +8,7 @@ from .forms import UpdateAccountForm, ItemForm
 from . import app, db
 from .routes.userAuth import userAuth, login_html
 from .routes.shop import shop_api, item_html
-from .utility_funcs import save_images_to_db_and_s3, delete_images_from_s3_and_db
+from .utility_funcs import save_images_to_db_and_s3, delete_images_from_s3_and_db, delete_non_remaining_images_from_s3_and_db
 from apscheduler.schedulers.background import BackgroundScheduler
 from .background import query_for_reminder
 # from werkzeug.utils import secure_filename
@@ -302,3 +302,53 @@ def inject_num_items():
             return {'numItems': []}
     else:
         return {'numItems': []}
+
+@app.route("/editform/<int:item_id>")
+def get_edit_form(item_id=None):
+    _item = Item.query.get_or_404(item_id)
+    edit_form = ItemForm()
+    if request.method == 'POST':
+        remains = request.form.get('remaining_files')
+        images = request.files.getlist("files[]")
+        print(images)
+        print(remains)
+        delete_non_remaining_images_from_s3_and_db(item_id, remains)
+        print("11111", _item.images)
+        print("2222", _item.thumbnail)
+        if not _item.images:
+            _item.thumbnail = "No_picture_available.png"
+        if images:
+            prevImageCount = _item.images
+            print(images)
+            thumbnail = save_images_to_db_and_s3(images, item_id)
+            if thumbnail and not prevImageCount:
+                _item.thumbnail = thumbnail
+        _item.name = request.form.get('name')
+        _item.description = request.form.get('description')
+        print(request.form.get('author'))
+        _item.isbn = request.form.get('isbn')
+        _item.author = request.form.get('author')
+        _item.user_id = current_user.id
+        _item.price = request.form.get('price')
+        _item.class_id = request.form.get('class_id')
+        _item.department_id = request.form.get('department_id')
+        db.session.commit()
+        print(item_id)
+        # result = {'url': url_for('shop_api.item', item_id=item_id)}
+    images = ItemImage.query.filter_by(item_id=item_id).all()
+    item_class = ItemClass.query.get(_item.class_id)
+    department = ItemDepartment.query.get(_item.department_id)
+    # for updating
+    print(department.department_name)
+    departments = db.session.query(ItemDepartment).all()
+    edit_form.name.data = _item.name
+    edit_form.description.data = _item.description
+    edit_form.price.data = _item.price
+    edit_form.isbn.data = _item.isbn
+    edit_form.author.data = _item.author
+    edit_form.item_class.data = item_class
+    edit_form.item_department.data = department.department_name
+    # for messaging
+    return render_template('post_form.html', title=_item.name, item=_item, images=images,
+                           item_class=item_class, department=department, form=edit_form, legend="Edit",
+                           item_id=item_id, departments=departments)

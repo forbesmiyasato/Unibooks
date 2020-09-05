@@ -202,25 +202,25 @@
         //             $('select').niceSelect('update');
         //         })
         //     });
-        {% if item and(images | length > 0) %}
+    //     {% if item and(images | length > 0) %}
 
-        console.log("!!!!!!!!!!!!!!!!")
-        $('input[name="files"]').fileuploader({
-            files: [
-                {% for image in images %}
-    {
-                "name": "",
-                "file": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
-                "type": "image/png",
-                "size": 26162,
-                "data": {
-                    "thumbnail": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
-                }
-            },
-            {% endfor %}
-        ],
-        })
-    {% endif %}
+    //     console.log("!!!!!!!!!!!!!!!!")
+    //     $('input[name="files"]').fileuploader({
+    //         files: [
+    //             {% for image in images %}
+    // {
+    //             "name": "",
+    //             "file": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
+    //             "type": "image/png",
+    //             "size": 26162,
+    //             "data": {
+    //                 "thumbnail": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
+    //             }
+    //         },
+    //         {% endfor %}
+    //     ],
+    //     })
+    // {% endif %}
     };
 
     function addToBag(item_id, user_id) {
