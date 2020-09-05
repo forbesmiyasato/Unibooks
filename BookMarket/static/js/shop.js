@@ -450,8 +450,10 @@ const browseCollapse = () => {
 const onSavedDelete = (index, name, id, url) => {
     const deletedRow = $(`#row-${index}`);
     console.log(url);
+    const itemUrl = `/shop/${id}`
+    console.log(itemUrl)
     deletedRow.html(
-        `<td colspan='4' class='deleted-item'>Deleted <a href="/shop/${id}">${name}</a> from your bag</td>`
+        `<td colspan='4' class='deleted-item'>Deleted <a href="javascript:onItemClick('${itemUrl}')">${name}</a> from your bag</td>`
     );
     $.ajax({
         url: url,
