@@ -1,3 +1,5 @@
+// var shopCall = null;
+
 function getParameterByName(name) {
     var match = RegExp("[?&]" + name + "=([^&]*)").exec(window.location.search);
     return match && decodeURIComponent(match[1].replace(/\+/g, " "));
@@ -58,11 +60,11 @@ const sortSwitch = (sort_term) => {
     }
 };
 const getData = (url) => {
-    console.log(url);
     $.ajax({
         url: url,
         type: "get",
         data: null,
+        async: true,
         success: function (response) {
             // console.log(response)
             let course = response.course;
@@ -103,7 +105,6 @@ const getData = (url) => {
                 $("#nav-department").html("");
                 $("#nav-course").html("");
             }
-            $("#posts-spinner").toggleClass("loading");
 
             $("#reloading-content").html(response.html);
         },
@@ -113,7 +114,7 @@ const getData = (url) => {
             $("#items-list").hide();
         },
         complete: function () {
-            // $("#posts-spinner").toggleClass("loading");
+            $("#posts-spinner").toggleClass("loading");
         },
         error: function (xhr) {
             getAll(); // return to main shop page on invalid query caused by user messing with url params

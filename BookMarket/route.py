@@ -262,7 +262,7 @@ def listings_html(standalone=None):
     _listings = Item.query.filter_by(user_id=current_user.id).order_by(
             Item.date_posted.asc()).all()
     form = ItemForm()
-    return render_template('user_listings.html', title="listings", listings=_listings,
+    return render_template('user_listings.html', title="Listings", listings=_listings,
                            legend='Edit', form=form, item_id=1, item=None, standalone=standalone)
 
 

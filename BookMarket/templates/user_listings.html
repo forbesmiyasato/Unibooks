@@ -22,7 +22,7 @@
             {% if listings|length == 0 %}
             <div class="container no-results">
                 <h1 class="pt-3 pb-3">You have no items for sale</h1>
-                <a href="{{url_for('new_item')}}" class="genric-btn primary-border circle arrow">Start Selling<span
+                <a href="javascript:linkClicked(this, '{{ url_for('new_item')}}')" class="genric-btn primary-border circle arrow">Start Selling<span
                         class="lnr lnr-arrow-right"></span></a>
             </div>
             {% else %}
