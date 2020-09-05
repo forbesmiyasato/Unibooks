@@ -39,9 +39,13 @@ def home():
     return render_template('home.html', title="Home", standalone=standalone)
 
 
-@app.route('/about')
-def about():
-    return render_template('about.html', title="about")
+@app.route('/aboutus')
+def about_us():
+    standalone = request.args.get('standalone')
+    print(standalone)
+    # if standalone != "true":
+    #     standalone = False
+    return render_template('about_us.html', standalone=standalone, title="about")
 
 
 @app.route("/account", methods=['GET', 'POST'])
@@ -272,14 +276,6 @@ def listings():
     standalone = request.args.get('standalone')
     return listings_html(standalone)
 
-
-@app.route('/aboutus')
-def about_us():
-    standalone = request.args.get('standalone')
-    print(standalone)
-    # if standalone != "true":
-    #     standalone = False
-    return render_template('about_us.html', standalone=standalone)
 # def download_file(file_name):
 #     """
 #     Function to download a given file from an S3 bucket

@@ -568,6 +568,8 @@ const highlightNavLink = () => {
         active = document.getElementById("user");
     } else if (path === "item") {
         active = document.getElementById("sell");
+    } else if (path === "aboutus") {
+        active = document.getElementById("home");
     } else {
         console.log("!!!!!!!!!!!!", path.split("?")[0])
         active = document.getElementById(path.split("?")[0]);

@@ -1,4 +1,3 @@
-
 {% if not standalone %} {% extends "layout.html" %} {% endif %}
 {% block content %}
 <!-- Start Banner Area -->
@@ -8,8 +7,9 @@
             <div class="col-first">
                 <h1>About Us</h1>
                 <nav class="d-flex align-items-center">
-                    <a href="{{url_for('home')}}">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="#">About Us</a>
+                    <a href="javascript:linkClicked(this, '{{ url_for('home')}}')">Home<span
+                            class="lnr lnr-arrow-right"></span></a>
+                    <a class="nav-no-href">About Us</a>
                 </nav>
             </div>
         </div>
@@ -22,9 +22,32 @@
     <div class="row">
         <div class="col-md-6 text-center">
             <h2>Forbes Miyasato</h2>
+            <img alt="founder Forbes" class="about-image"
+                src="https://book-advertisement-site.s3-us-west-2.amazonaws.com/No_picture_available.png" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus justo nulla, vestibulum non ligula id,
+                fringilla posuere nulla. Pellentesque et lobortis velit. Fusce fringilla sit amet libero ac dapibus.
+                Aliquam a enim sed lorem sagittis fringilla. Aliquam libero ante, molestie vitae pellentesque vel,
+                bibendum ut tortor. Cras egestas in ligula id aliquam. Lorem ipsum dolor sit amet, consectetur
+                adipiscing elit. Phasellus mollis convallis lacus, sit amet porta urna ultricies ut. Quisque id lobortis
+                purus. Nunc quis metus euismod, consectetur erat sed, fermentum quam. Nam ut erat eros. Pellentesque
+                rutrum sapien eget ullamcorper rutrum. Donec porta sapien vel ante ullamcorper dictum. Mauris viverra
+                mauris et eleifend congue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur
+                ridiculus mus. Sed tempus arcu vitae porta tincidunt.</p>
+
         </div>
         <div class="col-md-6 text-center">
             <h2>Thomas Robasciotti</h2>
+            <img alt="founder Thomas" class="about-image"
+                src="https://book-advertisement-site.s3-us-west-2.amazonaws.com/No_picture_available.png" />
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus justo nulla, vestibulum non ligula id,
+                fringilla posuere nulla. Pellentesque et lobortis velit. Fusce fringilla sit amet libero ac dapibus.
+                Aliquam a enim sed lorem sagittis fringilla. Aliquam libero ante, molestie vitae pellentesque vel,
+                bibendum ut tortor. Cras egestas in ligula id aliquam. Lorem ipsum dolor sit amet, consectetur
+                adipiscing elit. Phasellus mollis convallis lacus, sit amet porta urna ultricies ut. Quisque id lobortis
+                purus. Nunc quis metus euismod, consectetur erat sed, fermentum quam. Nam ut erat eros. Pellentesque
+                rutrum sapien eget ullamcorper rutrum. Donec porta sapien vel ante ullamcorper dictum. Mauris viverra
+                mauris et eleifend congue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur
+                ridiculus mus. Sed tempus arcu vitae porta tincidunt.</p>
         </div>
     </div>
 </div>
