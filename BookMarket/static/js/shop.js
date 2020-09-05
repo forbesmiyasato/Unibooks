@@ -552,27 +552,33 @@ function onItemClick(url) {
 
 const highlightNavLink = () => {
     let path = (window.location.pathname + location.search).split("/")[1];
-    let active = document.getElementById(path);
+    let active;
+    if (path === "saved?cart") {
+        active = document.getElementById("shopping-cart");
+    } else if (
+        path === "listings" ||
+        path === "account" ||
+        path === "saved"
+    ) {
+        active = document.getElementById("user");
+    } else if (path === "item") {
+        active = document.getElementById("sell");
+    } else {
+        console.log("!!!!!!!!!!!!", path.split("?")[0])
+        active = document.getElementById(path.split("?")[0]);
+    }
+    console.log(path, active)
     if (active) {
         let prevActive = document.getElementsByClassName("activable active")[0];
         console.log("PREV ACTIVE", prevActive);
         if (prevActive) {
             prevActive.classList.remove("active");
+            console.log(prevActive.classList.contains("active"))
         }
 
-        if (path === "saved?cart") {
-            active = document.getElementById("shopping-cart");
-        } else if (
-            path === "listings" ||
-            path === "account" ||
-            path === "saved"
-        ) {
-            active = document.getElementById("user");
-        } else if (path === "item") {
-            active = document.getElementById("sell");
-        } else {
-            active = document.getElementById(path);
-        }
+        console.log("PATH", path)
+        
         active.classList.add("active");
+        console.log("ACTIVE", active)
     }
 };

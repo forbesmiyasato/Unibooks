@@ -251,8 +251,8 @@
     //   })
     // }
 
-    let active = document.getElementsByClassName('activable active')[0];
-    let prevActive
+    // let active = document.getElementsByClassName('activable active')[0];
+    // let prevActive
 
     let home_html = null;
     let login_html = null;
@@ -266,41 +266,41 @@
       if (document.documentElement.clientWidth < 992) {
         navbarCollapse();
       }
-
-      highlightNavLink()
       //collapse user menu on click
       const userDropdown = $('.dropdown-toggle')
       if (userDropdown) {
         $('.dropdown-toggle').dropdown('toggle')
       }
 
-      console.log(active)
-      console.log(ele)
-      if (active) {
-        active.classList.remove('active');
-      }
-      if (!ele.classList.contains('footer-item')) {
-        prevActive = active;
-        if (url === '/saved?cart') {
-          let cart = document.getElementById('shopping-cart');
-          cart.classList.add('active')
-          active = cart
-        }
-        else if (url === '/listings' || url === '/account' || url === '/saved') {
-          let user = document.getElementById('user');
-          user.classList.add('active')
-          active = user;
-        } else {
-          ele.classList.add('active');
-          active = ele;
-        }
-      }
+      // console.log(active)
+      // console.log(ele)
+      // if (active) {
+      //   active.classList.remove('active');
+      // }
+      // if (!ele.classList.contains('footer-item')) {
+      //   prevActive = active;
+      //   if (url === '/saved?cart') {
+      //     let cart = document.getElementById('shopping-cart');
+      //     cart.classList.add('active')
+      //     active = cart
+      //   }
+      //   else if (url === '/listings' || url === '/account' || url === '/saved') {
+      //     let user = document.getElementById('user');
+      //     user.classList.add('active')
+      //     active = user;
+      //   } else {
+      //     ele.classList.add('active');
+      //     active = ele;
+      //   }
+      // }
 
       let alerts1 = document.getElementsByClassName('alert');
       console.log(alerts1);
       console.log(ele.id)
       if (call) call.abort()
       history.pushState({ element: ele.id }, null, url)
+      highlightNavLink()
+
       if (url === '/home' && home_html) {
         $('#block-content').html(home_html);
       } else if (url === '/login' && login_html) {
@@ -332,12 +332,16 @@
             if (response.state) {
               toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
               if (response.state === 'login-required') {
+                history.replaceState(null, null, '/login')
                 toastr.info("You must sign in before selling!");
               } else if (response.state === 'confirm-required') {
+                history.replaceState(null, null, '/account')
                 toastr.info("You must confirm your email address before selling!");
               } else if (response.state === 'max-listings') {
+                history.replaceState(null, null, '/listings')
                 toastr.error("There is a max of 10 listings at a time! Please wait or delete listings before selling.");
               }
+              highlightNavLink()
               $('#block-content').html(response.html);
             } else {
               $('#block-content').html(response);
@@ -362,12 +366,11 @@
     }
 
     window.addEventListener('popstate', (event) => {
-      console.log(active)
       console.log(event)
       highlightNavLink()
-      if (active) {
-        active.classList.remove('active');
-      }
+      // if (active) {
+      //   active.classList.remove('active');
+      // }
       // if (event.state) {
       //   prevActive = document.getElementById(event.state.element);
       //   prevActive.classList.add('active');
@@ -377,20 +380,22 @@
       // active = prevActive;
       let path = (window.location.pathname + location.search).split('/')[1];
       console.log(path)
-      if (path === 'saved?cart') {
-        active = document.getElementById('shopping-cart');
-      } else if (path === 'listings' || path === 'account' || path === 'saved') {
-        active = document.getElementById('user');
-      } else if (path === 'item') {
-        active = document.getElementById('sell');
-      } else {
-        active = document.getElementById(path);
-      }
-      if (active) {
-        active.classList.add('active');
-      }
+      // if (path === 'saved?cart') {
+      //   active = document.getElementById('shopping-cart');
+      // } else if (path === 'listings' || path === 'account' || path === 'saved') {
+      //   active = document.getElementById('user');
+      // } else if (path === 'item') {
+      //   active = document.getElementById('sell');
+      // } else {
+      //   active = document.getElementById(path);
+      // }
+      // if (active) {
+      //   active.classList.add('active');
+      // }
 
       console.log(location.href)
+      highlightNavLink()
+
       if (path === 'home' && home_html) {
         $('#block-content').html(home_html);
       } else if (path === 'login' && login_html) {
@@ -411,17 +416,20 @@
             if (response.state) {
               toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
               if (response.state === 'login-required') {
+                history.replaceState(null, null, '/login')
                 toastr.info("You must sign in before selling!");
               } else if (response.state === 'confirm-required') {
+                history.replaceState(null, null, '/account')
                 toastr.info("You must confirm your email address before selling!");
               } else if (response.state === 'max-listings') {
+                history.replaceState(null, null, '/listings')
                 toastr.error("There is a max of 10 listings at a time! Please wait or delete listings before selling.");
               }
+              highlightNavLink()
               $('#block-content').html(response.html);
             } else {
               $('#block-content').html(response);
             }
-            highlightNavLink()
           },
           beforeSend: function () {
             $("body").toggleClass("loading");
