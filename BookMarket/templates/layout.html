@@ -309,7 +309,7 @@
         $('#block-content').html(register_html);
       } else if (url ==='/shop' && shop_html) {
         $('#block-content').html(shop_html);
-      } else if (url ==='/about' && about_html) {
+      } else if (url ==='/aboutus' && about_html) {
         $('#block-content').html(about_html);
       } else {
       call = $.ajax({
@@ -326,7 +326,7 @@
             login_html = response
           } else if (url === '/shop' && !shop_html) {
             shop_html = response
-          } else if (url === '/about' && !about_html) {
+          } else if (url === '/aboutus' && !about_html) {
             about_html = response
           }
           if (response.state) {
