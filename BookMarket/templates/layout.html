@@ -164,7 +164,7 @@
     <script>
       toastr.options = { "positionClass": {% if message == 'Logged in!' or message == 'Logged out!' %} "toast-top-left" {% else %} "toast-top-center" {% endif %}
       , "closeButton": true, "timeOut": "6000" }
-      toastr.{{category}}("{{message}}");
+      toastr.{{ category}}("{{message}}");
     </script>
     {% endfor %}
     {% endif %}
@@ -303,60 +303,60 @@
       history.pushState({ element: ele.id }, null, url)
       if (url === '/home' && home_html) {
         $('#block-content').html(home_html);
-      } else if (url ==='/login' && login_html) {
+      } else if (url === '/login' && login_html) {
         $('#block-content').html(login_html);
-      } else if (url ==='/register' && register_html) {
+      } else if (url === '/register' && register_html) {
         $('#block-content').html(register_html);
-      } else if (url ==='/shop' && shop_html) {
+      } else if (url === '/shop' && shop_html) {
         $('#block-content').html(shop_html);
-      } else if (url ==='/aboutus' && about_html) {
+      } else if (url === '/aboutus' && about_html) {
         $('#block-content').html(about_html);
       } else {
-      call = $.ajax({
-        url: url,
-        type: "get",
-        data: { standalone: 'true' },
-        async: true,
-        success: function (response) {
-          if (url === '/home' && !home_html) {
-            home_html = response
-          } else if (url === '/register' && !register_html) {
-            register_html = response
-          } else if (url === '/login' && !login_html) {
-            login_html = response
-          } else if (url === '/shop' && !shop_html) {
-            shop_html = response
-          } else if (url === '/aboutus' && !about_html) {
-            about_html = response
-          }
-          if (response.state) {
-            toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
-            if (response.state === 'login-required') {
-              toastr.info("You must sign in before selling!");
-            } else if (response.state === 'confirm-required') {
-              toastr.info("You must confirm your email address before selling!");
-            } else if (response.state === 'max-listings') {
-              toastr.error("There is a max of 10 listings at a time! Please wait or delete listings before selling.");
+        call = $.ajax({
+          url: url,
+          type: "get",
+          data: { standalone: 'true' },
+          async: true,
+          success: function (response) {
+            if (url === '/home' && !home_html) {
+              home_html = response
+            } else if (url === '/register' && !register_html) {
+              register_html = response
+            } else if (url === '/login' && !login_html) {
+              login_html = response
+            } else if (url === '/shop' && !shop_html) {
+              shop_html = response
+            } else if (url === '/aboutus' && !about_html) {
+              about_html = response
             }
-            $('#block-content').html(response.html);
-          } else {
-            $('#block-content').html(response);
+            if (response.state) {
+              toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
+              if (response.state === 'login-required') {
+                toastr.info("You must sign in before selling!");
+              } else if (response.state === 'confirm-required') {
+                toastr.info("You must confirm your email address before selling!");
+              } else if (response.state === 'max-listings') {
+                toastr.error("There is a max of 10 listings at a time! Please wait or delete listings before selling.");
+              }
+              $('#block-content').html(response.html);
+            } else {
+              $('#block-content').html(response);
+            }
+          },
+          beforeSend: function () {
+            let loadText = "Loading..."
+            if (search_input) {
+              loadText = `Finding items with "${search_input}" in it's title`;
+            }
+            $("body").toggleClass("loading");
+            $("#loader-text").html(loadText)
+          },
+          complete: function () {
+            $("body").toggleClass("loading");
+            $("#loader-text").html('Loading...')
           }
-        },
-        beforeSend: function () {
-          let loadText = "Loading..."
-          if (search_input) {
-            loadText = `Finding items with "${search_input}" in it's title`;
-          }
-          $("body").toggleClass("loading");
-          $("#loader-text").html(loadText)
-        },
-        complete: function () {
-          $("body").toggleClass("loading");
-          $("#loader-text").html('Loading...')
-        }
-      })
-    }
+        })
+      }
       $(window).scrollTop(0);
       // $('#block-content').load(url + "?standalone=true")
     }
@@ -391,37 +391,51 @@
       }
 
       console.log(location.href)
-      $.ajax({
-        url: location.href,
-        type: "get",
-        data: { standalone: 'true' },
-        async: true,
-        success: function (response) {
-          if (response.state) {
-            toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
-            if (response.state === 'login-required') {
-              toastr.info("You must sign in before selling!");
-            } else if (response.state === 'confirm-required') {
-              toastr.info("You must confirm your email address before selling!");
-            } else if (response.state === 'max-listings') {
-              toastr.error("There is a max of 10 listings at a time! Please wait or delete listings before selling.");
+      if (path === 'home' && home_html) {
+        $('#block-content').html(home_html);
+      } else if (path === 'login' && login_html) {
+        $('#block-content').html(login_html);
+      } else if (path === 'register' && register_html) {
+        $('#block-content').html(register_html);
+      } else if (path === 'shop' && shop_html) {
+        $('#block-content').html(shop_html);
+      } else if (path === 'aboutus' && about_html) {
+        $('#block-content').html(about_html);
+      } else {
+        $.ajax({
+          url: location.href,
+          type: "get",
+          data: { standalone: 'true' },
+          async: true,
+          success: function (response) {
+            if (response.state) {
+              toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
+              if (response.state === 'login-required') {
+                toastr.info("You must sign in before selling!");
+              } else if (response.state === 'confirm-required') {
+                toastr.info("You must confirm your email address before selling!");
+              } else if (response.state === 'max-listings') {
+                toastr.error("There is a max of 10 listings at a time! Please wait or delete listings before selling.");
+              }
+              $('#block-content').html(response.html);
+            } else {
+              $('#block-content').html(response);
             }
-            $('#block-content').html(response.html);
-          } else {
-            $('#block-content').html(response);
+            highlightNavLink()
+          },
+          beforeSend: function () {
+            $("body").toggleClass("loading");
+          },
+          complete: function () {
+            $("body").toggleClass("loading");
+            // if (path === 'shop') {
+            //   initializeShopPage();
+            // }
           }
-          highlightNavLink()
-        },
-        beforeSend: function () {
-          $("body").toggleClass("loading");
-        },
-        complete: function () {
-          $("body").toggleClass("loading");
-          // if (path === 'shop') {
-          //   initializeShopPage();
-          // }
-        }
-      })
+        })
+      }
+      $(window).scrollTop(0);
+
     });
 
     const navbarCollapse = () => {
