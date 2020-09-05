@@ -67,7 +67,7 @@ const getData = (url) => {
             // console.log(response)
             let course = response.course;
             let department = response.department;
-            let search = response.search
+            let search = response.search;
             let numResults = response.numResults;
             // let sort = response.sort
             // let filter = response.filter
@@ -90,7 +90,9 @@ const getData = (url) => {
                 );
                 $("#nav-course").html("");
             } else if (search) {
-                $("#nav-header").html(`${numResults} results found for "${search}"`);
+                $("#nav-header").html(
+                    `${numResults} results found for "${search}"`
+                );
                 $("#nav-department").html(
                     '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
                         `<a class="text-white">"${search}"</a>`
@@ -232,7 +234,7 @@ const filterByPrice = (ele, filter, push) => {
     let search_params = url.searchParams;
     if (reclicked) {
         search_params.delete("filter");
-        filter = "default"
+        filter = "default";
     } else {
         search_params.set("filter", filter);
     }
@@ -454,10 +456,10 @@ const onSavedDelete = (index, name, id, url) => {
     $.ajax({
         url: url,
         type: "post",
-        success: function() {
+        success: function () {
             let bagIcon = document.getElementsByClassName("bag-icon")[0];
             bagIcon.innerHTML = parseInt(bagIcon.innerHTML) - 1;
-        }
+        },
     });
 };
 
@@ -487,7 +489,7 @@ const initializeSingleProductPage = () => {
 // })
 
 onItemDelete = (url, name, num, origin) => {
-    console.log(origin)
+    console.log(origin);
     $.ajax({
         url: url,
         type: "post",
@@ -496,12 +498,12 @@ onItemDelete = (url, name, num, origin) => {
         success: function (response) {
             // location.reload();
             // $("#block-content").html(response.html);
-            if (origin === 'shop') {
-                initializeShopPage()
-            } else if (origin === 'listings') {
+            if (origin === "shop") {
+                initializeShopPage();
+            } else if (origin === "listings") {
                 $("#block-content").html(response.html);
-            } else if (origin === 'single') {
-                linkClicked(document.getElementById('shop'), '/shop');
+            } else if (origin === "single") {
+                linkClicked(document.getElementById("shop"), "/shop");
             }
             toastr.options = {
                 positionClass: "toast-top-left",
@@ -512,12 +514,12 @@ onItemDelete = (url, name, num, origin) => {
         beforeSend: function () {
             $("body").toggleClass("loading");
             console.log(`#deleteModal${num}`);
-            $(`#deleteModal${num}`).modal('hide');
-            $("#loader-text").html (`Deleting "${name}"...`)
+            $(`#deleteModal${num}`).modal("hide");
+            $("#loader-text").html(`Deleting "${name}"...`);
         },
         complete: function () {
             $("body").toggleClass("loading");
-            $("#loader-text").html ('Loading...')
+            $("#loader-text").html("Loading...");
             // if (path === 'shop') {
             //   initializeShopPage();
             // }
@@ -531,10 +533,10 @@ function onItemClick(url) {
     $.ajax({
         url: url,
         type: "get",
-        data: { standalone: 'true' },
+        data: { standalone: "true" },
         async: true,
         success: function (response) {
-            $('#block-content').html(response);
+            $("#block-content").html(response);
         },
         beforeSend: function () {
             $("body").toggleClass("loading");
@@ -544,19 +546,33 @@ function onItemClick(url) {
             // if (path === 'shop') {
             //   initializeShopPage();
             // }
-        }
-    })
+        },
+    });
 }
 
 const highlightNavLink = () => {
-    let path = (window.location.pathname + location.search).split('/')[1];
+    let path = (window.location.pathname + location.search).split("/")[1];
     let active = document.getElementById(path);
     if (active) {
-        let prevActive = document.getElementsByClassName('activable active')[0]
-        console.log(prevActive)
+        let prevActive = document.getElementsByClassName("activable active")[0];
+        console.log("PREV ACTIVE", prevActive);
         if (prevActive) {
-            prevActive.classList.remove('active')
+            prevActive.classList.remove("active");
         }
-        active.classList.add('active')
+
+        if (path === "saved?cart") {
+            active = document.getElementById("shopping-cart");
+        } else if (
+            path === "listings" ||
+            path === "account" ||
+            path === "saved"
+        ) {
+            active = document.getElementById("user");
+        } else if (path === "item") {
+            active = document.getElementById("sell");
+        } else {
+            active = document.getElementById(path);
+        }
+        active.classList.add("active");
     }
-}
+};

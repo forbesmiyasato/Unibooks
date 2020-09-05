@@ -381,6 +381,8 @@
         active = document.getElementById('shopping-cart');
       } else if (path === 'listings' || path === 'account' || path === 'saved') {
         active = document.getElementById('user');
+      } else if (path === 'item') {
+        active = document.getElementById('sell');
       } else {
         active = document.getElementById(path);
       }
@@ -388,13 +390,26 @@
         active.classList.add('active');
       }
 
+      console.log(location.href)
       $.ajax({
         url: location.href,
         type: "get",
         data: { standalone: 'true' },
         async: true,
         success: function (response) {
-          $('#block-content').html(response);
+          if (response.state) {
+            toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
+            if (response.state === 'login-required') {
+              toastr.info("You must sign in before selling!");
+            } else if (response.state === 'confirm-required') {
+              toastr.info("You must confirm your email address before selling!");
+            } else if (response.state === 'max-listings') {
+              toastr.error("There is a max of 10 listings at a time! Please wait or delete listings before selling.");
+            }
+            $('#block-content').html(response.html);
+          } else {
+            $('#block-content').html(response);
+          }
           highlightNavLink()
         },
         beforeSend: function () {
