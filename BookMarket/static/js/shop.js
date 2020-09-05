@@ -528,6 +528,7 @@ onItemDelete = (url, name, num, origin) => {
     console.log(url);
 };
 
+//shop
 function onItemClick(url) {
     history.pushState(null, null, url);
     $.ajax({
@@ -550,6 +551,7 @@ function onItemClick(url) {
     });
 }
 
+//layout
 const highlightNavLink = () => {
     let path = (window.location.pathname + location.search).split("/")[1];
     let active;
@@ -582,3 +584,47 @@ const highlightNavLink = () => {
         console.log("ACTIVE", active)
     }
 };
+
+
+//listings
+let prevModal = null;
+const listingEditClicked = (id, item_class, item_department) => {
+    let url = `/editform/${id}`
+    console.log("!!!!!!!!!!!", url)
+    if (prevModal) {
+        prevModal.empty();
+    }
+    $.ajax({
+        url: url,
+        type: 'GET',
+        async: true,
+        success: function (response) {
+            $(`#modal-body-${id}`).html(response)
+            console.log("test", item_class)
+            console.log(item_department)
+            //     window.location.hash = 'update';
+            let class_select = document.getElementById('class_list');
+            let department_select = document.getElementById('department_list')
+            console.log(class_select)
+            class_select.value = item_class
+            department_select.value = item_department
+
+            var $department_select = $(document.getElementById('department_list'))
+            var department_selectize = $department_select[0].selectize;
+            department_selectize.setValue(item_department);
+
+            var $class_select = $(document.getElementById('class_list'))
+            var class_selectize = $class_select[0].selectize;
+            class_selectize.setValue(item_class);
+        },
+        beforeSend: function () {
+            $(`#modal-body-${id}`).html("")
+            $(`.modal-content-${id}`).toggleClass("loading");
+        },
+        complete: function () {
+            $(`.modal-content-${id}`).toggleClass("loading");
+            prevModal = $(`#modal-body-${id}`);
+        }
+    })
+    console.log(url)
+}

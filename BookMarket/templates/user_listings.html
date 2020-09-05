@@ -50,18 +50,21 @@
                                             href="javascript:onItemClick('{{url_for('shop_api.item', item_id=post.id)}}')">{{post.name}}</a>
                                     </h6>
                                     <div class="prd-bottom">
-                                        <a
-                                            href="javascript:onItemClick('{{url_for('shop_api.item', item_id=post.id)}}')">
-                                            <p class="hover-line">View more</p>
-                                        </a>
-                                        <a data-toggle="modal" data-target="#deleteModal{{loop.index}}"
-                                            href="javascript:void(0)">
-                                            <p class="hover-line">Delete</p>
-                                        </a>
-                                        <a data-toggle="modal" data-target="#editModal{{loop.index}}"
-                                            onclick="listingEditClicked({{post.id}}, '{{post.class_id}}', '{{post.department_id}}')">
-                                            <p class="hover-line">Edit</p>
-                                        </a>
+                                        <p class="hover-line"><a
+                                                href="javascript:onItemClick('{{url_for('shop_api.item', item_id=post.id)}}')">
+                                                View more
+                                        </p></a>
+                                        <p class="hover-line">
+                                            <a data-toggle="modal" data-target="#deleteModal{{loop.index}}"
+                                                href="javascript:void(0)">
+                                                Delete
+                                            </a>
+                                        </p>
+                                        <p class="hover-line"><a data-toggle="modal"
+                                                class="single-edit"
+                                                data-target="#editModal{{post.id}}"
+                                                onclick="listingEditClicked({{post.id}}, '{{post.class_id}}', '{{post.department_id}}')">Edit</a></a>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -97,10 +100,14 @@
                         </div>
                     </div>
                     <!-- Edit Modal -->
-                    <div class="modal fade" id="editModal{{loop.index}}" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="editModal{{post.id}}" tabindex="-1" role="dialog"
                         aria-labelledby="editModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
-                            <div class="modal-content">
+                            <div class="modal-content modal-content-{{post.id}}">
+                                <div class="list-overlay">
+                                    <div class="list-loader">Loading...</div>
+                                    <h3 class="list-loader-text" id="loader-text">Loading...</h3>
+                                </div>
                                 <div class="modal-header">
                                     <button onclick="history.replaceState(null, null, ' ');" type="button" class="close"
                                         data-dismiss="modal" aria-label="Close">
@@ -120,44 +127,6 @@
     </div>
 </div>
 <script>
-    const listingEditClicked = (id, item_class, item_department) => {
-        let url = `/editform/${id}`
-        console.log(url)
-        $.ajax({
-            url: url,
-            type: 'GET',
-            async: true,
-            success: function (response) {
-                $(`#modal-body-${id}`).html(response)
-                console.log("test", item_class)
-                console.log(item_department)
-                //     window.location.hash = 'update';
-                let class_select = document.getElementById('class_list');
-                let department_select = document.getElementById('department_list')
-                console.log(class_select)
-                class_select.value = item_class
-                department_select.value = item_department
-
-                var $department_select = $(document.getElementById('department_list'))
-                var department_selectize = $department_select[0].selectize;
-                department_selectize.setValue(item_department);
-
-                var $class_select = $(document.getElementById('class_list'))
-                var class_selectize = $class_select[0].selectize;
-                class_selectize.setValue(item_class);
-            },
-            beforeSend: function () {
-                $("body").toggleClass("loading");
-            },
-            complete: function () {
-                $("body").toggleClass("loading");
-                // if (path === 'shop') {
-                //   initializeShopPage();
-                // }
-            }
-        })
-        console.log(url)
-    }
     const deleteClicked = (url) => {
         $.ajax({
             url: url,

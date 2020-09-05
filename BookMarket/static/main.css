@@ -643,6 +643,10 @@ body.loading .overlay {
     margin-bottom: 600px;
 }
 
+.modal-content.loading .list-overlay {
+    display: block;
+}
+
 .list-overlay {
     display: none;
     width: 100%;
@@ -702,4 +706,9 @@ body.loading .overlay {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
     }
+}
+
+.single-edit {
+    cursor: pointer;
+    color: #007bff
 }

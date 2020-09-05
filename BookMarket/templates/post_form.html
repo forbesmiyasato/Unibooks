@@ -155,6 +155,7 @@
         selectize.enable()
         selectize.clear();
         if (department) {
+            console.log("INVAOKEDDD!")
             fetch('/class/' + department).then(function (response) {
                 response.json().then(function (data) {
                     let optionHTML = '';
@@ -420,6 +421,9 @@
                 $("body").toggleClass("loading");
                 if ($('#editModal').length) {
                     $('#editModal').modal('hide')
+                    $("#loader-text").html ('Updating Post...')
+                } else if ($('#editModal{{item_id}}').length) {
+                    $('#editModal{{item_id}}').modal('hide')
                     $("#loader-text").html ('Updating Post...')
                 } else {
                     $("#loader-text").html ('Creating Post...')
