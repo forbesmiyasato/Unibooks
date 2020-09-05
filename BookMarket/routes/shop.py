@@ -14,36 +14,6 @@ shop_api = Blueprint('shop_api', __name__,
 @shop_api.route("/shop")
 def shop():
     standalone = request.args.get('standalone')
-    # search_term = request.args.get('search')
-    # sort_term = request.args.get('sort', 'newest')
-    # if sort_term == "lowest":
-    #     sort_term = "asc"
-    #     sort_by = getattr(Item.price, sort_term)()
-    # elif sort_term == "highest":
-    #     sort_term = "desc"
-    #     sort_by = getattr(Item.price, sort_term)()
-    # elif sort_term == "oldest":
-    #     print("!!!")
-    #     sort_term = "asc"
-    #     sort_by = getattr(Item.date_posted, sort_term)()
-    # else:
-    #     sort_term = "desc"
-    #     sort_by = getattr(Item.date_posted, sort_term)()
-    # page = request.args.get('page', 1, type=int)
-    # per_page = request.args.get('per_page', 6, type=int)
-    # print(sort_term)
-    # # for department in departments:
-    # #     # classObj = {}
-    # #     classes = ItemClass.query.filter_by(department_id=department.id).all()
-    # #     department['classes'] = classes
-
-    # if search_term:
-    #     search_term = '%{0}%'.format(search_term)
-    #     posts = Item.query.filter(Item.name.ilike(search_term)).order_by(
-    #         sort_by).paginate(page=page, per_page=per_page)
-    # else:
-    #     posts = Item.query.order_by(
-    #         sort_by).paginate(page=page, per_page=per_page)
     departments = db.session.query(ItemDepartment).all()
 
     return render_template('shop.html', title='Shop', departments=departments, standalone=standalone)

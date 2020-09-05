@@ -254,6 +254,12 @@
     let active = document.getElementsByClassName('activable active')[0];
     let prevActive
 
+    let home_html = null;
+    let login_html = null;
+    let register_html = null;
+    let about_html = null;
+    let shop_html = null;
+
     var call;
     const linkClicked = (ele, url, search_input) => {
       console.log(url);
@@ -295,13 +301,34 @@
       console.log(ele.id)
       if (call) call.abort()
       history.pushState({ element: ele.id }, null, url)
+      if (url === '/home' && home_html) {
+        $('#block-content').html(home_html);
+      } else if (url ==='/login' && login_html) {
+        $('#block-content').html(login_html);
+      } else if (url ==='/register' && register_html) {
+        $('#block-content').html(register_html);
+      } else if (url ==='/shop' && shop_html) {
+        $('#block-content').html(shop_html);
+      } else if (url ==='/about' && about_html) {
+        $('#block-content').html(about_html);
+      } else {
       call = $.ajax({
         url: url,
         type: "get",
         data: { standalone: 'true' },
         async: true,
         success: function (response) {
-          console.log(response)
+          if (url === '/home' && !home_html) {
+            home_html = response
+          } else if (url === '/register' && !register_html) {
+            register_html = response
+          } else if (url === '/login' && !login_html) {
+            login_html = response
+          } else if (url === '/shop' && !shop_html) {
+            shop_html = response
+          } else if (url === '/about' && !about_html) {
+            about_html = response
+          }
           if (response.state) {
             toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
             if (response.state === 'login-required') {
@@ -329,6 +356,7 @@
           $("#loader-text").html('Loading...')
         }
       })
+    }
       $(window).scrollTop(0);
       // $('#block-content').load(url + "?standalone=true")
     }
