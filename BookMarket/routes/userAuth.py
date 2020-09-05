@@ -114,9 +114,8 @@ def confirm_email(token):
     return render_template('home.html')
 
 
-@userAuth.route("/login", methods=['GET', 'POST'])
-def login():
-    standalone = request.args.get('standalone')
+def login_html(standalone=None): 
+    print("111", standalone)
     form = LoginForm()
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
@@ -129,6 +128,12 @@ def login():
             flash('Login Unsuccessful. Please check email and password',
                   'error')
     return render_template('login.html', title='Login', form=form, standalone=standalone)
+
+
+@userAuth.route("/login", methods=['GET', 'POST'])
+def login():
+    standalone = request.args.get('standalone')
+    return login_html(standalone)
 
 
 @userAuth.route("/logout")

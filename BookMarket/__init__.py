@@ -55,4 +55,9 @@ login_manager = LoginManager = LoginManager(app)
 login_manager.login_view = 'userAuth.login'
 login_manager.login_message_category = 'info'
 
+# def test():
+#     return jsonify({'html': redirect(url_for('home', standalone=standalone)), 'state': 'login-required'})
+
+# login_manager.unauthorized_handler(test)
+
 from . import route

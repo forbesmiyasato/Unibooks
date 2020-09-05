@@ -6,7 +6,7 @@ from flask_login import current_user, login_required
 from .models import Users, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater
 from .forms import UpdateAccountForm, ItemForm
 from . import app, db
-from .routes.userAuth import userAuth
+from .routes.userAuth import userAuth, login_html
 from .routes.shop import shop_api, item_html
 from .utility_funcs import save_images_to_db_and_s3, delete_images_from_s3_and_db
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -25,10 +25,13 @@ def init_scheduler():
     scheduler.start()
     atexit.register(lambda: scheduler.shutdown())
 
+
 @app.errorhandler(404)
-def error404(error): 
+def error404(error):
     flash("Page Not Found! Redirected back to home.", 'error')
     return redirect(url_for('home'))
+
+
 @app.route('/')
 @app.route('/home')
 def home():
@@ -76,9 +79,8 @@ def account():
 #     return jsonify({'added': 'added'})
 
 @app.route("/item/new", methods=['GET', 'POST'])
-@login_required
 def new_item():
-    standalone = request.args.get('standalone')
+    standalone = request.args.get('standalone', None)
     if request.method == 'POST':
         # images = form.images.data  # without plugin
         images = request.files.getlist('files[]')
@@ -103,13 +105,27 @@ def new_item():
         # return redirect(url_for('home'))
         # result = {'url': url_for('shop_api.item', item_id=post.id)}
         return jsonify({'html': (item_html(post.id, 'notfromnewitem')), 'url': url_for('shop_api.item', item_id=post.id)})
+    if current_user.is_authenticated is False:
+        if standalone:
+            return jsonify({'html': login_html('standalone'), 'state': "login-required"})
+        else:
+            flash("You must sign in before selling!", 'info')
+            return redirect(url_for('userAuth.login'))
     if current_user.confirmed is False:
-        flash("You must confirm your email address before selling!", 'info')
-        return redirect(url_for('account', standalone=standalone))
+        if standalone:
+            return jsonify({'html': render_template('account.html', title='Account', confirmed=current_user.confirmed, standalone=standalone),
+                            'state': "confirm-required"})
+        else:
+            flash("You must confirm your email address before selling!", 'info')
+            return redirect(url_for('account', standalone=standalone))
     if current_user.listings >= 10:
-        print(current_user.listings)
-        flash("There is a max of 10 listings at a time! Please wait or delete listings before selling.", 'error')
-        return redirect(url_for('listings', standalone=standalone))
+        if standalone:
+            return jsonify({'html': listings_html(standalone),
+                            'state': "max-listings"})
+        else:
+            print("!!!!!!!!!!!!")
+            flash("There is a max of 10 listings at a time! Please wait or delete listings before selling.", 'error')
+            return redirect(url_for('listings', standalone=standalone))
     form = ItemForm()
     # form.item_class.choices = class_list
     departments = db.session.query(ItemDepartment).all()
@@ -240,6 +256,7 @@ def delete_item():
         print(standalone)
         return jsonify(html=listings_html(standalone))
     return jsonify({'result': 'deleted'})
+
 
 def listings_html(standalone=None):
     _listings = Item.query.filter_by(user_id=current_user.id).all()
