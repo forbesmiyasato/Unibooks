@@ -179,15 +179,15 @@
   <div class="school-overlay">
     <div class="school-modal">
       <h3 class="school-text">Please Select Your School</h3>
-      <form>
+      <form id="school-form">
         <select name="school-list" class="school-list" id='school-list' placeholder="Select Department">
           <option value="">Select School</option>
-          <!-- {% for department in departments %}
-        <option value='{{ department.id }}'>{{department.department_name}}</option>
-        {% endfor %} -->
-          <option value="1">Pacific University</option>
+          {% for school in schools %}
+        <option value='{{ school.id }}'>{{school.name}}</option>
+        {% endfor %}
+          <!-- <option value="1">Pacific University</option>
           <option value="2">Portland State</option>
-          <option value="3">Portland Community College</option>
+          <option value="3">Portland Community College</option> -->
         </select>
         <button class="genric-btn primary" type="submit">That's my school!</button>
       </form>
@@ -241,8 +241,8 @@
   <!-- End footer Area -->
   <!-- Optional JavaScript -->
   <script>
-    var school = localStorage.getItem('name');
-    if (!school) {
+    var school = localStorage.getItem('school');
+    if (!school || school == null || school === 'undefined') {
       // initialize the Selectize control
       var $select = $('select').selectize();
 
@@ -251,6 +251,20 @@
       $("body").toggleClass("need-school");
     }
     console.log("SCHOOL", school)
+
+    var $schoolForm = $('#school-form');
+
+    // form submit
+    $schoolForm.on('submit', function (e) {
+      e.preventDefault()
+      console.log(selectize.getValue())
+      localStorage.setItem('school', selectize.getValue())
+      var school = localStorage.getItem('school');
+      console.log(school)
+      if (school || school != null || school !== 'undefined') {
+        $("body").toggleClass("need-school");
+      }
+    })
 
     search_form = document.getElementById('search_form');
     function search(event) {

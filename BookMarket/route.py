@@ -3,7 +3,7 @@ import atexit
 # from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session, Markup, make_response
 from flask_login import current_user, login_required
-from .models import Users, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater
+from .models import Users, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater, School
 from .forms import UpdateAccountForm, ItemForm
 from . import app, db
 from .routes.userAuth import userAuth, login_html
@@ -264,7 +264,7 @@ def delete_item():
 
 def listings_html(standalone=None):
     _listings = Item.query.filter_by(user_id=current_user.id).order_by(
-            Item.date_posted.asc()).all()
+        Item.date_posted.asc()).all()
     form = ItemForm()
     return render_template('user_listings.html', title="Listings", listings=_listings,
                            legend='Edit', form=form, item_id=1, item=None, standalone=standalone)
@@ -353,14 +353,6 @@ def get_edit_form(item_id=None):
 
 
 @app.context_processor
-def inject_num_items():
-    if current_user:
-        if (current_user.is_authenticated):
-            return {'numItems': db.session.query(SaveForLater.item_id).filter_by(
-                user_id=current_user.id).order_by(SaveForLater.id.desc()).all()}
-        elif session.get('saved'):
-            return {'numItems': session["saved"]}
-        else:
-            return {'numItems': []}
-    else:
-        return {'numItems': []}
+def inject_schools():
+    schools = db.session.query(School).all()
+    return {'schools': schools}
