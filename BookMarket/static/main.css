@@ -717,6 +717,31 @@ body.loading .overlay {
     width: 350px;
     height: 350px;
     border-radius: 50%;
-    margin: 20px auto 40px auto;
     box-shadow: 0 10px 30px 1px rgba(0,0,0,.3);
+}
+
+.about-image-container{
+    position: relative;
+    width: 350px;
+    height: 350px;
+    margin: 20px auto 40px auto;
+}
+
+.about-forbes-insta {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 100px;
+}
+
+.about-forbes-linkedin {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: 100px;
+}
+
+.about-forbes-linkedin:hover,
+.about-forbes-insta:hover {
+    color: #70a9da;
 }
