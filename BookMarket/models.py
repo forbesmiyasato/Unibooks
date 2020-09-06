@@ -16,6 +16,8 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String(100), nullable=False)
     items = db.relationship('Item', backref='owner', lazy=True)
     confirmed = db.Column(db.Boolean, default=False, nullable=False)
+    # confirmed_sent_date = db.Column(db.DateTime, nullable=True,
+    #                         default=datetime.utcnow)
     listings = db.Column(db.Integer, default=0)
     def __repr__(self):
         return f"Users('{self.username}', '{self.email}', '{self.image_file}')"
@@ -69,6 +71,10 @@ class SaveForLater(db.Model):
     item_id = db.Column(db.Integer, db.ForeignKey('item.id', ondelete='CASCADE'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
+
+class School(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
 
 # class PastItem(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)

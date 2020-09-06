@@ -300,6 +300,7 @@ def inject_num_items():
     else:
         return {'numItems': []}
 
+
 @app.route("/editform/<int:item_id>")
 def get_edit_form(item_id=None):
     _item = Item.query.get_or_404(item_id)
@@ -349,3 +350,17 @@ def get_edit_form(item_id=None):
     return render_template('post_form.html', title=_item.name, item=_item, images=images,
                            item_class=item_class, department=department, form=edit_form, legend="Edit",
                            item_id=item_id, departments=departments)
+
+
+@app.context_processor
+def inject_num_items():
+    if current_user:
+        if (current_user.is_authenticated):
+            return {'numItems': db.session.query(SaveForLater.item_id).filter_by(
+                user_id=current_user.id).order_by(SaveForLater.id.desc()).all()}
+        elif session.get('saved'):
+            return {'numItems': session["saved"]}
+        else:
+            return {'numItems': []}
+    else:
+        return {'numItems': []}

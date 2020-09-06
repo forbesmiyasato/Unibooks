@@ -710,17 +710,17 @@ body.loading .overlay {
 
 .single-edit {
     cursor: pointer;
-    color: #007bff
+    color: #007bff;
 }
 
 .about-image {
     width: 350px;
     height: 350px;
     border-radius: 50%;
-    box-shadow: 0 10px 30px 1px rgba(0,0,0,.3);
+    box-shadow: 0 10px 30px 1px rgba(0, 0, 0, 0.3);
 }
 
-.about-image-container{
+.about-image-container {
     position: relative;
     width: 350px;
     height: 350px;
@@ -744,4 +744,66 @@ body.loading .overlay {
 .about-forbes-linkedin:hover,
 .about-forbes-insta:hover {
     color: #70a9da;
+}
+
+.school-overlay {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.6) center no-repeat;
+    text-align: center;
+    margin: 0 auto;
+}
+
+body.need-school {
+    overflow: hidden;
+}
+body.need-school .school-overlay {
+    display: block;
+}
+
+.school-modal {
+    width: 350px;
+    height: 250px;
+    position: fixed;
+    background-color: #fff;
+    top: 50%;
+    left: 50%;
+    margin-top: -125px;
+    margin-left: -175px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px 1px rgba(0, 0, 0, 0.7);
+    animation: moveInRight 1s ease-out;
+    background: linear-gradient(rgba(112, 169, 218, 0.45), rgba(112, 169, 218, 0.35)),
+        url("img/school_modal.jpg");
+    background-size: cover;
+}
+
+@keyframes moveInRight {
+    0% {
+        opacity: 0;
+        transform: translate(10rem, 0);
+    }
+    80% {
+        transform: translate(-1rem, 0);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+}
+
+.school-list {
+    width: 90%;
+    margin-left: 5%;
+    margin-bottom: 5px;
+}
+
+.school-text {
+    margin-top: 20%;
+    color: #fff
 }

@@ -105,7 +105,8 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
             <ul class="nav navbar-nav menu_nav ml-auto">
-              <li class="nav-item"><a id="home" class="nav-link activable {% if (title == 'Home' or title == 'about') %}active{% endif %}"
+              <li class="nav-item"><a id="home"
+                  class="nav-link activable {% if (title == 'Home' or title == 'about') %}active{% endif %}"
                   onclick="linkClicked(this, '{{ url_for('home')}}')">Home</a></li>
               <li class="nav-item"><a id="shop" class="nav-link activable {% if title == 'Shop' %}active{% endif %}"
                   onclick="linkClicked(this, '{{ url_for('shop_api.shop')}}')">shop</a></li>
@@ -164,7 +165,7 @@
     <script>
       toastr.options = { "positionClass": {% if message == 'Logged in!' or message == 'Logged out!' %} "toast-top-left" {% else %} "toast-top-center" {% endif %}
       , "closeButton": true, "timeOut": "6000" }
-      toastr.{{ category}}("{{message}}");
+      toastr.{{category}}("{{message}}");
     </script>
     {% endfor %}
     {% endif %}
@@ -174,6 +175,24 @@
   <div class="overlay">
     <div class="loader">Loading...</div>
     <h3 class="loader-text" id="loader-text">Loading...</h3>
+  </div>
+  <div class="school-overlay">
+    <div class="school-modal">
+      <h3 class="school-text">Please Select Your School</h3>
+      <form>
+        <select name="school-list" class="school-list" id='school-list' placeholder="Select Department">
+          <option value="">Select School</option>
+          <!-- {% for department in departments %}
+        <option value='{{ department.id }}'>{{department.department_name}}</option>
+        {% endfor %} -->
+          <option value="1">Pacific University</option>
+          <option value="2">Portland State</option>
+          <option value="3">Portland Community College</option>
+        </select>
+        <button class="genric-btn primary" type="submit">That's my school!</button>
+      </form>
+    </div>
+  </div>
   </div>
 
   <div id="block-content">
@@ -222,6 +241,17 @@
   <!-- End footer Area -->
   <!-- Optional JavaScript -->
   <script>
+    var school = localStorage.getItem('name');
+    if (!school) {
+      // initialize the Selectize control
+      var $select = $('select').selectize();
+
+      // fetch the instance
+      var selectize = $select[0].selectize;
+      $("body").toggleClass("need-school");
+    }
+    console.log("SCHOOL", school)
+
     search_form = document.getElementById('search_form');
     function search(event) {
       event.preventDefault();
