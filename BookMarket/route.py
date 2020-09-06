@@ -89,9 +89,10 @@ def new_item():
         # images = form.images.data  # without plugin
         images = request.files.getlist('files[]')
         print(images)
+        print("POST SCHOOL", current_user.school)
         post = Item(name=request.form.get('name'), description=request.form.get('description'), user_id=current_user.id,
                     price=request.form.get('price'), class_id=request.form.get('class_id'), department_id=request.form.get('department_id'),
-                    isbn=request.form.get('isbn'), author=request.form.get('author'))
+                    isbn=request.form.get('isbn'), author=request.form.get('author'), school=current_user.school)
         db.session.add(post)
         db.session.commit()
         db.session.refresh(post)
@@ -132,7 +133,7 @@ def new_item():
             return redirect(url_for('listings', standalone=standalone))
     form = ItemForm()
     # form.item_class.choices = class_list
-    departments = db.session.query(ItemDepartment).all()
+    departments = ItemDepartment.query.filter_by(school=session['school']).all()
     # department_list = [(i.id, i.department_name) for i in departments]
     print(departments)
     return render_template('create_post.html', title='Sell', form=form, legend='New', item_id=0, departments=departments,

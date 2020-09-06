@@ -24,7 +24,9 @@ def register():
         email = form.email.data
         hashed_password = bcrypt.generate_password_hash(
             form.password.data).decode('utf-8')
-        user = Users(email=email, password=hashed_password)
+        school = request.form.get('school')
+        print("REGISTER_SCHOOL", school)
+        user = Users(email=email, password=hashed_password, school=school)
 
         token = serializer.dumps(email, salt=salt)  # salt is optional
         link = url_for('userAuth.confirm_email', token=token, _external=True)

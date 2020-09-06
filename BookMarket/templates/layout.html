@@ -183,8 +183,8 @@
         <select name="school-list" class="school-list" id='school-list' placeholder="Select Department">
           <option value="">Select School</option>
           {% for school in schools %}
-        <option value='{{ school.id }}'>{{school.name}}</option>
-        {% endfor %}
+          <option value='{{ school.id }}'>{{school.name}}</option>
+          {% endfor %}
           <!-- <option value="1">Pacific University</option>
           <option value="2">Portland State</option>
           <option value="3">Portland Community College</option> -->
@@ -241,43 +241,47 @@
   <!-- End footer Area -->
   <!-- Optional JavaScript -->
   <script>
-    var school = localStorage.getItem('school');
-    if (!school || school == null || school === 'undefined') {
-      // initialize the Selectize control
-      var $select = $('select').selectize();
-
-      // fetch the instance
-      var selectize = $select[0].selectize;
-      $("body").toggleClass("need-school");
-    } else {
-      $.ajax({
-        url: `/setschool/${school}`,
-        type: "get",
-        // data: { school: school },
-        async: true
-      })
-    }
-    console.log("SCHOOL", school)
-
-    var $schoolForm = $('#school-form');
-
-    // form submit
-    $schoolForm.on('submit', function (e) {
-      e.preventDefault()
-      console.log(selectize.getValue())
-      localStorage.setItem('school', selectize.getValue())
+    const checkSchool = () => {
       var school = localStorage.getItem('school');
-      console.log(school)
-      if (school || school != null || school !== 'undefined') {
+
+      if (!school || school == null || school === 'undefined') {
+        // initialize the Selectize control
+        var $select = $('select').selectize();
+
+        // fetch the instance
+        var selectize = $select[0].selectize;
         $("body").toggleClass("need-school");
+      } else {
+        $.ajax({
+          url: `/setschool/${school}`,
+          type: "get",
+          // data: { school: school },
+          async: true
+        })
       }
-      $.ajax({
-        url: `/setschool/${school}`,
-        type: "get",
-        // data: { school: school },
-        async: true
+      var $schoolForm = $('#school-form');
+
+      // form submit
+      $schoolForm.on('submit', function (e) {
+        e.preventDefault()
+        console.log(selectize.getValue())
+        localStorage.setItem('school', selectize.getValue())
+        var school = localStorage.getItem('school');
+        console.log(school)
+        if (school || school != null || school !== 'undefined') {
+          $("body").toggleClass("need-school");
+        }
+        $.ajax({
+          url: `/setschool/${school}`,
+          type: "get",
+          // data: { school: school },
+          async: true
+        })
       })
-    })
+      console.log("SCHOOL", school)
+    }
+
+    checkSchool();
 
     search_form = document.getElementById('search_form');
     function search(event) {

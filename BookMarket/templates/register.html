@@ -19,6 +19,7 @@
     <div class="content-section">
         <form method="POST" action="">
             {{form.hidden_tag()}}
+            <input type="hidden" id="school-id" name="school" value="">
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">
                     Join Today
@@ -74,4 +75,9 @@
         </small>
     </div>
 </div>
+<script>
+    checkSchool();
+    
+    document.getElementById('school-id').value = localStorage.getItem('school');
+</script>
 {% endblock content %}

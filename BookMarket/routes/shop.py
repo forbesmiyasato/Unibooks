@@ -2,7 +2,7 @@ import re
 from flask import render_template, request, Blueprint, jsonify, url_for, flash, session
 from flask_login import current_user
 from flask_mail import Message
-from ..models import Item, ItemClass, ItemDepartment, ItemImage
+from ..models import Item, ItemClass, ItemDepartment, ItemImage, School
 from ..forms import ItemForm, MessageForm
 from .. import app, db, mail
 from ..utility_funcs import delete_images_from_s3_and_db, save_images_to_db_and_s3, delete_non_remaining_images_from_s3_and_db
@@ -43,6 +43,8 @@ def getPosts():
 
     original_sort_term = sort_term
 
+    posts = Item.query.filter_by(school=session['school'])
+    print(posts)
     if sort_term == "lowest":
         sort_term = "asc"
         sort_by = getattr(Item.price, sort_term)()
@@ -59,11 +61,11 @@ def getPosts():
     if search_term:
         search = search_term
         search_term = '%{0}%'.format(search_term)
-        posts = Item.query.filter(Item.name.ilike(search_term)).order_by(
+        posts = posts.filter(Item.name.ilike(search_term)).order_by(
             sort_by)
         num_results = posts.count()
     elif class_id:
-        posts = Item.query.filter_by(class_id=class_id).order_by(
+        posts = posts.filter_by(class_id=class_id).order_by(
             sort_by)
         course = ItemClass.query.filter_by(id=class_id).first()
         department = ItemDepartment.query.filter_by(
@@ -71,12 +73,12 @@ def getPosts():
         course = {"name": course.class_name, "id": course.id}
         department = {"name": department.department_name, "id": department.id}
     elif department_id:
-        posts = Item.query.filter_by(department_id=department_id).order_by(
+        posts = posts.filter_by(department_id=department_id).order_by(
             sort_by)
         department = ItemDepartment.query.filter_by(id=department_id).first()
         department = {"name": department.department_name, "id": department.id}
     else:
-        posts = Item.query.order_by(
+        posts = posts.order_by(
             sort_by)
     if low and high:
         low = int(low)
@@ -139,7 +141,7 @@ def item_html(item_id, standalone=None):
     item_class = ItemClass.query.get(_item.class_id)
     department = ItemDepartment.query.get(_item.department_id)
     # for updating
-    departments = db.session.query(ItemDepartment).all()
+    departments = ItemDepartment.query.filter_by(school=session['school']).all()
     edit_form.name.data = _item.name
     edit_form.description.data = _item.description
     edit_form.price.data = _item.price
