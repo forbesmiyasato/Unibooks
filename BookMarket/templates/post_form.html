@@ -412,6 +412,7 @@
                     $('#editModal').modal('hide')
                     toastr.success("Updated Post!");
                 } else {
+                    listings_html = null;
                     toastr.success("Post created!");
                 }
                 history.pushState(null, null, response.url)

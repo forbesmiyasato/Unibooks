@@ -464,6 +464,8 @@ const onSavedDelete = (index, name, id, url) => {
             bagIcon.innerHTML = parseInt(bagIcon.innerHTML) - 1;
         },
     });
+
+    saved_html = null;
 };
 
 const initializeSingleProductPage = () => {
@@ -529,6 +531,7 @@ onItemDelete = (url, name, num, origin) => {
         },
     });
     console.log(url);
+    listings_html = null;
 };
 
 //shop
