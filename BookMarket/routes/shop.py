@@ -1,5 +1,5 @@
 import re
-from flask import render_template, request, Blueprint, jsonify, url_for, flash
+from flask import render_template, request, Blueprint, jsonify, url_for, flash, session
 from flask_login import current_user
 from flask_mail import Message
 from ..models import Item, ItemClass, ItemDepartment, ItemImage
@@ -14,7 +14,8 @@ shop_api = Blueprint('shop_api', __name__,
 @shop_api.route("/shop")
 def shop():
     standalone = request.args.get('standalone')
-    departments = db.session.query(ItemDepartment).all()
+    school = session['school']
+    departments = ItemDepartment.query.filter_by(school=school).all()
 
     return render_template('shop.html', title='Shop', departments=departments, standalone=standalone)
 

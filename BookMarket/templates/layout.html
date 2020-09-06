@@ -249,6 +249,13 @@
       // fetch the instance
       var selectize = $select[0].selectize;
       $("body").toggleClass("need-school");
+    } else {
+      $.ajax({
+        url: `/setschool/${school}`,
+        type: "get",
+        // data: { school: school },
+        async: true
+      })
     }
     console.log("SCHOOL", school)
 
@@ -264,6 +271,12 @@
       if (school || school != null || school !== 'undefined') {
         $("body").toggleClass("need-school");
       }
+      $.ajax({
+        url: `/setschool/${school}`,
+        type: "get",
+        // data: { school: school },
+        async: true
+      })
     })
 
     search_form = document.getElementById('search_form');

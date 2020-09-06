@@ -356,3 +356,9 @@ def get_edit_form(item_id=None):
 def inject_schools():
     schools = db.session.query(School).all()
     return {'schools': schools}
+
+@app.route('/setschool/<int:school>')
+def set_school_in_session(school):
+    session['school'] = school
+    print ("SCHOOL", session['school'])
+    return ('', 204)
