@@ -19,7 +19,7 @@
   <meta charset="UTF-8">
   <!-- Site Title -->
   {% if title %}
-  <title>Bookstore - {{title}}</title>
+  <title>{{title}} | Bookmarkit</title>
   {% else %}
   <title>Bookstore</title>
   {% endif %}
@@ -384,7 +384,7 @@
         $('#block-content').html(shop_html);
       } else if (path === 'aboutus' && about_html) {
         $('#block-content').html(about_html);
-      } else if (path === 'message' && message_html) {
+      } else if (path === 'contactus' && message_html) {
         $('#block-content').html(message_html);
       } else if (path === 'account' && account_html) {
         $('#block-content').html(account_html);
@@ -409,7 +409,7 @@
               shop_html = response
             } else if (path === 'aboutus' && !about_html) {
               about_html = response
-            } else if (path === 'message' && !message_html) {
+            } else if (path === 'contactus' && !message_html) {
               message_html = response
             } else if (path === 'listings' && !listings_html) {
               listings_html = response
@@ -487,7 +487,7 @@
       console.log(alerts1);
       console.log(ele.id)
       if (call) call.abort()
-      history.pushState({ element: ele.id }, null, url)
+      history.pushState(null, '', url)
       highlightNavLink()
 
       redirect(url.substring(1))

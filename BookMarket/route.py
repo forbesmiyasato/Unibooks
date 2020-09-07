@@ -46,7 +46,7 @@ def about_us():
     print(standalone)
     # if standalone != "true":
     #     standalone = False
-    return render_template('about_us.html', standalone=standalone, title="about")
+    return render_template('about_us.html', standalone=standalone, title="About Us")
 
 
 @app.route("/account", methods=['GET', 'POST'])
@@ -368,7 +368,7 @@ def set_school_in_session(school):
     return ('', 204)
 
 
-@app.route('/message')
+@app.route('/contactus')
 def leave_a_message():
     message_form = MessageForm()
     standalone = request.args.get('standalone', None)

@@ -562,16 +562,32 @@ function onItemClick(url) {
 const highlightNavLink = () => {
     let path = (window.location.pathname + location.search).split("/")[1];
     let active;
+    let ending = ' | Bookmarkit'
+
     if (path === "saved?cart") {
         active = document.getElementById("shopping-cart");
-    } else if (path === "listings" || path === "account" || path === "saved") {
+        document.title = "Saved" + ending;
+    } else if (path === "listings") {
         active = document.getElementById("user");
+        document.title = "Listings" + ending;
+    } else if (path === "account") {
+        active = document.getElementById("user");
+        document.title = "Account" + ending;
+    } else if (path === "saved") {
+        active = document.getElementById("user");
+        document.title = "Saved" + ending;
     } else if (path === "item") {
         active = document.getElementById("sell");
-    } else if (path === "aboutus" || path === "message") {
+        document.title = "Create Posting" + ending;
+    } else if (path === "aboutus") {
         active = document.getElementById("home");
+        document.title = "About Us" + ending;
+    } else if (path === "contactus") {
+        active = document.getElementById("home");
+        document.title = "Contact Us" + ending;
     } else {
         console.log("!!!!!!!!!!!!", path.split("?")[0]);
+        document.title = (path.charAt(0).toUpperCase() + path.slice(1)) + ending;
         active = document.getElementById(path.split("?")[0]);
     }
     console.log(path, active);
