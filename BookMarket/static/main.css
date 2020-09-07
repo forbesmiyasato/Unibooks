@@ -807,3 +807,28 @@ body.need-school .school-overlay {
     margin-top: 20%;
     color: #fff
 }
+
+.switch-container-full {
+    position: relative;
+    width: 90px;
+}
+
+.switch-text-full {
+    position: absolute;
+    cursor: pointer;
+}
+
+.switch-container-mobile {
+    display: none;
+}
+
+@media (max-width: 550px) {
+    .switch-container-mobile {
+        display: block;
+    }
+
+    .switch-container-full {
+        display: none;
+    }
+}
+

@@ -96,6 +96,9 @@
           <!-- Brand and toggle get grouped for better mobile display -->
           <a class="navbar-brand logo_h" href="{{ url_for('home')}}"><img
               src="{{ url_for('static', filename='img/logo.png')}}" alt=""></a>
+          <div class="switch-container-full">
+            <a onclick="switchSchool()" class="switch-text-full">Switch School</a>
+          </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="icon-bar"></span>
@@ -140,6 +143,9 @@
                   onclick="linkClicked(this, '{{ url_for('saved_for_later')}}?cart')"
                   class="cart activable {% if title == 'Saved?cart' %}active{% endif %}">
                   <span class="ti-bag"><span class="bag-icon">{{ numItems|length }}</span></span></a></li>
+              <li class="nav-item switch-container-mobile">
+                <a onclick="switchSchool()" class="nav-link">Switch School</a>
+              </li>
               <li class="nav-item">
                 <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
               </li>
@@ -180,7 +186,7 @@
     <div class="school-modal">
       <h3 class="school-text">Please Select Your School</h3>
       <form id="school-form">
-        <select name="school-list" class="school-list" id='school-list' placeholder="Select Department">
+        <select required name="school-list" class="school-list" id='school-list' placeholder="Select School">
           <option value="">Select School</option>
           {% for school in schools %}
           <option value='{{ school.id }}'>{{school.name}}</option>
@@ -241,15 +247,42 @@
   <!-- End footer Area -->
   <!-- Optional JavaScript -->
   <script>
+    // initialize the Selectize control
+    var $select = $('select').selectize();
+
+    // fetch the instance
+    var selectize = $select[0].selectize;
+
+    let selectList = document.getElementById('school-list');
+    // $('#school-list-selectized').on('invalid', function () {
+    //   console.log("INVALID")
+    //   selectList.setCustomValidity('You must select a school!');
+    // })
+    
+    let selectListInput = document.getElementById('school-list-selectized')
+    selectListInput.setCustomValidity('You must select a school!');
+
+    selectList.onchange = function () {
+      console.log("CHANGE")
+
+      console.log(selectList.value)
+      if (!selectList.value) {
+        console.log('invalid');
+        selectListInput.setCustomValidity('You must select a school!');
+      } else {
+        console.log('valid');
+        selectListInput.setCustomValidity('');
+      }
+    };
+    
+    const switchSchool = () => {
+      $("body").toggleClass("need-school");
+    }
+
     const checkSchool = () => {
       var school = localStorage.getItem('school');
 
       if (!school || school == null || school === 'undefined') {
-        // initialize the Selectize control
-        var $select = $('select').selectize();
-
-        // fetch the instance
-        var selectize = $select[0].selectize;
         $("body").toggleClass("need-school");
       } else {
         $.ajax({
