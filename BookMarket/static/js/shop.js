@@ -451,8 +451,8 @@ const browseCollapse = () => {
 const onSavedDelete = (index, name, id, url) => {
     const deletedRow = $(`#row-${index}`);
     console.log(url);
-    const itemUrl = `/shop/${id}`
-    console.log(itemUrl)
+    const itemUrl = `/shop/${id}`;
+    console.log(itemUrl);
     deletedRow.html(
         `<td colspan='4' class='deleted-item'>Deleted <a href="javascript:onItemClick('${itemUrl}')">${name}</a> from your bag</td>`
     );
@@ -563,76 +563,95 @@ const highlightNavLink = () => {
     let active;
     if (path === "saved?cart") {
         active = document.getElementById("shopping-cart");
-    } else if (
-        path === "listings" ||
-        path === "account" ||
-        path === "saved"
-    ) {
+    } else if (path === "listings" || path === "account" || path === "saved") {
         active = document.getElementById("user");
     } else if (path === "item") {
         active = document.getElementById("sell");
     } else if (path === "aboutus") {
         active = document.getElementById("home");
     } else {
-        console.log("!!!!!!!!!!!!", path.split("?")[0])
+        console.log("!!!!!!!!!!!!", path.split("?")[0]);
         active = document.getElementById(path.split("?")[0]);
     }
-    console.log(path, active)
+    console.log(path, active);
     if (active) {
         let prevActive = document.getElementsByClassName("activable active")[0];
         console.log("PREV ACTIVE", prevActive);
         if (prevActive) {
             prevActive.classList.remove("active");
-            console.log(prevActive.classList.contains("active"))
+            console.log(prevActive.classList.contains("active"));
         }
 
-        console.log("PATH", path)
-        
+        console.log("PATH", path);
+
         active.classList.add("active");
-        console.log("ACTIVE", active)
+        console.log("ACTIVE", active);
     }
 };
-
 
 //listings
 let prevModal = null;
 const listingEditClicked = (id, item_class, item_department) => {
-    let url = `/editform/${id}`
-    console.log("!!!!!!!!!!!", url)
+    let url = `/editform/${id}`;
+    console.log("!!!!!!!!!!!", url);
     if (prevModal) {
         prevModal.empty();
     }
     $.ajax({
         url: url,
-        type: 'GET',
+        type: "GET",
         async: true,
         success: function (response) {
-            $(`#modal-body-${id}`).html(response)
-            console.log("test", item_class)
-            console.log(item_department)
+            $(`#modal-body-${id}`).html(response);
+            console.log("test", item_class);
+            console.log(item_department);
             //     window.location.hash = 'update';
-            let class_select = document.getElementById('class_list');
-            let department_select = document.getElementById('department_list')
-            console.log(class_select)
-            class_select.value = item_class
-            department_select.value = item_department
+            let class_select = document.getElementById("class_list");
+            let department_select = document.getElementById("department_list");
+            console.log(class_select);
+            class_select.value = item_class;
+            department_select.value = item_department;
 
-            var $department_select = $(document.getElementById('department_list'))
+            var $department_select = $(
+                document.getElementById("department_list")
+            );
             var department_selectize = $department_select[0].selectize;
             department_selectize.setValue(item_department);
 
-            var $class_select = $(document.getElementById('class_list'))
+            var $class_select = $(document.getElementById("class_list"));
             var class_selectize = $class_select[0].selectize;
             class_selectize.setValue(item_class);
         },
         beforeSend: function () {
-            $(`#modal-body-${id}`).html("")
+            $(`#modal-body-${id}`).html("");
             $(`.modal-content-${id}`).toggleClass("loading");
         },
         complete: function () {
             $(`.modal-content-${id}`).toggleClass("loading");
             prevModal = $(`#modal-body-${id}`);
-        }
-    })
-    console.log(url)
+        },
+    });
+    console.log(url);
+};
+
+const getSchoolName = (id) => {
+    console.log(id);
+    switch (id) {
+        case '1':
+            return "Pacific University";
+        case '2':
+            return "Portland State University";
+        case '3':
+            return "Portland Community College";
+    }
+
+    return "Unknown"
+};
+
+const setSchoolName = (id) => {
+    const name = getSchoolName(id);
+    const normal = document.getElementById('school-name-normal');
+    const mobile = document.getElementById('school-name-mobile');
+    normal.innerHTML = name;
+    mobile.innerHTML = name + ' - ';
 }

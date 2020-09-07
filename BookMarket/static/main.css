@@ -810,7 +810,7 @@ body.need-school .school-overlay {
 
 .switch-container-full {
     position: relative;
-    width: 90px;
+    width: 200px;
 }
 
 .switch-text-full {
@@ -822,7 +822,7 @@ body.need-school .school-overlay {
     display: none;
 }
 
-@media (max-width: 550px) {
+@media (max-width: 768px) {
     .switch-container-mobile {
         display: block;
     }
@@ -832,3 +832,14 @@ body.need-school .school-overlay {
     }
 }
 
+#school-name-normal {
+    display: block;
+}
+
+@media (max-width: 1200px) {
+    .header-container {
+        margin-left: 0;
+        margin-right: 0;
+        max-width: 1200px;
+    }
+}
