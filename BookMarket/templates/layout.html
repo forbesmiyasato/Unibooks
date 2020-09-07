@@ -110,7 +110,7 @@
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
             <ul class="nav navbar-nav menu_nav ml-auto">
               <li class="nav-item"><a id="home"
-                  class="nav-link activable {% if (title == 'Home' or title == 'about') %}active{% endif %}"
+                  class="nav-link activable {% if (title == 'Home' or title == 'About Us' or title == 'Contact Us') %}active{% endif %}"
                   onclick="linkClicked(this, '{{ url_for('home')}}')">Home</a></li>
               <li class="nav-item"><a id="shop" class="nav-link activable {% if title == 'Shop' %}active{% endif %}"
                   onclick="linkClicked(this, '{{ url_for('shop_api.shop')}}')">shop</a></li>
@@ -229,7 +229,7 @@
           <div class="single-footer-widget">
             <h6>Contact <span class="it">Us</span></h6>
             <p>
-              <a class="footer-item" href="{{url_for('about_us')}}">Leave a Message</a>
+              <a class="footer-item" onclick="linkClicked(this, '{{url_for('leave_a_message')}}')">Leave a Message</a>
             </p>
             <p style="font-size: 16px">
               forbesmiyasato@yahoo.com
@@ -283,6 +283,13 @@
     const checkSchool = () => {
       var school = localStorage.getItem('school');
 
+      if (school && sessionStorage.justChangedSchool === 'true') {
+      console.log("IN IF")
+      toastr.options = { "positionClass": "toast-top-center", "closeButton": true}
+      toastr.success(`Your school is set to ${getSchoolName(school)}`);
+      sessionStorage.justChangedSchool = false;
+      }
+
       if (!school || school == null || school === 'undefined') {
         $("body").toggleClass("need-school");
       } else {
@@ -312,6 +319,7 @@
           // data: { school: school },
           async: true,
           success: function () {
+            sessionStorage.justChangedSchool = true;
             location.reload();
           }
         })
@@ -362,6 +370,7 @@
     let saved_html = null;
     let listings_html = null;
     let account_html = null;
+    let message_html = null;
 
     const redirect = (path) => {
       console.log("PATH", path)
@@ -375,6 +384,8 @@
         $('#block-content').html(shop_html);
       } else if (path === 'aboutus' && about_html) {
         $('#block-content').html(about_html);
+      } else if (path === 'message' && message_html) {
+        $('#block-content').html(message_html);
       } else if (path === 'account' && account_html) {
         $('#block-content').html(account_html);
       } else if (path === 'listings' && listings_html) {
@@ -398,6 +409,8 @@
               shop_html = response
             } else if (path === 'aboutus' && !about_html) {
               about_html = response
+            } else if (path === 'message' && !message_html) {
+              message_html = response
             } else if (path === 'listings' && !listings_html) {
               listings_html = response
             } else if (path === 'account' && !account_html) {

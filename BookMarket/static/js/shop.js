@@ -485,6 +485,7 @@ const initializeSingleProductPage = () => {
     } else {
         $(".s_Product_carousel").owlCarousel({
             items: 1,
+            loop: true,
         });
     }
 };
@@ -567,7 +568,7 @@ const highlightNavLink = () => {
         active = document.getElementById("user");
     } else if (path === "item") {
         active = document.getElementById("sell");
-    } else if (path === "aboutus") {
+    } else if (path === "aboutus" || path === "message") {
         active = document.getElementById("home");
     } else {
         console.log("!!!!!!!!!!!!", path.split("?")[0]);
@@ -654,6 +655,4 @@ const setSchoolName = (id) => {
     const mobile = document.getElementById('school-name-mobile');
     normal.innerHTML = name;
     mobile.innerHTML = name + ' - ';
-    toastr.options = { "positionClass": "toast-top-center", "closeButton": true}
-    toastr.success(`Your school is set to "${name}"`);
 }

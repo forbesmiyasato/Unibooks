@@ -3,9 +3,10 @@ import atexit
 # from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session, Markup, make_response
 from flask_login import current_user, login_required
+from flask_mail import Message
 from .models import Users, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater, School
-from .forms import UpdateAccountForm, ItemForm
-from . import app, db
+from .forms import UpdateAccountForm, ItemForm, MessageForm
+from . import app, db, mail
 from .routes.userAuth import userAuth, login_html
 from .routes.shop import shop_api, item_html
 from .utility_funcs import save_images_to_db_and_s3, delete_images_from_s3_and_db, delete_non_remaining_images_from_s3_and_db
@@ -133,7 +134,8 @@ def new_item():
             return redirect(url_for('listings', standalone=standalone))
     form = ItemForm()
     # form.item_class.choices = class_list
-    departments = ItemDepartment.query.filter_by(school=session['school']).all()
+    departments = ItemDepartment.query.filter_by(
+        school=session['school']).all()
     # department_list = [(i.id, i.department_name) for i in departments]
     print(departments)
     return render_template('create_post.html', title='Sell', form=form, legend='New', item_id=0, departments=departments,
@@ -358,8 +360,26 @@ def inject_schools():
     schools = db.session.query(School).all()
     return {'schools': schools}
 
+
 @app.route('/setschool/<int:school>')
 def set_school_in_session(school):
     session['school'] = school
-    print ("SCHOOL", session['school'])
+    print("SCHOOL", session['school'])
     return ('', 204)
+
+
+@app.route('/message')
+def leave_a_message():
+    message_form = MessageForm()
+    standalone = request.args.get('standalone', None)
+
+    if request.method == 'POST':
+        email = request.form.get('email', "None")
+        standalone = "standalone"
+        msg = Message("Feedback from user",
+                      sender="pacificubooks@gmail.com",
+                      recipients=["pacificubooks@gmail.com"], html=render_template("message_email.html", name="feedback from user",
+                                                                                   email=email, body=request.form.get('message')))
+        mail.send(msg)
+    return render_template('message_page.html', title="Contact Us", message_form=message_form, standalone=standalone,
+                           message_title="Contact Us", optional="(optional)")

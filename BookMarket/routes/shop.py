@@ -154,7 +154,8 @@ def item_html(item_id, standalone=None):
         message_form.email.data = current_user.email
     return render_template('single_product.html', title=_item.name, item=_item, images=images,
                            item_class=item_class, department=department, form=edit_form, legend="Edit",
-                           message_form=message_form, item_id=item_id, departments=departments, standalone=standalone)
+                           message_form=message_form, item_id=item_id, departments=departments, standalone=standalone,
+                           message_title="Message Seller")
 
 
 @shop_api.route("/shop/<int:item_id>", methods=['GET', 'POST'])
