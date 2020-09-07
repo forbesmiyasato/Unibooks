@@ -346,22 +346,6 @@
 
     search_form.addEventListener("submit", search);
 
-    // const shopClicked = (url) => {
-    //   console.log(url)
-    //   history.pushState(null, '11', url)
-    //   $.ajax({
-    //     url: url,
-    //     type: "get",
-    //     data: null,
-    //     success: function (response) {
-    //       $('#block-content').html(response);
-    //     }
-    //   })
-    // }
-
-    // let active = document.getElementsByClassName('activable active')[0];
-    // let prevActive
-
     let home_html = null;
     let login_html = null;
     let register_html = null;
@@ -372,15 +356,18 @@
     let account_html = null;
     let message_html = null;
 
-    const redirect = (path) => {
-      console.log("PATH", path)
+    const redirect = (paths) => {
+      console.log("PATH", paths.split('/'))
+      path = paths.split('/')[1]
+      other = paths.split('/')[2]
+
       if (path === 'home' && home_html) {
         $('#block-content').html(home_html);
       } else if (path === 'login' && login_html) {
         $('#block-content').html(login_html);
       } else if (path === 'register' && register_html) {
         $('#block-content').html(register_html);
-      } else if (path === 'shop' && shop_html) {
+      } else if (path === 'shop' && shop_html && !other) {
         $('#block-content').html(shop_html);
       } else if (path === 'aboutus' && about_html) {
         $('#block-content').html(about_html);
@@ -461,28 +448,6 @@
         $('.dropdown-toggle').dropdown('toggle')
       }
 
-      // console.log(active)
-      // console.log(ele)
-      // if (active) {
-      //   active.classList.remove('active');
-      // }
-      // if (!ele.classList.contains('footer-item')) {
-      //   prevActive = active;
-      //   if (url === '/saved?cart') {
-      //     let cart = document.getElementById('shopping-cart');
-      //     cart.classList.add('active')
-      //     active = cart
-      //   }
-      //   else if (url === '/listings' || url === '/account' || url === '/saved') {
-      //     let user = document.getElementById('user');
-      //     user.classList.add('active')
-      //     active = user;
-      //   } else {
-      //     ele.classList.add('active');
-      //     active = ele;
-      //   }
-      // }
-
       let alerts1 = document.getElementsByClassName('alert');
       console.log(alerts1);
       console.log(ele.id)
@@ -490,8 +455,7 @@
       history.pushState(null, '', url)
       highlightNavLink()
 
-      redirect(url.substring(1))
-      // $('#block-content').load(url + "?standalone=true")
+      redirect(url)
     }
 
     window.addEventListener('popstate', (event) => {
@@ -507,13 +471,12 @@
       //   prevActive = document.getElementById('home').classList.add('active');
       // }
       // active = prevActive;
-      let path = (window.location.pathname + location.search).split('/')[1];
-      console.log(path)
+      // let path = (window.location.pathname + location.search).split('/')[1];
+      // console.log(path)
 
-      console.log(location.href)
+      // console.log(location.href)
       highlightNavLink()
-
-      redirect(path);
+      redirect(window.location.pathname + location.search);
 
     });
 
