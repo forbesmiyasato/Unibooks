@@ -1,5 +1,5 @@
 import re
-from flask import render_template, request, Blueprint, jsonify, url_for, flash, session
+from flask import render_template, request, Blueprint, jsonify, url_for, flash, session, redirect
 from flask_login import current_user
 from flask_mail import Message
 from ..models import Item, ItemClass, ItemDepartment, ItemImage, School
@@ -14,6 +14,10 @@ shop_api = Blueprint('shop_api', __name__,
 @shop_api.route("/shop")
 def shop():
     standalone = request.args.get('standalone')
+    if session.get('school') is None:
+        flash("School Session Needed", 'error')
+        return redirect(url_for('home'))
+        # return jsonify(state="no school in session")
     school = session['school']
     departments = ItemDepartment.query.filter_by(school=school).all()
 
@@ -42,7 +46,9 @@ def getPosts():
         high = split[1]
 
     original_sort_term = sort_term
-
+    print(session.get('school') is None)
+    if session.get('school') is None:
+        return jsonify(error='no school in session')
     posts = Item.query.filter_by(school=session['school'])
     print(posts)
     if sort_term == "lowest":

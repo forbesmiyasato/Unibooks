@@ -416,6 +416,8 @@
               } else if (response.state === 'max-listings') {
                 history.replaceState(null, null, '/listings')
                 toastr.error("There is a max of 10 listings at a time! Please wait or delete listings before selling.");
+              } else if (response.state === 'no school in session') {
+                location.reload()
               }
               highlightNavLink()
               $('#block-content').html(response.html);

@@ -66,6 +66,11 @@ const getData = (url) => {
         data: null,
         async: true,
         success: function (response) {
+            if (response.error) {
+                if (response.error === 'no school in session') {
+                    location.reload();
+                }
+            }
             // console.log(response)
             let course = response.course;
             let department = response.department;
@@ -117,7 +122,7 @@ const getData = (url) => {
             $("#posts-spinner").toggleClass("loading");
         },
         error: function (xhr) {
-            getAll(); // return to main shop page on invalid query caused by user messing with url params
+            getAll()
         },
     });
 };
@@ -403,6 +408,11 @@ const sort = (ele, order, push) => {
     getData(url.toString());
 };
 
+function displayErrorMessage(message) {
+    toastr.options = { positionClass: "toast-top-center", closeButton: true };
+    toastr.error(message);
+}
+
 function initializeShopPage() {
     let url;
     if (window.location.href.includes("?")) {
@@ -420,15 +430,34 @@ function initializeShopPage() {
     console.log(sort_term, filter_term, show_term);
 
     if (sort_term) {
-        sort(document.getElementById(sort_term), sort_term, false);
+        const sort_element = document.getElementById(sort_term);
+        if (sort_element) {
+            sort(document.getElementById(sort_term), sort_term, false);
+        } else {
+            displayErrorMessage("Invalid sort option!");
+        }
     }
 
     if (filter_term) {
-        filterByPrice(document.getElementById(filter_term), filter_term, false);
+        const filter_element = document.getElementById(sort_term);
+        if (filter_element) {
+            filterByPrice(
+                document.getElementById(filter_term),
+                filter_term,
+                false
+            );
+        } else {
+            displayErrorMessage("Invalid filter option!");
+        }
     }
 
     if (show_term) {
-        show(document.getElementById(show_term), show_term, false);
+        const show_element = document.getElementById(sort_term);
+        if (show_element) {
+            show(document.getElementById(show_term), show_term, false);
+        } else {
+            displayErrorMessage("Invalid show option!");
+        }
     }
 
     console.log(url.toString());
@@ -562,7 +591,7 @@ function onItemClick(url) {
 const highlightNavLink = () => {
     let path = (window.location.pathname + location.search).split("/")[1];
     let active;
-    let ending = ' | Bookmarkit'
+    let ending = " | Bookmarkit";
 
     if (path === "saved?cart") {
         active = document.getElementById("shopping-cart");
@@ -587,7 +616,7 @@ const highlightNavLink = () => {
         document.title = "Contact Us" + ending;
     } else {
         console.log("!!!!!!!!!!!!", path.split("?")[0]);
-        document.title = (path.charAt(0).toUpperCase() + path.slice(1)) + ending;
+        document.title = path.charAt(0).toUpperCase() + path.slice(1) + ending;
         active = document.getElementById(path.split("?")[0]);
     }
     console.log(path, active);
@@ -654,21 +683,21 @@ const listingEditClicked = (id, item_class, item_department) => {
 const getSchoolName = (id) => {
     console.log(id);
     switch (id) {
-        case '1':
+        case "1":
             return "Pacific University";
-        case '2':
+        case "2":
             return "Portland State University";
-        case '3':
+        case "3":
             return "Portland Community College";
     }
 
-    return "Unknown"
+    return "Unknown";
 };
 
 const setSchoolName = (id) => {
     const name = getSchoolName(id);
-    const normal = document.getElementById('school-name-normal');
-    const mobile = document.getElementById('school-name-mobile');
+    const normal = document.getElementById("school-name-normal");
+    const mobile = document.getElementById("school-name-mobile");
     normal.innerHTML = name;
-    mobile.innerHTML = name + ' - ';
-}
+    mobile.innerHTML = name + " - ";
+};
