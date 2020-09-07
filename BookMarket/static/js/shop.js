@@ -101,7 +101,7 @@ const getData = (url) => {
                 );
                 $("#nav-course").html("");
             } else {
-                $("#nav-header").html("All Categories");
+                // $("#nav-header").html("All Categories");
                 $("#nav-department").html("");
                 $("#nav-course").html("");
             }
