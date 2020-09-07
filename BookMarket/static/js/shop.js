@@ -654,4 +654,6 @@ const setSchoolName = (id) => {
     const mobile = document.getElementById('school-name-mobile');
     normal.innerHTML = name;
     mobile.innerHTML = name + ' - ';
+    toastr.options = { "positionClass": "toast-top-center", "closeButton": true}
+    toastr.success(`Your school is set to "${name}"`);
 }

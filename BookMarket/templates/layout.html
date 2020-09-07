@@ -310,9 +310,12 @@
           url: `/setschool/${school}`,
           type: "get",
           // data: { school: school },
-          async: true
+          async: true,
+          success: function () {
+            location.reload();
+          }
         })
-        setSchoolName(school)
+        // setSchoolName(school)
       })
       console.log("SCHOOL", school)
     }
