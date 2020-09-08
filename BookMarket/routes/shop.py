@@ -169,7 +169,7 @@ def item(item_id):
     standalone = request.args.get('standalone', None)
     if request.method == 'POST':
         print("YES!")
-        return jsonify({'html': (item_html(item_id, standalone)), 'url': url_for('shop_api.item', item_id=item_id)})
+        return jsonify({'html': (item_html(item_id, standalone)), 'url': url_for('shop_api.item', item_id=item_id), 'origin': 'single'})
     return item_html(item_id, standalone)
 
 

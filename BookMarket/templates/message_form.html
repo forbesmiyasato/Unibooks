@@ -19,7 +19,11 @@
                         {% endfor %}
                     </div>
                     {% else %}
+                    {% if optional == '(optional)' %}
                     {{ message_form.email(class="form-control form-control-lg", type="email") }}
+                    {% else %}
+                    {{ message_form.email(class="form-control form-control-lg", type="email", required='required') }}
+                    {% endif %}
                     {% endif %}
                 </div>
                 <div class="form-group">
@@ -36,7 +40,7 @@
                     {% endif %}
                 </div>
             </fieldset>
-            <div class="form-group">
+            <div class="form-group" id="send-button">
                 {{ message_form.message_submit(class="btn btn-outline-info", onclick="history.replaceState(null, null, ' ');")}}
             </div>
         </form>
@@ -90,17 +94,23 @@
             async: true,
             success: function (response) {
                 $('#block-content').html(response.html);
-                toastr.options = {"positionClass": "toast-top-left", "closeButton": true}
-                toastr.success("Message Sent! The seller will contact you soon!");
+                toastr.options = { "positionClass": "toast-top-left", "closeButton": true }
+                if (response.origin === 'single') {
+                    toastr.success("Message Sent! The seller will contact you soon!");
+                }
+                else if (response.origin === 'contactus') {
+                    toastr.success("Message Sent! Thank you for contacting us!");
+                    document.getElementById('send-button').innerHTML = "Your message is sent. Thank you for contacting us!"
+                }
             },
             beforeSend: function () {
                 $("body").toggleClass("loading");
                 $('#messageModal').modal('hide')
-                $("#loader-text").html ('Sending Message...')
+                $("#loader-text").html('Sending Message...')
             },
             complete: function () {
                 $("body").toggleClass("loading");
-                $("#loader-text").html ('Loading...')
+                $("#loader-text").html('Loading...')
             }
         })
     })

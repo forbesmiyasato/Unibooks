@@ -77,7 +77,7 @@ class ItemForm(FlaskForm):
 
 class MessageForm(FlaskForm):
     email = StringField('Your Email',
-                        validators=[DataRequired(), Email()])
+                        validators=[Email()])
     message = TextAreaField('Message', validators=[DataRequired(), Length(max=150)])
     message_submit = SubmitField('Send')
 

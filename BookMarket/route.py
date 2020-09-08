@@ -312,6 +312,7 @@ def inject_num_items():
 def get_edit_form(item_id=None):
     _item = Item.query.get_or_404(item_id)
     edit_form = ItemForm()
+    # It's never actually posting here, just left it incase we need to
     if request.method == 'POST':
         remains = request.form.get('remaining_files')
         images = request.files.getlist("files[]")
@@ -372,7 +373,7 @@ def set_school_in_session(school):
     return ('', 204)
 
 
-@app.route('/contactus')
+@app.route('/contactus', methods=['GET', 'POST'])
 def leave_a_message():
     message_form = MessageForm()
     standalone = request.args.get('standalone', None)
@@ -385,5 +386,6 @@ def leave_a_message():
                       recipients=["pacificubooks@gmail.com"], html=render_template("message_email.html", name="feedback from user",
                                                                                    email=email, body=request.form.get('message')))
         mail.send(msg)
+        return jsonify(origin='contactus')
     return render_template('message_page.html', title="Contact Us", message_form=message_form, standalone=standalone,
                            message_title="Contact Us", optional="(optional)")
