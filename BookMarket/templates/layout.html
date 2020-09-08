@@ -224,6 +224,9 @@
             <p>
               <a class="footer-item" onclick="linkClicked(this, '{{url_for('about_us')}}')">About Us</a>
             </p>
+            <p>
+              <a class="footer-item" onclick="linkClicked(this, '{{url_for('help')}}')">FAQ</a>
+            </p>
             <!-- <p>
               <a class="footer-item"href ="{{url_for('about_us')}}">Meet the founders</a>
             </p> -->
@@ -359,6 +362,7 @@
     let listings_html = null;
     let account_html = null;
     let message_html = null;
+    let help_html = null;
 
     const redirect = (paths) => {
       console.log("PATH", paths.split('/'))
@@ -377,6 +381,8 @@
         $('#block-content').html(about_html);
       } else if (path === 'contactus' && message_html) {
         $('#block-content').html(message_html);
+      } else if (path === 'help' && help_html) {
+        $('#block-content').html(help_html);
       } else if (path === 'account' && account_html) {
         $('#block-content').html(account_html);
       } else if (path === 'listings' && listings_html) {
@@ -402,6 +408,8 @@
               about_html = response
             } else if (path === 'contactus' && !message_html) {
               message_html = response
+            } else if (path === 'help' && !help_html) {
+              help_html = response
             } else if (path === 'listings' && !listings_html) {
               listings_html = response
             } else if (path === 'account' && !account_html) {

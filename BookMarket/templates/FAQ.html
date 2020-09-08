@@ -1,0 +1,50 @@
+{% if not standalone %} {% extends "layout.html" %} {% endif %}
+{% block content %}
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Help</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="javascript:linkClicked(document.getElementById('home'), '/home')">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a class="nav-no-href">FAQ</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<div class="container mt-3">
+    <p>
+        <a data-toggle="collapse" href="#howtosell" role="button" aria-expanded="false" aria-controls="collapseExample">
+          How to sell?
+        </a>
+      </p>
+      <div class="collapse" id="howtosell">
+        <div class="card card-body mb-3">
+          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+        </div>
+      </div>
+      <p>
+        <a data-toggle="collapse" href="#howtobuy" role="button" aria-expanded="false" aria-controls="collapseExample">
+          How to buy?
+        </a>
+      </p>
+      <div class="collapse" id="howtobuy">
+        <div class="card card-body mb-3">
+          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+        </div>
+      </div>
+      <p>
+        <a data-toggle="collapse" href="#transactionsafety" role="button" aria-expanded="false" aria-controls="collapseExample">
+          How safe are the transactions?
+        </a>
+      </p>
+      <div class="collapse" id="transactionsafety">
+        <div class="card card-body mb-3">
+          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+        </div>
+      </div>
+</div>
+{% endblock content %}

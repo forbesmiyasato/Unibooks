@@ -48,6 +48,10 @@ def about_us():
     #     standalone = False
     return render_template('about_us.html', standalone=standalone, title="About Us")
 
+@app.route('/help')
+def help():
+    standalone = request.args.get('standalone')
+    return render_template('FAQ.html', standalone=standalone, title="Help")
 
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
