@@ -1315,7 +1315,7 @@ h6 {
     color: #222222; }
 
 .organic-breadcrumb {
-  background: url(../img/banner/common-banner.jpg) center no-repeat;
+  background-image: linear-gradient(to right bottom, rgba(77, 148, 255, 0.8), rgba(0, 102, 255, 0.8)), url(../img/banner/common-banner.jpg);
   background-size: cover;
   padding-top: 160px; }
   @media (max-width: 991px) {
@@ -3174,7 +3174,7 @@ label {
 
 .filter-bar {
   padding: 0px 20px 10px 20px;
-  background: #70a9da; }
+  background: #ff9900; }
   .filter-bar a, .filter-bar i {
     color: #000; }
 
@@ -3355,7 +3355,7 @@ label {
 
 .sidebar-categories .head {
   line-height: 60px;
-  background: #70a9da;
+  background: #ff9900;
   padding: 0 30px;
   font-size: 16px;
   font-weight: 400;
@@ -3388,7 +3388,7 @@ label {
   margin-top: 50px; }
   .sidebar-filter .top-filter-head {
     line-height: 60px;
-    background: #70a9da;
+    background: #ff9900;
     padding: 0 30px;
     font-size: 16px;
     font-weight: 400;
