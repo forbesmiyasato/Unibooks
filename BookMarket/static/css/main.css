@@ -1317,7 +1317,8 @@ h6 {
 .organic-breadcrumb {
   background-image: linear-gradient(to right bottom, rgba(77, 148, 255, 0.8), rgba(0, 102, 255, 0.8)), url(../img/banner/common-banner.jpg);
   background-size: cover;
-  padding-top: 160px; }
+  padding-top: 160px;
+  margin-bottom: 50px; }
   @media (max-width: 991px) {
     .organic-breadcrumb {
       padding-top: 80px; } }
