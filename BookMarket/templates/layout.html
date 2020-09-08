@@ -110,7 +110,7 @@
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
             <ul class="nav navbar-nav menu_nav ml-auto">
               <li class="nav-item"><a id="home"
-                  class="nav-link activable {% if (title == 'Home' or title == 'About Us' or title == 'Contact Us') %}active{% endif %}"
+                  class="nav-link activable {% if (title == 'Home' or title == 'About Us' or title == 'Contact Us' or title == 'Help') %}active{% endif %}"
                   onclick="linkClicked(this, '{{ url_for('home')}}')">Home</a></li>
               <li class="nav-item"><a id="shop" class="nav-link activable {% if title == 'Shop' %}active{% endif %}"
                   onclick="linkClicked(this, '{{ url_for('shop_api.shop')}}')">shop</a></li>

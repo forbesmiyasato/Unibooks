@@ -1,10 +1,10 @@
-from flask import render_template, url_for, flash, request, redirect, Blueprint, jsonify
+from flask import render_template, url_for, flash, request, redirect, Blueprint, jsonify, session
 from flask_login import login_user, logout_user, current_user, login_required
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
 from flask_mail import Message
 from ..forms import RegistrationForm, LoginForm, PasswordResetForm
 from .. import app, db, bcrypt, mail
-from ..models import Users
+from ..models import Users, School
 
 userAuth = Blueprint('userAuth', __name__,
                      static_folder="../static", template_folder="../template")
@@ -16,8 +16,13 @@ salt = "email_confirm"
 def register():
     standalone = request.args.get('standalone')
     form = RegistrationForm()
+    school = School.query.filter_by(id=session['school']).first()
+    pattern = school.email_pattern
+    error_message = "Must be a " + school.name + " email address!"
+    print(pattern)
     print (form.email.data)
     print (form.password.data)
+    print (error_message)
     if form.validate_on_submit():
         print (form.email.data)
         print (form.password.data)
@@ -40,7 +45,7 @@ def register():
         flash(
             f'Your account has been created, you can now login!', 'success')
         return redirect(url_for('userAuth.login'))
-    return render_template('register.html', title='Register', form=form, standalone=standalone)
+    return render_template('register.html', title='Register', form=form, standalone=standalone, pattern=pattern, errorMessage=error_message)
 
 
 @userAuth.route('/confirm_email/send/')

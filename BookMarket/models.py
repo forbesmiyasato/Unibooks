@@ -91,6 +91,8 @@ class School(db.Model):
         'ItemDepartment', backref='parent', lazy=True)
     items = db.relationship('Item', backref='parent', lazy=True)
     users = db.relationship('Users', backref='parent', lazy=True)
+    email_pattern = db.Column(db.String(150), nullable=True)
+
 
 # class PastItem(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
