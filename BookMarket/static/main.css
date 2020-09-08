@@ -732,7 +732,6 @@ body.loading .overlay {
     bottom: 0;
     right: 0;
     font-size: 100px;
-
 }
 
 .about-forbes-linkedin {
@@ -792,7 +791,10 @@ body.need-school .school-overlay {
     border-radius: 10px;
     box-shadow: 0 10px 30px 1px rgba(0, 0, 0, 0.7);
     animation: moveInRight 1s ease-out;
-    background: linear-gradient(rgba(112, 169, 218, 0.45), rgba(112, 169, 218, 0.35)),
+    background: linear-gradient(
+            rgba(112, 169, 218, 0.45),
+            rgba(112, 169, 218, 0.35)
+        ),
         url("img/school_modal.jpg");
     background-size: cover;
 }
@@ -819,7 +821,7 @@ body.need-school .school-overlay {
 
 .school-text {
     margin-top: 20%;
-    color: #fff
+    color: #fff;
 }
 
 .switch-container-full {
@@ -868,4 +870,20 @@ body.need-school .school-overlay {
     position: relative;
     left: -50%;
     white-space: nowrap;
+}
+
+#email::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    font-size: 14px;
+    opacity: 1; /* Firefox */
+}
+
+#email:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    font-size: 14px;
+}
+
+#email::-ms-input-placeholder {
+    /* Microsoft Edge */
+    font-size: 14px;
 }

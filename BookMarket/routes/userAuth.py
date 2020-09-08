@@ -18,14 +18,15 @@ def register():
     form = RegistrationForm()
     school = School.query.filter_by(id=session['school']).first()
     pattern = school.email_pattern
+    placeholder = "Your " + school.name + " email address"
     error_message = "Must be a " + school.name + " email address!"
     print(pattern)
-    print (form.email.data)
-    print (form.password.data)
-    print (error_message)
+    print(form.email.data)
+    print(form.password.data)
+    print(error_message)
     if form.validate_on_submit():
-        print (form.email.data)
-        print (form.password.data)
+        print(form.email.data)
+        print(form.password.data)
         email = form.email.data
         hashed_password = bcrypt.generate_password_hash(
             form.password.data).decode('utf-8')
@@ -45,7 +46,8 @@ def register():
         flash(
             f'Your account has been created, you can now login!', 'success')
         return redirect(url_for('userAuth.login'))
-    return render_template('register.html', title='Register', form=form, standalone=standalone, pattern=pattern, errorMessage=error_message)
+    return render_template('register.html', title='Register', form=form, standalone=standalone,
+                           pattern=pattern, errorMessage=error_message, placeholder=placeholder)
 
 
 @userAuth.route('/confirm_email/send/')
@@ -108,7 +110,8 @@ def confirm_email(token):
         print(email)
     except SignatureExpired:
         # return '<h1>The token is expired!<h1>'
-        flash("The token is expired! Login and go to accounts to send another one.", 'error')
+        flash(
+            "The token is expired! Login and go to accounts to send another one.", 'error')
         return redirect(url_for('userAuth.login'))
     except BadTimeSignature:
         flash("Invalid Token!", 'error')
@@ -121,7 +124,7 @@ def confirm_email(token):
     return render_template('home.html')
 
 
-def login_html(standalone=None): 
+def login_html(standalone=None):
     print("111", standalone)
     form = LoginForm()
     if form.validate_on_submit():
