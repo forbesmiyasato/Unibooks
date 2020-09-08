@@ -5767,7 +5767,8 @@ label {
 ============================================================================================ */
 .footer-area {
   padding-top: 100px;
-  background-color: #222222; }
+  background-color: #222222;
+  position: relative; }
   .footer-area h6 {
     color: #fff;
     margin-bottom: 25px;

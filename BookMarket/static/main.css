@@ -843,3 +843,15 @@ body.need-school .school-overlay {
         max-width: 1200px;
     }
 }
+
+.switch-text-footer {
+    position: absolute;
+    top: 2%;
+    left: 50%;
+}
+
+.footer-center {
+    position: relative;
+    left: -50%;
+    white-space: nowrap;
+}

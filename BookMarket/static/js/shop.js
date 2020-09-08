@@ -698,6 +698,8 @@ const setSchoolName = (id) => {
     const name = getSchoolName(id);
     const normal = document.getElementById("school-name-normal");
     const mobile = document.getElementById("school-name-mobile");
+    const footer = document.getElementById("school-name-footer");
     normal.innerHTML = name;
     mobile.innerHTML = name + " - ";
+    footer.innerHTML = name + " - ";
 };
