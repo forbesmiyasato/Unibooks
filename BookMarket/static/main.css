@@ -732,6 +732,7 @@ body.loading .overlay {
     bottom: 0;
     right: 0;
     font-size: 100px;
+
 }
 
 .about-forbes-linkedin {
@@ -741,9 +742,22 @@ body.loading .overlay {
     font-size: 100px;
 }
 
+.about-forbes-insta,
+.about-forbes-linkedin {
+    -webkit-transition: transform 0.5s;
+    -moz-transition: transform 0.5s;
+    transition: transform 0.5s;
+}
+
 .about-forbes-linkedin:hover,
 .about-forbes-insta:hover {
     color: #70a9da;
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
 }
 
 .school-overlay {
