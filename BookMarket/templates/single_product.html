@@ -7,8 +7,10 @@
             <div class="col-first">
                 <h1>Product Details Page</h1>
                 <nav class="d-flex align-items-center">
-                    <a href="javascript:linkClicked(document.getElementById('home'), '/home')">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="javascript:linkClicked(document.getElementById('shop'), '/shop')">Shop<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="javascript:linkClicked(document.getElementById('home'), '/home')">Home<span
+                            class="lnr lnr-arrow-right"></span></a>
+                    <a href="javascript:linkClicked(document.getElementById('shop'), '/shop')">Shop<span
+                            class="lnr lnr-arrow-right"></span></a>
                     <a href="">product-details</a>
                 </nav>
             </div>
@@ -51,7 +53,8 @@
                         <li><a class="active"
                                 href="javascript:linkClicked(document.getElementById('shop'), '/shop?department={{department.id}}')"><span>Department</span>
                                 : {{department.department_name}}</a></li>
-                        <li><a href="javascript:linkClicked(document.getElementById('shop'), '/shop?class={{item_class.id}}')"><span>Class</span>
+                        <li><a
+                                href="javascript:linkClicked(document.getElementById('shop'), '/shop?class={{item_class.id}}')"><span>Class</span>
                                 :
                                 {{item_class.class_name}}</a></li>
                         <li><a><span>Author</span>
@@ -81,7 +84,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
-                                            <input type="submit" class="btn btn-danger" value="Delete"
+                                        <input type="submit" class="btn btn-danger" value="Delete"
                                             onclick="onItemDelete('{{url_for('delete_item', item_id=item.id)}}', '{{item.name}}', '', 'single')">
                                     </div>
                                 </div>
@@ -105,7 +108,8 @@
                             </div>
                         </div>
                         {% else %}
-                        <a class="primary-btn" href="javascript:void(0)" data-toggle="modal" data-target="#messageModal">
+                        <a class="primary-btn" href="javascript:void(0)" data-toggle="modal"
+                            data-target="#messageModal">
                             Message Seller <i class="lnr lnr-envelope"></i></a>
                         <a class="icon_btn" onclick="addToBag({{item.id}}, {{current_user.id}})"
                             href="javascript:void(0)"><span class="ti-bag"></span>
@@ -116,13 +120,16 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <button type="button"
-                                            class="close" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        {% include "message_form.html" %}
+                                        <div class="container">
+                                            <div class="content-section">
+                                                {% include "message_form.html" %}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -201,25 +208,25 @@
         //             $('select').niceSelect('update');
         //         })
         //     });
-    //     {% if item and(images | length > 0) %}
+        //     {% if item and(images | length > 0) %}
 
-    //     console.log("!!!!!!!!!!!!!!!!")
-    //     $('input[name="files"]').fileuploader({
-    //         files: [
-    //             {% for image in images %}
-    // {
-    //             "name": "",
-    //             "file": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
-    //             "type": "image/png",
-    //             "size": 26162,
-    //             "data": {
-    //                 "thumbnail": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
-    //             }
-    //         },
-    //         {% endfor %}
-    //     ],
-    //     })
-    // {% endif %}
+        //     console.log("!!!!!!!!!!!!!!!!")
+        //     $('input[name="files"]').fileuploader({
+        //         files: [
+        //             {% for image in images %}
+        // {
+        //             "name": "",
+        //             "file": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
+        //             "type": "image/png",
+        //             "size": 26162,
+        //             "data": {
+        //                 "thumbnail": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
+        //             }
+        //         },
+        //         {% endfor %}
+        //     ],
+        //     })
+        // {% endif %}
     };
 
     function addToBag(item_id, user_id) {

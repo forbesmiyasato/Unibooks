@@ -2,7 +2,7 @@ import os
 import atexit
 # from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session, Markup, make_response
-from flask_login import current_user, login_required
+from flask_login import current_user, login_required, logout_user
 from flask_mail import Message
 from .models import Users, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater, School
 from .forms import UpdateAccountForm, ItemForm, MessageForm
@@ -368,6 +368,12 @@ def inject_schools():
 
 @app.route('/setschool/<int:school>')
 def set_school_in_session(school):
+    state = request.args.get('state', None)
+    print(state)
+    if state == "loggout":
+        logout_user()
+    elif state == 'emptycart':
+        session.pop('saved')
     session['school'] = school
     print("SCHOOL", session['school'])
     return ('', 204)

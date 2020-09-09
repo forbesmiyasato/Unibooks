@@ -7,7 +7,8 @@
             <div class="col-first">
                 <h1>Contact Us</h1>
                 <nav class="d-flex align-items-center">
-                    <a href="javascript:linkClicked(document.getElementById('home'), '/home')">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="javascript:linkClicked(document.getElementById('home'), '/home')">Home<span
+                            class="lnr lnr-arrow-right"></span></a>
                     <a class="nav-no-href">Contact Us</a>
                 </nav>
             </div>
@@ -15,7 +16,11 @@
     </div>
 </section>
 <!-- End Banner Area -->
-<div class="container mt-3">
-{% include "message_form.html" %}
+<div class="container mb-5" id="contact-us-container">
+    <!-- <div class="message-overlay"> -->
+        <div class="content-section">
+            {% include "message_form.html" %}
+        </div>
+    <!-- </div> -->
 </div>
 {% endblock content %}

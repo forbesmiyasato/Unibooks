@@ -703,6 +703,6 @@ const setSchoolName = (id) => {
     const mobile = document.getElementById("school-name-mobile");
     const footer = document.getElementById("school-name-footer");
     normal.innerHTML = name;
-    mobile.innerHTML = name + " - ";
+    mobile.innerHTML = name;
     footer.innerHTML = name + " - ";
 };

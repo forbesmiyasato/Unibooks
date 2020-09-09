@@ -98,7 +98,6 @@
               src="{{ url_for('static', filename='img/logo.png')}}" alt=""></a>
           <div class="switch-container-full">
             <span id="school-name-normal"></span>
-            <a onclick="switchSchool()" class="switch-text-full">Switch School</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -145,7 +144,7 @@
                   class="cart activable {% if title == 'Saved?cart' %}active{% endif %}">
                   <span class="ti-bag"><span class="bag-icon">{{ numItems|length }}</span></span></a></li>
               <li class="nav-item switch-container-mobile">
-                <a onclick="switchSchool()" class="nav-link"><span id="school-name-mobile"></span>Switch School</a>
+                <span id="school-name-mobile"></span>
               </li>
               <li class="nav-item">
                 <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
@@ -283,8 +282,35 @@
       }
     };
     
-    const switchSchool = () => {
+    const toggleSwitchSchoolModal = () => {
       $("body").toggleClass("need-school");
+      toastr.remove()
+    }
+
+    let state = null;
+
+    const switchSchool = () => {
+      // $("body").toggleClass("need-school");
+      let message;
+      const ending = "Click to "
+      toastr.options = { "positionClass": "toast-top-center", "closeButton": true, "timeOut": "15000"}
+      // toastr.options.onclick = function() {
+      // $("body").toggleClass("need-school");
+      // }
+      console.log(document.getElementsByClassName('bag-icon')[0].innerHTML)
+      if ('{{current_user.is_authenticated}}' === 'True') {
+        message = 'Are you sure? You will be logged out if you change schools.'
+        state = 'loggout'
+      } else if (document.getElementsByClassName('bag-icon')[0].innerHTML > 0) {
+        message = "Are you sure? You'll lose all the items saved in cart if you change schools."
+        state = 'emptycart'
+      } else {
+        message = 'Are you sure?'
+      }
+      toastr.warning(`<div id="switch-school-warning"><button onclick="toastr.remove()" type="button" id="NoBtn" 
+        class="btn btn-outline-dark">Nevermind</button>
+        <button type="button" id="YesBtn" onclick="toggleSwitchSchoolModal()" class="btn" 
+        style="margin: 0 8px 0 8px">Yes</button></div>`, message);
     }
 
     const checkSchool = () => {
@@ -323,11 +349,12 @@
         $.ajax({
           url: `/setschool/${school}`,
           type: "get",
-          // data: { school: school },
+          data: { 'state': state },
           async: true,
           success: function () {
             sessionStorage.justChangedSchool = true;
             location.reload();
+            state = null;
           }
         })
         // setSchoolName(school)
