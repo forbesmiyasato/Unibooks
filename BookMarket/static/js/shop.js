@@ -591,7 +591,7 @@ function onItemClick(url) {
 const highlightNavLink = () => {
     let path = (window.location.pathname + location.search).split("/")[1];
     let active;
-    let ending = " | Bookmarkit";
+    let ending = " | Unibooks";
 
     if (path === "saved?cart") {
         active = document.getElementById("shopping-cart");
