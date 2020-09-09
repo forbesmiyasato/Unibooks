@@ -213,7 +213,7 @@ def items_for_department(department_id):
 
 @shop_api.context_processor
 def get_totals_depts():
-    items = db.session.query(Item).all()
+    items = db.session.query(Item).filter(Item.school==session['school']).all()
     depObj = {}
     classObj = {}
 
@@ -223,7 +223,6 @@ def get_totals_depts():
                 depObj[item.department_id] = 1
             else:
                 depObj[item.department_id] += 1
-
             if item.class_id not in classObj:
                 classObj[item.class_id] = 1
             else:
