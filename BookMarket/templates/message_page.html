@@ -16,11 +16,25 @@
     </div>
 </section>
 <!-- End Banner Area -->
-<div class="container mb-5" id="contact-us-container">
-    <!-- <div class="message-overlay"> -->
-        <div class="content-section">
+<div style="padding-left:15px; padding-right: 15px;">
+    <div class="container-sm mb-5 {% if current_user.is_authenticated == False %}not-logged-in{% endif %}"
+        id="contact-us-container">
+        <div class="message-overlay">
+            <div class="message-error-container">
+                <div class="message-error">
+                    <span>Please <a class="log-in-text"
+                            href="javascript:linkClicked(document.getElementById('login'), '{{url_for('userAuth.login')}}')">log
+                            in</a> to contact us</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="message-content-section content-section">
             {% include "message_form.html" %}
         </div>
-    <!-- </div> -->
+    </div>
 </div>
+<script>
+    console.log('{{current_user.is_authenticated}}')
+</script>
 {% endblock content %}

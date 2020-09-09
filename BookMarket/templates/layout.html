@@ -290,6 +290,7 @@
     let state = null;
 
     const switchSchool = () => {
+      toastr.remove()
       // $("body").toggleClass("need-school");
       let message;
       const ending = "Click to "
@@ -305,7 +306,7 @@
         message = "Are you sure? You'll lose all the items saved in cart if you change schools."
         state = 'emptycart'
       } else {
-        message = 'Are you sure?'
+        message = 'Are you sure you want to switch schools?'
       }
       toastr.warning(`<div id="switch-school-warning"><button onclick="toastr.remove()" type="button" id="NoBtn" 
         class="btn btn-outline-dark">Nevermind</button>
