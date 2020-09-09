@@ -2,7 +2,7 @@ import os
 import secrets
 import boto3
 import io
-from PIL import Image
+from PIL import Image, ImageOps
 from .models import ItemImage
 from . import db, S3_BUCKET
 # Utility functions
@@ -27,6 +27,7 @@ def save_images_to_db_and_s3(form_images, item_id):
                 output_size = (600, 600)
                 image = image.resize(output_size, Image.ANTIALIAS)
             in_mem_file = io.BytesIO()
+            image = ImageOps.exif_transpose(image)
             image.save(in_mem_file, optimize=True, format=image_format)
             # # output_resolution = (1000, 1000)
             # resizedImage = Image.open(images)
