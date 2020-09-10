@@ -125,7 +125,11 @@
                     </div>
                     {% else %}
                     <div>
-                        <select name="category_id" id='category_list' placeholder="Select Category">
+                        <select name="category_id" id='category_list' placeholder="Select category">
+                            <option value="">Select category</option>
+                            {% for category in categories %}
+                            <option value='{{ category.id }}'>{{category.category_name}}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     {% endif %}
@@ -157,43 +161,71 @@
 <script>
     let class_select = document.getElementById('class_list');
     let department_select = document.getElementById('department_list')
+    let category_select = document.getElementById('category_list')
     let department;
 
     const checkboxClicked = () => {
         let department_input = document.getElementById('department_list-selectized');
         let course_input = document.getElementById('class_list-selectized');
+        let category_input = document.getElementById('category_list-selectized')
+        console.log(class_select.value, department_select.value, department_input.value, course_input.value);
+
 
         $('#book-isbn').toggleClass('hide');
         $('#book-author').toggleClass('hide');
         $('#book-department').toggleClass('hide');
         $('#book-course').toggleClass('hide');
         $('#book-category').toggleClass('hide');
+        console.log("ISCHECKED", document.getElementById('checkbox').checked)
         if (document.getElementById('checkbox').checked) {
             console.log("CHECKED!")
+            department_input.setCustomValidity('')
+            course_input.setCustomValidity('')
+            let $department_select = $(document.getElementById('department_list'))
+            let department_selectize = $department_select[0].selectize;
+            let $course_select = $(document.getElementById('class_list'))
+            let course_selectize = $course_select[0].selectize;
+            department_selectize.clear();
+            course_selectize.clear();
             class_select.required = false;
             department_select.required = false;
             department_input.required = false;
             course_input.required = false;
+            console.log("REQUIRED", department_input.required)
+            console.log("REQUIRED", course_input.required)
+            category_select.required = true;
         } else {
-            class_select.required = false;
-            department_select.required = false;
-            department_input.required = true;
-            course_input.required = true;
+            console.log("UNCHECKED!")
+            if (department_input) { department_input.setCustomValidity("Please Select Department") }
+            if (course_input) { course_input.setCustomValidity("Please Select Course") }
+            category_select.required = false;
         }
-        console.log(department_select.required)
-        console.log(department_input.required);
+
+        console.log(class_select.value, department_select.value, department_input.value, course_input.value);
+    }
+
+    category_select.onchange = function () {
+        let category_input = document.getElementById('category_list-selectized');
+
+        category_input.setCustomValidity('')
+
+        if (!category_input.checkValidity()) {
+            category_input.setCustomValidity("Please Select category")
+        } else {
+            category_input.setCustomValidity('')
+        }
     }
 
     class_select.setAttribute("disabled", "disabled");
 
-    // class_select.required = true;
-    // department_select.required = true;
-
+    class_select.required = true;
+    department_select.required = true;
+    category_select.required = true;
     console.log(department_select)
 
     department_select.onchange = function () {
-        var $select = $(document.getElementById('class_list'))
-        var selectize = $select[0].selectize;
+        let $select = $(document.getElementById('class_list'))
+        let selectize = $select[0].selectize;
         department = department_select.value
         selectize.enable()
         selectize.clear();
@@ -228,9 +260,13 @@
 
         let department_input = document.getElementById('department_list-selectized');
 
+        console.log("VALIDITY", !department_input.checkValidity())
+
+        console.log(department_input.value);
+        console.log(department_select.value)
         department_input.setCustomValidity('')
 
-        console.log(!department_input.checkValidity())
+        console.log("VALIDITY", !department_input.checkValidity())
         if (!department_input.checkValidity()) {
             department_input.setCustomValidity("Please Select Department")
         } else {
@@ -267,7 +303,7 @@
 
         console.log("!!!", department_select.required)
         console.log(department_input.required);
-        
+
         // enable fileuploader plugin
         $('input[name="files"]').fileuploader({
             extensions: null,
@@ -486,9 +522,9 @@
         });
 
 
-        $('form').submit(function () {
-            $(this).find(':submit').attr('disabled', 'disabled');
-        });
+        // $('form').submit(function () {
+        //     $(this).find(':submit').attr('disabled', 'disabled');
+        // });
     });
     });
 </script>

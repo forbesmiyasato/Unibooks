@@ -6,29 +6,13 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from dotenv import load_dotenv
 from flask_mail import Mail
-from authlib.integrations.flask_client import OAuth
-from flask_cors import CORS
+from flask_talisman import Talisman
+
 # from .background import test
 # from flask.ext.session import Session
 
 app = Flask(__name__)
-CORS(app)
-oauth = OAuth(app)
-
-oauth = OAuth(app)
-google = oauth.register(
-    name="google",
-    client_id=os.getenv('GOOGLE_CLIENT_ID'),
-    client_secret=os.getenv('GOOGLE_CLIENT_SECRET'),
-    access_token_url='https://accounts.google.com/o/oauth2/token',
-    access_token_params=None,
-    authorize_url='https://accounts.google.com/o/oauth2/auth',
-    authorize_params=None,
-    api_base_url='https://www.googleapis.com/oauth2/v1/',
-    # This is only needed if using openId to fetch user info
-    userinfo_endpoint='https://openidconnect.googleapis.com/v1/userinfo',
-    client_kwargs={'scope': 'openid email profile'},
-)
+# Talisman(app)
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'

@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
 from flask_mail import Message
 from ..forms import RegistrationForm, LoginForm, PasswordResetForm
-from .. import app, db, bcrypt, mail, oauth
+from .. import app, db, bcrypt, mail
 from ..models import Users, School
 
 userAuth = Blueprint('userAuth', __name__,
@@ -140,10 +140,10 @@ def login_html(standalone=None):
     return render_template('login.html', title='Login', form=form, standalone=standalone)
 
 
-# @userAuth.route("/login", methods=['GET', 'POST'])
-# def login():
-#     standalone = request.args.get('standalone')
-#     return login_html(standalone)
+@userAuth.route("/login", methods=['GET', 'POST'])
+def login():
+    standalone = request.args.get('standalone')
+    return login_html(standalone)
 
 
 @userAuth.route("/logout")
@@ -154,25 +154,3 @@ def logout():
           'info')
     return render_template('home.html', title="Home", standalone=standalone)
 
-
-@userAuth.route('/login')
-def login():
-    google = oauth.create_client('google')  # create the google oauth client
-    redirect_uri = url_for('userAuth.authorize', _external=True)
-    return google.authorize_redirect(redirect_uri)
-
-
-@userAuth.route('/authorize')
-def authorize():
-    google = oauth.create_client('google')  # create the google oauth client
-    token = google.authorize_access_token()  # Access token from google (needed to get user info)
-    resp = google.get('userinfo')  # userinfo contains stuff u specificed in the scrope
-    user_info = resp.json()
-    user = oauth.google.userinfo()  # uses openid endpoint to fetch user info
-    # Here you use the profile/user data that you got and query your database find/register the user
-    # and set ur own data in the session not the profile from google
-    session['profile'] = user_info
-    session.permanent = True  # make the session permanant so it keeps existing after broweser gets closed
-    flash('Logged In', 'success')
-    print(user_info['email'])
-    return redirect('/')

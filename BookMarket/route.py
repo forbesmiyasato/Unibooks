@@ -4,7 +4,7 @@ import atexit
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session, Markup, make_response
 from flask_login import current_user, login_required, logout_user
 from flask_mail import Message
-from .models import Users, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater, School
+from .models import Users, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater, School, ItemCategory
 from .forms import UpdateAccountForm, ItemForm, MessageForm
 from . import app, db, mail
 from .routes.userAuth import userAuth, login_html
@@ -106,9 +106,14 @@ def new_item():
         images = request.files.getlist('files[]')
         print(images)
         print("POST SCHOOL", current_user.school)
-        post = Item(name=request.form.get('name'), description=request.form.get('description'), user_id=current_user.id,
-                    price=request.form.get('price'), class_id=request.form.get('class_id'), department_id=request.form.get('department_id'),
-                    isbn=request.form.get('isbn'), author=request.form.get('author'), school=current_user.school)
+        if not request.form.get('category_id'):
+            post = Item(name=request.form.get('name'), description=request.form.get('description'), user_id=current_user.id,
+                        price=request.form.get('price'), class_id=request.form.get('class_id'), department_id=request.form.get('department_id'),
+                        isbn=request.form.get('isbn'), author=request.form.get('author'), school=current_user.school)
+        else:
+            post = Item(name=request.form.get('name'), description=request.form.get('description'), user_id=current_user.id,
+                        price=request.form.get('price'), category_id=request.form.get('category_id'),
+                        isbn=request.form.get('isbn'), author=request.form.get('author'), school=current_user.school)
         db.session.add(post)
         db.session.commit()
         db.session.refresh(post)
@@ -151,10 +156,11 @@ def new_item():
     # form.item_class.choices = class_list
     departments = ItemDepartment.query.filter_by(
         school=session['school']).all()
+    categories = ItemCategory.query.filter_by(school=session['school']).all()
     # department_list = [(i.id, i.department_name) for i in departments]
     print(departments)
     return render_template('create_post.html', title='Sell', form=form, legend='New', item_id=0, departments=departments,
-                           standalone=standalone)
+                           standalone=standalone, categories=categories)
 
 
 @app.route('/class/<department>')
