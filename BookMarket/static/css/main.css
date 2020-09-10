@@ -999,7 +999,7 @@ h6 {
 
 .sticky-wrapper {
   position: absolute;
-  top: 40px;
+  top: 0;
   width: 100%; }
   @media (max-width: 1200px) {
     .sticky-wrapper {
@@ -1232,19 +1232,34 @@ h6 {
 .banner-area {
   background: url(../img/banner/banner-bg.jpg) center no-repeat;
   background-size: cover;
-  position: relative; }
-  @media (max-width: 767px) {
-    .banner-area {
-      margin-top: 60px; } }
-  @media (max-width: 570px) {
-    .banner-area {
-      margin-top: 60px; } }
-  @media (max-width: 480px) {
+  position: relative;
+  text-align: center;
+  align-content: center; }
+  @media (max-width: 1382px) {
     .banner-area {
       margin-top: 60px; } }
   @media (max-width: 768px) {
+    .banner-area {
+      margin-top: 60px; } }
+  @media (max-width: 320px) {
+    .banner-area {
+      margin-top: 60px; } }
+  .banner-area .banner-row {
+    margin: 0 120px; }
+    @media (max-width: 1382px) {
+      .banner-area .banner-row {
+        margin: 0 !important; } }
+    @media (max-width: 768px) {
+      .banner-area .banner-row {
+        margin: 0 !important; } }
+    @media (max-width: 320px) {
+      .banner-area .banner-row {
+        margin: 0 !important; } }
+  .banner-area .self-center {
+    align-self: center; }
+  @media (max-width: 768px) {
     .banner-area .fullscreen {
-      height: 650px !important; } }
+      /*height: 650px !important;*/ } }
   .banner-area .active-banner-slider .owl-nav {
     position: absolute;
     right: 0;
@@ -1272,10 +1287,16 @@ h6 {
         opacity: 1; }
   .banner-area .banner-content {
     background: #fcfcfc;
-    padding: 10vw 35vh; }
-    @media (max-width: 991px) {
+    padding: 200px; }
+    @media (max-width: 1382px) {
       .banner-area .banner-content {
-        padding-left: 0; } }
+        padding: 50px 180px !important; } }
+    @media (max-width: 768px) {
+      .banner-area .banner-content {
+        padding: 30px 80px !important; } }
+    @media (max-width: 320px) {
+      .banner-area .banner-content {
+        padding: 15px !important; } }
     .banner-area .banner-content h1 {
       font-size: 60px;
       line-height: 66px;
@@ -1287,9 +1308,18 @@ h6 {
           line-height: 46px; } }
     .banner-area .banner-content p {
       margin: 0; }
-  @media (max-width: 991px) {
+  @media (max-width: 1382px) {
     .banner-area .banner-img {
-      display: none; } }
+      width: 100%;
+      padding-top: 20px !important; } }
+  @media (max-width: 768px) {
+    .banner-area .banner-img {
+      width: 100%;
+      padding-top: 20px !important; } }
+  @media (max-width: 320px) {
+    .banner-area .banner-img {
+      width: 100%;
+      padding-top: 30px !important; } }
 
 .add-bag {
   margin-top: 30px; }
@@ -1316,8 +1346,9 @@ h6 {
     color: #222222; }
 
 .organic-breadcrumb {
-  background-image: linear-gradient(to right bottom, rgba(135, 206, 235, 0.8), rgba(0, 191, 255, 0.8)), url(../img/banner/common-banner.jpg);
-  background-size: cover;
+  background-image: linear-gradient(to right bottom, rgba(135, 206, 235, 0.8), rgba(0, 191, 255, 0.8)), url(../img/banner/banner-img1.svg);
+  background-size: contain;
+  background-position: right;
   padding-top: 160px;
   margin-bottom: 50px; }
   @media (max-width: 991px) {
@@ -3176,7 +3207,7 @@ label {
 
 .filter-bar {
   padding: 0px 20px 10px 20px;
-  background: #F895B8; }
+  background: #9c9881; }
   .filter-bar a, .filter-bar i {
     color: #000; }
 
@@ -3357,7 +3388,7 @@ label {
 
 .sidebar-categories .head {
   line-height: 60px;
-  background: #F895B8;
+  background: #9c9881;
   padding: 0 30px;
   font-size: 16px;
   font-weight: 400;
@@ -3390,7 +3421,7 @@ label {
   margin-top: 50px; }
   .sidebar-filter .top-filter-head {
     line-height: 60px;
-    background: #F895B8;
+    background: #9c9881;
     padding: 0 30px;
     font-size: 16px;
     font-weight: 400;
@@ -5768,6 +5799,7 @@ label {
 /* End Contact Success and error Area css
 ============================================================================================ */
 .footer-area {
+  overflow-x: hidden;
   padding-top: 100px;
   background-color: #222222;
   position: relative; }

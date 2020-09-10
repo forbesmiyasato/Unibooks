@@ -3,7 +3,8 @@
 body {
     background: #fafafa !important;
     color: #333333;
-    width: 100vw;
+    width: 100vw !important;
+    overflow-x: hidden;
 }
 
 h1,
