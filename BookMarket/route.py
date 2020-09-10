@@ -24,6 +24,10 @@ def beforeRequest():
     if not request.url.startswith('https') and request.url != "http://localhost:5000/":
         return redirect(request.url.replace('http', 'https', 1))
 
+@app.route('/loaderio-d2cf780526acfac1fe150b2163a01707/')
+def loaderio():
+    return render_template('loaderio-d2cf780526acfac1fe150b2163a01707.txt')
+
 
 @app.before_first_request
 def init_scheduler():
