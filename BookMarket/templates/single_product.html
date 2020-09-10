@@ -50,6 +50,7 @@
                     <h3>{{item.name}}</h3>
                     <h2>{{item.price}}</h2>
                     <ul class="list">
+                        {% if isBook == True %}
                         <li><a class="active"
                                 href="javascript:linkClicked(document.getElementById('shop'), '/shop?department={{department.id}}')"><span>Department</span>
                                 : {{department.department_name}}</a></li>
@@ -61,15 +62,26 @@
                                 : {{item.author}} </li></a>
                         <li><a><span>ISBN</span>
                                 : {{item.isbn}} </li></a>
+                        {% else %}
+                        <li><a class="active"
+                            href="javascript:linkClicked(document.getElementById('shop'), '/shop?department={{department.id}}')"><span>Category</span>
+                            : {{category.category_name}}</a></li>
+                        {% endif %}
                     </ul>
                     <p>{{item.description}}</p>
                     <div class="card_area d-flex align-items-center">
                         {% if current_user.id == item.user_id %}
                         <a class="primary-btn" data-toggle="modal" data-target="#deleteModal"
                             href="javascript:void(0)">Delete</a>
+                        {% if isBook == True %}
                         <a class="primary-btn" href="javascript:void(0)" data-toggle="modal" data-target="#editModal"
-                            onclick="editClicked({{item.class_id}}, {{item.department_id}})">
+                            onclick="editBookClicked({{item.class_id}}, {{item.department_id}})">
                             Edit</a>
+                        {% else %}
+                        <a class="primary-btn" href="javascript:void(0)" data-toggle="modal" data-target="#editModal"
+                            onclick="editOtherClicked({{item.category_id}})">
+                            Edit</a>
+                        {% endif %}
                         <!-- Delete Modal -->
                         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
                             aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -147,41 +159,17 @@
     initializeSingleProductPage();
     highlightNavLink();
 
-    // departmentOnClick = (id) => {
-    //     linkClicked(document.getElementById('shop'), `/shop?department=${id}`)
-    // }
-
     $('#editModal').on("hidden.bs.modal", function () {
         // console.log("Hidden")
         console.log(deleted)
         if (deleted && !post) {
             location.reload();
         }
-        // window.location = window.location
-        // input = document.querySelector('input[name="files[]"')
-        // var $input = $(input),
-        //     api = $.fileuploader.getInstance($input);
-        // console.log(api)
-        // if (api) {
-
-        //     api.reset();
-        //     api.enable();
-        //     {% if item and(images | length > 0) %}
-        //     {% for image in images %}
-        //     console.log("add")
-        //     api.add("https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}", "image/png", "")
-        //     {% endfor %}
-        //     {% endif %}
-
-        //     api.updateFileList();
-
-        // }
     });
 
-    function editClicked(item_class, item_department) {
+    function editBookClicked(item_class, item_department) {
         console.log("test", item_class)
         console.log(item_department)
-        //     window.location.hash = 'update';
         let class_select = document.getElementById('class_list');
         let department_select = document.getElementById('department_list')
         console.log(class_select)
@@ -195,38 +183,16 @@
         var $class_select = $(document.getElementById('class_list'))
         var class_selectize = $class_select[0].selectize;
         class_selectize.setValue(item_class);
-        //     fetch('/class/' + item_department).then(function (response) {
-        //         response.json().then(function (data) {
-        //             let optionHTML = '';
-        //             // optionHTML += '<option data-display="Select Class">Select</option>'
-        //             for (let item_class of data.classes) {
-        //                 optionHTML += '<option value="' + item_class.id + '">'
-        //                     + item_class.class_name + '</option>';
-        //             }
-        //             class_select.innerHTML = optionHTML;
-        //             $('#class').val(item_class);
-        //             $('select').niceSelect('update');
-        //         })
-        //     });
-        //     {% if item and(images | length > 0) %}
+    };
 
-        //     console.log("!!!!!!!!!!!!!!!!")
-        //     $('input[name="files"]').fileuploader({
-        //         files: [
-        //             {% for image in images %}
-        // {
-        //             "name": "",
-        //             "file": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
-        //             "type": "image/png",
-        //             "size": 26162,
-        //             "data": {
-        //                 "thumbnail": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
-        //             }
-        //         },
-        //         {% endfor %}
-        //     ],
-        //     })
-        // {% endif %}
+    function editOtherClicked(item_category) {
+        console.log("test", item_category)
+        let category_select = document.getElementById('category_list')
+        category_select.value = item_category
+
+        var $category_select = $(document.getElementById('category_list'))
+        var category_selectize = $category_select[0].selectize;
+        category_selectize.setValue(item_category);
     };
 
     function addToBag(item_id, user_id) {

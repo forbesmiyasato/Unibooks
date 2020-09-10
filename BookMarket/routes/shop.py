@@ -2,7 +2,7 @@ import re
 from flask import render_template, request, Blueprint, jsonify, url_for, flash, session, redirect
 from flask_login import current_user
 from flask_mail import Message
-from ..models import Item, ItemClass, ItemDepartment, ItemImage, School
+from ..models import Item, ItemClass, ItemDepartment, ItemImage, School, ItemCategory
 from ..forms import ItemForm, MessageForm
 from .. import app, db, mail
 from ..utility_funcs import delete_images_from_s3_and_db, save_images_to_db_and_s3, delete_non_remaining_images_from_s3_and_db
@@ -20,8 +20,9 @@ def shop():
         # return jsonify(state="no school in session")
     school = session['school']
     departments = ItemDepartment.query.filter_by(school=school).all()
+    categories = ItemCategory.query.filter_by(school=session['school']).all()
 
-    return render_template('shop.html', title='Shop', departments=departments, standalone=standalone)
+    return render_template('shop.html', title='Shop', departments=departments, standalone=standalone, categories=categories)
 
 
 @shop_api.route("/shop/data")
@@ -139,6 +140,7 @@ def item_html(item_id, standalone=None):
         _item.user_id = current_user.id
         _item.price = request.form.get('price')
         _item.class_id = request.form.get('class_id')
+        _item.category_id = request.form.get('category_id')
         _item.department_id = request.form.get('department_id')
         db.session.commit()
         print(item_id)
@@ -155,13 +157,20 @@ def item_html(item_id, standalone=None):
     edit_form.author.data = _item.author
     edit_form.item_class.data = item_class
     edit_form.item_department.data = department
+    print("1", item_class)
+    print("2", department)
+    print("3", _item.category_id)
+    isBook = True if _item.category_id is None else False
+    categories = ItemCategory.query.filter_by(school=session['school']).all()
+    category = ItemCategory.query.get(_item.category_id)
+    print(isBook)
     # for messaging
     if current_user.is_authenticated:
         message_form.email.data = current_user.email
     return render_template('single_product.html', title=_item.name, item=_item, images=images,
                            item_class=item_class, department=department, form=edit_form, legend="Edit",
                            message_form=message_form, item_id=item_id, departments=departments, standalone=standalone,
-                           message_title="Message Seller")
+                           message_title="Message Seller", isBook=isBook, categories=categories, category=category)
 
 
 @shop_api.route("/shop/<int:item_id>", methods=['GET', 'POST'])
