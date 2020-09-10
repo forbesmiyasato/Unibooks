@@ -2,80 +2,58 @@
 {% block content %}
 <!-- start banner Area -->
 <section class="banner-area">
-	<div id="homeCarousel" class="carousel slide home-carousel" data-ride="carousel">
-		<ol class="carousel-indicators">
-			<li data-target="#homeCarousel" data-slide-to="0" class="active"></li>
-			<li data-target="#homeCarousel" data-slide-to="1"></li>
-			<li data-target="#homeCarousel" data-slide-to="2"></li>
-		</ol>
-		<div class="carousel-inner">
-			<div class="carousel-item active">
-				<img src="../static/img/slide1.jpg" class="d-block w-100 h-100" alt="book_stack">
-				<div class="container">
-					<div class="carousel-caption text-right top-align slide-default">
-						<h1>Buy, Sell, or Trade</br>Used Textbooks</h1>
-						<h5>Save on the books you need and get rid of the ones you don't. No fees, no hassle.</h5>
-					</div>
-				</div>
-			</div>
-			<div class="carousel-item">
-				<img src="../static/img/slide2.jpg" class="d-block w-100 h-100" alt="book_window">
-				<div class="container">
-					<div class="carousel-caption text-center top-align slide-default" style="padding-bottom: 55px;">
-						<h1>Local Listings Only</h1>
-						<h5>Your school, your classes. Only deal with students in your area.</h5>
-					</div>
-				</div>
-			</div>
-			<div class="carousel-item">
-				<img src="../static/img/slide3.jpg" class="d-block w-100 h-100" alt="book_hand">
-				<div class="container">
-					<div class="carousel-caption text-left top-align slide-default" style="padding-bottom:50px;">
-						<h1>Totally Free</h1>
-						<h5>Change how you buy &amp; sell textbooks today.</h5>
-					</div>
-				</div>
-			</div>
-		</div>
-		<a class="carousel-control-prev" href="#homeCarousel" role="button" data-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			<span class="sr-only">Previous</span>
-		</a>
-		<a class="carousel-control-next" href="#homeCarousel" role="button" data-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="sr-only">Next</span>
-		</a>
-	</div>
+	<div class="banner-content">
+		<div class="row banner-row">
+       	 <div class="col-lg-6 self-center">
+          	<h2>The ultimate university </br>marketplace</h2>
+        	</div>
+        	<div class="col-lg-6 swing-in-top-bck">
+          		<img class="banner-img" src="static/img/banner-img-desk.png" alt="iphone-mockup">
+        	</div>
+      	</div>
+	</div>	  
 </section>
 <!-- End banner Area -->
 <!-- Start feature Area -->
-<section class="feature-area">
-	<div class="container marketing">
-		<!-- Three columns of text below the carousel -->
-		<div class="animation-element bounce-up">
-			<div class="row feature-row">
-				<div class="col-lg-4">
-					<a class="btn feature-btn" href="{{ url_for('shop_api.shop')}}" role="button"><img id="buy_img"
-							class="rounded-circle" src="../static/img/features/buy.png" alt="buy_img" width="90"
-							height="90"></a>
-					<p>Browse for the books you need, message the seller directly, and save items for later.</p>
-				</div><!-- /.col-lg-4 -->
-				<div class="col-lg-4">
-					<a class="btn feature-btn" href="{{ url_for('new_item')}}" role="button"><img img id="sell_img"
-							class="rounded-circle" src="../static/img/features/sell.png" alt="sell_img" width="90"
-							height="90"></a>
-					<p>Create a free account with your school email address and post your used textbooks for sale.</p>
-				</div><!-- /.col-lg-4 -->
-				<div class="col-lg-4">
-					<a class="btn feature-btn" href="{{ url_for('shop_api.shop')}}" role="button"><img img
-							id="trade_img" class="rounded-circle" src="../static/img/features/trade.png" alt="trade_img"
-							width="90" height="90"></a>
-					<p>Swap for the book you need with one you don't without paying a dime.</p>
-				</div><!-- /.col-lg-4 -->
-			</div><!-- /.row -->
-		</div><!-- /.animation-element-->
+<div class="animation-element bounce-up">
+<section class="section-features">
+	<div class="feature-header">
+		<h1>What is Unibooks?</h1>
+		</br>
+		<h5>Unibooks is an online marketplace where students can buy, sell, or trade used textbooks (and other stuff too)</h5>
 	</div>
+    <div class="grid-row">
+        <div class="col-1-of-3">
+            <div class="feature-box">
+				<i class="feature-box__icon ti-bookmark-alt"></i>
+                <h3 class="heading-tertiary u-margin-bottom-small">Buy what you need</h3>
+                <p class="feature-box__text">
+                    Search for everything from textbooks to furniture, all local to your area
+                </p>
+            </div>
+        </div>
+        <div class="col-1-of-3">
+            <div class="feature-box">
+                <i class="feature-box__icon ti-money"></i>
+                <h3 class="heading-tertiary u-margin-bottom-small">Sell what you don't</h3>
+                <p class="feature-box__text">
+                    Post the stuff you no longer need up for sale at your own price
+                </p>
+            </div>
+        </div>
+        <div class="col-1-of-3">
+            <div class="feature-box">
+                <i class="feature-box__icon ti-map-alt"></i>
+                <h3 class="heading-tertiary u-margin-bottom-small">Local students only</h3>
+                    <p class="feature-box__text">
+                    All items posted are from your campus, so no shipping or travelling required
+                </p>
+            </div>
+        </div>
+    </div>
+
 </section>
+</div>
 <!-- End feature Area -->
 <script src="{{ url_for('static', filename='js/home.js')}}"></script>
 

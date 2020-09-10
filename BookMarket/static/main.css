@@ -1,9 +1,10 @@
 /* Forbes & Thomas */
 
 body {
-    background: #fafafa;
+    background: #fafafa !important;
     color: #333333;
-    width: 100vw;
+    width: 100vw !important;
+    overflow-x: hidden;
 }
 
 h1,
@@ -268,7 +269,7 @@ li.options {
 }
 
 .ti-bag-active:before {
-    color: #70a9da !important;
+    color: #87CEEB !important;
     content: "\e655";
 }
 
@@ -277,7 +278,7 @@ li.options {
 } */
 
 .ti-bag:hover {
-    color: #70a9da !important;
+    color: #87CEEB !important;
 }
 
 .lnr.lnr-magnifier {
@@ -286,7 +287,7 @@ li.options {
 
 .lnr.lnr-magnifier:hover {
     padding: 3px;
-    background-color: #70a9da;
+    background-color: #87CEEB;
     color: white !important;
     border-radius: 20px;
 }
@@ -354,7 +355,7 @@ a.nav-link {
 
 label.field-required::after {
     content: "*";
-    /* color: #70a9da; */
+    /* color: #87CEEB; */
     color: red;
 }
 
@@ -364,7 +365,7 @@ label.field-required::after {
     font-size: 0.8rem;
     margin-left: 0.4em;
     border-radius: 10rem;
-    background-color: #70a9da;
+    background-color: #87CEEB;
     font-family: Roboto;
 }
 
@@ -398,8 +399,7 @@ label.field-required::after {
 /* Feature area (below carousel) */
 .feature-area {
     text-align: center;
-    background-color: #eaeef1;
-    padding-top: 60px;
+    background-color: #fcfcfc;
     padding-bottom: 60px;
 }
 
@@ -427,7 +427,7 @@ label.field-required::after {
 }
 
 .dropdown-item.active {
-    background-color: #70a9da !important;
+    background-color: #87CEEB !important;
     color: white !important;
 }
 
@@ -454,10 +454,10 @@ input.form-control:focus {
 
 .bounce-up {
     opacity: 0;
-    -moz-transition: all 700ms ease-out;
-    -webkit-transition: all 700ms ease-out;
-    -o-transition: all 700ms ease-out;
-    transition: all 700ms ease-out;
+    -moz-transition: all 1s ease-out;
+    -webkit-transition: all 1s ease-out;
+    -o-transition: all 1s ease-out;
+    transition: all 1s ease-out;
     -moz-transform: translate3d(0px, 200px, 0px);
     -webkit-transform: translate3d(0px, 200px, 0px);
     -o-transform: translate(0px, 200px);
@@ -501,7 +501,7 @@ input.form-control:focus {
 }
 
 .activable.active {
-    color: #70a9da !important;
+    color: #87CEEB !important;
 }
 
 a.footer-item {
@@ -547,7 +547,7 @@ body.loading .overlay {
     animation: load7 1.8s infinite ease-in-out;
 }
 .loader {
-    color: #70a9da;
+    color: #87CEEB;
     font-size: 10px;
     margin: 20% auto 50px auto;
     position: relative;
@@ -561,7 +561,7 @@ body.loading .overlay {
 }
 
 .loader-text {
-    color: #70a9da;
+    color: #87CEEB;
     width: 100vw;
 }
 .loader:before,
@@ -600,7 +600,7 @@ body.loading .overlay {
 }
 
 #shopping-cart.active > .ti-bag {
-    color: #70a9da;
+    color: #87CEEB;
 }
 
 /* .modal-open {
@@ -661,7 +661,7 @@ body.loading .overlay {
 
 .list-loader-text {
     width: 100%;
-    color: #70a9da;
+    color: #87CEEB;
     margin-left: 10px;
 }
 
@@ -672,7 +672,7 @@ body.loading .overlay {
     height: 10em;
 }
 .list-loader {
-    color: #70a9da;
+    color: #87CEEB;
     margin: 60px auto;
     font-size: 10px;
     position: relative;
@@ -680,7 +680,7 @@ body.loading .overlay {
     border-top: 1.1em solid rgba(255, 255, 255, 0.2);
     border-right: 1.1em solid rgba(255, 255, 255, 0.2);
     border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
-    border-left: 1.1em solid #70a9da;
+    border-left: 1.1em solid #87CEEB;
     -webkit-transform: translateZ(0);
     -ms-transform: translateZ(0);
     transform: translateZ(0);
@@ -710,7 +710,7 @@ body.loading .overlay {
 
 .single-edit {
     cursor: pointer;
-    color: #007bff;
+    color: #87CEEB;
 }
 
 .about-image {
@@ -750,7 +750,7 @@ body.loading .overlay {
 
 .about-forbes-linkedin:hover,
 .about-forbes-insta:hover {
-    color: #70a9da;
+    color: #87CEEB;
     -moz-transform: scale(1.2);
     -webkit-transform: scale(1.2);
     -o-transform: scale(1.2);
@@ -832,6 +832,7 @@ body.need-school .school-overlay {
 .switch-text-full {
     position: absolute;
     cursor: pointer;
+    color: #87CEEB !important;
 }
 
 .switch-container-mobile {

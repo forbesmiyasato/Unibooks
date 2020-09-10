@@ -6,9 +6,11 @@ $title-font     : 'Poppins', sans-serif;
 
 /*--------------------------- Color variations ----------------------*/
 
-$primary-color	: #70a9da;
-$primary-color2	: #d4e5f3;
-$primary-color3	: #ff9900;
+$primary-color	: #87CEEB;
+$primary-color2	: #00BFFF;
+$primary-color3	: #9c9881;
+$secondary-color: #ffd98e;
+$secondary-color2: #fd8369;
 $title-color	: #222222;
 $text-color		: #777777;
 $baseColor: #c5322d; 
@@ -22,7 +24,11 @@ $offwhite: #fcfcfc;
 
 @import url('https://fonts.googleapis.com/css?family=Poppins:500,700|Roboto:400,500');
 
-
+/*---------------------------- GRID ----------------------*/
+$grid-width: 114rem;
+$gutter-vertical: 8rem;
+$gutter-vertical-small: 6rem;
+$gutter-horizontal: 6rem;
 
 
 
