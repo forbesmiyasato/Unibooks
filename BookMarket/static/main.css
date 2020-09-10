@@ -454,10 +454,10 @@ input.form-control:focus {
 
 .bounce-up {
     opacity: 0;
-    -moz-transition: all 700ms ease-out;
-    -webkit-transition: all 700ms ease-out;
-    -o-transition: all 700ms ease-out;
-    transition: all 700ms ease-out;
+    -moz-transition: all 1s ease-out;
+    -webkit-transition: all 1s ease-out;
+    -o-transition: all 1s ease-out;
+    transition: all 1s ease-out;
     -moz-transform: translate3d(0px, 200px, 0px);
     -webkit-transform: translate3d(0px, 200px, 0px);
     -o-transform: translate(0px, 200px);
