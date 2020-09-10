@@ -157,10 +157,11 @@ def new_item():
     departments = ItemDepartment.query.filter_by(
         school=session['school']).all()
     categories = ItemCategory.query.filter_by(school=session['school']).all()
+    isBook = True #default display is book item
     # department_list = [(i.id, i.department_name) for i in departments]
     print(departments)
     return render_template('create_post.html', title='Sell', form=form, legend='New', item_id=0, departments=departments,
-                           standalone=standalone, categories=categories)
+                           standalone=standalone, categories=categories, isBook=isBook)
 
 
 @app.route('/class/<department>')
