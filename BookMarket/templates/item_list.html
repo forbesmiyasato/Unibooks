@@ -39,6 +39,11 @@
                             <span class="ti-bag"></span>
                             <p class="hover-text">Add to bag</p>
                         </a>
+                        <a href="javascript:report({{post.id}})"
+                            class="social-info">
+                            <span class="lnr lnr-alarm"></span>
+                            <p class="hover-text">Report</p>
+                        </a>
                         {% endif %}
                     </div>
                 </div>
@@ -86,6 +91,16 @@
         })
 
         saved_html = null;
+    }
+
+    function report(item_id) {
+        $.ajax({
+            url: `/report/${item_id}`,
+            success: function (response) {
+                toastr.options = { "positionClass": "toast-top-left", "closeButton": true }
+                toastr.success("Thanks for reporting the inappropriate post!");
+            }
+        })
     }
 </script>
 {% endblock %}

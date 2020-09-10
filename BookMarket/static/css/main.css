@@ -1680,7 +1680,8 @@ h6 {
     margin-bottom: 0; }
   .single-product .product-details .prd-bottom {
     position: relative;
-    margin-top: 20px; }
+    margin-top: 20px;
+    white-space: nowrap; }
     .single-product .product-details .prd-bottom .social-info {
       position: relative;
       display: inline-block;

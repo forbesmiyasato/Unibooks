@@ -4,7 +4,7 @@ import atexit
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session, Markup, make_response
 from flask_login import current_user, login_required, logout_user
 from flask_mail import Message
-from .models import Users, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater, School, ItemCategory
+from .models import Users, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater, School, ItemCategory, Inappropriate
 from .forms import UpdateAccountForm, ItemForm, MessageForm
 from . import app, db, mail
 from .routes.userAuth import userAuth, login_html
@@ -413,3 +413,17 @@ def leave_a_message():
         return jsonify(origin='contactus')
     return render_template('message_page.html', title="Contact Us", message_form=message_form, standalone=standalone,
                            message_title="Contact Us", optional="(optional)")
+
+
+@app.route('/report/<int:item_id>')
+def report_item(item_id):
+    item = Inappropriate.query.filter_by(id=item_id).first()
+    if item is None:
+        new = Inappropriate(id=item_id, count=1)
+        db.session.add(new)
+        db.session.commit()
+    else:
+        item.count += 1
+        db.session.commit()
+
+    return 'added'
