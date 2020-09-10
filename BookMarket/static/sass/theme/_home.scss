@@ -19,6 +19,66 @@
 
 /* start features area css
 ============================================================================================ */
+.section-features {
+    padding: 10rem 0;
+    background-image: linear-gradient(
+        to right bottom,
+        rgba($primary-color, 0.8),
+        rgba($primary-color2, 0.8)),
+    url(../img/banner/banner-img3.svg);
+	background-size: cover;
+	background-repeat: no-repeat; 
+    transform: skewY(-7deg);
+    margin-top: 3rem;
+
+    & > * {
+        transform: skewY(7deg);
+    }
+
+    @include respond(tab-port) {
+        padding: 10rem 0;
+	}
+	
+	.feature-header {
+		text-align: center;
+		padding-bottom: 2rem;
+
+		h5 {
+			padding: 0 5%;
+		}
+	}
+
+}
+.feature-box {
+    background-color: rgba($white, .8);
+    font-size: 1.5rem;
+    padding: 2.5rem;
+    text-align: center;
+    border-radius: 3px;
+    box-shadow: 0 1.5rem 4rem rgba($black, .15);
+    transition: transform .3s;
+
+    @include respond(tab-port) {
+        padding: 2rem;
+    }
+
+    &__icon {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+        display: inline-block;
+        background-image: linear-gradient(to right, $secondary-color2, $secondary-color);
+        -webkit-background-clip: text;
+        color: transparent;
+
+        @include respond(tab-port) {
+            margin-bottom: 0;
+        }
+    }
+
+    &:hover {
+        transform: translateY(-1.5rem) scale(1.03);
+	}
+}
 .features-area {
 	@media (max-width: 768px) {
 		padding-top: 0;

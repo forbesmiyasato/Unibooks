@@ -7,7 +7,7 @@
        	 <div class="col-lg-6 self-center">
           	<h2>The ultimate university </br>marketplace</h2>
         	</div>
-        	<div class="col-lg-6">
+        	<div class="col-lg-6 swing-in-top-bck">
           		<img class="banner-img" src="static/img/banner-img-desk.png" alt="iphone-mockup">
         	</div>
       	</div>
@@ -15,13 +15,41 @@
 </section>
 <!-- End banner Area -->
 <!-- Start feature Area -->
-<section class="feature-area">
-	<div class="container marketing">
-		<!-- Three columns of text below the carousel -->
-		<div class="animation-element bounce-up">
-					<h2>What is Unibooks?</h2>
-		</div><!-- /.animation-element-->
+<section class="section-features">
+	<div class="feature-header">
+		<h1>What is Unibooks?</h1>
+		</br>
+		<h5>Unibooks is an online marketplace where students can buy, sell, or trade used textbooks (and other stuff too)</h5>
 	</div>
+    <div class="grid-row">
+        <div class="col-1-of-3">
+            <div class="feature-box">
+				<i class="feature-box__icon ti-bookmark-alt"></i>
+                <h3 class="heading-tertiary u-margin-bottom-small">Buy what you need</h3>
+                <p class="feature-box__text">
+                    Search for everything from textbooks to furniture, all local to your area.
+                </p>
+            </div>
+        </div>
+        <div class="col-1-of-3">
+            <div class="feature-box">
+                <i class="feature-box__icon ti-money"></i>
+                <h3 class="heading-tertiary u-margin-bottom-small">Sell what you don't</h3>
+                <p class="feature-box__text">
+                    Post the stuff you no longer need up for sale at your own price.
+                </p>
+            </div>
+        </div>
+        <div class="col-1-of-3">
+            <div class="feature-box">
+                <i class="feature-box__icon ti-map-alt"></i>
+                <h3 class="heading-tertiary u-margin-bottom-small">Local students only</h3>
+                    <p class="feature-box__text">
+                    All items posted are from your campus, so no shipping or travelling required.
+                </p>
+            </div>
+        </div>
+    </div>
 </section>
 <!-- End feature Area -->
 <script src="{{ url_for('static', filename='js/home.js')}}"></script>
