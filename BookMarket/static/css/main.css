@@ -1256,7 +1256,8 @@ h6 {
       .banner-area .banner-row {
         margin: 0 !important; } }
   .banner-area .self-center {
-    align-self: center; }
+    align-self: center;
+    text-align: center; }
   @media (max-width: 768px) {
     .banner-area .fullscreen {
       /*height: 650px !important;*/ } }
@@ -1287,13 +1288,13 @@ h6 {
         opacity: 1; }
   .banner-area .banner-content {
     background: #fcfcfc;
-    padding: 200px; }
+    padding: 200px 200px 100px; }
     @media (max-width: 1382px) {
       .banner-area .banner-content {
-        padding: 50px 180px !important; } }
+        padding: 50px 180px 50px !important; } }
     @media (max-width: 768px) {
       .banner-area .banner-content {
-        padding: 30px 80px !important; } }
+        padding: 30px 80px 50px !important; } }
     @media (max-width: 320px) {
       .banner-area .banner-content {
         padding: 15px !important; } }
