@@ -18,14 +18,14 @@
                 <ul class="collapse" id="navOther" data-toggle="collapse" aria-expanded="false"
                     aria-controls="Other">
                     <li class="main-nav-list child">
-                        <a href="">All Others
+                        <a href="javascript:filterByCategory('all')">All Others
                             <span class="number" id="other_total">
                                 10
                             </span>
                         </a>
                     </li>
                     {% for category in categories %}
-                    <li class="main-nav-list child"><a href="">{{category.abbreviation}}<span
+                    <li class="main-nav-list child"><a href="javascript:filterByCategory({{category.id}})">{{category.abbreviation}}<span
                                 class="number" id="category_total{{ category.id }}">10</span></a>
                     </li>
                     {% endfor %}

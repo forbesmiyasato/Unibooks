@@ -313,6 +313,7 @@ const filterByClass = (
     search_params.delete("show");
     search_params.delete("filter");
     search_params.delete("sort");
+    search_params.delete("nonbook");
     clearAllActiveSelections();
 
     url.search = search_params.toString();
@@ -343,6 +344,7 @@ const filterByDepartment = (department_id) => {
     search_params.delete("show");
     search_params.delete("filter");
     search_params.delete("sort");
+    search_params.delete("nonbook");
     clearAllActiveSelections();
 
     console.log(url);
@@ -350,6 +352,38 @@ const filterByDepartment = (department_id) => {
     url.search = search_params.toString();
 
     history.pushState(null, "", `?department=${department_id}`);
+
+    console.log(url.toString());
+    getData(url.toString());
+};
+
+const filterByCategory = (term) => {
+    browseCollapse();
+    let url;
+    if (window.location.href.includes("?")) {
+        url = new URL(
+            insertBeforeLastOccurrence(window.location.href, "?", "/data")
+        );
+    } else {
+        url = new URL(window.location.href + "/data");
+    }
+    let search_params = url.searchParams;
+
+    console.log(url);
+
+    search_params.set("nonbook", term);
+    search_params.delete("class");
+    search_params.delete("show");
+    search_params.delete("filter");
+    search_params.delete("sort");
+    search_params.delete("department");
+    clearAllActiveSelections();
+
+    console.log(url);
+
+    url.search = search_params.toString();
+
+    history.pushState(null, "", `?nonbook=${term}`);
 
     console.log(url.toString());
     getData(url.toString());

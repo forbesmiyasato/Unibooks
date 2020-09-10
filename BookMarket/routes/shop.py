@@ -29,6 +29,8 @@ def shop():
 def getPosts():
     num_results = 0
     department_id = request.args.get('department')
+    category = request.args.get('nonbook')
+    print(category)
     department = None
     class_id = request.args.get('class')
     course = None
@@ -84,6 +86,13 @@ def getPosts():
             sort_by)
         department = ItemDepartment.query.filter_by(id=department_id).first()
         department = {"name": department.department_name, "id": department.id}
+    elif category:
+        if category == "all":
+            posts = posts.filter(Item.category_id != None).order_by(
+                sort_by)
+        else:
+            posts = posts.filter_by(category_id=category).order_by(
+            sort_by)
     else:
         posts = posts.order_by(
             sort_by)
