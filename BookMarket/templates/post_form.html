@@ -22,6 +22,10 @@
                     {% endif %}
                 </div>
                 <div class="form-group">
+                    <input type="checkbox" id="checkbox" onclick="checkboxClicked()">
+                    <label class="form-control-label" for="exampleCheck1">Not a book?</label>
+                </div>
+                <div class="form-group" id="book-isbn">
                     {{ form.isbn.label(class="form-control-label") }}
                     {% if form.isbn.errors %}
                     {{ form.isbn(class="form-control form-control-lg is-invalid") }}
@@ -34,7 +38,7 @@
                     {{ form.isbn(class="form-control form-control-lg", title="ISBN number must be 13 digits", pattern="^\d{13}$") }}
                     {% endif %}
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="book-author">
                     {{ form.author.label(class="form-control-label") }}
                     {% if form.author.errors %}
                     {{ form.author(class="form-control form-control-lg is-invalid") }}
@@ -74,7 +78,7 @@
                     oninvalid="setCustomValidity('Must be a decimal number between 0 and 99999')", oninput="setCustomValidity('')") }}
                     {% endif %}
                 </div>
-                <div class="form-group department-form">
+                <div class="form-group department-form" id="book-department">
                     {{ form_field(form.item_department) }}
                     {% if form.item_department.errors %}
                     {{ form.item_department(id="department", class="form-control form-control-lg is-invalid") }}
@@ -94,7 +98,7 @@
                     </div>
                     {% endif %}
                 </div>
-                <div class="form-group class-form">
+                <div class="form-group class-form" id="book-course">
                     {{ form_field(form.item_class) }}
                     {% if form.item_class.errors %}
                     {{ form.item_class(id="class", class="form-control form-control-lg is-invalid") }}
@@ -106,6 +110,22 @@
                     {% else %}
                     <div>
                         <select name="class_id" id='class_list' placeholder="Select Course">
+                        </select>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="form-group department-form hide" id="book-category">
+                    {{ form_field(form.item_category) }}
+                    {% if form.item_category.errors %}
+                    {{ form.item_category(id="category", category="form-control form-control-lg is-invalid") }}
+                    <div category="invalid-feedback">
+                        {% for error in form.item_category.errors %}
+                        <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div>
+                        <select name="category_id" id='category_list' placeholder="Select Category">
                         </select>
                     </div>
                     {% endif %}
@@ -139,12 +159,35 @@
     let department_select = document.getElementById('department_list')
     let department;
 
-    // class_select.value = {{ item_class }}
-    // department_select.value = {{ item_department }}
+    const checkboxClicked = () => {
+        let department_input = document.getElementById('department_list-selectized');
+        let course_input = document.getElementById('class_list-selectized');
+
+        $('#book-isbn').toggleClass('hide');
+        $('#book-author').toggleClass('hide');
+        $('#book-department').toggleClass('hide');
+        $('#book-course').toggleClass('hide');
+        $('#book-category').toggleClass('hide');
+        if (document.getElementById('checkbox').checked) {
+            console.log("CHECKED!")
+            class_select.required = false;
+            department_select.required = false;
+            department_input.required = false;
+            course_input.required = false;
+        } else {
+            class_select.required = false;
+            department_select.required = false;
+            department_input.required = true;
+            course_input.required = true;
+        }
+        console.log(department_select.required)
+        console.log(department_input.required);
+    }
+
     class_select.setAttribute("disabled", "disabled");
 
-    class_select.required = true;
-    department_select.required = true;
+    // class_select.required = true;
+    // department_select.required = true;
 
     console.log(department_select)
 
@@ -222,6 +265,9 @@
         class_input.value = '{{item_class.class_name|safe}}'
         {% endif %}
 
+        console.log("!!!", department_select.required)
+        console.log(department_input.required);
+        
         // enable fileuploader plugin
         $('input[name="files"]').fileuploader({
             extensions: null,
@@ -407,7 +453,7 @@
             processData: false,
             success: function (response) {
                 console.log("success")
-                toastr.options = { "positionClass": "toast-top-left", "closeButton": true}
+                toastr.options = { "positionClass": "toast-top-left", "closeButton": true }
                 if ($('#editModal').length) {
                     $('#editModal').modal('hide')
                     toastr.success("Updated Post!");
@@ -422,12 +468,12 @@
                 $("body").toggleClass("loading");
                 if ($('#editModal').length) {
                     $('#editModal').modal('hide')
-                    $("#loader-text").html ('Updating Post...')
+                    $("#loader-text").html('Updating Post...')
                 } else if ($('#editModal{{item_id}}').length) {
                     $('#editModal{{item_id}}').modal('hide')
-                    $("#loader-text").html ('Updating Post...')
+                    $("#loader-text").html('Updating Post...')
                 } else {
-                    $("#loader-text").html ('Creating Post...')
+                    $("#loader-text").html('Creating Post...')
                 }
             },
             complete: function () {
@@ -435,7 +481,7 @@
                 if ($('#editModal').length) {
                     $('#editModal').modal('hide')
                 }
-                $("#loader-text").html ('Loading...')
+                $("#loader-text").html('Loading...')
             }
         });
 

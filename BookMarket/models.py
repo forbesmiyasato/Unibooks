@@ -32,7 +32,12 @@ class ItemClass(db.Model):
     department_id = db.Column(db.Integer, db.ForeignKey(
         'itemdepartment.id'), nullable=False)
 
-
+class ItemCategory(db.Model):
+    __tablename__ = 'itemcategory'
+    id = db.Column(db.Integer, primary_key=True)
+    category_name = db.Column(db.String(100), nullable=False)
+    abbreviation = db.Column(db.String(20), nullable=True)
+    school = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
 class ItemDepartment(db.Model):
     __tablename__ = 'itemdepartment'
     id = db.Column(db.Integer, primary_key=True)
@@ -53,9 +58,11 @@ class Item(db.Model):
                           default='No_picture_available.png')
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     class_id = db.Column(db.Integer, db.ForeignKey(
-        'itemclass.id'), nullable=False)
+        'itemclass.id'), nullable=True)
     department_id = db.Column(db.Integer, db.ForeignKey(
-        'itemdepartment.id'), nullable=False)
+        'itemdepartment.id'), nullable=True)
+    category_id = db.Column(db.Integer, db.ForeignKey(
+        'itemcategory.id'), nullable=True)
     images = db.relationship(
         'ItemImage', cascade="all,delete", backref='owner', lazy=True)
     saved_by = db.relationship(

@@ -18,6 +18,13 @@ app.register_blueprint(userAuth)
 app.register_blueprint(shop_api)
 
 
+@app.before_request
+def beforeRequest():
+    print(request.url)
+    if not request.url.startswith('https') and request.url != "http://localhost:5000/":
+        return redirect(request.url.replace('http', 'https', 1))
+
+
 @app.before_first_request
 def init_scheduler():
     scheduler = BackgroundScheduler()

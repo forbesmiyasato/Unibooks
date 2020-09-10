@@ -58,8 +58,10 @@ class ItemForm(FlaskForm):
     files = MultipleFileField('Upload item images', validators=[
                               FileAllowed(['jpg', 'png'])])
     item_department = SelectField(
-        'Department', validators=[InputRequired()])
-    item_class = SelectField('Class', validators=[InputRequired()])
+        'Department')
+    item_class = SelectField('Course')
+    item_category = SelectField('Category')
+
     submit = SubmitField('Post')
 
 

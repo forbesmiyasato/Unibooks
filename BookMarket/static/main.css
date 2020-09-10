@@ -950,3 +950,7 @@ body.need-school .school-overlay {
 #YesBtn {
     border: none;
 }
+
+.form-group.hide {
+    display: none;
+}
