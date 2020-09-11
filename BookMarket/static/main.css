@@ -713,52 +713,6 @@ body.loading .overlay {
     color: #87ceeb;
 }
 
-.about-image {
-    width: 350px;
-    height: 350px;
-    border-radius: 50%;
-    box-shadow: 0 10px 30px 1px rgba(0, 0, 0, 0.3);
-}
-
-.about-image-container {
-    position: relative;
-    width: 350px;
-    height: 350px;
-    margin: 20px auto 40px auto;
-}
-
-.about-forbes-insta {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    font-size: 100px;
-}
-
-.about-forbes-linkedin {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    font-size: 100px;
-}
-
-.about-forbes-insta,
-.about-forbes-linkedin {
-    -webkit-transition: transform 0.5s;
-    -moz-transition: transform 0.5s;
-    transition: transform 0.5s;
-}
-
-.about-forbes-linkedin:hover,
-.about-forbes-insta:hover {
-    color: #87ceeb;
-    -moz-transform: scale(1.2);
-    -webkit-transform: scale(1.2);
-    -o-transform: scale(1.2);
-    -ms-transform: scale(1.2);
-    -webkit-transform: scale(1.2);
-    transform: scale(1.2);
-}
-
 .school-overlay {
     display: none;
     position: fixed;
