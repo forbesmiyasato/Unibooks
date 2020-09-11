@@ -10,7 +10,7 @@ def load_user(user_id):
 
 class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(320), unique=True, nullable=False)
+    email = db.Column(db.String(320), nullable=False) #unique=True
     image_file = db.Column(db.String(50), nullable=False,
                            default='default.jpg')
     password = db.Column(db.String(100), nullable=False)
