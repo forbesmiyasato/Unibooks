@@ -960,7 +960,7 @@ body.need-school .school-overlay {
 input,
 textarea,
 select {
-    font-size: 16px;
+    font-size: 16px !important;
 }
 
 @media (min-width: 768px) {
