@@ -96,14 +96,7 @@
 </div>
 
 <!-- <script>
-    const onDelete = (index, name, id, url) => {
-        const deletedRow = $(`#row-${index}`)
-        console.log(url)
-        deletedRow.html(`<td colspan='4' class='deleted-item'>Deleted <a href="/shop/${id}">${name}</a> from your bag</td>`)
-        $.ajax({
-            url: url,
-            type: "post"
-        })
-    }
+    let deletedItems = new Object();
+
 </script> -->
 {% endblock content %}

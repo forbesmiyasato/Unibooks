@@ -188,14 +188,13 @@ def user_posts(username):
 
 @app.route('/add-to-bag', methods=['POST'])
 def add_to_bag():
-    user = request.args.get('user')
     item = request.args.get('item')
     added = False
     if current_user.is_authenticated is True:
         exist = SaveForLater.query.filter_by(
-            item_id=item, user_id=user).first()
+            item_id=item, user_id=current_user.id).first()
         if exist is None:
-            new = SaveForLater(item_id=item, user_id=user)
+            new = SaveForLater(item_id=item, user_id=current_user.id)
             db.session.add(new)
             db.session.commit()
             added = True

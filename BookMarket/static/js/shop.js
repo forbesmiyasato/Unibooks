@@ -511,14 +511,18 @@ const browseCollapse = () => {
 // $('document').ready(function () {
 //    initializeShopPage();
 // })
+let deletedItems = new Object();
 
 const onSavedDelete = (index, name, id, url) => {
+    deletedItems[index] = document.getElementById(`row-${index}`).innerHTML;
+
     const deletedRow = $(`#row-${index}`);
     console.log(url);
     const itemUrl = `/shop/${id}`;
     console.log(itemUrl);
     deletedRow.html(
-        `<td colspan='4' class='deleted-item'>Deleted <a href="javascript:onItemClick('${itemUrl}')">${name}</a> from your bag</td>`
+        `<td colspan='4' class='deleted-item'>Deleted <a href="javascript:onItemClick('${itemUrl}')">${name}</a> from your bag
+        <a href="javascript:onSavedUndo(${index}, ${id})">Undo</a></td>`
     );
     $.ajax({
         url: url,
@@ -531,6 +535,16 @@ const onSavedDelete = (index, name, id, url) => {
 
     saved_html = null;
 };
+
+const onSavedUndo = (index, id) => {
+    $.post(`/add-to-bag?item=${id}`, null, (data, status) => {
+        if (data.added) {
+            let bagIcon = document.getElementsByClassName("bag-icon")[0];
+            bagIcon.innerHTML = parseInt(bagIcon.innerHTML) + 1;
+        }
+    })
+    document.getElementById(`row-${index}`).innerHTML = deletedItems[index];
+}
 
 const initializeSingleProductPage = () => {
     console.log("invoked");
