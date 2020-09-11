@@ -131,8 +131,10 @@
                         <a class="primary-btn" style="pointer-events: none;" href="javascript:void(0)">
                             Message Seller <i class="lnr lnr-envelope"></i></a>
                         {% endif %}
-                        <a class="icon_btn" onclick="addToBag({{item.id}}, {{current_user.id}})"
-                            href="javascript:void(0)"><span class="ti-bag"></span>
+                        <a class="icon_btn social-info" onclick="addToBag({{item.id}}, {{current_user.id}})"
+                            href="javascript:void(0)">
+                            <span class="add-icon-single ti-bag"></span>
+                            <p class="hover-text">Add to bag</p>
                         </a>
                         <!-- Message Modal -->
                         <div class="modal fade" id="messageModal" tabindex="-1" role="dialog"
@@ -202,6 +204,15 @@
     };
 
     function addToBag(item_id, user_id) {
+        const animation = document.createElement('span')
+        animation.className = "ti-bag added-animation"
+
+        document.getElementsByClassName('icon_btn')[0].append(animation);
+
+        setTimeout(() => {
+            animation.remove();
+        }, 1000);
+
         var url = "{{url_for('add_to_bag', item='tempItem', user='tempUser')}}"
             .replace('tempItem', item_id).replace('tempUser', user_id).replace('&amp;', '&')
 

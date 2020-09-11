@@ -36,7 +36,7 @@ def register():
 
         token = serializer.dumps(email, salt=salt)  # salt is optional
         link = url_for('userAuth.confirm_email', token=token, _external=True)
-        msg = Message('Confirm Email', sender="pacificubooks@gmail.com", recipients=[email],
+        msg = Message('Confirm Email', sender=("Unibooks", "Unibooks@unibooks.io"), recipients=[email],
                       html=render_template('confirmation_email.html', email=email, link=link))
 
         mail.send(msg)
@@ -56,7 +56,7 @@ def send_confirm_email():
     email = current_user.email
     token = serializer.dumps(email, salt=salt)  # salt is optional
     link = url_for('userAuth.confirm_email', token=token, _external=True)
-    msg = Message('Confirm Email', sender="pacificubooks@gmail.com", recipients=[email],
+    msg = Message('Confirm Email', sender=("Unibooks", "Unibooks@unibooks.io"), recipients=[email],
                   html=render_template('confirmation_email.html', email=email, link=link))
     mail.send(msg)
     flash(
@@ -72,7 +72,7 @@ def send_password_reset():
     print("!!!!!!!!!!!!!!!!!!", email)
     token = serializer.dumps(email, salt=salt)  # salt is optional
     link = url_for('userAuth.reset_password', token=token, _external=True)
-    msg = Message('Password Reset', sender="pacificubooks@gmail.com", recipients=[email],
+    msg = Message('Password Reset', sender=("Unibooks", "Unibooks@unibooks.io"), recipients=[email],
                   html=render_template('password_email.html', link=link))
     mail.send(msg)
     # flash(

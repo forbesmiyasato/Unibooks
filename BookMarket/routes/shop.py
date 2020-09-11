@@ -118,7 +118,7 @@ def item_html(item_id, standalone=None):
         print(_item.owner.email)
         standalone = "standalone"
         msg = Message("Message regarding " + "\"" + _item.name + "\"",
-                      sender="pacificubooks@gmail.com",
+                      sender=("Unibooks", 'unibooks@unibooks.io'),
                       recipients=[_item.owner.email], html=render_template("message_email.html", name=_item.name,
                                                                            email=request.form.get('email'), body=request.form.get('message')))
         mail.send(msg)

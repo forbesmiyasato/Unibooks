@@ -406,7 +406,7 @@ def leave_a_message():
         email = request.form.get('email', "None")
         standalone = "standalone"
         msg = Message("Feedback from user",
-                      sender="pacificubooks@gmail.com",
+                      sender=("Unibooks", "Unibooks@unibooks.io"),
                       recipients=["pacificubooks@gmail.com"], html=render_template("message_email.html", name="feedback from user",
                                                                                    email=email, body=request.form.get('message')))
         mail.send(msg)

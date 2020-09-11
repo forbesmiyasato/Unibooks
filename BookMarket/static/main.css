@@ -974,3 +974,29 @@ select {
 .fas.fa-exclamation-triangle {
     color: #F89406;
 }
+
+/* .icon_btn {
+    position: relative;
+}
+.added-animation {
+    animation: popUp 1s;
+    position: absolute;
+    color: black;
+    position: absolute;
+    left: 32%;
+    top: 30%;
+}
+
+@keyframes popUp {
+    0% {
+        opacity: 0;
+        transform: translate(0, 0rem);
+    }
+    50% {
+        font-family: "Font Awesome 5 Free"; font-weight: 400; content: "\f1ea";
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0, -20px);
+    }
+} */
