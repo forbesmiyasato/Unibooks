@@ -970,3 +970,7 @@ select {
         font-size: 16px;
     }
 }
+
+.fas.fa-exclamation-triangle {
+    color: #F89406;
+}

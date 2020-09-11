@@ -125,6 +125,7 @@ const getData = (url) => {
             getAll()
         },
     });
+    $(window).scrollTop(0);
 };
 
 function clearAllActiveSelections() {
@@ -619,6 +620,7 @@ function onItemClick(url) {
             // }
         },
     });
+    $(window).scrollTop(0);
 }
 
 //layout
