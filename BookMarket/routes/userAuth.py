@@ -133,6 +133,7 @@ def login_html(standalone=None):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
             flash('Logged in!', 'success')
+            print("!!!", next_page)
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check email and password',
@@ -152,5 +153,6 @@ def logout():
     standalone = request.args.get('standalone')
     flash('Logged out!',
           'info')
-    return render_template('home.html', title="Home", standalone=standalone)
+    # return render_template('home.html', title="Home", standalone=standalone)
+    return redirect(url_for('home'))
 

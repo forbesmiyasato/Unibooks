@@ -450,7 +450,7 @@
             if (response.state) {
               toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
               if (response.state === 'login-required') {
-                history.replaceState(null, null, '/login')
+                history.replaceState(null, null, '/login?next=item/new')
                 toastr.info("You must sign in before selling!");
               } else if (response.state === 'confirm-required') {
                 history.replaceState(null, null, '/account')
