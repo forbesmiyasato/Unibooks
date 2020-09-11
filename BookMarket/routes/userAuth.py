@@ -44,7 +44,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash(
-            f'Your account has been created, you can now login!', 'success')
+            f'Your account has been created, please check your inbox to confirm your email!', 'success')
         return redirect(url_for('userAuth.login'))
     return render_template('register.html', title='Register', form=form, standalone=standalone,
                            pattern=pattern, errorMessage=error_message, placeholder=placeholder)
