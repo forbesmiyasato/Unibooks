@@ -269,7 +269,7 @@ li.options {
 }
 
 .ti-bag-active:before {
-    color: #87ceeb !important;
+    color: #87CEEB !important;
     content: "\e655";
 }
 
@@ -975,6 +975,21 @@ select {
     color: #F89406;
 }
 
+.social-info.add-icon-social {
+    width: 40px;
+}
+.add-icon-single {
+    width: 40px !important;
+    height: 40px !important;
+} 
+
+.add-icon-social .add-icon-single.ti-bag {
+    line-height: 40px;
+}
+
+.social-info div.hover-text {
+    top: 6px;
+}
 /* .icon_btn {
     position: relative;
 }

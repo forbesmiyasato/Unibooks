@@ -69,7 +69,7 @@ ORDER: Base + typography > general layout + grid > page layout > components
 
 /* Start Gradient Area css
 ============================================================================================ */
-.gradient-bg, .primary-btn, .add-bag .add-btn, .single-product .product-details .prd-bottom .social-info span:after, .grid-btn:hover, .list-btn:hover, .grid-btn.active, .list-btn.active, .pagination a:last-child:hover, .pagination a.active, .pagination a:not(:last-child):hover, .s_Product_carousel .owl-dots div.active, .s_product_text .card_area .icon_btn:after, .product_description_area .nav.nav-tabs li a.active, .blog-pagination .page-item.active .page-link {
+.gradient-bg, .primary-btn, .add-bag .add-btn, .single-product .product-details .prd-bottom .social-info span:after, .social-info span:after, .grid-btn:hover, .list-btn:hover, .grid-btn.active, .list-btn.active, .pagination a:last-child:hover, .pagination a.active, .pagination a:not(:last-child):hover, .s_Product_carousel .owl-dots div.active, .s_product_text .card_area .icon_btn:after, .product_description_area .nav.nav-tabs li a.active, .blog-pagination .page-item.active .page-link {
   background: -webkit-linear-gradient(90deg, #87CEEB 0%, #00BFFF 100%);
   background: -moz-linear-gradient(90deg, #87CEEB 0%, #00BFFF 100%);
   background: -o-linear-gradient(90deg, #87CEEB 0%, #00BFFF 100%);
@@ -2419,6 +2419,68 @@ label {
   border: none; }
   .tracking_form .primary-btn:hover:before {
     left: 170px; }
+
+.social-info {
+  position: relative;
+  display: inline-block;
+  width: 35px;
+  -webkit-transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  overflow: hidden; }
+  .social-info span {
+    position: relative;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    text-align: center;
+    background: #87CEEB;
+    border-radius: 50%;
+    display: inline-block;
+    color: #fff;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+    z-index: 1; }
+    .social-info span:after {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      content: "";
+      border-radius: 50%;
+      opacity: 0;
+      visibility: hidden;
+      z-index: -1; }
+  .social-info .hover-text {
+    position: absolute;
+    left: 0;
+    top: 3px;
+    width: 100px;
+    left: -40px;
+    text-transform: uppercase;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    color: #222222;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+    opacity: 0;
+    visibility: hidden; }
+  .social-info:hover {
+    width: 115px; }
+    .social-info:hover span:after {
+      opacity: 1;
+      visibility: visible; }
+    .social-info:hover .hover-text {
+      opacity: 1;
+      visibility: visible;
+      left: 40px; }
 
 .load-product {
   display: none; }
