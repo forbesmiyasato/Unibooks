@@ -740,3 +740,49 @@ const setSchoolName = (id) => {
     mobile.innerHTML = name;
     footer.innerHTML = name + " - ";
 };
+
+
+// const checkboxClicked = () => {
+//     let category_select = document.getElementById('category_list')
+
+//     let department_input = document.getElementById('department_list-selectized');
+//     let course_input = document.getElementById('class_list-selectized');
+//     let category_input = document.getElementById('category_list-selectized')
+//     let class_select = document.getElementById('class_list');
+//     let department_select = document.getElementById('department_list')
+//     let $department_select = $(document.getElementById('department_list'))
+//     let department_selectize = $department_select[0].selectize;
+//     let $course_select = $(document.getElementById('class_list'))
+//     let course_selectize = $course_select[0].selectize;
+//     let $category_select = $(document.getElementById('category_list'))
+//     let category_selectize = $category_select[0].selectize;
+
+//     $('#book-isbn').toggleClass('hide');
+//     $('#book-author').toggleClass('hide');
+//     $('#book-department').toggleClass('hide');
+//     $('#book-course').toggleClass('hide');
+//     $('#book-category').toggleClass('hide');
+//     console.log("ISCHECKED", document.getElementById('checkbox').checked)
+//     if (document.getElementById('checkbox').checked) {
+//         console.log("CHECKED!")
+//         department_input.setCustomValidity('')
+//         course_input.setCustomValidity('')
+//         department_selectize.clear();
+//         course_selectize.clear();
+//         class_select.required = false;
+//         department_select.required = false;
+//         department_input.required = false;
+//         course_input.required = false;
+//         category_select.required = true;
+//         category_input.setCustomValidity("Please Select category")
+//         // category_input.required = true;
+//     } else {
+//         console.log("UNCHECKED!")
+//         if (department_input) { department_input.setCustomValidity("Please Select Department") }
+//         if (course_input) { course_input.setCustomValidity("Please Select Course") }
+//         category_select.required = false;
+//         category_input.setCustomValidity('')
+//         category_selectize.clear();
+//         category_input.required = false;
+//     }
+// }

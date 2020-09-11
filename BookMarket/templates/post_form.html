@@ -23,7 +23,7 @@
                 </div>
                 {% if legend == "New" %}
                 <div class="form-group">
-                    <input type="checkbox" id="checkbox" onclick="checkboxClicked()">
+                    <input type="checkbox" id="checkbox">
                     <label class="form-control-label" for="exampleCheck1">Not a book?</label>
                 </div>
                 {% endif %}
@@ -175,12 +175,18 @@
     let category_select = document.getElementById('category_list')
 
     {% if legend == "New" %}
-    const checkboxClicked = () => {
+    function checkboxClicked() {
         let department_input = document.getElementById('department_list-selectized');
         let course_input = document.getElementById('class_list-selectized');
         let category_input = document.getElementById('category_list-selectized')
-        console.log(class_select.value, department_select.value, department_input.value, course_input.value);
-
+        let class_select = document.getElementById('class_list');
+        let department_select = document.getElementById('department_list')
+        let $department_select = $(document.getElementById('department_list'))
+        let department_selectize = $department_select[0].selectize;
+        let $course_select = $(document.getElementById('class_list'))
+        let course_selectize = $course_select[0].selectize;
+        let $category_select = $(document.getElementById('category_list'))
+        let category_selectize = $category_select[0].selectize;
 
         $('#book-isbn').toggleClass('hide');
         $('#book-author').toggleClass('hide');
@@ -192,18 +198,12 @@
             console.log("CHECKED!")
             department_input.setCustomValidity('')
             course_input.setCustomValidity('')
-            let $department_select = $(document.getElementById('department_list'))
-            let department_selectize = $department_select[0].selectize;
-            let $course_select = $(document.getElementById('class_list'))
-            let course_selectize = $course_select[0].selectize;
             department_selectize.clear();
             course_selectize.clear();
             class_select.required = false;
             department_select.required = false;
             department_input.required = false;
             course_input.required = false;
-            console.log("REQUIRED", department_input.required)
-            console.log("REQUIRED", course_input.required)
             category_select.required = true;
             category_input.setCustomValidity("Please Select category")
             // category_input.required = true;
@@ -211,17 +211,23 @@
             console.log("UNCHECKED!")
             if (department_input) { department_input.setCustomValidity("Please Select Department") }
             if (course_input) { course_input.setCustomValidity("Please Select Course") }
-            category_select.required = false;
+            category_selectize.clear();
             category_input.setCustomValidity('')
-            // category_input.required = false;
+            category_select.required = false;
+            category_input.required = false;
         }
-
-        console.log(class_select.value, department_select.value, department_input.value, course_input.value);
+        // console.log("1", category_select.required)
+        // console.log(category_input.required)
+        // category_input.setCustomValidity('')
+        // console.log(category_input.checkValidity())
     }
+    
+    document.getElementById('checkbox').addEventListener('click', checkboxClicked)
 
     {% endif %}
-    {% if isBook  != True or legend == "New" %}
+    {% if isBook != True or legend == "New" %}
 
+    console.log("TRIGGERD")
     category_select.onchange = function () {
         let category_input = document.getElementById('category_list-selectized');
 
@@ -238,6 +244,8 @@
     }
 
     {% endif %}
+
+    // let category_select = document.getElementById('category_list')
 
     {% if legend == "New" or isBook == True %}
     class_select.setAttribute("disabled", "disabled");
@@ -311,7 +319,7 @@
     }
 
     {% endif %}
-    
+
     $(document).ready(function () {
         $('select').selectize({
             sortField: 'text'
