@@ -1,10 +1,12 @@
-from flask import render_template, url_for, flash, request, redirect, Blueprint, jsonify, session
+import threading
+from flask import render_template, url_for, flash, request, redirect, Blueprint, jsonify, session, current_app
 from flask_login import login_user, logout_user, current_user, login_required
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
 from flask_mail import Message
 from ..forms import RegistrationForm, LoginForm, PasswordResetForm
 from .. import app, db, bcrypt, mail
 from ..models import Users, School
+from ..utility_funcs import send_message
 
 userAuth = Blueprint('userAuth', __name__,
                      static_folder="../static", template_folder="../template")
@@ -39,8 +41,8 @@ def register():
         msg = Message('Confirm Email', sender=("Unibooks", "Unibooks@unibooks.io"), recipients=[email],
                       html=render_template('confirmation_email.html', email=email, link=link))
 
-        mail.send(msg)
-
+        sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
+        sender.start()
         db.session.add(user)
         db.session.commit()
         flash(
@@ -58,7 +60,8 @@ def send_confirm_email():
     link = url_for('userAuth.confirm_email', token=token, _external=True)
     msg = Message('Confirm Email', sender=("Unibooks", "Unibooks@unibooks.io"), recipients=[email],
                   html=render_template('confirmation_email.html', email=email, link=link))
-    mail.send(msg)
+    sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
+    sender.start()
     flash(
         f'Confirmation email sent to {current_user.email}', 'success')
     return redirect(url_for('account'))
@@ -74,7 +77,8 @@ def send_password_reset():
     link = url_for('userAuth.reset_password', token=token, _external=True)
     msg = Message('Password Reset', sender=("Unibooks", "Unibooks@unibooks.io"), recipients=[email],
                   html=render_template('password_email.html', link=link))
-    mail.send(msg)
+    sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
+    sender.start()
     # flash(
     #     f'Confirmation email sent to {current_user.email}', 'success')
     return jsonify({'result': 'success'})

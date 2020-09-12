@@ -1,11 +1,12 @@
 import re
-from flask import render_template, request, Blueprint, jsonify, url_for, flash, session, redirect
+import threading
+from flask import render_template, request, Blueprint, jsonify, url_for, flash, session, redirect, current_app
 from flask_login import current_user
 from flask_mail import Message
 from ..models import Item, ItemClass, ItemDepartment, ItemImage, School, ItemCategory
 from ..forms import ItemForm, MessageForm
 from .. import app, db, mail
-from ..utility_funcs import delete_images_from_s3_and_db, save_images_to_db_and_s3, delete_non_remaining_images_from_s3_and_db
+from ..utility_funcs import delete_images_from_s3_and_db, save_images_to_db_and_s3, delete_non_remaining_images_from_s3_and_db, send_message
 
 shop_api = Blueprint('shop_api', __name__,
                      static_folder="../static", template_folder="../template")
@@ -121,7 +122,8 @@ def item_html(item_id, standalone=None):
                       sender=("Unibooks", 'unibooks@unibooks.io'),
                       recipients=[_item.owner.email], html=render_template("message_email.html", name=_item.name,
                                                                            email=request.form.get('email'), body=request.form.get('message')))
-        mail.send(msg)
+        sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
+        sender.start()
         # flash(
         # f'Message sent! The seller will contact you soon.', 'success')
     elif request.method == 'POST' and standalone != 'notfromnewitem':
