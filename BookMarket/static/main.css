@@ -441,7 +441,12 @@ input.form-control:focus:invalid {
     border-bottom: 3px solid #ff7730;
 }
 
+
 input.form-control:focus {
+    border-bottom: 3px solid #7ed56f;
+}
+
+input.form-control:focus:valid {
     border-bottom: 3px solid #7ed56f;
 }
 
