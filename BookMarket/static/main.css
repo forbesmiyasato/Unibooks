@@ -445,13 +445,13 @@ input.form-control:focus {
     border-bottom: 3px solid #7ed56f;
 }
 
-/* Fade in animation */
+/* Fade in animation*/
 .animation-element {
     position: relative;
     width: 100%;
     margin: 0% 1.33 2.66% 1.33%;
 }
-
+/* Fade in animation up*/
 .bounce-up {
     opacity: 0;
     -moz-transition: all 1s ease-out;
@@ -476,6 +476,59 @@ input.form-control:focus {
     -ms-transform: translate(0px, 0px);
     transform: translate3d(0px, 0px, 0px);
 }
+
+/* Fade in animation left*/
+.bounce-left {
+    opacity: 0;
+    -moz-transition: all 1s ease-out;
+    -webkit-transition: all 1s ease-out;
+    -o-transition: all 1s ease-out;
+    transition: all 1s ease-out;
+    -moz-transform: translate3d(200px, 0px, 0px);
+    -webkit-transform: translate3d(200px, 0px, 0px);
+    -o-transform: translate(200px, 0px);
+    -ms-transform: translate(200px, 0px);
+    transform: translate3d(200px, 0, 0px);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.bounce-left.in-view {
+    opacity: 1;
+    -moz-transform: translate3d(0px, 0px, 0px);
+    -webkit-transform: translate3d(0px, 0px, 0px);
+    -o-transform: translate(0px, 0px);
+    -ms-transform: translate(0px, 0px);
+    transform: translate3d(0px, 0px, 0px);
+}
+
+/* Fade in animation right*/
+.bounce-right {
+    opacity: 0;
+    -moz-transition: all 1s ease-out;
+    -webkit-transition: all 1s ease-out;
+    -o-transition: all 1s ease-out;
+    transition: all 1s ease-out;
+    -moz-transform: translate3d(-200px, 0px, 0px);
+    -webkit-transform: translate3d(-200px, 0px, 0px);
+    -o-transform: translate(-200px, 0px);
+    -ms-transform: translate(-200px, 0px);
+    transform: translate3d(-200px, 0, 0px);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.bounce-right.in-view {
+    opacity: 1;
+    -moz-transform: translate3d(0px, 0px, 0px);
+    -webkit-transform: translate3d(0px, 0px, 0px);
+    -o-transform: translate(0px, 0px);
+    -ms-transform: translate(0px, 0px);
+    transform: translate3d(0px, 0px, 0px);
+}
+
 
 .alert.alert-info,
 .alert.alert-success,

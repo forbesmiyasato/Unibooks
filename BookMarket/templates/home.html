@@ -8,7 +8,7 @@
           	<h2>The ultimate university </br>marketplace</h2>
         	</div>
         	<div class="col-lg-6 swing-in-top-bck">
-          		<img class="banner-img" src="static/img/banner-img-desk.png" alt="iphone-mockup">
+          		<img class="banner-img" src="static/img/banner-img-desk.png" alt="desk">
         	</div>
       	</div>
 	</div>	  
@@ -55,6 +55,53 @@
 </section>
 </div>
 <!-- End feature Area -->
+<!-- start How Area -->
+<section class="section-tutorial">
+	<div class="tutorial-content">
+        <div class="tutorial-header">
+		    <h1>How it works</h1>
+	    </div>
+		<div class="row tutorial-row animation-element bounce-left">
+       	    <div class="col-lg-6 self-center">
+               <h2><a class="tutorial-link" onclick="linkClicked(this, '{{ url_for('userAuth.register')}}')">Create</a> an account or
+               <a class="tutorial-link" onclick="linkClicked(this, '{{ url_for('userAuth.login')}}')">log in</a></h2>
+               <p>Use your .edu email address to create a free account</p>
+      	    </div>
+            <div class="col-lg-6 self-center">
+                <img class="tutorial-img" src="static/img/how_to/holding-phone-colour.svg" alt="phone">
+            </div>
+	    </div>
+		<div class="row tutorial-row animation-element bounce-right flex-contain">
+            <div class="col-lg-6 self-center flex-2">
+                <img class="tutorial-img" src="static/img/how_to/shopping-cart-colour.svg" alt="phone">
+            </div>
+       	    <div class="col-lg-6 self-center flex-1">
+               <h2><a class="tutorial-link" onclick="linkClicked(this, '{{ url_for('shop_api.shop')}}')">Shop</a> for what you need</h2>
+               <p>Search for used textbooks and more, all local to your campus</p>
+      	    </div>
+	    </div>
+		<div class="row tutorial-row animation-element bounce-left">
+       	    <div class="col-lg-6 self-center">
+               <h2><a class="tutorial-link" onclick="linkClicked(this, '{{ url_for('shop_api.shop')}}')">Connect</a> with local sellers</h2>
+               <p>Message the seller directly to work out the details</p>
+      	    </div>
+            <div class="col-lg-6 self-center">
+                <img class="tutorial-img" src="static/img/how_to/handshake-colour.svg" alt="phone">
+            </div>
+	    </div>
+		<div class="row tutorial-row animation-element bounce-right flex-contain">
+            <div class="col-lg-6 self-center flex-2">
+                <img class="tutorial-img" src="static/img/how_to/schoolbooks-colour.svg" alt="phone">
+            </div>
+       	    <div class="col-lg-6 self-center flex-1">
+               <h2><a class="tutorial-link" onclick="linkClicked(this, '{{ url_for('new_item')}}')">Sell</a> your stuff to local students</h2>
+               <p>Post your used items at your own price with no fees and no hassle</p>
+      	    </div>
+	    </div>
+    </div>	  
+</section>
+<!-- End How Area -->
+
 <script src="{{ url_for('static', filename='js/home.js')}}"></script>
 
 {% endblock content %}
