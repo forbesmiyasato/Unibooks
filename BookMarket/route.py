@@ -1,7 +1,8 @@
 import os
 import atexit
+import threading
 # from PIL import Image
-from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session, Markup, make_response
+from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session, Markup, make_response, current_app
 from flask_login import current_user, login_required, logout_user
 from flask_mail import Message
 from .models import Users, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater, School, ItemCategory, Inappropriate
@@ -9,7 +10,7 @@ from .forms import UpdateAccountForm, ItemForm, MessageForm
 from . import app, db, mail
 from .routes.userAuth import userAuth, login_html
 from .routes.shop import shop_api, item_html
-from .utility_funcs import save_images_to_db_and_s3, delete_images_from_s3_and_db, delete_non_remaining_images_from_s3_and_db
+from .utility_funcs import save_images_to_db_and_s3, delete_images_from_s3_and_db, delete_non_remaining_images_from_s3_and_db, send_message
 from apscheduler.schedulers.background import BackgroundScheduler
 from .background import query_for_reminder
 # from werkzeug.utils import secure_filename
@@ -408,7 +409,8 @@ def leave_a_message():
                       sender=("Unibooks", "Unibooks@unibooks.io"),
                       recipients=["pacificubooks@gmail.com"], html=render_template("message_email.html", name="feedback from user",
                                                                                    email=email, body=request.form.get('message')))
-        mail.send(msg)
+        sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
+        sender.start()
         return jsonify(origin='contactus')
     return render_template('message_page.html', title="Contact Us", message_form=message_form, standalone=standalone,
                            message_title="Contact Us", optional="(optional)")

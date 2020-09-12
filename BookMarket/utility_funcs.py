@@ -4,7 +4,7 @@ import boto3
 import io
 from PIL import Image, ImageOps
 from .models import ItemImage
-from . import db, S3_BUCKET
+from . import db, S3_BUCKET, mail
 # Utility functions
 def save_images_to_db_and_s3(form_images, item_id):
     thumbnail = None
@@ -72,3 +72,9 @@ def delete_non_remaining_images_from_s3_and_db(item_id, remains):
         if image.image_file not in remains:
             db.session.delete(image)
             my_bucket.Object(image.image_file).delete()
+
+
+
+def send_message(app, message):
+    with app.app_context():
+        mail.send(message)
