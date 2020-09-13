@@ -1,6 +1,13 @@
 {% block body_content %}
 <section class="lattest-product-area pb-40 category-list">
     <!-- <div class="text-center mt-5 mb-5" id="posts-spinner"> -->
+    {% if foundCourse != None %}
+    <a>Did you mean {{foundCourse.class_name}} </a>
+    {% endif %}
+    {% if foundDepartment != None %}
+    <a href="javascript:filterByDepartment({{foundDepartment.id}})">Search by Department: {{foundDepartment.department_name}} </a>
+    {% endif %}
+    
     {% if posts.total == 0 %}
     <div class="container no-results mt-5">
         <h1 class="pt-3 pb-3">Sorry there are no books that meet your search criteria at this moment</h1>

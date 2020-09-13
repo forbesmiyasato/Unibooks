@@ -6,7 +6,8 @@ from flask_mail import Message
 from ..models import Item, ItemClass, ItemDepartment, ItemImage, School, ItemCategory
 from ..forms import ItemForm, MessageForm
 from .. import app, db, mail
-from ..utility_funcs import delete_images_from_s3_and_db, save_images_to_db_and_s3, delete_non_remaining_images_from_s3_and_db, send_message
+from ..utility_funcs import (delete_images_from_s3_and_db, save_images_to_db_and_s3, 
+delete_non_remaining_images_from_s3_and_db, send_message, insert_space_before_first_number)
 
 shop_api = Blueprint('shop_api', __name__,
                      static_folder="../static", template_folder="../template")
@@ -40,6 +41,8 @@ def getPosts():
     search = None
     filter_term = request.args.get('filter', '0+99999')
     show_term = request.args.get('show', None)
+    matchCourse = None
+    matchDepartment = None
     low = None
     high = None
     print(filter_term)
@@ -73,6 +76,10 @@ def getPosts():
         search_term = '%{0}%'.format(search_term)
         posts = posts.filter(Item.name.ilike(search_term)).order_by(
             sort_by)
+        courseSearch = insert_space_before_first_number(search_term)
+        matchCourse = ItemClass.query.filter_by(school=session['school']).filter(ItemClass.class_name.ilike(courseSearch)).first()
+        matchDepartment = ItemDepartment.query.filter_by(school=session['school']).filter((ItemDepartment.department_name.ilike(search_term) | (ItemDepartment.abbreviation.ilike(search_term)))).first()
+        print (matchDepartment)
         num_results = posts.count()
     elif class_id:
         posts = posts.filter_by(class_id=class_id).order_by(
@@ -105,7 +112,7 @@ def getPosts():
     if show_term == 'all':
         per_page = posts.count()
     posts = posts.paginate(page=page, per_page=per_page)
-    return jsonify(html=render_template("shop-main.html", posts=posts),
+    return jsonify(html=render_template("shop-main.html", posts=posts, foundCourse=matchCourse, foundDepartment=matchDepartment),
                    department=department, course=course, sort=original_sort_term, filter=filter_term, show=show_term,
                    search=search, numResults=num_results)
 

@@ -78,3 +78,9 @@ def delete_non_remaining_images_from_s3_and_db(item_id, remains):
 def send_message(app, message):
     with app.app_context():
         mail.send(message)
+
+def insert_space_before_first_number(string):
+    for i, char in enumerate(string):
+        if char.isdigit():
+            break
+    return string[:i] + ' ' + string[i:]

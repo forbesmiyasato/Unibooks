@@ -31,6 +31,7 @@ class ItemClass(db.Model):
     class_name = db.Column(db.String(100), nullable=False)
     department_id = db.Column(db.Integer, db.ForeignKey(
         'itemdepartment.id'), nullable=False)
+    school = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
 
 class ItemCategory(db.Model):
     __tablename__ = 'itemcategory'
