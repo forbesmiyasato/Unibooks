@@ -22,7 +22,8 @@ def shop():
         return redirect(url_for('home'))
         # return jsonify(state="no school in session")
     school = session['school']
-    departments = ItemDepartment.query.filter_by(school=school).all()
+    departments = ItemDepartment.query.filter_by(school=school).order_by(
+            ItemDepartment.abbreviation).all()
     categories = ItemCategory.query.filter_by(school=session['school']).all()
 
     return render_template('shop.html', title='Shop', departments=departments, standalone=standalone, categories=categories)

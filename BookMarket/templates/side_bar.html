@@ -40,15 +40,14 @@
             <!-- Books -->
             {% for department in departments %}
             <li class="main-nav-list">
-                <a aria-expanded="false" {% if department.classes|length > 0 %}data-toggle="collapse"
-                    href="#nav{{department.id}}" {% endif %} aria-controls="{{department_id}}"><span
-                        class="lnr lnr-arrow-right"></span>
-                    {{department.department_name}}<span class="number"
+                <a class="side-bar-text" aria-expanded="false" {% if department.classes|length > 0 %}data-toggle="collapse"
+                    href="#nav{{department.id}}" {% endif %} aria-controls="{{department_id}}">
+                    {{department.abbreviation}} - {{department.department_name}}<span class="number"
                         id="dep{{ department.id }}">{{ depObj[department.id] }}</span>
                 </a>
                 <ul class="collapse" id="nav{{department.id}}" data-toggle="collapse" aria-expanded="false"
                     aria-controls="{{department_id}}">
-                    <li class="main-nav-list child"><a class="all-in-department" href="javascript:filterByDepartment({{department.id}})">All in
+                    <li class="main-nav-list child"><a class="side-bar-text" href="javascript:filterByDepartment({{department.id}})">All in
                             {{department.department_name}}<span class="number"
                                 id="dep_total{{ department.id }}">{{ depObj[department.id] }}</span></a>
                     </li>

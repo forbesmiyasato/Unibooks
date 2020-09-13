@@ -1003,7 +1003,7 @@ select {
     top: 6px;
 }
 
-.all-in-department {
+.side-bar-text {
     text-overflow: ellipsis;
     overflow: hidden; 
     white-space: nowrap;
