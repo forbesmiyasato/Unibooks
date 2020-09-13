@@ -70,10 +70,10 @@ ORDER: Base + typography > general layout + grid > page layout > components
 /* Start Gradient Area css
 ============================================================================================ */
 .gradient-bg, .primary-btn, .add-bag .add-btn, .single-product .product-details .prd-bottom .social-info span:after, .social-info span:after, .grid-btn:hover, .list-btn:hover, .grid-btn.active, .list-btn.active, .pagination a:last-child:hover, .pagination a.active, .pagination a:not(:last-child):hover, .s_Product_carousel .owl-dots div.active, .s_product_text .card_area .icon_btn:after, .product_description_area .nav.nav-tabs li a.active, .blog-pagination .page-item.active .page-link {
-  background: -webkit-linear-gradient(90deg, #87CEEB 0%, #00BFFF 100%);
-  background: -moz-linear-gradient(90deg, #87CEEB 0%, #00BFFF 100%);
-  background: -o-linear-gradient(90deg, #87CEEB 0%, #00BFFF 100%);
-  background: linear-gradient(90deg, #87CEEB 0%, #00BFFF 100%); }
+  background: -webkit-linear-gradient(90deg, #ffd98e 0%, #fd8369 100%);
+  background: -moz-linear-gradient(90deg,  #ffd98e 0%, #fd8369 100%);
+  background: -o-linear-gradient(90deg,  #ffd98e 0%, #fd8369 100%);
+  background: linear-gradient(90deg,  #ffd98e 0%, #fd8369 100%); }
 
 .gradient-bg-reverse, #search_input_box .container-wrapper {
   background: -webkit-linear-gradient(270deg, #87CEEB 0%, #00BFFF 100%);
@@ -1131,7 +1131,8 @@ h6 {
             height: 0;
             border-style: solid;
             border-width: 10px 10px 0 10px;
-            border-color: #eeeeee transparent transparent transparent;
+            border-color: #eeeeee transparent transparent
+ transparent;
             position: absolute;
             right: 24px;
             top: 45px;
@@ -3441,7 +3442,7 @@ label {
 
 .filter-bar {
   padding: 0px 20px 10px 20px;
-  background: #9c9881; }
+  background: linear-gradient(to right bottom, #ffd98e, #fd8369); }
   .filter-bar a, .filter-bar i {
     color: #000; }
 
@@ -3622,7 +3623,7 @@ label {
 
 .sidebar-categories .head {
   line-height: 60px;
-  background: #9c9881;
+  background: linear-gradient(to right bottom, #ffd98e, #fd8369);
   padding: 0 30px;
   font-size: 16px;
   font-weight: 400;
@@ -3655,7 +3656,7 @@ label {
   margin-top: 50px; }
   .sidebar-filter .top-filter-head {
     line-height: 60px;
-    background: #9c9881;
+    background: #fd8369;
     padding: 0 30px;
     font-size: 16px;
     font-weight: 400;
