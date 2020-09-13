@@ -256,7 +256,7 @@ def get_totals_depts():
     depObj = {}
     classObj = {}
     categoryObj = {}
-    total_category = None
+    total_category = 0
     if items:
         for item in items:
             if item.category_id == None:
