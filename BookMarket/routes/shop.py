@@ -43,6 +43,7 @@ def getPosts():
     show_term = request.args.get('show', None)
     matchCourse = None
     matchDepartment = None
+    match_category = None
     low = None
     high = None
     print(filter_term)
@@ -79,6 +80,7 @@ def getPosts():
         courseSearch = insert_space_before_first_number(search_term)
         matchCourse = ItemClass.query.filter_by(school=session['school']).filter(ItemClass.class_name.ilike(courseSearch)).first()
         matchDepartment = ItemDepartment.query.filter_by(school=session['school']).filter((ItemDepartment.department_name.ilike(search_term) | (ItemDepartment.abbreviation.ilike(search_term)))).first()
+        match_category = ItemCategory.query.filter_by(school=session['school']).filter((ItemCategory.category_name.ilike(search_term))).first()
         print (matchDepartment)
         num_results = posts.count()
     elif class_id:
@@ -112,7 +114,7 @@ def getPosts():
     if show_term == 'all':
         per_page = posts.count()
     posts = posts.paginate(page=page, per_page=per_page)
-    return jsonify(html=render_template("shop-main.html", posts=posts, foundCourse=matchCourse, foundDepartment=matchDepartment),
+    return jsonify(html=render_template("shop-main.html", posts=posts, foundCourse=matchCourse, foundDepartment=matchDepartment, foundCategory=match_category),
                    department=department, course=course, sort=original_sort_term, filter=filter_term, show=show_term,
                    search=search, numResults=num_results)
 

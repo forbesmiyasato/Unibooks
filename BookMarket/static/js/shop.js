@@ -315,6 +315,7 @@ const filterByClass = (
     search_params.delete("filter");
     search_params.delete("sort");
     search_params.delete("nonbook");
+    search_params.delete("search");
     clearAllActiveSelections();
 
     url.search = search_params.toString();
@@ -342,6 +343,7 @@ const filterByDepartment = (department_id) => {
 
     search_params.set("department", department_id);
     search_params.delete("class");
+    search_params.delete("search");
     search_params.delete("show");
     search_params.delete("filter");
     search_params.delete("sort");
@@ -378,6 +380,8 @@ const filterByCategory = (term) => {
     search_params.delete("filter");
     search_params.delete("sort");
     search_params.delete("department");
+    search_params.delete("search");
+
     clearAllActiveSelections();
 
     console.log(url);
