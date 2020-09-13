@@ -209,9 +209,8 @@ const show = (ele, term, push) => {
     params = params.substring(params.lastIndexOf("/") + 1);
     if (push) {
         history.pushState(null, "", params);
+        getData(url.toString());
     }
-    console.log(url.toString());
-    getData(url.toString());
 };
 
 const filterByPrice = (ele, filter, push) => {
@@ -254,14 +253,13 @@ const filterByPrice = (ele, filter, push) => {
     params = params.substring(params.lastIndexOf("/") + 1);
     if (push) {
         history.pushState(null, "", params);
+        getData(url.toString());
     }
-
-    console.log(url.toString());
-    getData(url.toString());
 };
 
 const getAll = () => {
     var url = new URL(window.location.href.split("?")[0] + "/data");
+    let search_params = url.searchParams;
 
     browseCollapse();
     clearAllActiveSelections();
@@ -276,6 +274,7 @@ const getAll = () => {
 
     url.search = search_params.toString();
 
+    console.log("3");
     getData(url);
 };
 
@@ -298,6 +297,7 @@ const getFromPage = (page_num) => {
     history.pushState(null, "", params);
 
     console.log(url.toString());
+    console.log("4");
     getData(url.toString());
 };
 
@@ -334,6 +334,7 @@ const filterByClass = (
 
     console.log(class_id, class_name, department_name, department_id);
     console.log(url.toString());
+    console.log("5");
     getData(url.toString());
 };
 
@@ -367,6 +368,7 @@ const filterByDepartment = (department_id) => {
     history.pushState(null, "", `?department=${department_id}`);
 
     console.log(url.toString());
+    console.log("6");
     getData(url.toString());
 };
 
@@ -401,6 +403,7 @@ const filterByCategory = (term) => {
     history.pushState(null, "", `?nonbook=${term}`);
 
     console.log(url.toString());
+    console.log("7");
     getData(url.toString());
 };
 
@@ -450,11 +453,10 @@ const sort = (ele, order, push) => {
     params = params.substring(params.lastIndexOf("/") + 1);
 
     if (push) {
+        console.log("TESTTTTTTTTTTTTTTTTTTT")
         history.pushState(null, "", params);
+        getData(url.toString());
     }
-
-    console.log(url.toString());
-    getData(url.toString());
 };
 
 function displayErrorMessage(message) {
@@ -510,7 +512,6 @@ function initializeShopPage() {
         }
     }
 
-    console.log(url.toString());
     getData(url.toString());
 }
 
