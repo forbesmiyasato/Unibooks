@@ -1,5 +1,6 @@
 import re
 import threading
+import concurrent.futures
 from flask import render_template, request, Blueprint, jsonify, url_for, flash, session, redirect, current_app
 from flask_login import current_user
 from flask_mail import Message
@@ -26,6 +27,15 @@ def shop():
 
     return render_template('shop.html', title='Shop', departments=departments, standalone=standalone, categories=categories)
 
+
+def findMatchingCourse(courseSearch):
+    return ItemClass.query.filter_by(school=session['school']).filter(ItemClass.class_name.ilike(courseSearch)).first()
+
+def findMatchingDepartment(search_term):
+    return ItemDepartment.query.filter_by(school=session['school']).filter((ItemDepartment.department_name.ilike(search_term) | (ItemDepartment.abbreviation.ilike(search_term)))).first()
+
+def findMatchingCategory(search_term):
+    return ItemCategory.query.filter_by(school=session['school']).filter((ItemCategory.category_name.ilike(search_term))).first()
 
 @shop_api.route("/shop/data")
 def getPosts():
@@ -78,9 +88,9 @@ def getPosts():
         posts = posts.filter(Item.name.ilike(search_term)).order_by(
             sort_by)
         courseSearch = insert_space_before_first_number(search_term)
-        matchCourse = ItemClass.query.filter_by(school=session['school']).filter(ItemClass.class_name.ilike(courseSearch)).first()
-        matchDepartment = ItemDepartment.query.filter_by(school=session['school']).filter((ItemDepartment.department_name.ilike(search_term) | (ItemDepartment.abbreviation.ilike(search_term)))).first()
-        match_category = ItemCategory.query.filter_by(school=session['school']).filter((ItemCategory.category_name.ilike(search_term))).first()
+        matchCourse = findMatchingCourse(courseSearch)
+        matchDepartment = findMatchingDepartment(search_term)
+        match_category = findMatchingCategory(search_term)
         print (matchDepartment)
         num_results = posts.count()
     elif class_id:
