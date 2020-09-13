@@ -255,16 +255,25 @@ def get_totals_depts():
     items = db.session.query(Item).filter(Item.school==session['school']).all()
     depObj = {}
     classObj = {}
-
+    categoryObj = {}
+    total_category = None
     if items:
         for item in items:
-            if item.department_id not in depObj:
-                depObj[item.department_id] = 1
+            if item.category_id == None:
+                if item.department_id not in depObj:
+                    depObj[item.department_id] = 1
+                else:
+                    depObj[item.department_id] += 1
+                if item.class_id not in classObj:
+                    classObj[item.class_id] = 1
+                else:
+                    classObj[item.class_id] += 1
             else:
-                depObj[item.department_id] += 1
-            if item.class_id not in classObj:
-                classObj[item.class_id] = 1
-            else:
-                classObj[item.class_id] += 1
+                if item.category_id not in categoryObj:
+                    categoryObj[item.category_id] = 1
+                    total_category += 1
+                else:
+                    categoryObj[item.category_id] += 1
+                    total_category += 1
 
-    return {'depObj': depObj, 'classObj': classObj, 'items': items}
+    return {'depObj': depObj, 'classObj': classObj, 'items': items, 'categoryObj': categoryObj, 'totalCategory': total_category}

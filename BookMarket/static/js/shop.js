@@ -122,6 +122,7 @@ const getData = (url) => {
             $("#posts-spinner").toggleClass("loading");
         },
         error: function (xhr) {
+            displayErrorMessage("Error occurred due to invalid Behavior!")
             getAll()
         },
     });
@@ -260,11 +261,20 @@ const filterByPrice = (ele, filter, push) => {
 };
 
 const getAll = () => {
-    var url = window.location.href.split("?")[0] + "/data";
+    var url = new URL(window.location.href.split("?")[0] + "/data");
 
     browseCollapse();
     clearAllActiveSelections();
     history.pushState(null, "", "shop");
+    search_params.delete("department");
+    search_params.delete("show");
+    search_params.delete("filter");
+    search_params.delete("sort");
+    search_params.delete("nonbook");
+    search_params.delete("search");
+    search_params.delete("class");
+
+    url.search = search_params.toString();
 
     getData(url);
 };
@@ -478,7 +488,8 @@ function initializeShopPage() {
     }
 
     if (filter_term) {
-        const filter_element = document.getElementById(sort_term);
+        console.log("!!!!!!!!!!", filter_term)
+        const filter_element = document.getElementById(filter_term);
         if (filter_element) {
             filterByPrice(
                 document.getElementById(filter_term),
@@ -491,7 +502,7 @@ function initializeShopPage() {
     }
 
     if (show_term) {
-        const show_element = document.getElementById(sort_term);
+        const show_element = document.getElementById(show_term);
         if (show_element) {
             show(document.getElementById(show_term), show_term, false);
         } else {
