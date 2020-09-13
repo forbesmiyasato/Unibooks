@@ -28,6 +28,7 @@ class Users(db.Model, UserMixin):
 class ItemClass(db.Model):
     __tablename__ = 'itemclass'
     id = db.Column(db.Integer, primary_key=True)
+    abbreviation = db.Column(db.String(15), nullable=False)
     class_name = db.Column(db.String(100), nullable=False)
     department_id = db.Column(db.Integer, db.ForeignKey(
         'itemdepartment.id'), nullable=False)

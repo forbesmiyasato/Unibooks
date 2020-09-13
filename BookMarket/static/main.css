@@ -1002,6 +1002,12 @@ select {
 .social-info div.hover-text {
     top: 6px;
 }
+
+.all-in-department {
+    text-overflow: ellipsis;
+    overflow: hidden; 
+    white-space: nowrap;
+}
 /* .icon_btn {
     position: relative;
 }

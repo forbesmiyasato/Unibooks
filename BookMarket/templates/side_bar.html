@@ -48,13 +48,13 @@
                 </a>
                 <ul class="collapse" id="nav{{department.id}}" data-toggle="collapse" aria-expanded="false"
                     aria-controls="{{department_id}}">
-                    <li class="main-nav-list child"><a href="javascript:filterByDepartment({{department.id}})">All in
+                    <li class="main-nav-list child"><a class="all-in-department" href="javascript:filterByDepartment({{department.id}})">All in
                             {{department.department_name}}<span class="number"
                                 id="dep_total{{ department.id }}">{{ depObj[department.id] }}</span></a>
                     </li>
                     {% for class in department.classes %}
                     <li class="main-nav-list child"><a href="javascript:filterByClass({{class.id}}, '{{class.class_name}}',
-                            '{{department.id}}', '{{department.department_name}}')">{{class.class_name}}<span
+                            '{{department.id}}', '{{department.department_name}}')">{{class.abbreviation}}<span
                                 class="number" id="class_total{{ class.id }}">{{ classObj[class.id] }}</span></a>
                     </li>
                     {% endfor %}
