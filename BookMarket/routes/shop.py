@@ -100,13 +100,13 @@ def getPosts():
         course = ItemClass.query.filter_by(id=class_id).first()
         department = ItemDepartment.query.filter_by(
             id=course.department_id).first()
-        course = {"name": course.class_name, "id": course.id}
-        department = {"name": department.department_name, "id": department.id}
+        course = {"short": course.abbreviation, "id": course.id, "long": course.class_name}
+        department = {"short": department.abbreviation, "id": department.id}
     elif department_id:
         posts = posts.filter_by(department_id=department_id).order_by(
             sort_by)
         department = ItemDepartment.query.filter_by(id=department_id).first()
-        department = {"name": department.department_name, "id": department.id}
+        department = {"short": department.abbreviation, "id": department.id, "long": department.department_name}
     elif category:
         if category == "all":
             posts = posts.filter(Item.category_id != None).order_by(

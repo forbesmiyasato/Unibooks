@@ -80,20 +80,20 @@ const getData = (url) => {
             // let filter = response.filter
             // let show = response.filter
             if (course) {
-                $("#nav-header").html(course.name);
+                $("#nav-header").html(course.long);
                 $("#nav-department").html(
                     '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
-                        `<a href="javascript:filterByDepartment(${department.id})">${department.name}</a>`
+                        `<a href="javascript:filterByDepartment(${department.id})">${department.short}</a>`
                 );
                 $("#nav-course").html(
                     '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
-                        `<a class="text-white">${course.name}</a>`
+                        `<a class="text-white">${course.short}</a>`
                 );
             } else if (department) {
-                $("#nav-header").html(department.name);
+                $("#nav-header").html(department.long);
                 $("#nav-department").html(
                     '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
-                        `<a class="text-white">${department.name}</a>`
+                        `<a class="text-white">${department.short}</a>`
                 );
                 $("#nav-course").html("");
             } else if (search) {
