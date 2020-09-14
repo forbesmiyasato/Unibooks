@@ -264,6 +264,16 @@ li.options {
     padding-bottom: 50px;
 }
 
+.no-results a {
+    font-size: 20px;
+    color: #00BFFF;
+}
+
+.no-results a:hover {
+    font-size: 20px;
+    color: #ffd98e;
+}
+
 .img-fluid {
     max-height: 585px;
 }
