@@ -48,25 +48,24 @@
         </div>
       </div>
 </div> -->
+<button id="help-back">back</button>
+
 <div class="help-container">
-  <div class="help-grid">
+  <div class="help-grid show">
     <div class="help-item">231</div>
     <div class="help-item">23321</div>
     <div class="help-item">3243</div>
     <div class="help-item">231</div>
     <div class="help-item">23321</div>
     <div class="help-item">3243</div>
-  </div>
-  <div class="help-grid-detail">
-    <div class="">231</div>
   </div>
 </div>
 <script>
-  let elements = document.querySelectorAll(".help-item");
   const fadeIn = () => {
-
+    let elements = document.querySelectorAll(".help-item");
     for (var i = 0; i < elements.length; i++) {
       load(elements[i], i);
+      console.log(elements[i])
     }
 
     function load(elem, i) {
@@ -77,12 +76,13 @@
   }
 
   const changeContent = () => {
-    document.getElementsByClassName('help-grid')[0].style.display = "none"
-    document.getElementsByClassName('help-grid-detail')[0].style.display = "grid"
+    document.getElementsByClassName('help-grid')[0].innerHTML = `
+    <div class="">231</div>`
   }
 
   const fadeOut = (num) => {
     console.log(num);
+    let elements = document.querySelectorAll(".help-item");
 
     let count = 0;
     let x = num;
@@ -114,19 +114,35 @@
     // for (var i = 0; i < elements.length; i++) {
     //   deLoad(elements[i], i);
     // }
-    setTimeout(changeContent, 100 * 7)
+    setTimeout(changeContent, 100 * 8)
     function deLoad(elem, i) {
       setTimeout(function () {
         elem.classList.remove("load");
       }, 100 * i);
     }
   }
-  
+
+  let elements = document.querySelectorAll(".help-item");
+
   for (var i = 0; i < elements.length; i++) {
     elements[i].addEventListener("click", fadeOut.bind(null, i));
   }
 
-
+  document.getElementById('help-back').addEventListener(
+    "click", function () {
+      console.log("back clicked")
+      document.getElementsByClassName('help-grid')[0].classList.remove('show')
+      document.getElementsByClassName('help-grid')[0].innerHTML = `
+    <div class="help-item" onclick="fadeOut(1)">231</div>
+    <div class="help-item" onclick="fadeOut(2)">23321</div>
+    <div class="help-item" onclick="fadeOut(3)">3243</div>
+    <div class="help-item" onclick="fadeOut(4)">231</div>
+    <div class="help-item" onclick="fadeOut(5)">23321</div>
+    <div class="help-item" onclick="fadeOut(6)">3243</div>`
+      document.getElementsByClassName('help-grid')[0].classList.add('show')
+      setTimeout(fadeIn, 500)
+    }
+  )
   fadeIn();
 
 

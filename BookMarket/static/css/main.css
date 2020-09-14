@@ -6236,6 +6236,7 @@ label {
   -webkit-transform: scale(1.2);
   transform: scale(1.2); }
 
+/* help page */
 .help-container {
   max-width: 800px;
   margin: 50px auto 50px auto; }
@@ -6244,7 +6245,15 @@ label {
     grid-template-columns: 1fr 1fr 1fr;
     grid-auto-rows: 1fr;
     column-gap: 20px;
-    row-gap: 20px; }
+    row-gap: 20px;
+    opacity: 0;
+    -webkit-transition: opacity 0.5s ease-in;
+    -moz-transition: opacity 0.5s ease-in;
+    -ms-transition: opacity 0.5s ease-in;
+    -o-transition: opacity 0.5s ease-in;
+    transition: opacity 0.5s ease-in; }
+    .help-container .help-grid.show {
+      opacity: 1; }
     .help-container .help-grid::before {
       content: "";
       width: 0;
@@ -6255,22 +6264,24 @@ label {
       grid-row: 1 / 1;
       grid-column: 1 / 1; }
   .help-container .help-grid-detail {
-    display: none;
+    display: grid;
     grid-template-columns: 1fr;
     grid-auto-rows: 1fr 1fr 1fr;
     box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
     background-color: #fff;
-    border-radius: 10px; }
+    border-radius: 10px;
+    opacity: 1;
+    transition: 1s opacity ease-in; }
   .help-container .help-item {
     box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
     background-color: #fff;
     border-radius: 10px;
     cursor: pointer;
     opacity: 0;
-    -webkit-transition: opacity 0.5s linear;
-    -moz-transition: opacity 0.5s linear;
-    -ms-transition: opacity 0.5s linear;
-    -o-transition: opacity 0.5s linear;
-    transition: opacity 0.5s linear; }
+    -webkit-transition: opacity 0.5s ease-in;
+    -moz-transition: opacity 0.5s ease-in;
+    -ms-transition: opacity 0.5s ease-in;
+    -o-transition: opacity 0.5s ease-in;
+    transition: opacity 0.5s ease-in; }
     .help-container .help-item.load {
       opacity: 1; }
