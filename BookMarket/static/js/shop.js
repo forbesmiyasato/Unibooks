@@ -738,10 +738,12 @@ const listingEditClicked = (id, item_class, item_department) => {
             class_selectize.setValue(item_class);
         },
         beforeSend: function () {
+            console.log("BEFORE")
             $(`#modal-body-${id}`).html("");
             $(`.modal-content-${id}`).toggleClass("loading");
         },
         complete: function () {
+            console.log("AFTER")
             $(`.modal-content-${id}`).toggleClass("loading");
             prevModal = $(`#modal-body-${id}`);
         },

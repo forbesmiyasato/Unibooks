@@ -372,10 +372,11 @@ def get_edit_form(item_id=None):
     edit_form.author.data = _item.author
     edit_form.item_class.data = item_class
     edit_form.item_department.data = department.department_name
+    isBook = True if _item.category_id is None else False
     # for messaging
     return render_template('post_form.html', title=_item.name, item=_item, images=images,
                            item_class=item_class, department=department, form=edit_form, legend="Edit",
-                           item_id=item_id, departments=departments)
+                           item_id=item_id, departments=departments, isBook=isBook)
 
 
 @app.context_processor
