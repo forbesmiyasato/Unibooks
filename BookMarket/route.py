@@ -173,7 +173,7 @@ def item_class(department):
         classObj = {}
         classObj['id'] = item_class.id
         classObj['department_id'] = item_class.department_id
-        classObj['class_name'] = item_class.class_name
+        classObj['class_name'] = item_class.abbreviation
         classArray.append(classObj)
     return jsonify({'classes': classArray})
 

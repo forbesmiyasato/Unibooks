@@ -5,13 +5,13 @@
     <div class="container">
         <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
             <div class="col-first">
-                <h1>Product Details Page</h1>
+                <h1>{{item.name}}</h1>
                 <nav class="d-flex align-items-center">
                     <a href="javascript:linkClicked(document.getElementById('home'), '/home')">Home<span
                             class="lnr lnr-arrow-right"></span></a>
                     <a href="javascript:linkClicked(document.getElementById('shop'), '/shop')">Shop<span
                             class="lnr lnr-arrow-right"></span></a>
-                    <a class="nav-no-href">product-details</a>
+                    <a class="nav-no-href">Product Details</a>
                 </nav>
             </div>
         </div>
@@ -53,11 +53,11 @@
                         {% if isBook == True %}
                         <li><a class="active"
                                 href="javascript:linkClicked(document.getElementById('shop'), '/shop?department={{department.id}}')"><span>Department</span>
-                                : {{department.department_name}}</a></li>
+                                : {{department.abbreviation}}</a></li>
                         <li><a
                                 href="javascript:linkClicked(document.getElementById('shop'), '/shop?class={{item_class.id}}')"><span>Class</span>
                                 :
-                                {{item_class.class_name}}</a></li>
+                                {{item_class.abbreviation}}</a></li>
                         <li><a><span>Author</span>
                                 : {{item.author}} </li></a>
                         <li><a><span>ISBN</span>

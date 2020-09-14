@@ -98,7 +98,7 @@
                         <select name="department_id" id='department_list' placeholder="Select Department">
                             <option value="">Select Department</option>
                             {% for department in departments %}
-                            <option value='{{ department.id }}'>{{department.department_name}}</option>
+                            <option value='{{ department.id }}'>{{department.abbreviation}}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -221,7 +221,7 @@
         // category_input.setCustomValidity('')
         // console.log(category_input.checkValidity())
     }
-    
+
     document.getElementById('checkbox').addEventListener('click', checkboxClicked)
 
     {% endif %}
@@ -268,6 +268,7 @@
                     // optionHTML += '<option data-display="Select Class">Select</option>'
                     for (let item_class of data.classes) {
                         // optionHTML += `<option value="${item_class.id}">${item_class.class_name}</option>`;
+                        console.log(item_class.abbreviation)
                         selectize.addOption({ value: item_class.id, text: item_class.class_name });
                         selectize.refreshOptions()
                     }
@@ -332,7 +333,7 @@
         if (class_input) { class_input.setCustomValidity("Please Select Course") }
         department_input.value = '{{department|safe}}'
         {% if item_class is defined %}
-        class_input.value = '{{item_class.class_name|safe}}'
+        class_input.value = '{{item_class.abbreviation|safe}}'
         {% endif %}
 
         console.log("!!!", department_select.required)
@@ -534,6 +535,7 @@
                 }
                 history.pushState(null, null, response.url)
                 $('#block-content').html(response.html);
+                $(window).scrollTop(0);
             },
             beforeSend: function () {
                 $("body").toggleClass("loading");
