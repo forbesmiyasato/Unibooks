@@ -5,8 +5,8 @@
     {% if posts.total == 0 %}
     <div class="container no-results mt-5">
         <h1 class="pt-3 pb-3">Sorry there are no books that meet your search criteria at this moment</h1>
-        <h3>Did you mean:</h3></br>
         {% if foundCourse != None %}
+            <h3>Did you mean:</h3></br>
             <a href="javascript:filterByClass({{foundCourse.id}})">Course: {{foundCourse.abbreviation}}</a></br>
         {% endif %}
         {% if foundDepartment != None %}
