@@ -30,6 +30,10 @@
             grid-row: 1 / 1;
             grid-column: 1 / 1;
         }
+
+        &.detail {
+            display: block;
+        }
     }
 
     .help-item {
@@ -45,6 +49,7 @@
         transition: opacity 0.5s ease-in;
         &.load {
             opacity: 1;
+            height: auto;
         }
     }
 
