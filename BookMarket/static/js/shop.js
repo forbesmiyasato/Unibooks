@@ -606,7 +606,7 @@ onItemDelete = (url, name, num, origin) => {
                 linkClicked(document.getElementById("shop"), "/shop");
             }
             toastr.options = {
-                positionClass: "toast-top-left",
+                positionClass: "toast-top-center",
                 closeButton: true,
             };
             toastr.success(`Post ${name} Deleted!`);

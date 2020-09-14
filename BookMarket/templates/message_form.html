@@ -89,7 +89,7 @@
             async: true,
             success: function (response) {
                 $('#block-content').html(response.html);
-                toastr.options = { "positionClass": "toast-top-left", "closeButton": true }
+                toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
                 if (response.origin === 'single') {
                     toastr.success("Message Sent! The seller will contact you soon!");
                 }

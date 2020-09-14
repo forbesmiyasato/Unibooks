@@ -675,7 +675,7 @@ body.loading .overlay {
     overflow: hidden;
 } */
 
-.toast-top-center {
+/* .toast-top-center {
     width: 100vw !important;
     margin-top: 100px;
     right: auto !important;
@@ -688,10 +688,10 @@ body.loading .overlay {
 .toast {
     max-width: 1200px;
     width: 100% !important;
-}
+} */
 
 /* version two */
-/* .toast-top-center {
+.toast-top-center {
     margin-top: 100px;
     right: auto !important;
     left: 50%;
@@ -714,7 +714,7 @@ body.loading .overlay {
     display: inline-block;
     white-space: nowrap;
     padding-right: 20px !important;
-} */
+}
 @media (max-width: 992px) {
     .toast-top-left,
     .toast-top-center {

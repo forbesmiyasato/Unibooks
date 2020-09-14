@@ -108,7 +108,7 @@
         $.ajax({
             url: `/report/${item_id}`,
             success: function (response) {
-                toastr.options = { "positionClass": "toast-top-left", "closeButton": true }
+                toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
                 toastr.success("Thanks for reporting the inappropriate post!");
             }
         })
