@@ -213,42 +213,42 @@ def item(item_id):
     return item_html(item_id, standalone)
 
 
-@shop_api.route("/shop/class/<int:class_id>")
-def items_for_class(class_id):
-    search_term = request.args.get('search')
-    per_page = request.args.get('per_page', 6, type=int)
-    page = request.args.get('page', 1, type=int)
-    departments = db.session.query(ItemDepartment).all()
-    order = request.args.get('order', 'desc')
-    date_sorted = getattr(Item.date_posted, order)()
-    item_class = ItemClass.query.get_or_404(class_id)
-    if search_term:
-        search_term = '%{0}%'.format(search_term)
-        posts = Item.query.filter(Item.name.ilike(search_term)).filter_by(class_id=class_id).order_by(
-            date_sorted).paginate(page=page, per_page=per_page)
-    else:
-        posts = Item.query.filter_by(class_id=class_id).order_by(
-            date_sorted).paginate(page=page, per_page=per_page)
-    return render_template('shop_class.html', title='Shop', posts=posts, departments=departments, class1=item_class)
+# @shop_api.route("/shop/class/<int:class_id>")
+# def items_for_class(class_id):
+#     search_term = request.args.get('search')
+#     per_page = request.args.get('per_page', 6, type=int)
+#     page = request.args.get('page', 1, type=int)
+#     departments = db.session.query(ItemDepartment).all()
+#     order = request.args.get('order', 'desc')
+#     date_sorted = getattr(Item.date_posted, order)()
+#     item_class = ItemClass.query.get_or_404(class_id)
+#     if search_term:
+#         search_term = '%{0}%'.format(search_term)
+#         posts = Item.query.filter(Item.name.ilike(search_term)).filter_by(class_id=class_id).order_by(
+#             date_sorted).paginate(page=page, per_page=per_page)
+#     else:
+#         posts = Item.query.filter_by(class_id=class_id).order_by(
+#             date_sorted).paginate(page=page, per_page=per_page)
+#     return render_template('shop_class.html', title='Shop', posts=posts, departments=departments, class1=item_class)
 
 
-@shop_api.route("/shop/department/<int:department_id>")
-def items_for_department(department_id):
-    search_term = request.args.get('search')
-    per_page = request.args.get('per_page', 6, type=int)
-    page = request.args.get('page', 1, type=int)
-    departments = db.session.query(ItemDepartment).all()
-    order = request.args.get('order', 'desc')
-    date_sorted = getattr(Item.date_posted, order)()
-    department = ItemDepartment.query.get_or_404(department_id)
-    if search_term:
-        search_term = '%{0}%'.format(search_term)
-        posts = Item.query.filter(Item.name.ilike(search_term)).filter_by(department_id=department_id).order_by(
-            date_sorted).paginate(page=page, per_page=per_page)
-    else:
-        posts = Item.query.filter_by(department_id=department_id).order_by(
-            date_sorted).paginate(page=page, per_page=per_page)
-    return render_template('shop_department.html', title='Shop', posts=posts, departments=departments, department=department)
+# @shop_api.route("/shop/department/<int:department_id>")
+# def items_for_department(department_id):
+#     search_term = request.args.get('search')
+#     per_page = request.args.get('per_page', 6, type=int)
+#     page = request.args.get('page', 1, type=int)
+#     departments = db.session.query(ItemDepartment).all()
+#     order = request.args.get('order', 'desc')
+#     date_sorted = getattr(Item.date_posted, order)()
+#     department = ItemDepartment.query.get_or_404(department_id)
+#     if search_term:
+#         search_term = '%{0}%'.format(search_term)
+#         posts = Item.query.filter(Item.name.ilike(search_term)).filter_by(department_id=department_id).order_by(
+#             date_sorted).paginate(page=page, per_page=per_page)
+#     else:
+#         posts = Item.query.filter_by(department_id=department_id).order_by(
+#             date_sorted).paginate(page=page, per_page=per_page)
+#     return render_template('shop_department.html', title='Shop', posts=posts, departments=departments, department=department)
 
 
 @shop_api.context_processor

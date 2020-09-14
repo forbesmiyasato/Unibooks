@@ -1008,6 +1008,16 @@ select {
     overflow: hidden; 
     white-space: nowrap;
 }
+
+.side-department-name {
+    margin-right: 0 !important;
+    width: 90%;
+    display: inline-block;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+}
 /* .icon_btn {
     position: relative;
 }
