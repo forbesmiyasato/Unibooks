@@ -2,20 +2,21 @@
 {% block content %}
 <!-- Start Banner Area -->
 <section class="banner-area organic-breadcrumb">
-    <div class="container">
-        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
-            <div class="col-first">
-                <h1>Help</h1>
-                <nav class="d-flex align-items-center">
-                    <a href="javascript:linkClicked(document.getElementById('home'), '/home')">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a class="nav-no-href">FAQ</a>
-                </nav>
-            </div>
-        </div>
+  <div class="container">
+    <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+      <div class="col-first">
+        <h1>Help</h1>
+        <nav class="d-flex align-items-center">
+          <a href="javascript:linkClicked(document.getElementById('home'), '/home')">Home<span
+              class="lnr lnr-arrow-right"></span></a>
+          <a class="nav-no-href">FAQ</a>
+        </nav>
+      </div>
     </div>
+  </div>
 </section>
 <!-- End Banner Area -->
-<div class="container mt-3">
+<!-- <div class="container mt-3">
     <p>
         <a data-toggle="collapse" href="#howtosell" role="button" aria-expanded="false" aria-controls="collapseExample">
           How to sell?
@@ -46,5 +47,77 @@
           Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
         </div>
       </div>
+</div> -->
+<div class="help-container">
+  <div class="help-grid">
+    <div class="help-item">231</div>
+    <div class="help-item">23321</div>
+    <div class="help-item">3243</div>
+    <div class="help-item">231</div>
+    <div class="help-item">23321</div>
+    <div class="help-item">3243</div>
+  </div>
 </div>
+<script>
+  let elements = document.querySelectorAll(".help-item");
+  const fadeIn = () => {
+
+    for (var i = 0; i < elements.length; i++) {
+      load(elements[i], i);
+    }
+
+    function load(elem, i) {
+      setTimeout(function () {
+        elem.classList.add("load");
+      }, 100 * i);
+    }
+  }
+
+  const fadeOut = (num) => {
+    console.log(num);
+
+    let count = 0;
+    let x = num;
+    y = num;
+    deLoad(elements[num], count);
+    count++;
+    x--;
+    y++;
+    while (x > 0 && y < elements.length) {
+      deLoad(elements[x], count);
+      x--;
+      deLoad(elements[y], count);
+      y++;
+      count++;
+    }
+
+    while (x >= 0) {
+      deLoad(elements[x], count);
+      count++;
+      x--;
+    }
+
+    while (y < elements.length) {
+      deLoad(elements[y], count);
+      count++;
+      y++;
+    }
+
+    // for (var i = 0; i < elements.length; i++) {
+    //   deLoad(elements[i], i);
+    // }
+    function deLoad(elem, i) {
+      setTimeout(function () {
+        elem.classList.remove("load");
+      }, 100 * i);
+    }
+  }
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].addEventListener("click", fadeOut.bind(null, i));
+  }
+
+  fadeIn();
+
+
+</script>
 {% endblock content %}

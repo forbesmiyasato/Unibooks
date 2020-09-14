@@ -680,6 +680,31 @@ body.loading .overlay {
     width: 100% !important;
 }
 
+/* version two */
+/* .toast-top-center {
+    margin-top: 100px;
+    right: auto !important;
+    left: 50%;
+    width: auto !important;
+}
+
+.toast-top-left {
+    width: 300px !important;
+}
+
+.toast-close-button {
+    right: -0.6em !important;
+    top: -0.6em !important;
+}
+
+.toast {
+    left: -50%;
+    width: auto !important;
+    max-width: none !important;
+    display: inline-block;
+    white-space: nowrap;
+    padding-right: 20px !important;
+} */
 @media (max-width: 992px) {
     .toast-top-left,
     .toast-top-center {
