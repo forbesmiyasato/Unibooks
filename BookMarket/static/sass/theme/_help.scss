@@ -17,7 +17,7 @@
         &.show {
             opacity: 1;
         }
-        
+
         &::before {
             content: "";
             width: 0;
@@ -32,17 +32,6 @@
         }
     }
 
-    .help-grid-detail {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-auto-rows: 1fr 1fr 1fr;
-        box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
-        background-color: $white;
-        border-radius: 10px;
-        opacity: 1;
-        transition: 1s opacity ease-in
-    }
-
     .help-item {
         box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
         background-color: $white;
@@ -55,6 +44,35 @@
         -o-transition: opacity 0.5s ease-in;
         transition: opacity 0.5s ease-in;
         &.load {
+            opacity: 1;
+        }
+    }
+
+    .help-detail {
+        box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
+        background-color: $white;
+        border-radius: 10px;
+        opacity: 0;
+        -webkit-transition: opacity 0.5s ease-in;
+        -moz-transition: opacity 0.5s ease-in;
+        -ms-transition: opacity 0.5s ease-in;
+        -o-transition: opacity 0.5s ease-in;
+        transition: opacity 0.5s ease-in;
+        &.load {
+            opacity: 1;
+        }
+    }
+
+    #help-back {
+        -webkit-transition: opacity 0.5s ease-in;
+        -moz-transition: opacity 0.5s ease-in;
+        -ms-transition: opacity 0.5s ease-in;
+        -o-transition: opacity 0.5s ease-in;
+        transition: opacity 0.5s ease-in;
+        visibility: hidden;
+        opacity: 0;
+        &.show {
+            visibility: visible;
             opacity: 1;
         }
     }

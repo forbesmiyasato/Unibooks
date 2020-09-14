@@ -48,36 +48,40 @@
         </div>
       </div>
 </div> -->
-<button id="help-back">back</button>
 
 <div class="help-container">
-  <div class="help-grid show">
-    <div class="help-item">231</div>
-    <div class="help-item">23321</div>
-    <div class="help-item">3243</div>
-    <div class="help-item">231</div>
-    <div class="help-item">23321</div>
-    <div class="help-item">3243</div>
+  <div>
+    <button class="genric-btn primary circle" id="help-back">back</button>
+    <div class="help-grid show">
+      <div class="help-item">How to sell</div>
+      <div class="help-item">How to buy</div>
+      <div class="help-item">3243</div>
+      <div class="help-item">231</div>
+      <div class="help-item">23321</div>
+      <div class="help-item">3243</div>
+    </div>
   </div>
 </div>
 <script>
+  function load(elem, i) {
+    setTimeout(function () {
+      elem.classList.add("load");
+    }, 100 * i);
+  }
+
   const fadeIn = () => {
     let elements = document.querySelectorAll(".help-item");
     for (var i = 0; i < elements.length; i++) {
       load(elements[i], i);
       console.log(elements[i])
     }
-
-    function load(elem, i) {
-      setTimeout(function () {
-        elem.classList.add("load");
-      }, 100 * i);
-    }
   }
 
   const changeContent = () => {
     document.getElementsByClassName('help-grid')[0].innerHTML = `
-    <div class="">231</div>`
+    <div class="help-detail">231</div>`
+    load(document.getElementsByClassName('help-detail')[0], 0)
+    document.getElementById('help-back').classList.add('show');
   }
 
   const fadeOut = (num) => {
@@ -140,7 +144,8 @@
     <div class="help-item" onclick="fadeOut(5)">23321</div>
     <div class="help-item" onclick="fadeOut(6)">3243</div>`
       document.getElementsByClassName('help-grid')[0].classList.add('show')
-      setTimeout(fadeIn, 500)
+      fadeIn()
+      document.getElementById('help-back').classList.remove('show');
     }
   )
   fadeIn();
