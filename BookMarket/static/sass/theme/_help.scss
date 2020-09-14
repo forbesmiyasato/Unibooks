@@ -22,13 +22,22 @@
         }
     }
 
+    .help-grid-detail {
+        display: none;
+        grid-template-columns: 1fr;
+        grid-auto-rows: 1fr 1fr 1fr;
+        box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
+        background-color: $white;
+        border-radius: 10px;
+    }
+
     .help-item {
         box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
         background-color: $white;
         border-radius: 10px;
         cursor: pointer;
         opacity: 0;
-        -webkit-transition: opacity .5s linear;
+        -webkit-transition: opacity 0.5s linear;
         -moz-transition: opacity 0.5s linear;
         -ms-transition: opacity 0.5s linear;
         -o-transition: opacity 0.5s linear;

@@ -2,10 +2,10 @@
 <section class="lattest-product-area pb-40 category-list">
     <!-- <div class="text-center mt-5 mb-5" id="posts-spinner"> -->
     {% if foundCourse != None %}
-    <a href="javascript:filterByClass({{foundCourse.id}})">Did you mean {{foundCourse.class_name}}?</a>
+    <a href="javascript:filterByClass({{foundCourse.id}})">Did you want to search by Course: {{foundCourse.abbreviation}}?</a>
     {% endif %}
     {% if foundDepartment != None %}
-    <a href="javascript:filterByDepartment({{foundDepartment.id}})">Search by Department: {{foundDepartment.department_name}} </a>
+    <a href="javascript:filterByDepartment({{foundDepartment.id}})">Search by Department: {{foundDepartment.abbreviation}} - {{foundDepartment.department_name}} </a>
     {% endif %}
     {% if foundCategory != None %}
     <a href="javascript:filterByCategory({{foundCategory.id}})">Search by Others: {{foundCategory.category_name}} </a>

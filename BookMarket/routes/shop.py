@@ -30,7 +30,7 @@ def shop():
 
 
 def findMatchingCourse(courseSearch):
-    return ItemClass.query.filter_by(school=session['school']).filter(ItemClass.class_name.ilike(courseSearch)).first()
+    return ItemClass.query.filter_by(school=session['school']).filter(ItemClass.abbreviation.ilike(courseSearch)).first()
 
 def findMatchingDepartment(search_term):
     return ItemDepartment.query.filter_by(school=session['school']).filter((ItemDepartment.department_name.ilike(search_term) | (ItemDepartment.abbreviation.ilike(search_term)))).first()
@@ -85,12 +85,12 @@ def getPosts():
     page = request.args.get('page', 1, type=int)
     if search_term:
         search = search_term
+        matchDepartment = findMatchingDepartment(search_term) #want to match exact whole word for deparments
         search_term = '%{0}%'.format(search_term)
         posts = posts.filter(Item.name.ilike(search_term)).order_by(
             sort_by)
         courseSearch = insert_space_before_first_number(search_term)
         matchCourse = findMatchingCourse(courseSearch)
-        matchDepartment = findMatchingDepartment(search_term)
         match_category = findMatchingCategory(search_term)
         print (matchDepartment)
         num_results = posts.count()
