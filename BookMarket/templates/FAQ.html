@@ -196,12 +196,12 @@
         load(elements[i], i)
       }
       document.getElementsByClassName('help-grid')[0].style.display = 'grid'
-      deLoad(document.getElementsByClassName('help-detail')[0]);
       document.getElementById('help-back').classList.remove('show');
-      document.getElementsByClassName('help-detail')[0].style.display = 'none';
-      let details = document.querySelectorAll(".help-details");
+      let details = document.querySelectorAll(".help-detail");
       for (var i = 0; i < details.length; i++) {
+        console.log(i, details[i])
         details[i].style.display = 'none';
+        deLoad(details[i]);
       }
     }
   )
