@@ -59,7 +59,7 @@ const sortSwitch = (sort_term) => {
             break;
     }
 };
-const getData = (url) => {
+const getData = (url, first) => {
     $.ajax({
         url: url,
         type: "get",
@@ -67,7 +67,7 @@ const getData = (url) => {
         async: true,
         success: function (response) {
             if (response.error) {
-                if (response.error === 'no school in session') {
+                if (response.error === "no school in session") {
                     location.reload();
                 }
             }
@@ -122,11 +122,19 @@ const getData = (url) => {
             $("#posts-spinner").toggleClass("loading");
         },
         error: function (xhr) {
-            displayErrorMessage("Error occurred due to invalid Behavior!")
-            getAll()
+            displayErrorMessage("Error occurred due to invalid Behavior!");
+            getAll();
         },
     });
-    $(window).scrollTop(0);
+    if (first === true) {
+        console.log("FIRST!!!!!!!!!")
+
+        $(window).scrollTop(0);
+    } else {
+        console.log("!!!!!!!!!")
+
+        $(document.body).scrollTop($("#shop-top-bar").offset().top);
+    }
 };
 
 function clearAllActiveSelections() {
@@ -453,7 +461,7 @@ const sort = (ele, order, push) => {
     params = params.substring(params.lastIndexOf("/") + 1);
 
     if (push) {
-        console.log("TESTTTTTTTTTTTTTTTTTTT")
+        console.log("TESTTTTTTTTTTTTTTTTTTT");
         history.pushState(null, "", params);
         getData(url.toString());
     }
@@ -490,7 +498,7 @@ function initializeShopPage() {
     }
 
     if (filter_term) {
-        console.log("!!!!!!!!!!", filter_term)
+        console.log("!!!!!!!!!!", filter_term);
         const filter_element = document.getElementById(filter_term);
         if (filter_element) {
             filterByPrice(
@@ -512,7 +520,7 @@ function initializeShopPage() {
         }
     }
 
-    getData(url.toString());
+    getData(url.toString(), true);
 }
 
 const browseCollapse = () => {
@@ -558,9 +566,9 @@ const onSavedUndo = (index, id) => {
             let bagIcon = document.getElementsByClassName("bag-icon")[0];
             bagIcon.innerHTML = parseInt(bagIcon.innerHTML) + 1;
         }
-    })
+    });
     document.getElementById(`row-${index}`).innerHTML = deletedItems[index];
-}
+};
 
 const initializeSingleProductPage = () => {
     console.log("invoked");
@@ -680,7 +688,7 @@ const highlightNavLink = () => {
     } else if (path === "contactus") {
         active = document.getElementById("home");
         document.title = "Contact Us" + ending;
-    } else if (path === 'help') {
+    } else if (path === "help") {
         active = document.getElementById("home");
         document.title = "Help" + ending;
     } else {
@@ -738,12 +746,12 @@ const listingEditClicked = (id, item_class, item_department) => {
             class_selectize.setValue(item_class);
         },
         beforeSend: function () {
-            console.log("BEFORE")
+            console.log("BEFORE");
             $(`#modal-body-${id}`).html("");
             $(`.modal-content-${id}`).toggleClass("loading");
         },
         complete: function () {
-            console.log("AFTER")
+            console.log("AFTER");
             $(`.modal-content-${id}`).toggleClass("loading");
             prevModal = $(`#modal-body-${id}`);
         },
