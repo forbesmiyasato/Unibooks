@@ -62,17 +62,57 @@
     </div>
     <div class="help-detail">
       <h2>How to start selling</h2>
-      <p>1. <a>Create</a> or <a>Log in</a> to your account<i class="fas fa-user"></i></p>
-      <p>2. <a>Confirm</a> your account to prove that you're a local university student <i class="fas fa-user-check"></i></p>
-      <p>3. <a>Post</a> your item for sale<i class="fas fa-money-check-alt"></i></p>
-      <p>4. Wait to receive an email from Unibooks notifying you that someone is interested in your item! <i class="fas fa-envelope"></i></p>
-      <p>5. Reply to the buyers email given in the email and sort out the details. <i class="fas fa-envelope"></i></p>
+      <p>1. <a class="sell-links" onclick="linkClicked(this, '/register')">Create</a> or <a class="sell-links"
+          onclick="linkClicked(this, '/login')">Log
+          in</a> to your account<i class="fas fa-user"></i></p>
+      <p>2. <a class="sell-links" onclick="linkClicked(this, '/account')">Confirm</a> your account to prove that you're
+        a local university
+        student <i class="fas fa-user-check"></i></p>
+      <p>3. <a class="sell-links" onclick="linkClicked(this, '/item/new')">Post</a> your item for sale<i
+          class="fas fa-money-check-alt"></i></p>
+      <p>4. Wait to receive an email from Unibooks notifying you that someone is interested in your item! <i
+          class="fas fa-envelope"></i></p>
+      <p>5. Reply to the buyer's email given in the email and sort out the details. <i class="fas fa-handshake"></i></p>
       <div>
-        <p style="margin-bottom: 0;">6a. Meet in person to complete the transaction somewhere on campus <i class="fas fa-user-friends"></i></p>
+        <p style="margin-bottom: 0;">6a. Meet in person to complete the transaction somewhere on campus <i
+            class="fas fa-user-friends"></i></p>
         <span>or</span>
-        <p>6b. Mail out the item and request money via an invoice.<i class="fas fa-shipping-fast"></i> We recommend using Paypal service & goods for buyer protection <i class="fab fa-paypal"></i></p>
+        <p>6b. Receive the money via an payment service and ship the item.<i class="fas fa-shipping-fast"></i>
+          <br />
+          We recommend
+          using Paypal service & goods for seller and buyer protection <i class="fab fa-paypal"></i></p>
       </div>
-      <div class="sell-notes">2321</div>
+      <div class="sell-notes">
+        <span>*Your email will be completely private until you decide to reply to the seller</span>
+        <br />
+        <span>*There's a limit of 10 postings at a time</span>
+      </div>
+    </div>
+    <div class="help-detail">
+      <h2>How to start buying</h2>
+      <p>1. <a class="sell-links" onclick="linkClicked(this, '/register')">Create</a> or <a class="sell-links"
+          onclick="linkClicked(this, '/login')">Log
+          in</a> to your account<i class="fas fa-user"></i></p>
+      <p>2. <a class="sell-links" onclick="linkClicked(this, '/account')">Confirm</a> your account to prove that you're
+        a local university
+        student <i class="fas fa-user-check"></i></p>
+      <p>3. Go to the <a class="sell-links" onclick="linkClicked(this, '/shop')">shop</a> page and look for book/items
+        you need<i class="fas fa-book"></i></p>
+      <p>4. Message the seller using Unibooks messaging feature and sort out the details <i class="fas fa-handshake"></i></p>
+      <div>
+        <p style="margin-bottom: 0;">6a. Meet in person to complete the transaction somewhere on campus <i
+            class="fas fa-user-friends"></i></p>
+        <span>or</span>
+        <p>6b. Pay the buyer via an payment service and wait for your shipment.<i class="fas fa-shipping-fast"></i>
+          <br />
+          We recommend
+          using Paypal service & goods for seller and buyer protection <i class="fab fa-paypal"></i></p>
+      </div>
+      <div class="sell-notes">
+        <span>*Your email will be provided to the buyer</span>
+        <br />
+        <span>*If making an online transation, we strongly encourage to use a payment service with buyers protection</span>
+      </div>
     </div>
   </div>
 </div>
@@ -97,10 +137,11 @@
   }
 
   const changeContent = (num) => {
-    console.log(num)
-    document.getElementsByClassName('help-detail')[0].style.display = 'block'
+    console.log(typeof num)
+    console.log(document.querySelectorAll('.help-detail')[parseInt(num)])
+    document.querySelectorAll('.help-detail')[num].style.display = 'block'
     document.getElementsByClassName('help-grid')[0].style.display = 'none'
-    load(document.getElementsByClassName('help-detail')[0], 0)
+    load(document.getElementsByClassName('help-detail')[num], 0)
     document.getElementById('help-back').classList.add('show');
   }
 
@@ -138,7 +179,7 @@
     // for (var i = 0; i < elements.length; i++) {
     //   deLoad(elements[i], i);
     // }
-    setTimeout(changeContent.bind(num), 100 * 10)
+    setTimeout(changeContent.bind(null, num), 100 * 10)
   }
 
   let elements = document.querySelectorAll(".help-item");
@@ -152,15 +193,16 @@
       console.log("back clicked")
       let elements = document.querySelectorAll(".help-item");
       for (var i = 0; i < elements.length; i++) {
-        // elements[i].style.display = 'block';
         load(elements[i], i)
       }
-      // document.getElementsByClassName('help-grid')[0].classList.add('show')
-      // fadeIn()
       document.getElementsByClassName('help-grid')[0].style.display = 'grid'
       deLoad(document.getElementsByClassName('help-detail')[0]);
       document.getElementById('help-back').classList.remove('show');
-      document.getElementsByClassName('help-detail')[0].style.display = 'none'
+      document.getElementsByClassName('help-detail')[0].style.display = 'none';
+      let details = document.querySelectorAll(".help-details");
+      for (var i = 0; i < details.length; i++) {
+        details[i].style.display = 'none';
+      }
     }
   )
   fadeIn();

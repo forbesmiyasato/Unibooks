@@ -6302,3 +6302,10 @@ label {
     .help-container #help-back.show {
       visibility: visible;
       opacity: 1; }
+  .help-container .sell-notes {
+    text-align: right; }
+  .help-container .sell-links {
+    color: #87CEEB;
+    cursor: pointer; }
+    .help-container .sell-links:hover {
+      color: #00BFFF; }

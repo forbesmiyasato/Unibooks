@@ -79,4 +79,16 @@
             opacity: 1;
         }
     }
+
+    .sell-notes {
+        text-align: right;
+    }
+
+    .sell-links {
+        color: $primary-color;
+        cursor: pointer;
+        &:hover {
+            color: $primary-color2
+        }
+    }
 }
