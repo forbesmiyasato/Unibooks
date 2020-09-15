@@ -77,6 +77,14 @@
         &.load {
             opacity: 1;
         }
+
+        & #contact-us-container {
+            border-left: none;
+        }
+
+        & #contact-us-container.not-logged-in {
+            border-left: 4px solid #bd362f;
+        }
     }
 
     #help-back {

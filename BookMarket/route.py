@@ -60,10 +60,23 @@ def about_us():
     #     standalone = False
     return render_template('about_us.html', standalone=standalone, title="About Us")
 
-@app.route('/help')
+@app.route('/help', methods=['GET', 'POST'])
 def help():
-    standalone = request.args.get('standalone')
-    return render_template('FAQ.html', standalone=standalone, title="Help")
+    message_form = MessageForm()
+    standalone = request.args.get('standalone', None)
+    if request.method == 'POST':
+        email = request.form.get('email', "None")
+        standalone = "standalone"
+        msg = Message("Feedback from user",
+                      sender=("Unibooks", "Unibooks@unibooks.io"),
+                      recipients=["pacificubooks@gmail.com"], html=render_template("message_email.html", name="feedback from user",
+                                                                                   email=email, body=request.form.get('message')))
+        sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
+        sender.start()
+        return jsonify(origin='contactus')
+
+    return render_template('FAQ.html', standalone=standalone, title="Help", message_form=message_form,
+                           message_title="Need help?", optional="(optional)")
 
 @app.route("/account", methods=['GET', 'POST'])
 @login_required

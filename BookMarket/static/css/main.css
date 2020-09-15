@@ -6300,6 +6300,10 @@ label {
     display: none; }
     .help-container .help-detail.load {
       opacity: 1; }
+    .help-container .help-detail #contact-us-container {
+      border-left: none; }
+    .help-container .help-detail #contact-us-container.not-logged-in {
+      border-left: 4px solid #bd362f; }
   .help-container #help-back {
     -webkit-transition: opacity 0.5s ease-in;
     -moz-transition: opacity 0.5s ease-in;

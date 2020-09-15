@@ -1,11 +1,4 @@
 {% block body_content %}
-
-<form method="POST" id="message-form" action="" enctype="multipart/form-data">
-    {{message_form.hidden_tag()}}
-    <fieldset class="form-group">
-        <legend class="border-bottom mb-4">
-            {{message_title}}
-        </legend>
         <div class="form-group">
             {{ message_form.email.label(class="form-control-label") }} {{optional}}
             {% if message_form.email.errors %}

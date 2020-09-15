@@ -53,18 +53,23 @@
   <div>
     <button class="genric-btn primary circle" id="help-back">Back</button>
     <div class="help-grid show">
-      <div class="help-item">
+      <div class="help-item" style="order: 1;">
         <i class="help-item-icon fas fa-book"></i>
-        <h3>How to sell</h3></div>
-      <div class="help-item">
+        <h3>How to sell</h3>
+      </div>
+      <div class="help-item" style="order: 2;">
         <i class="help-item-icon fas fa-shopping-cart"></i>
         <h3>How to buy</h3>
       </div>
-      <div class="help-item">3243</div>
-      <div class="help-item">231</div>
-      <div class="help-item">23321</div>
-      <div class="help-item">3243</div>
+      <div class="help-item" style="order: 3;">
+        <i class="help-item-icon fas fa-question-circle"></i>
+        <h3>Need help?</h3>
+      </div>
+      <div class="help-item" style="order: 6;">4</div>
+      <div class="help-item" style="order: 5;">5</div>
+      <div class="help-item" style="order: 4;">6</div>
     </div>
+    <!-- sell -->
     <div class="help-detail">
       <h2>How to start selling</h2>
       <p>1. <a class="sell-links" onclick="linkClicked(this, '/register')">Create</a> or <a class="sell-links"
@@ -93,6 +98,7 @@
         <span>*There's a limit of 10 postings at a time</span>
       </div>
     </div>
+    <!-- buy -->
     <div class="help-detail">
       <h2>How to start buying</h2>
       <p>1. <a class="sell-links" onclick="linkClicked(this, '/register')">Create</a> or <a class="sell-links"
@@ -103,7 +109,8 @@
         student <i class="fas fa-user-check"></i></p>
       <p>3. Go to the <a class="sell-links" onclick="linkClicked(this, '/shop')">shop</a> page and look for book/items
         you need<i class="fas fa-book"></i></p>
-      <p>4. Message the seller using Unibooks messaging feature and sort out the details <i class="fas fa-handshake"></i></p>
+      <p>4. Message the seller using Unibooks messaging feature and sort out the details <i
+          class="fas fa-handshake"></i></p>
       <div>
         <p style="margin-bottom: 0;">5a. Meet in person to complete the transaction somewhere on campus <i
             class="fas fa-user-friends"></i></p>
@@ -116,7 +123,28 @@
       <div class="sell-notes">
         <span>*Your email will be provided to the buyer</span>
         <br />
-        <span>*If making an online transation, we strongly encourage to use a payment service with buyers protection</span>
+        <span>*If making an online transation, we strongly encourage to use a payment service with buyers
+          protection</span>
+      </div>
+    </div>
+    <!-- help -->
+    <div class="help-detail">
+      <h2>Need Help?</h2>
+      <div class="container-sm mb-5 {% if current_user.is_authenticated == False %}not-logged-in{% endif %}"
+        id="contact-us-container">
+        <div class="message-overlay">
+          <div class="message-error-container">
+            <div class="message-error">
+              <span>Please <a class="log-in-text"
+                  href="javascript:linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/help')}}')">log
+                  in</a> to contact us</span>
+            </div>
+          </div>
+        </div>
+        <form method="POST" id="message-form" action="" enctype="multipart/form-data">
+          {{message_form.hidden_tag()}}
+          <fieldset class="form-group">
+            {% include "message_form.html" %}
       </div>
     </div>
   </div>

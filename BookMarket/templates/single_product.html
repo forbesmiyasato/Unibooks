@@ -147,6 +147,12 @@
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
+                                                <form method="POST" id="message-form" action="" enctype="multipart/form-data">
+                                                    {{message_form.hidden_tag()}}
+                                                    <fieldset class="form-group">
+                                                        <legend class="border-bottom mb-4">
+                                                            {{message_title}}
+                                                        </legend>
                                                 {% include "message_form.html" %}
                                             </div>
                                         </div>
