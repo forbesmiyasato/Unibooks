@@ -4,10 +4,10 @@
 <head>
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-PTKJJXZ');</script>
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PTKJJXZ');</script>
   <!-- End Google Tag Manager -->
 
   <!-- Required meta tags -->
@@ -99,8 +99,8 @@
 
 <body>
   <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PTKJJXZ"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PTKJJXZ" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
   <!-- Start Header Area -->
   <header id="sticky" class="header_area sticky-header">
@@ -224,10 +224,10 @@
   <footer class="footer-area section_gap">
     <div class="switch-text-footer">
       <div class="footer-center">
-      <i class="fas fa-circle"></i>
-      <span style="font-size: 16px" id="school-name-footer"></span>
-      <a onclick="switchSchool()" class="footer-item">Switch School</a>
-    </div>
+        <i class="fas fa-circle"></i>
+        <span style="font-size: 16px" id="school-name-footer"></span>
+        <a onclick="switchSchool()" class="footer-item">Switch School</a>
+      </div>
     </div>
     <div class="container">
       <div class="row">
@@ -255,7 +255,7 @@
               <a class="footer-item" onclick="linkClicked(this, '{{url_for('leave_a_message')}}')">Leave a Message</a>
             </p>
             <p style="font-size: 16px">
-            contact@unibooks.io
+              contact@unibooks.io
             </p>
             <div class="footer-social d-flex align-items-center">
               <a href="https://www.linkedin.com/in/forbesmiyasato/"><i class="fa fa-linkedin"></i></a>
@@ -272,6 +272,14 @@
   <!-- Optional JavaScript -->
   <script>
     // initialize the Selectize control
+    $(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError) {
+      if (jqXHR.handledLocally) {
+        return;
+      }
+      toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
+      toastr.error("Something went wrong :( Please try again later or contact us about the issue.");
+    })
+
     var $select = $('select').selectize();
 
     // fetch the instance
@@ -282,7 +290,7 @@
     //   console.log("INVALID")
     //   selectList.setCustomValidity('You must select a school!');
     // })
-    
+
     let selectListInput = document.getElementById('school-list-selectized')
     selectListInput.setCustomValidity('You must select a school!');
 
@@ -298,7 +306,7 @@
         selectListInput.setCustomValidity('');
       }
     };
-    
+
     const toggleSwitchSchoolModal = () => {
       $("body").toggleClass("need-school");
       toastr.remove()
@@ -311,7 +319,7 @@
       // $("body").toggleClass("need-school");
       let message;
       const ending = "Click to "
-      toastr.options = { "positionClass": "toast-top-center", "closeButton": true, "timeOut": "15000"}
+      toastr.options = { "positionClass": "toast-top-center", "closeButton": true, "timeOut": "15000" }
       // toastr.options.onclick = function() {
       // $("body").toggleClass("need-school");
       // }
@@ -335,11 +343,11 @@
       var school = localStorage.getItem('school');
 
       if (school && sessionStorage.justChangedSchool === 'true') {
-      console.log("IN IF")
-      toastr.options = { "positionClass": "toast-top-center", "closeButton": true}
-      toastr.success(`Your school is set to ${getSchoolName(school)}`);
-      sessionStorage.justChangedSchool = false;
-      // $(window).scrollTop(0);
+        console.log("IN IF")
+        toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
+        toastr.success(`Your school is set to ${getSchoolName(school)}`);
+        sessionStorage.justChangedSchool = false;
+        // $(window).scrollTop(0);
       }
 
       if (!school || school == null || school === 'undefined') {
