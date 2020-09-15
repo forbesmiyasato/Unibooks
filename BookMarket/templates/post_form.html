@@ -144,7 +144,7 @@
                 </div>
                 {% endif %}
                 <div class="form-group">
-                    {{ form.files.label(class="form-control-label") }}
+                    {{ form.files.label(class="form-control-label upload-images-label") }}
                     {% if form.files.errors %}
                     {{ form.files(class="form-control-file is-invalid") }}
                     <div class="invalid-feedback">
@@ -348,7 +348,7 @@
             enableApi: true,
             addMore: true,
             limit: 8,
-            // maxSize: 10,
+            maxSize: 10,
             extensions: ['jpg', 'png', 'jpeg'],
             {% if item and(images | length > 0) %}
             files: [
@@ -484,12 +484,11 @@
         console.log(files);
         for (var i = 0; i < files.length; i++) {
             formData.append(name, (files[i].file ? files[i].file : files[i]), (files[i].name ? files[i].name : false));
+            console.log(typeof (files[i].file ? files[i].file : files[i]), (files[i].name ? files[i].name : false))
         }
 
         console.log("???", formData.get("fileuploader-list-files").split("\""))
         let fileArray = formData.get("fileuploader-list-files").split("\"");
-
-        var blob = null;
 
         let remainingFiles = []
 

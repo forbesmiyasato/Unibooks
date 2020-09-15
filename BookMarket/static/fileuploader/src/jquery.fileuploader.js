@@ -4513,7 +4513,9 @@
                 },
                 filesType: 'Only ${extensions} files are allowed to be uploaded.',
                 fileSize: '${name} is too large! Please choose a file up to ${fileMaxSize} MB.',
-                filesSizeAll: 'The chosen files are too large! Please select files up to ${maxSize} MB.',
+                filesSizeAll: 'The chosen files are too large! Please select files up to ${maxSize} MB. \
+                Please select smaller file sizes because all images would be optimized to under 100 KB server side and \
+                you can still add images to your post after it\'s created.',
                 fileName: 'A file with the same name ${name} is already selected.',
                 remoteFile: 'Remote files are not allowed.',
                 folderUpload: 'Folders are not allowed.',
