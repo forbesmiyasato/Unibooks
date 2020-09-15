@@ -15,41 +15,8 @@
     </div>
   </div>
 </section>
-<!-- End Banner Area -->
-<!-- <div class="container mt-3">
-    <p>
-        <a data-toggle="collapse" href="#howtosell" role="button" aria-expanded="false" aria-controls="collapseExample">
-          How to sell?
-        </a>
-      </p>
-      <div class="collapse" id="howtosell">
-        <div class="card card-body mb-3">
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-        </div>
-      </div>
-      <p>
-        <a data-toggle="collapse" href="#howtobuy" role="button" aria-expanded="false" aria-controls="collapseExample">
-          How to buy?
-        </a>
-      </p>
-      <div class="collapse" id="howtobuy">
-        <div class="card card-body mb-3">
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-        </div>
-      </div>
-      <p>
-        <a data-toggle="collapse" href="#transactionsafety" role="button" aria-expanded="false" aria-controls="collapseExample">
-          How safe are the transactions?
-        </a>
-      </p>
-      <div class="collapse" id="transactionsafety">
-        <div class="card card-body mb-3">
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-        </div>
-      </div>
-</div> -->
 
-<div class="help-container">
+<div class="help-container container">
   <div>
     <button class="genric-btn primary circle" id="help-back">Back</button>
     <div class="help-grid show">
@@ -62,12 +29,21 @@
         <h3>How to buy</h3>
       </div>
       <div class="help-item" style="order: 3;">
+        <i class="help-item-icon fas fa-edit"></i>
+        <h3 style="text-align: center;">Request to add school</h3>
+      </div>
+      <div class="help-item" style="order: 6;">
+        <i class="help-item-icon fas fa-question"></i>
+        <h3 style="text-align: center;">FAQ</h3>
+      </div>
+      <div class="help-item" style="order: 5;">
+        <i class="help-item-icon fas fa-bug"></i>
+        <h3>Report a bug</h3>
+      </div>
+      <div class="help-item" style="order: 4;">
         <i class="help-item-icon fas fa-question-circle"></i>
         <h3>Need help?</h3>
       </div>
-      <div class="help-item" style="order: 6;">4</div>
-      <div class="help-item" style="order: 5;">5</div>
-      <div class="help-item" style="order: 4;">6</div>
     </div>
     <!-- sell -->
     <div class="help-detail">
@@ -125,6 +101,39 @@
         <br />
         <span>*If making an online transation, we strongly encourage to use a payment service with buyers
           protection</span>
+      </div>
+    </div>
+    <!-- add school -->
+    <div class="help-detail">
+      <h2>How you can help us add your school</h2>
+      <p>Make a donation - adding schools means we need to up our production cost <i class="fas fa-frown-open"></i></p>
+      <p>Provide us your schools courses and department information (In a parsable or SQL insert format <i class="fas fa-smile"></i>)
+        - That will really save us some hassle<i class="fas fa-user-check"></i></p>
+      <p><i class="fas fa-envelope"></i>Contact us at addmyschool@unibooks.io - Let us know which school is in demand or show us how you're willing to help!</p>
+    </div>
+    <!-- common questions -->
+    <div class="help-detail">
+      <h2>Reserved for common questions</h2>
+      <p>Currently None...</p>
+    </div>
+    <!-- Report a bug -->
+    <div class="help-detail">
+      <h2>Report a bug</h2>
+      <div class="container-sm mb-5 {% if current_user.is_authenticated == False %}not-logged-in{% endif %}"
+        id="contact-us-container">
+        <div class="message-overlay">
+          <div class="message-error-container">
+            <div class="message-error">
+              <span>Please <a class="log-in-text"
+                  href="javascript:linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/help')}}')">log
+                  in</a> to contact us</span>
+            </div>
+          </div>
+        </div>
+        <form method="POST" id="message-form" action="" enctype="multipart/form-data">
+          {{message_form.hidden_tag()}}
+          <fieldset class="form-group">
+            {% include "message_form.html" %}
       </div>
     </div>
     <!-- help -->

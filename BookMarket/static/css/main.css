@@ -6273,11 +6273,11 @@ label {
     align-items: center;
     cursor: pointer;
     opacity: 0;
-    -webkit-transition: opacity 0.5s ease-in;
-    -moz-transition: opacity 0.5s ease-in;
-    -ms-transition: opacity 0.5s ease-in;
-    -o-transition: opacity 0.5s ease-in;
-    transition: opacity 0.5s ease-in; }
+    -webkit-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+    -moz-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+    -ms-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+    -o-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+    transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in; }
     .help-container .help-item.load {
       opacity: 1;
       height: auto; }
@@ -6311,7 +6311,8 @@ label {
     -o-transition: opacity 0.5s ease-in;
     transition: opacity 0.5s ease-in;
     visibility: hidden;
-    opacity: 0; }
+    opacity: 0;
+    position: absolute; }
     .help-container #help-back.show {
       visibility: visible;
       opacity: 1; }
@@ -6325,4 +6326,9 @@ label {
   .help-container .help-item-icon {
     font-size: 5em;
     color: #87CEEB;
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+    -webkit-transition: font-size 0.2s ease-in;
+    -moz-transition: font-size 0.2s ease-in;
+    -ms-transition: font-size 0.2s ease-in;
+    -o-transition: font-size 0.2s ease-in;
+    transition: font-size 0.2s ease-in; }
