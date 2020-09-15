@@ -6252,6 +6252,9 @@ label {
     -ms-transition: opacity 0.5s ease-in;
     -o-transition: opacity 0.5s ease-in;
     transition: opacity 0.5s ease-in; }
+    @media (max-width: 560px) {
+      .help-container .help-grid {
+        grid-template-columns: 1fr 1fr; } }
     .help-container .help-grid.show {
       opacity: 1; }
     .help-container .help-grid::before {
@@ -6304,6 +6307,9 @@ label {
       border-left: none; }
     .help-container .help-detail #contact-us-container.not-logged-in {
       border-left: 4px solid #bd362f; }
+    @media (max-width: 550px) {
+      .help-container .help-detail h2 {
+        font-size: 20px; } }
   .help-container #help-back {
     -webkit-transition: opacity 0.5s ease-in;
     -moz-transition: opacity 0.5s ease-in;
@@ -6332,3 +6338,7 @@ label {
     -ms-transition: font-size 0.2s ease-in;
     -o-transition: font-size 0.2s ease-in;
     transition: font-size 0.2s ease-in; }
+  @media (max-width: 550px) {
+    .help-container .genric-btn.primary {
+      padding: 0 15px;
+      line-height: 30px; } }

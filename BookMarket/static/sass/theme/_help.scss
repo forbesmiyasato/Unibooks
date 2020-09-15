@@ -14,6 +14,10 @@
         -ms-transition: opacity 0.5s ease-in;
         -o-transition: opacity 0.5s ease-in;
         transition: opacity 0.5s ease-in;
+
+        @media (max-width: 560px) {
+            grid-template-columns: 1fr 1fr;
+        }
         &.show {
             opacity: 1;
         }
@@ -85,6 +89,12 @@
         & #contact-us-container.not-logged-in {
             border-left: 4px solid #bd362f;
         }
+
+        & h2 {
+            @media (max-width: 550px) {
+                font-size: 20px;
+            }
+        }
     }
 
     #help-back {
@@ -123,5 +133,12 @@
         -ms-transition: font-size 0.2s ease-in;
         -o-transition: font-size 0.2s ease-in;
         transition: font-size 0.2s ease-in;
+    }
+
+    & .genric-btn.primary {
+        @media (max-width: 550px) {
+            padding: 0 15px;
+            line-height: 30px;
+        }
     }
 }
