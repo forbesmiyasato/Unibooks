@@ -6267,6 +6267,10 @@ label {
     box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
     background-color: #fff;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
     opacity: 0;
     -webkit-transition: opacity 0.5s ease-in;
@@ -6277,6 +6281,11 @@ label {
     .help-container .help-item.load {
       opacity: 1;
       height: auto; }
+    .help-container .help-item:hover {
+      box-shadow: 0 10px 30px 1px rgba(0, 0, 0, 0.3); }
+    .help-container .help-item:hover .help-item-icon {
+      color: #00BFFF;
+      font-size: 6em; }
   .help-container .help-detail {
     box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
     background-color: #fff;
@@ -6309,3 +6318,7 @@ label {
     cursor: pointer; }
     .help-container .sell-links:hover {
       color: #00BFFF; }
+  .help-container .help-item-icon {
+    font-size: 5em;
+    color: #87CEEB;
+    margin-bottom: 20px; }
