@@ -60,7 +60,20 @@
       <div class="help-item">23321</div>
       <div class="help-item">3243</div>
     </div>
-    <div class="help-detail">231</div>
+    <div class="help-detail">
+      <h2>How to start selling</h2>
+      <p>1. <a>Create</a> or <a>Log in</a> to your account<i class="fas fa-user"></i></p>
+      <p>2. <a>Confirm</a> your account to prove that you're a local university student <i class="fas fa-user-check"></i></p>
+      <p>3. <a>Post</a> your item for sale<i class="fas fa-money-check-alt"></i></p>
+      <p>4. Wait to receive an email from Unibooks notifying you that someone is interested in your item! <i class="fas fa-envelope"></i></p>
+      <p>5. Reply to the buyers email given in the email and sort out the details. <i class="fas fa-envelope"></i></p>
+      <div>
+        <p style="margin-bottom: 0;">6a. Meet in person to complete the transaction somewhere on campus <i class="fas fa-user-friends"></i></p>
+        <span>or</span>
+        <p>6b. Mail out the item and request money via an invoice.<i class="fas fa-shipping-fast"></i> We recommend using Paypal service & goods for buyer protection <i class="fab fa-paypal"></i></p>
+      </div>
+      <div class="sell-notes">2321</div>
+    </div>
   </div>
 </div>
 <script>
@@ -83,8 +96,9 @@
     }
   }
 
-  const changeContent = () => {
-
+  const changeContent = (num) => {
+    console.log(num)
+    document.getElementsByClassName('help-detail')[0].style.display = 'block'
     document.getElementsByClassName('help-grid')[0].style.display = 'none'
     load(document.getElementsByClassName('help-detail')[0], 0)
     document.getElementById('help-back').classList.add('show');
@@ -124,7 +138,7 @@
     // for (var i = 0; i < elements.length; i++) {
     //   deLoad(elements[i], i);
     // }
-    setTimeout(changeContent, 100 * 10)
+    setTimeout(changeContent.bind(num), 100 * 10)
   }
 
   let elements = document.querySelectorAll(".help-item");
@@ -146,6 +160,7 @@
       document.getElementsByClassName('help-grid')[0].style.display = 'grid'
       deLoad(document.getElementsByClassName('help-detail')[0]);
       document.getElementById('help-back').classList.remove('show');
+      document.getElementsByClassName('help-detail')[0].style.display = 'none'
     }
   )
   fadeIn();
