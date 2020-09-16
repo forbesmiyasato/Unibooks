@@ -1,4 +1,3 @@
-/* help page */
 .help-container {
     max-width: 800px;
     margin: 50px auto 50px auto;
@@ -40,20 +39,20 @@
         box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
         background-color: $white;
         border-radius: 10px;
-        display: none;
+        display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        // opacity: 0;
-        // -webkit-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
-        // -moz-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
-        // -ms-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
-        // -o-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
-        // transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+        opacity: 0;
+        -webkit-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+        -moz-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+        -ms-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+        -o-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+        transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
         &.load {
-            display: flex !important;
-            // opacity: 1 !important;
+            opacity: 1;
+            height: auto;
         }
 
         &:hover {
@@ -72,16 +71,6 @@
         border-radius: 10px;
         text-align: center;
         display: none;
-        // opacity: 0;
-        // -webkit-transition: opacity 0.5s ease-in;
-        // -moz-transition: opacity 0.5s ease-in;
-        // -ms-transition: opacity 0.5s ease-in;
-        // -o-transition: opacity 0.5s ease-in;
-        // transition: opacity 0.5s ease-in;
-        // display: none;
-        // &.load {
-        //     opacity: 1;
-        // }
 
         & #send-button {
             padding-bottom: 15px;
@@ -113,19 +102,13 @@
     }
 
     #help-back {
+        z-index: 100;
+        @media (max-width: 550px) {
+            padding: 0 15px;
+            line-height: 30px;
+        }
+        position: absolute;
         display: none;
-        // -webkit-transition: opacity 0.5s ease-in;
-        // -moz-transition: opacity 0.5s ease-in;
-        // -ms-transition: opacity 0.5s ease-in;
-        // -o-transition: opacity 0.5s ease-in;
-        // transition: opacity 0.5s ease-in;
-        // visibility: hidden;
-        // opacity: 0;
-        // position: absolute;
-        // &.show {
-        //     visibility: visible;
-        //     opacity: 1;
-        // }
     }
 
     .sell-notes {
@@ -152,12 +135,5 @@
         -ms-transition: font-size 0.2s ease-in;
         -o-transition: font-size 0.2s ease-in;
         transition: font-size 0.2s ease-in;
-    }
-
-    & .genric-btn.primary {
-        @media (max-width: 550px) {
-            padding: 0 15px;
-            line-height: 30px;
-        }
     }
 }

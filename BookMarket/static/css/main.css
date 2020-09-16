@@ -239,10 +239,10 @@ h6 {
   text-decoration: none;
   font-weight: 500;
   cursor: pointer;
-  -webkit-transition: all 0.3s ease 0s;
-  -moz-transition: all 0.3s ease 0s;
-  -o-transition: all 0.3s ease 0s;
-  transition: all 0.3s ease 0s; }
+  -webkit-transition: background 0.3s ease 0s;
+  -moz-transition: background 0.3s ease 0s;
+  -o-transition: background 0.3s ease 0s;
+  transition: background 0.3s ease 0s; }
   .genric-btn:focus {
     outline: none; }
   .genric-btn.e-large {
@@ -6236,7 +6236,6 @@ label {
   -webkit-transform: scale(1.2);
   transform: scale(1.2); }
 
-/* help page */
 .help-container {
   max-width: 800px;
   margin: 50px auto 50px auto; }
@@ -6270,13 +6269,20 @@ label {
     box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
     background-color: #fff;
     border-radius: 10px;
-    display: none;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    cursor: pointer; }
+    cursor: pointer;
+    opacity: 0;
+    -webkit-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+    -moz-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+    -ms-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+    -o-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+    transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in; }
     .help-container .help-item.load {
-      display: flex !important; }
+      opacity: 1;
+      height: auto; }
     .help-container .help-item:hover {
       box-shadow: 0 10px 30px 1px rgba(0, 0, 0, 0.3); }
     .help-container .help-item:hover .help-item-icon {
@@ -6306,7 +6312,13 @@ label {
       width: 70%;
       margin: 0 auto; }
   .help-container #help-back {
+    z-index: 100;
+    position: absolute;
     display: none; }
+    @media (max-width: 550px) {
+      .help-container #help-back {
+        padding: 0 15px;
+        line-height: 30px; } }
   .help-container .sell-notes {
     text-align: right; }
   .help-container .sell-links {
@@ -6326,7 +6338,3 @@ label {
     -ms-transition: font-size 0.2s ease-in;
     -o-transition: font-size 0.2s ease-in;
     transition: font-size 0.2s ease-in; }
-  @media (max-width: 550px) {
-    .help-container .genric-btn.primary {
-      padding: 0 15px;
-      line-height: 30px; } }
