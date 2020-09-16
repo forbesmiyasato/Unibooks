@@ -20,37 +20,37 @@
   <div>
     <button class="genric-btn primary circle" id="help-back">Back</button>
     <div class="help-grid show">
-      <div class="help-item" style="order: 1;">
+      <div class="help-item">
         <span class="help-item-icon material-icons-outlined">
           monetization_on
         </span>
         <h3>How to sell</h3>
       </div>
-      <div class="help-item" style="order: 2;">
+      <div class="help-item">
         <span class="help-item-icon material-icons-outlined">
           shopping_cart
         </span>
         <h3>How to buy</h3>
       </div>
-      <div class="help-item" style="order: 3;">
+      <div class="help-item">
         <span class="help-item-icon material-icons-outlined">
           note_add
         </span>
         <h3 style="text-align: center;">Request to add school</h3>
       </div>
-      <div class="help-item" style="order: 6;">
+      <div class="help-item">
         <span class="help-item-icon material-icons-outlined">
           question_answer
         </span>
         <h3 style="text-align: center;">FAQ</h3>
       </div>
-      <div class="help-item" style="order: 5;">
+      <div class="help-item">
         <span class="help-item-icon material-icons-outlined">
           bug_report
         </span>
         <h3>Report a bug</h3>
       </div>
-      <div class="help-item" style="order: 4;">
+      <div class="help-item">
         <span class="help-item-icon material-icons">
           help_outline
         </span>
@@ -185,6 +185,7 @@
   function deLoad(elem, i) {
     setTimeout(function () {
       elem.classList.remove("load");
+      elem.removeEventListener('click', fadeOut);
     }, 100 * i);
   }
 
@@ -192,6 +193,7 @@
     let elements = document.querySelectorAll(".help-item");
     for (var i = 0; i < elements.length; i++) {
       load(elements[i], i);
+      elements[i].onclick = fadeOut.bind(null, i);
     }
   }
 
@@ -203,53 +205,48 @@
   }
 
   const fadeOut = (num) => {
-    console.log(num);
     let elements = document.querySelectorAll(".help-item");
 
     let count = 0;
     let x = num;
     y = num;
     deLoad(elements[num], count);
+    elements[num].onclick = null;
+    console.log("!!", elements[num].onclick)
     count++;
     x--;
     y++;
     while (x > 0 && y < elements.length) {
       deLoad(elements[x], count);
+      elements[x].onclick = null;
       x--;
       deLoad(elements[y], count);
+      elements[y].onclick = null;
       y++;
       count++;
     }
 
     while (x >= 0) {
       deLoad(elements[x], count);
+      elements[x].onclick = null;
       count++;
       x--;
     }
 
     while (y < elements.length) {
       deLoad(elements[y], count);
+      elements[y].onclick = null;
       count++;
       y++;
     }
     setTimeout(changeContent.bind(null, num), 100 * 10)
   }
 
-  let elements = document.querySelectorAll(".help-item");
-
-  for (var i = 0; i < elements.length; i++) {
-    elements[i].addEventListener("click", fadeOut.bind(null, i));
-  }
-
   document.getElementById('help-back').addEventListener(
     "click", function () {
-      console.log("back clicked")
       $('#help-back').fadeOut(600);
       $(`#help-detail-${change}`).fadeOut(600, function () {
-        let elements = document.querySelectorAll(".help-item");
-        for (var i = 0; i < elements.length; i++) {
-          load(elements[i], i)
-        }
+        fadeIn();
         document.getElementsByClassName('help-grid')[0].style.display = 'grid'
       });
       let details = document.querySelectorAll(".help-detail");
