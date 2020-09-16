@@ -1,5 +1,3 @@
-var shopRequest = null;
-
 function getParameterByName(name) {
     var match = RegExp("[?&]" + name + "=([^&]*)").exec(window.location.search);
     return match && decodeURIComponent(match[1].replace(/\+/g, " "));
@@ -60,11 +58,7 @@ const sortSwitch = (sort_term) => {
     }
 };
 const getData = (url, first) => {
-    console.log("GETDATA", url)
-    if (url.includes('shop') === false) {
-        return;
-    }
-    shopRequest = $.ajax({
+    $.ajax({
         url: url,
         type: "get",
         data: null,
@@ -131,11 +125,11 @@ const getData = (url, first) => {
         },
     });
     if (first === true) {
-        console.log("FIRST!!!!!!!!!")
+        console.log("FIRST!!!!!!!!!");
 
         $(window).scrollTop(0);
     } else {
-        console.log("!!!!!!!!!")
+        console.log("!!!!!!!!!");
 
         $(document.body).scrollTop($("#shop-top-bar").offset().top);
     }

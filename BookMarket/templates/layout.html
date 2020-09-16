@@ -89,7 +89,10 @@
   <!-- Latest compiled and minified JavaScript -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.15/dist/js/bootstrap-select.min.js"></script> -->
   <script src="{{ url_for('static', filename='js/owl.carousel.min.js')}}"></script>
+
+  <!-- javascript -->
   <script src="{{ url_for('static', filename='js/shop.js')}}"></script>
+  <script src="{{ url_for('static', filename='js/home.js')}}"></script>
 
   <!-- toastr -->
   <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
@@ -278,6 +281,9 @@
     // initialize the Selectize control
     $(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError) {
       if (jqXHR.handledLocally) {
+        return;
+      }
+      if (thrownError === 'abort') {
         return;
       }
       toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
@@ -524,8 +530,6 @@
       console.log(alerts1);
       console.log(ele.id)
       if (call) call.abort()
-      console.log("SR", shopRequest)
-      if (shopRequest) shopRequest.abort()
       history.pushState(null, '', url)
       highlightNavLink()
 
