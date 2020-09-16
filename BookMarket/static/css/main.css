@@ -6303,10 +6303,15 @@ label {
     display: none; }
     .help-container .help-detail.load {
       opacity: 1; }
+    .help-container .help-detail #send-button {
+      padding-bottom: 15px; }
     .help-container .help-detail #contact-us-container {
-      border-left: none; }
+      border-left: none;
+      width: 70%; }
     .help-container .help-detail #contact-us-container.not-logged-in {
       border-left: 4px solid #bd362f; }
+    .help-container .help-detail fieldset.form-group {
+      text-align: left; }
     @media (max-width: 550px) {
       .help-container .help-detail h2 {
         font-size: 25px; } }

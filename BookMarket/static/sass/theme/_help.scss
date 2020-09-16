@@ -82,14 +82,21 @@
             opacity: 1;
         }
 
+        & #send-button {
+            padding-bottom: 15px;
+        }
         & #contact-us-container {
             border-left: none;
+            width: 70%;
         }
 
         & #contact-us-container.not-logged-in {
             border-left: 4px solid #bd362f;
         }
 
+        & fieldset.form-group {
+            text-align: left;
+        }
         & h2 {
             @media (max-width: 550px) {
                 font-size: 25px;
