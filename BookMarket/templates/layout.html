@@ -488,10 +488,10 @@
                 linkClicked(null, "{{url_for('userAuth.login', next='/item/new')}}")
                 toastr.info("You must sign in before selling!");
               } else if (response.state === 'confirm-required') {
-                linkClicked(null, "{{url_for('account', next='/item/new')}}")
+                linkClicked(null, "{{url_for('account')}}")
                 toastr.info("You must confirm your email address before selling!");
               } else if (response.state === 'max-listings') {
-                linkClicked(null, "{{url_for('listings', next='/item/new')}}")
+                linkClicked(null, "{{url_for('listings')}}")
                 toastr.error("There is a max of 10 listings at a time! Please wait or delete listings before selling.");
               } else if (response.state === 'no school in session') {
                 location.reload()

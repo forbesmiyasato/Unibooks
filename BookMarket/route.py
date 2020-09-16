@@ -153,15 +153,13 @@ def new_item():
             return redirect(url_for('userAuth.login'))
     if current_user.confirmed is False:
         if standalone:
-            return jsonify({'html': render_template('account.html', title='Account', confirmed=current_user.confirmed, standalone=standalone),
-                            'state': "confirm-required"})
+            return jsonify({'state': "confirm-required"})
         else:
             flash("You must confirm your email address before selling!", 'info')
             return redirect(url_for('account', standalone=standalone))
     if current_user.listings >= 10:
         if standalone:
-            return jsonify({'html': listings_html(standalone),
-                            'state': "max-listings"})
+            return jsonify({'state': "max-listings"})
         else:
             print("!!!!!!!!!!!!")
             flash("There is a max of 10 listings at a time! Please wait or delete listings before selling.", 'error')
