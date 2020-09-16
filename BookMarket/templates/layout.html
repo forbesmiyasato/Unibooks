@@ -436,7 +436,7 @@
 
       if (path === 'home' && home_html) {
         $('#block-content').html(home_html);
-      } else if (path === 'login' && login_html) {
+      } else if (path.includes('login') && login_html) {
         $('#block-content').html(login_html);
       } else if (path === 'register' && register_html) {
         $('#block-content').html(register_html);
@@ -448,9 +448,9 @@
         $('#block-content').html(message_html);
       } else if (path === 'help' && help_html) {
         $('#block-content').html(help_html);
-      } else if (path === 'account' && account_html) {
+      } else if (path.includes('account') && account_html) {
         $('#block-content').html(account_html);
-      } else if (path === 'listings' && listings_html) {
+      } else if (path.includes('listings') && listings_html) {
         $('#block-content').html(listings_html);
       } else if ((path === 'saved' || path === 'saved?cart') && saved_html) {
         $('#block-content').html(saved_html);
@@ -465,7 +465,7 @@
               home_html = response
             } else if (path === 'register' && !register_html) {
               register_html = response
-            } else if (path === 'login' && !login_html) {
+            } else if (path.includes('login') && !login_html) {
               login_html = response
             } else if (path === 'shop' && !shop_html) {
               shop_html = response
@@ -475,9 +475,9 @@
               message_html = response
             } else if (path === 'help' && !help_html) {
               help_html = response
-            } else if (path === 'listings' && !listings_html) {
+            } else if (path.includes('listings') && !listings_html) {
               listings_html = response
-            } else if (path === 'account' && !account_html) {
+            } else if (path.includes('account') && !account_html) {
               account_html = response
             } else if ((path === 'saved' || path === 'saved?cart') && !saved_html) {
               saved_html = response
@@ -485,19 +485,19 @@
             if (response.state) {
               toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
               if (response.state === 'login-required') {
-                history.replaceState(null, null, '/login?next=item/new')
+                linkClicked(null, "{{url_for('userAuth.login', next='/item/new')}}")
                 toastr.info("You must sign in before selling!");
               } else if (response.state === 'confirm-required') {
-                history.replaceState(null, null, '/account')
+                linkClicked(null, "{{url_for('account', next='/item/new')}}")
                 toastr.info("You must confirm your email address before selling!");
               } else if (response.state === 'max-listings') {
-                history.replaceState(null, null, '/listings')
+                linkClicked(null, "{{url_for('listings', next='/item/new')}}")
                 toastr.error("There is a max of 10 listings at a time! Please wait or delete listings before selling.");
               } else if (response.state === 'no school in session') {
                 location.reload()
               }
               highlightNavLink()
-              $('#block-content').html(response.html);
+              // $('#block-content').html(response.html);
             } else {
               $('#block-content').html(response);
             }
@@ -515,8 +515,8 @@
       }
       $(window).scrollTop(0);
     }
-    const linkClicked = (ele, url, search_input) => {
-      console.log(url);
+    const linkClicked = (ele, url) => {
+      console.log('url', url)
       if (document.documentElement.clientWidth < 992) {
         navbarCollapse();
       }
@@ -527,8 +527,6 @@
       }
 
       let alerts1 = document.getElementsByClassName('alert');
-      console.log(alerts1);
-      console.log(ele.id)
       if (call) call.abort()
       history.pushState(null, '', url)
       highlightNavLink()
@@ -547,31 +545,6 @@
         $('.navbar-collapse').collapse("toggle")
       }
     }
-
-    // $(document).on({
-    //   ajaxStart: function () {
-    //     $("body").toggleClass("loading");
-    //   },
-    //   ajaxStop: function () {
-    //     $("body").toggleClass("loading");
-    //   }
-    // });
-    // $(window).on('popstate', function (event) {
-    //   // location.reload();
-    //   console.log(event.state)
-    //   console.log(event)
-    //   console.log(prevActive)
-    //   console.log(active)
-    //   $.ajax({
-    //     url: location.href,
-    //     type: "get",
-    //     data: { standalone: 'true' },
-    //     async: true,
-    //     success: function (response) {
-    //       $('#block-content').html(response);
-    //     }
-    //   })
-    // });
   </script>
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

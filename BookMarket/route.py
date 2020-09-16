@@ -147,7 +147,7 @@ def new_item():
         return jsonify({'html': (item_html(post.id, 'notfromnewitem')), 'url': url_for('shop_api.item', item_id=post.id)})
     if current_user.is_authenticated is False:
         if standalone:
-            return jsonify({'html': login_html('standalone'), 'state': "login-required"})
+            return jsonify({'state': "login-required"})
         else:
             flash("You must sign in before selling!", 'info')
             return redirect(url_for('userAuth.login'))
