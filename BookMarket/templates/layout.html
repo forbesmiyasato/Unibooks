@@ -274,6 +274,7 @@
   <!-- End footer Area -->
   <!-- Optional JavaScript -->
   <script>
+    var call;
     // initialize the Selectize control
     $(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError) {
       if (jqXHR.handledLocally) {
@@ -448,7 +449,7 @@
       } else if ((path === 'saved' || path === 'saved?cart') && saved_html) {
         $('#block-content').html(saved_html);
       } else {
-        $.ajax({
+        call = $.ajax({
           url: location.href,
           type: "get",
           data: { standalone: 'true' },
@@ -508,7 +509,6 @@
       }
       $(window).scrollTop(0);
     }
-    var call;
     const linkClicked = (ele, url, search_input) => {
       console.log(url);
       if (document.documentElement.clientWidth < 992) {
@@ -524,6 +524,8 @@
       console.log(alerts1);
       console.log(ele.id)
       if (call) call.abort()
+      console.log("SR", shopRequest)
+      if (shopRequest) shopRequest.abort()
       history.pushState(null, '', url)
       highlightNavLink()
 
@@ -533,23 +535,7 @@
     window.addEventListener('popstate', (event) => {
       console.log(event)
       highlightNavLink()
-      // if (active) {
-      //   active.classList.remove('active');
-      // }
-      // if (event.state) {
-      //   prevActive = document.getElementById(event.state.element);
-      //   prevActive.classList.add('active');
-      // } else {
-      //   prevActive = document.getElementById('home').classList.add('active');
-      // }
-      // active = prevActive;
-      // let path = (window.location.pathname + location.search).split('/')[1];
-      // console.log(path)
-
-      // console.log(location.href)
-      highlightNavLink()
       redirect(window.location.pathname + location.search);
-
     });
 
     const navbarCollapse = () => {

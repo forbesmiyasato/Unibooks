@@ -1,4 +1,4 @@
-// var shopCall = null;
+var shopRequest = null;
 
 function getParameterByName(name) {
     var match = RegExp("[?&]" + name + "=([^&]*)").exec(window.location.search);
@@ -60,7 +60,11 @@ const sortSwitch = (sort_term) => {
     }
 };
 const getData = (url, first) => {
-    $.ajax({
+    console.log("GETDATA", url)
+    if (url.includes('shop') === false) {
+        return;
+    }
+    shopRequest = $.ajax({
         url: url,
         type: "get",
         data: null,
