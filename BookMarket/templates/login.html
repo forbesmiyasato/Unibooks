@@ -33,7 +33,8 @@
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{ form.email(class="form-control form-control-lg", type="email") }}
+                    {{ form.email(class="form-control form-control-lg", type="email",
+                    pattern=pattern, placeholder=placeholder) }}
                     {% endif %}
                 </div>
                 <div class="form-group">
@@ -75,7 +76,8 @@
                             <div class="form-group">
                                 <form id="forgot-form" method="POST" action="">
                                     <label for="recipient-name" class="col-form-label">Email</label>
-                                    <input required type="email" class="form-control" id="recipient-name" name="email">
+                                    <input required type="email" class="form-control" id="recipient-name" name="email"
+                                    pattern='{{pattern}}', placeholder='{{placeholder}}'>
                                 </form>
                             </div>
                         </div>
@@ -125,8 +127,13 @@
             data: formData,
             async: true,
             success: function (response) {
+                if (response.result && response.result === 'success') {
                 toastr.options = {"positionClass": "toast-top-center", "closeButton": true}
                 toastr.success("Email Sent! Please change your password within 24 hours!");
+                } else if (response.result && response.result === 'nouser') {
+                toastr.options = {"positionClass": "toast-top-center", "closeButton": true}
+                toastr.error("There seems to be no user associated with this email address. Please sign up or contact us.");
+                }
             },
             beforeSend: function () {
                 $("body").toggleClass("loading");

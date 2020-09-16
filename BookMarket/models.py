@@ -101,6 +101,7 @@ class School(db.Model):
     items = db.relationship('Item', backref='parent', lazy=True)
     users = db.relationship('Users', backref='parent', lazy=True)
     email_pattern = db.Column(db.String(150), nullable=True)
+    email_domain = db.Column(db.String(15), nullable=True)
 
 
 class Inappropriate(db.Model):

@@ -41,7 +41,8 @@ def register():
         msg = Message('Confirm Email', sender=("Unibooks", "Unibooks@unibooks.io"), recipients=[email],
                       html=render_template('confirmation_email.html', email=email, link=link))
 
-        sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
+        sender = threading.Thread(name="mail_sender", target=send_message, args=(
+            current_app._get_current_object(), msg,))
         sender.start()
         db.session.add(user)
         db.session.commit()
@@ -60,7 +61,8 @@ def send_confirm_email():
     link = url_for('userAuth.confirm_email', token=token, _external=True)
     msg = Message('Confirm Email', sender=("Unibooks", "Unibooks@unibooks.io"), recipients=[email],
                   html=render_template('confirmation_email.html', email=email, link=link))
-    sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
+    sender = threading.Thread(name="mail_sender", target=send_message, args=(
+        current_app._get_current_object(), msg,))
     sender.start()
     flash(
         f'Confirmation email sent to {current_user.email}', 'success')
@@ -72,12 +74,16 @@ def send_password_reset():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     email = request.form.get('email')
+    user = Users.query.filter_by(email=email).first()
+    if user is None:
+        return jsonify({'result': 'nouser'})
     print("!!!!!!!!!!!!!!!!!!", email)
     token = serializer.dumps(email, salt=salt)  # salt is optional
     link = url_for('userAuth.reset_password', token=token, _external=True)
     msg = Message('Password Reset', sender=("Unibooks", "Unibooks@unibooks.io"), recipients=[email],
                   html=render_template('password_email.html', link=link))
-    sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
+    sender = threading.Thread(name="mail_sender", target=send_message, args=(
+        current_app._get_current_object(), msg,))
     sender.start()
     # flash(
     #     f'Confirmation email sent to {current_user.email}', 'success')
@@ -128,7 +134,7 @@ def confirm_email(token):
     return render_template('home.html')
 
 
-def login_html(standalone=None):
+def login_html(standalone=None, pattern=None, placeholder=None, error_message=None):
     print("111", standalone)
     form = LoginForm()
     if form.validate_on_submit():
@@ -142,13 +148,18 @@ def login_html(standalone=None):
         else:
             flash('Login Unsuccessful. Please check email and password',
                   'error')
-    return render_template('login.html', title='Login', form=form, standalone=standalone)
+    return render_template('login.html', title='Login', form=form, standalone=standalone,
+                           pattern=pattern, placeholder=placeholder, error_message=error_message)
 
 
 @userAuth.route("/login", methods=['GET', 'POST'])
 def login():
     standalone = request.args.get('standalone')
-    return login_html(standalone)
+    school = School.query.filter_by(id=session['school']).first()
+    pattern = school.email_pattern
+    placeholder = "e.g. xxxx@" + school.email_domain
+    error_message = "Must be a " + school.name + " email address!"
+    return login_html(standalone, pattern, placeholder, error_message)
 
 
 @userAuth.route("/logout")
@@ -159,4 +170,3 @@ def logout():
           'info')
     # return render_template('home.html', title="Home", standalone=standalone)
     return redirect(url_for('home'))
-
