@@ -6287,8 +6287,7 @@ label {
     .help-container .help-item:hover {
       box-shadow: 0 10px 30px 1px rgba(0, 0, 0, 0.3); }
     .help-container .help-item:hover .help-item-icon {
-      color: #00BFFF;
-      font-size: 6em; }
+      font-size: 7em; }
   .help-container .help-detail {
     box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
     background-color: #fff;
@@ -6341,8 +6340,11 @@ label {
     .help-container .sell-links:hover {
       color: #00BFFF; }
   .help-container .help-item-icon {
-    font-size: 5em;
-    color: #87CEEB;
+    font-size: 6em;
+    background: linear-gradient(to right bottom, #ffd98e, #fd8369);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-bottom: 20px;
     -webkit-transition: font-size 0.2s ease-in;
     -moz-transition: font-size 0.2s ease-in;

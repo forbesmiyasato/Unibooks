@@ -61,8 +61,8 @@
         }
 
         &:hover .help-item-icon {
-            color: $primary-color2;
-            font-size: 6em;
+            // color: $primary-color2;
+            font-size: 7em;
         }
     }
 
@@ -139,8 +139,11 @@
     }
 
     .help-item-icon {
-        font-size: 5em;
-        color: $primary-color;
+        font-size: 6em;
+        background: linear-gradient(to right bottom, #ffd98e, #fd8369);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;        
         margin-bottom: 20px;
         -webkit-transition: font-size 0.2s ease-in;
         -moz-transition: font-size 0.2s ease-in;
