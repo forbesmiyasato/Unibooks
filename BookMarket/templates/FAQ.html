@@ -19,38 +19,38 @@
 <div class="help-container container">
   <div>
     <button class="genric-btn primary circle" id="help-back">Back</button>
-    <div class="help-grid show">
-      <div class="help-item" style="order: 1;">
+    <div class="help-grid show" id="help-item-grid">
+      <div class="help-item" id="help-item-0" style="order: 1;">
         <span class="help-item-icon material-icons-outlined">
           monetization_on
         </span>
         <h3>How to sell</h3>
       </div>
-      <div class="help-item" style="order: 2;">
+      <div class="help-item" id="help-item-1" style="order: 2;">
         <span class="help-item-icon material-icons-outlined">
           shopping_cart
         </span>
         <h3>How to buy</h3>
       </div>
-      <div class="help-item" style="order: 3;">
+      <div class="help-item" id="help-item-2" style="order: 3;">
         <span class="help-item-icon material-icons-outlined">
           note_add
         </span>
         <h3 style="text-align: center;">Request to add school</h3>
       </div>
-      <div class="help-item" style="order: 6;">
+      <div class="help-item" id="help-item-3" style="order: 6;">
         <span class="help-item-icon material-icons-outlined">
           question_answer
         </span>
         <h3 style="text-align: center;">FAQ</h3>
       </div>
-      <div class="help-item" style="order: 5;">
+      <div class="help-item" id="help-item-4" style="order: 5;">
         <span class="help-item-icon material-icons-outlined">
           bug_report
         </span>
         <h3>Report a bug</h3>
       </div>
-      <div class="help-item" style="order: 4;">
+      <div class="help-item" id="help-item-5" style="order: 4;">
         <span class="help-item-icon material-icons">
           help_outline
         </span>
@@ -58,7 +58,7 @@
       </div>
     </div>
     <!-- sell -->
-    <div class="help-detail">
+    <div class="help-detail" id="help-detail-1">
       <h2>How to start selling</h2>
       <p>1. <a class="sell-links" onclick="linkClicked(this, '/register')">Create</a> or <a class="sell-links"
           onclick="linkClicked(this, '/login')">Log
@@ -87,7 +87,7 @@
       </div>
     </div>
     <!-- buy -->
-    <div class="help-detail">
+    <div class="help-detail" id="help-detail-2">
       <h2>How to start buying</h2>
       <p>1. <a class="sell-links" onclick="linkClicked(this, '/register')">Create</a> or <a class="sell-links"
           onclick="linkClicked(this, '/login')">Log
@@ -116,7 +116,7 @@
       </div>
     </div>
     <!-- add school -->
-    <div class="help-detail">
+    <div class="help-detail" id="help-detail-3">
       <div class="help-header-container">
         <h2>How you can help us add your school</h2>
       </div>
@@ -128,12 +128,12 @@
         show us how you're willing to help!</p>
     </div>
     <!-- common questions -->
-    <div class="help-detail">
+    <div class="help-detail" id="help-detail-4">
       <h2>Reserved for common questions</h2>
       <p>Currently None...</p>
     </div>
     <!-- Report a bug -->
-    <div class="help-detail">
+    <div class="help-detail" id="help-detail-5">
       <h2>Report a bug</h2>
       <div class="container-sm mb-5 {% if current_user.is_authenticated == False %}not-logged-in{% endif %}"
         id="contact-us-container">
@@ -153,7 +153,7 @@
       </div>
     </div>
     <!-- help -->
-    <div class="help-detail">
+    <div class="help-detail" id="help-detail-6">
       <h2>Need Help?</h2>
       <div class="container-sm mb-5 {% if current_user.is_authenticated == False %}not-logged-in{% endif %}"
         id="contact-us-container">
@@ -175,96 +175,100 @@
   </div>
 </div>
 <script>
-  function load(elem, i) {
-    setTimeout(function () {
-      elem.classList.add("load");
-    }, 100 * i);
-  }
+  $(document).ready(function () {
 
-  function deLoad(elem, i) {
-    setTimeout(function () {
-      elem.classList.remove("load");
-    }, 100 * i);
-  }
-
-  const fadeIn = () => {
-    let elements = document.querySelectorAll(".help-item");
-    for (var i = 0; i < elements.length; i++) {
-      load(elements[i], i);
-    }
-  }
-
-  const changeContent = (num) => {
-    console.log(typeof num)
-    console.log(document.querySelectorAll('.help-detail')[parseInt(num)])
-    document.querySelectorAll('.help-detail')[num].style.display = 'block'
-    document.getElementsByClassName('help-grid')[0].style.display = 'none'
-    load(document.getElementsByClassName('help-detail')[num], 0)
-    document.getElementById('help-back').classList.add('show');
-  }
-
-  const fadeOut = (num) => {
-    console.log(num);
-    let elements = document.querySelectorAll(".help-item");
-
-    let count = 0;
-    let x = num;
-    y = num;
-    deLoad(elements[num], count);
-    count++;
-    x--;
-    y++;
-    while (x > 0 && y < elements.length) {
-      deLoad(elements[x], count);
-      x--;
-      deLoad(elements[y], count);
-      y++;
-      count++;
+    function load(i) {
+      console.log("1", $(`#help-item-${i}`))
+      $(`#help-item-${i}`).fadeIn(i * 250).addClass('load')
     }
 
-    while (x >= 0) {
-      deLoad(elements[x], count);
-      count++;
-      x--;
+    function deLoad(num, i) {
+      console.log(i)
+      if (i === 5) {
+        console.log("!!")
+        $(`#help-item-${num}`).fadeTo(i * 250, 0, () => {
+          $('#help-item-grid').hide();
+          let elements = document.querySelectorAll(".help-item");
+          for (var i = 0; i < elements.length; i++) {
+            $(`#help-item-${i}`).css("display", "none")
+          }
+          changeContent(num)
+        })
+      }
+      else {
+        $(`#help-item-${num}`).fadeTo(i * 250, 0)
+      }
     }
 
-    while (y < elements.length) {
-      deLoad(elements[y], count);
-      count++;
-      y++;
-    }
-
-    // for (var i = 0; i < elements.length; i++) {
-    //   deLoad(elements[i], i);
-    // }
-    setTimeout(changeContent.bind(null, num), 100 * 10)
-  }
-
-  let elements = document.querySelectorAll(".help-item");
-
-  for (var i = 0; i < elements.length; i++) {
-    elements[i].addEventListener("click", fadeOut.bind(null, i));
-  }
-
-  document.getElementById('help-back').addEventListener(
-    "click", function () {
-      console.log("back clicked")
+    const fadeIn = () => {
       let elements = document.querySelectorAll(".help-item");
       for (var i = 0; i < elements.length; i++) {
-        load(elements[i], i)
-      }
-      document.getElementsByClassName('help-grid')[0].style.display = 'grid'
-      document.getElementById('help-back').classList.remove('show');
-      let details = document.querySelectorAll(".help-detail");
-      for (var i = 0; i < details.length; i++) {
-        console.log(i, details[i])
-        details[i].style.display = 'none';
-        deLoad(details[i]);
+        load(i);
       }
     }
-  )
-  fadeIn();
 
+    const hideContent = (num) => {
+
+    }
+    const changeContent = (num) => {
+      console.log($(`help-detail-${num}`))
+      $(`#help-detail-${num}`).fadeIn(100);
+      $('#help-back').fadeIn(100);
+    }
+
+    const fadeOut = (num) => {
+      console.log(num);
+      let elements = document.querySelectorAll(".help-item");
+
+      let count = 0;
+      let x = num;
+      y = num;
+      deLoad(num, count);
+      count++;
+      x--;
+      y++;
+      while (x > 0 && y < elements.length) {
+        deLoad(x, count);
+        x--;
+        deLoad(y, count);
+        y++;
+        count++;
+      }
+
+      while (x >= 0) {
+        deLoad(x, count);
+        count++;
+        x--;
+      }
+
+      while (y < elements.length) {
+        deLoad(y, count);
+        count++;
+        y++;
+      }
+    }
+
+    let elements = document.querySelectorAll(".help-item");
+
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].addEventListener("click", fadeOut.bind(null, i));
+    }
+
+    document.getElementById('help-back').addEventListener(
+      "click", function () {
+        console.log("back clicked")
+        $('#help-item-grid').show();
+        fadeIn();
+        $('#help-back').fadeOut();
+        let details = document.querySelectorAll(".help-detail");
+        // for (var i = 0; i < details.length; i++) {
+        //   deLoad(details[i]);
+        // }
+      }
+    )
+
+    fadeIn();
+  })
 
 </script>
 {% endblock content %}

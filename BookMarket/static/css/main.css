@@ -6270,20 +6270,13 @@ label {
     box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
     background-color: #fff;
     border-radius: 10px;
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    opacity: 0;
-    -webkit-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
-    -moz-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
-    -ms-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
-    -o-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
-    transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in; }
+    cursor: pointer; }
     .help-container .help-item.load {
-      opacity: 1;
-      height: auto; }
+      display: flex !important; }
     .help-container .help-item:hover {
       box-shadow: 0 10px 30px 1px rgba(0, 0, 0, 0.3); }
     .help-container .help-item:hover .help-item-icon {
@@ -6292,16 +6285,8 @@ label {
     box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
     background-color: #fff;
     border-radius: 10px;
-    opacity: 0;
-    -webkit-transition: opacity 0.5s ease-in;
-    -moz-transition: opacity 0.5s ease-in;
-    -ms-transition: opacity 0.5s ease-in;
-    -o-transition: opacity 0.5s ease-in;
-    transition: opacity 0.5s ease-in;
     text-align: center;
     display: none; }
-    .help-container .help-detail.load {
-      opacity: 1; }
     .help-container .help-detail #send-button {
       padding-bottom: 15px; }
     .help-container .help-detail #contact-us-container {
@@ -6321,17 +6306,7 @@ label {
       width: 70%;
       margin: 0 auto; }
   .help-container #help-back {
-    -webkit-transition: opacity 0.5s ease-in;
-    -moz-transition: opacity 0.5s ease-in;
-    -ms-transition: opacity 0.5s ease-in;
-    -o-transition: opacity 0.5s ease-in;
-    transition: opacity 0.5s ease-in;
-    visibility: hidden;
-    opacity: 0;
-    position: absolute; }
-    .help-container #help-back.show {
-      visibility: visible;
-      opacity: 1; }
+    display: none; }
   .help-container .sell-notes {
     text-align: right; }
   .help-container .sell-links {

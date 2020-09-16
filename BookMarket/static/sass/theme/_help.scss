@@ -40,20 +40,20 @@
         box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
         background-color: $white;
         border-radius: 10px;
-        display: flex;
+        display: none;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        opacity: 0;
-        -webkit-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
-        -moz-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
-        -ms-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
-        -o-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
-        transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+        // opacity: 0;
+        // -webkit-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+        // -moz-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+        // -ms-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+        // -o-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+        // transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
         &.load {
-            opacity: 1;
-            height: auto;
+            display: flex !important;
+            // opacity: 1 !important;
         }
 
         &:hover {
@@ -70,17 +70,18 @@
         box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
         background-color: $white;
         border-radius: 10px;
-        opacity: 0;
-        -webkit-transition: opacity 0.5s ease-in;
-        -moz-transition: opacity 0.5s ease-in;
-        -ms-transition: opacity 0.5s ease-in;
-        -o-transition: opacity 0.5s ease-in;
-        transition: opacity 0.5s ease-in;
         text-align: center;
         display: none;
-        &.load {
-            opacity: 1;
-        }
+        // opacity: 0;
+        // -webkit-transition: opacity 0.5s ease-in;
+        // -moz-transition: opacity 0.5s ease-in;
+        // -ms-transition: opacity 0.5s ease-in;
+        // -o-transition: opacity 0.5s ease-in;
+        // transition: opacity 0.5s ease-in;
+        // display: none;
+        // &.load {
+        //     opacity: 1;
+        // }
 
         & #send-button {
             padding-bottom: 15px;
@@ -112,18 +113,19 @@
     }
 
     #help-back {
-        -webkit-transition: opacity 0.5s ease-in;
-        -moz-transition: opacity 0.5s ease-in;
-        -ms-transition: opacity 0.5s ease-in;
-        -o-transition: opacity 0.5s ease-in;
-        transition: opacity 0.5s ease-in;
-        visibility: hidden;
-        opacity: 0;
-        position: absolute;
-        &.show {
-            visibility: visible;
-            opacity: 1;
-        }
+        display: none;
+        // -webkit-transition: opacity 0.5s ease-in;
+        // -moz-transition: opacity 0.5s ease-in;
+        // -ms-transition: opacity 0.5s ease-in;
+        // -o-transition: opacity 0.5s ease-in;
+        // transition: opacity 0.5s ease-in;
+        // visibility: hidden;
+        // opacity: 0;
+        // position: absolute;
+        // &.show {
+        //     visibility: visible;
+        //     opacity: 1;
+        // }
     }
 
     .sell-notes {
