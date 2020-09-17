@@ -213,7 +213,7 @@ def item(item_id):
             return jsonify({'origin': 'single'})
         else:    
             return jsonify({'html': (item_html(item_id, _item, standalone)), 'url': url_for('shop_api.item', item_id=item_id)})
-    return item_html(item_id, standalone)
+    return item_html(item_id, _item, standalone)
 
 
 # @shop_api.route("/shop/class/<int:class_id>")
