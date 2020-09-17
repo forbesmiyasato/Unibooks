@@ -6318,15 +6318,7 @@ label {
     background-color: #fff;
     border-radius: 10px;
     text-align: center;
-    display: none;
-    transform: scale(0);
-    -webkit-transition: transform 0.2s ease-in-out;
-    -moz-transition: transform 0.2s ease-in-out;
-    -ms-transition: transform 0.2s ease-in-out;
-    -o-transition: transform 0.2s ease-in-out;
-    transition: transform 0.2s ease-in-out; }
-    .help-container .help-detail.load {
-      transform: scale(1); }
+    display: none; }
     .help-container .help-detail .send-button {
       padding-bottom: 15px; }
     .help-container .help-detail .contact-us-container {
@@ -6345,6 +6337,15 @@ label {
     .help-container .help-detail .help-header-container {
       width: 70%;
       margin: 0 auto; }
+  .help-container #help-detail-container {
+    transform: scale(0);
+    -webkit-transition: transform 0.2s ease-in-out;
+    -moz-transition: transform 0.2s ease-in-out;
+    -ms-transition: transform 0.2s ease-in-out;
+    -o-transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out; }
+    .help-container #help-detail-container.load {
+      transform: scale(1); }
   .help-container #help-back {
     z-index: 90;
     position: absolute;

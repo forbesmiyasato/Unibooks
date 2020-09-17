@@ -18,7 +18,6 @@
 
 <div class="help-container container">
   <div>
-    <button class="genric-btn primary circle" id="help-back">Back</button>
     <div class="help-grid show">
       <div class="help-item">
         <span class="help-item-icon material-icons-outlined">
@@ -57,117 +56,127 @@
         <h3>Need help?</h3>
       </div>
     </div>
-    <!-- sell -->
-    <div class="help-detail" id="help-detail-0">
-      <h2>How to start selling</h2>
-      <p>1. <a class="sell-links" onclick="linkClicked(this, '/register')">Create</a> or <a class="sell-links"
-          onclick="linkClicked(this, '/login')">Log
-          in</a> to your account<i class="fas fa-user"></i></p>
-      <p>2. <a class="sell-links" onclick="linkClicked(this, '/account')">Confirm</a> your account to prove that you're
-        a local university
-        student <i class="fas fa-user-check"></i></p>
-      <p>3. <a class="sell-links" onclick="linkClicked(this, '/item/new')">Post</a> your item for sale<i
-          class="fas fa-money-check-alt"></i></p>
-      <p>4. Wait to receive an email from Unibooks notifying you that someone is interested in your item! <i
-          class="fas fa-envelope"></i></p>
-      <p>5. Reply to the buyer's email given in the email and sort out the details. <i class="fas fa-handshake"></i></p>
-      <div>
-        <p style="margin-bottom: 0;">6a. Meet in person to complete the transaction somewhere on campus <i
-            class="fas fa-user-friends"></i></p>
-        <span>or</span>
-        <p>6b. Receive the money via an payment service and ship the item.<i class="fas fa-shipping-fast"></i>
+    <div id="help-detail-container">
+      <button class="genric-btn primary circle" id="help-back">Back</button>
+      <!-- sell -->
+      <div class="help-detail" id="help-detail-0">
+        <h2>How to start selling</h2>
+        <p>1. <a class="sell-links" onclick="linkClicked(this, '/register')">Create</a> or <a class="sell-links"
+            onclick="linkClicked(this, '/login')">Log
+            in</a> to your account<i class="fas fa-user"></i></p>
+        <p>2. <a class="sell-links" onclick="linkClicked(this, '/account')">Confirm</a> your account to prove that
+          you're
+          a local university
+          student <i class="fas fa-user-check"></i></p>
+        <p>3. <a class="sell-links" onclick="linkClicked(this, '/item/new')">Post</a> your item for sale<i
+            class="fas fa-money-check-alt"></i></p>
+        <p>4. Wait to receive an email from Unibooks notifying you that someone is interested in your item! <i
+            class="fas fa-envelope"></i></p>
+        <p>5. Reply to the buyer's email given in the email and sort out the details. <i class="fas fa-handshake"></i>
+        </p>
+        <div>
+          <p style="margin-bottom: 0;">6a. Meet in person to complete the transaction somewhere on campus <i
+              class="fas fa-user-friends"></i></p>
+          <span>or</span>
+          <p>6b. Receive the money via an payment service and ship the item.<i class="fas fa-shipping-fast"></i>
+            <br />
+            We recommend
+            using Paypal service & goods for seller and buyer protection <i class="fab fa-paypal"></i></p>
+        </div>
+        <div class="sell-notes">
+          <span>*Your email will be completely private until you decide to reply to the seller</span>
           <br />
-          We recommend
-          using Paypal service & goods for seller and buyer protection <i class="fab fa-paypal"></i></p>
+          <span>*There's a limit of 10 postings at a time</span>
+        </div>
       </div>
-      <div class="sell-notes">
-        <span>*Your email will be completely private until you decide to reply to the seller</span>
-        <br />
-        <span>*There's a limit of 10 postings at a time</span>
-      </div>
-    </div>
-    <!-- buy -->
-    <div class="help-detail" id="help-detail-1">
-      <h2>How to start buying</h2>
-      <p>1. <a class="sell-links" onclick="linkClicked(this, '/register')">Create</a> or <a class="sell-links"
-          onclick="linkClicked(this, '/login')">Log
-          in</a> to your account<i class="fas fa-user"></i></p>
-      <p>2. <a class="sell-links" onclick="linkClicked(this, '/account')">Confirm</a> your account to prove that you're
-        a local university
-        student <i class="fas fa-user-check"></i></p>
-      <p>3. Go to the <a class="sell-links" onclick="linkClicked(this, '/shop')">shop</a> page and look for book/items
-        you need<i class="fas fa-book"></i></p>
-      <p>4. Message the seller using Unibooks messaging feature and sort out the details <i
-          class="fas fa-handshake"></i></p>
-      <div>
-        <p style="margin-bottom: 0;">5a. Meet in person to complete the transaction somewhere on campus <i
-            class="fas fa-user-friends"></i></p>
-        <span>or</span>
-        <p>5b. Pay the buyer via an payment service and wait for your shipment.<i class="fas fa-shipping-fast"></i>
+      <!-- buy -->
+      <div class="help-detail" id="help-detail-1">
+        <h2>How to start buying</h2>
+        <p>1. <a class="sell-links" onclick="linkClicked(this, '/register')">Create</a> or <a class="sell-links"
+            onclick="linkClicked(this, '/login')">Log
+            in</a> to your account<i class="fas fa-user"></i></p>
+        <p>2. <a class="sell-links" onclick="linkClicked(this, '/account')">Confirm</a> your account to prove that
+          you're
+          a local university
+          student <i class="fas fa-user-check"></i></p>
+        <p>3. Go to the <a class="sell-links" onclick="linkClicked(this, '/shop')">shop</a> page and look for book/items
+          you need<i class="fas fa-book"></i></p>
+        <p>4. Message the seller using Unibooks messaging feature and sort out the details <i
+            class="fas fa-handshake"></i></p>
+        <div>
+          <p style="margin-bottom: 0;">5a. Meet in person to complete the transaction somewhere on campus <i
+              class="fas fa-user-friends"></i></p>
+          <span>or</span>
+          <p>5b. Pay the buyer via an payment service and wait for your shipment.<i class="fas fa-shipping-fast"></i>
+            <br />
+            We recommend
+            using Paypal service & goods for seller and buyer protection <i class="fab fa-paypal"></i></p>
+        </div>
+        <div class="sell-notes">
+          <span>*Your email will be provided to the buyer</span>
           <br />
-          We recommend
-          using Paypal service & goods for seller and buyer protection <i class="fab fa-paypal"></i></p>
+          <span>*If making an online transation, we strongly encourage to use a payment service with buyers
+            protection</span>
+        </div>
       </div>
-      <div class="sell-notes">
-        <span>*Your email will be provided to the buyer</span>
-        <br />
-        <span>*If making an online transation, we strongly encourage to use a payment service with buyers
-          protection</span>
+      <!-- add school -->
+      <div class="help-detail" id="help-detail-2">
+        <div class="help-header-container">
+          <h2>How you can help us add your school</h2>
+        </div>
+        <p>Make a donation - adding schools means we need to up our production cost <i class="fas fa-frown-open"></i>
+        </p>
+        <p>Provide us your schools courses and department information (In a parsable or SQL insert format <i
+            class="fas fa-smile"></i>)
+          - That will really save us some hassle</p>
+        <p><i class="fas fa-envelope"></i>Contact us at addmyschool@unibooks.io - Let us know which school is in demand
+          or
+          show us how you're willing to help!</p>
       </div>
-    </div>
-    <!-- add school -->
-    <div class="help-detail" id="help-detail-2">
-      <div class="help-header-container">
-        <h2>How you can help us add your school</h2>
+      <!-- common questions -->
+      <div class="help-detail" id="help-detail-3">
+        <h2>Common questions</h2>
+        <p>Currently None...</p>
       </div>
-      <p>Make a donation - adding schools means we need to up our production cost <i class="fas fa-frown-open"></i></p>
-      <p>Provide us your schools courses and department information (In a parsable or SQL insert format <i
-          class="fas fa-smile"></i>)
-        - That will really save us some hassle</p>
-      <p><i class="fas fa-envelope"></i>Contact us at addmyschool@unibooks.io - Let us know which school is in demand or
-        show us how you're willing to help!</p>
-    </div>
-    <!-- common questions -->
-    <div class="help-detail" id="help-detail-3">
-      <h2>Common questions</h2>
-      <p>Currently None...</p>
-    </div>
-    <!-- Report a bug -->
-    <div class="help-detail" id="help-detail-4">
-      <h2>Report a bug</h2>
-      <div class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
-        <div class="message-overlay">
-          <div class="message-error-container">
-            <div class="message-error">
-              <span>Please <a class="log-in-text"
-                  href="javascript:linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/help')}}')">log
-                  in</a> to contact us</span>
+      <!-- Report a bug -->
+      <div class="help-detail" id="help-detail-4">
+        <h2>Report a bug</h2>
+        <div
+          class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
+          <div class="message-overlay">
+            <div class="message-error-container">
+              <div class="message-error">
+                <span>Please <a class="log-in-text"
+                    href="javascript:linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/help')}}')">log
+                    in</a> to contact us</span>
+              </div>
             </div>
           </div>
+          <form method="POST" id="message-form" action="" enctype="multipart/form-data">
+            {{message_form.hidden_tag()}}
+            <fieldset class="form-group">
+              {% include "message_form.html" %}
         </div>
-        <form method="POST" id="message-form" action="" enctype="multipart/form-data">
-          {{message_form.hidden_tag()}}
-          <fieldset class="form-group">
-            {% include "message_form.html" %}
       </div>
-    </div>
-    <!-- help -->
-    <div class="help-detail" id="help-detail-5">
-      <h2>Need Help?</h2>
-      <div class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
-        <div class="message-overlay">
-          <div class="message-error-container">
-            <div class="message-error">
-              <span>Please <a class="log-in-text"
-                  href="javascript:linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/help')}}')">log
-                  in</a> to contact us</span>
+      <!-- help -->
+      <div class="help-detail" id="help-detail-5">
+        <h2>Need Help?</h2>
+        <div
+          class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
+          <div class="message-overlay">
+            <div class="message-error-container">
+              <div class="message-error">
+                <span>Please <a class="log-in-text"
+                    href="javascript:linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/help')}}')">log
+                    in</a> to contact us</span>
+              </div>
             </div>
           </div>
+          <form method="POST" id="message-form-2" action="" enctype="multipart/form-data">
+            {{message_form.hidden_tag()}}
+            <fieldset class="form-group">
+              {% include "message_form_2.html" %}
         </div>
-        <form method="POST" id="message-form-2" action="" enctype="multipart/form-data">
-          {{message_form.hidden_tag()}}
-          <fieldset class="form-group">
-            {% include "message_form_2.html" %}
       </div>
     </div>
   </div>
@@ -177,7 +186,7 @@
   function load(elem, i) {
     setTimeout(function () {
       elem.classList.add("load");
-    }, 200 * i);
+    }, 150 * i);
   }
 
   function deLoad(elem, i) {
@@ -195,16 +204,10 @@
   }
 
   const changeContent = (num) => {
-    // if (num === 5) {
-    //   num = 4
-    //   document.getElementById('help-message-text').innerHTML = "Need Help"
-    // } else if (num === 4) {
-    //   document.getElementById('help-message-text').innerHTML = "Report a bug"
-    // }
     document.getElementsByClassName('help-grid')[0].style.display = 'none';
     $(`#help-detail-${num}`).fadeIn(500);
     $('#help-back').fadeIn(500);
-    load($('#help-back'), 0)
+    load(document.getElementById(`help-detail-container`), 0)
     change = num;
   }
 
@@ -226,20 +229,13 @@
       count++;
     }
 
-    // while (x >= 0) {
-    //   deLoad(elements[x], count);
-    //   elements[x].onclick = null;
-    //   count++;
-    //   x--;
-    // }
-
     setTimeout(changeContent.bind(null, num), 1200)
   }
 
   document.getElementById('help-back').addEventListener(
     "click", function () {
       $('#help-back').fadeOut(500);
-      deLoad($(`#help-detail-${change}`))
+      deLoad(document.getElementById(`help-detail-container`))
       $(`#help-detail-${change}`).fadeOut(500, function () {
         fadeIn();
         document.getElementsByClassName('help-grid')[0].style.display = 'grid'
