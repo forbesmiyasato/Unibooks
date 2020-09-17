@@ -8,11 +8,11 @@
         column-gap: 20px;
         row-gap: 20px;
         opacity: 0;
-        -webkit-transition: opacity 0.5s ease-in;
-        -moz-transition: opacity 0.5s ease-in;
-        -ms-transition: opacity 0.5s ease-in;
-        -o-transition: opacity 0.5s ease-in;
-        transition: opacity 0.5s ease-in;
+        -webkit-transition: opacity 0.25s ease-in;
+        -moz-transition: opacity 0.25s ease-in;
+        -ms-transition: opacity 0.25s ease-in;
+        -o-transition: opacity 0.25s ease-in;
+        transition: opacity 0.25s ease-in;
 
         @media (max-width: 560px) {
             grid-template-columns: 1fr 1fr;
@@ -45,11 +45,11 @@
         align-items: center;
         cursor: pointer;
         opacity: 0;
-        -webkit-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
-        -moz-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
-        -ms-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
-        -o-transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
-        transition: opacity 0.5s ease-in, box-shadow 0.2s ease-in;
+        -webkit-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in;
+        -moz-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in;
+        -ms-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in;
+        -o-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in;
+        transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in;
         &.load {
             opacity: 1;
             height: auto;

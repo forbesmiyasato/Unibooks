@@ -940,7 +940,7 @@ body.need-school .school-overlay {
     border-left: 4px solid #70a9da;
 }
 
-#contact-us-container {
+.contact-us-container {
     position: relative;
     max-width: 690px !important;
     padding-left: 0px;

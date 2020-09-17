@@ -177,14 +177,14 @@
   function load(elem, i) {
     setTimeout(function () {
       elem.classList.add("load");
-    }, 100 * i);
+    }, 200 * i);
   }
 
   function deLoad(elem, i) {
     setTimeout(function () {
       elem.classList.remove("load");
       elem.removeEventListener('click', fadeOut);
-    }, 100 * i);
+    }, 150 * i);
   }
 
   const fadeIn = () => {
@@ -203,8 +203,8 @@
     //   document.getElementById('help-message-text').innerHTML = "Report a bug"
     // }
     document.getElementsByClassName('help-grid')[0].style.display = 'none';
-    $(`#help-detail-${num}`).fadeIn(1000);
-    $('#help-back').fadeIn(1000);
+    $(`#help-detail-${num}`).fadeIn(500);
+    $('#help-back').fadeIn(500);
     change = num;
   }
 
@@ -243,13 +243,13 @@
       count++;
       y++;
     }
-    setTimeout(changeContent.bind(null, num), 100 * 10)
+    setTimeout(changeContent.bind(null, num), 1200)
   }
 
   document.getElementById('help-back').addEventListener(
     "click", function () {
-      $('#help-back').fadeOut(600);
-      $(`#help-detail-${change}`).fadeOut(600, function () {
+      $('#help-back').fadeOut(500);
+      $(`#help-detail-${change}`).fadeOut(500, function () {
         fadeIn();
         document.getElementsByClassName('help-grid')[0].style.display = 'grid'
       });

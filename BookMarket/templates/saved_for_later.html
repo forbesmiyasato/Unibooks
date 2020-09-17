@@ -61,9 +61,15 @@
                                                 href="javascript:void(0)">
                                                 Delete
                                             </a></p>
+                                        {% if current_user.is_authenticated %}
                                         <p class="hover-line"><a data-toggle="modal" class="saved-message single-edit"
                                                 data-target="#messageModal" id="{{post.id}}">Contact Seller</a>
                                         </p>
+                                        {% else %}
+                                        <p>
+                                            <a class="hover-line log-in single-edit">Log in</a> to contact the seller
+                                        </p>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -131,8 +137,14 @@
 
     let messageButtons = document.getElementsByClassName('saved-message');
     for (var i = 0; i < messageButtons.length; i++) {
-        console.log(messageButtons[i].id)
         messageButtons[i].addEventListener('click', messageClicked.bind(null, messageButtons[i].id))
     }
+
+    $(document).ready(function () {
+        let loginButtons = document.getElementsByClassName('log-in');
+        for (var i = 0; i < loginButtons.length; i++) {
+            loginButtons[i].addEventListener('click', linkClicked.bind(null, null, "{{url_for('userAuth.login', next='saved?cart')}}"));
+        }
+    });
 </script>
 {% endblock content %}
