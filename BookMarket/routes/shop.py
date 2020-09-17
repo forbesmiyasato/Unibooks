@@ -131,8 +131,7 @@ def getPosts():
                    search=search, numResults=num_results)
 
 
-def item_html(item_id, standalone=None):
-    _item = Item.query.get_or_404(item_id)
+def item_html(item_id, _item, standalone=None):
     edit_form = ItemForm()
     message_form = MessageForm()
     if request.method == 'POST' and standalone != 'notfromnewitem':
@@ -183,6 +182,7 @@ def item_html(item_id, standalone=None):
 
 @shop_api.route("/shop/<int:item_id>", methods=['GET', 'POST'])
 def item(item_id):
+    _item = Item.query.get_or_404(item_id)
     standalone = request.args.get('standalone', None)
     if request.method == 'POST':
         if request.method == 'POST' and request.form.get('email'):
@@ -196,7 +196,7 @@ def item(item_id):
                 print("TIME", minutes)
                 if minutes >= 60.0:
                     current_user.last_buy_message_sent = datetime.utcnow()
-                    current_user.num_buy_message_sent = 0
+                    current_user.num_buy_message_sent = 1
                     db.session.commit()
                 elif minutes < 60.0:
                     if current_user.num_buy_message_sent >= 10:
@@ -210,9 +210,9 @@ def item(item_id):
                                                                            email=request.form.get('email'), body=request.form.get('message')))
             sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
             sender.start()
-            return
+            return jsonify({'origin': 'single'})
         else:    
-            return jsonify({'html': (item_html(item_id, standalone)), 'url': url_for('shop_api.item', item_id=item_id), 'origin': 'single'})
+            return jsonify({'html': (item_html(item_id, _item, standalone)), 'url': url_for('shop_api.item', item_id=item_id)})
     return item_html(item_id, standalone)
 
 

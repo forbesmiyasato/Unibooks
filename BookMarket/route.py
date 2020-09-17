@@ -244,7 +244,7 @@ def saved_for_later():
             print("TIME", minutes)
             if minutes >= 60.0:
                 current_user.last_buy_message_sent = datetime.utcnow()
-                current_user.num_buy_message_sent = 0
+                current_user.num_buy_message_sent = 1
                 db.session.commit()
             elif minutes < 60.0:
                 if current_user.num_buy_message_sent >= 10:
