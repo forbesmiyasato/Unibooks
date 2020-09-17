@@ -64,7 +64,7 @@
                                 : {{item.isbn}} </li></a>
                         {% else %}
                         <li><a class="active"
-                                href="javascript:linkClicked(document.getElementById('shop'), '/shop?department={{department.id}}')"><span>Category</span>
+                                href="javascript:linkClicked(document.getElementById('shop'), '/shop?nonbook={{category.id}}')"><span>Category</span>
                                 : {{category.category_name}}</a></li>
                         {% endif %}
                     </ul>

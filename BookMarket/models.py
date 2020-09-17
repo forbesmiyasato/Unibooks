@@ -20,6 +20,7 @@ class Users(db.Model, UserMixin):
     school = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
     last_confirm_email_sent = db.Column(db.DateTime, nullable=True,
                                         default=datetime.utcnow)
+    last_message_sent = db.Column(db.DateTime, nullable=True)
 
     def __repr__(self):
         return f"Users('{self.username}', '{self.email}', '{self.image_file}')"

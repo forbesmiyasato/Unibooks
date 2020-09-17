@@ -1,6 +1,7 @@
 import re
 import threading
 import concurrent.futures
+from datetime import datetime
 from flask import render_template, request, Blueprint, jsonify, url_for, flash, session, redirect, current_app
 from flask_login import current_user
 from flask_mail import Message
@@ -134,9 +135,7 @@ def item_html(item_id, standalone=None):
     _item = Item.query.get_or_404(item_id)
     edit_form = ItemForm()
     message_form = MessageForm()
-    print(request.form.get('email'))
     if request.method == 'POST' and request.form.get('email'):
-        print(_item.owner.email)
         standalone = "standalone"
         msg = Message("Message regarding " + "\"" + _item.name + "\"",
                       sender=("Unibooks", 'unibooks@unibooks.io'),
@@ -151,22 +150,16 @@ def item_html(item_id, standalone=None):
         standalone = "standalone"
         remains = request.form.get('remaining_files')
         images = request.files.getlist("files[]")
-        print(images)
-        print(remains)
         delete_non_remaining_images_from_s3_and_db(item_id, remains)
-        print("11111", _item.images)
-        print("2222", _item.thumbnail)
         if not _item.images:
             _item.thumbnail = "No_picture_available.png"
         if images:
             prevImageCount = _item.images
-            print(images)
             thumbnail = save_images_to_db_and_s3(images, item_id)
             if thumbnail and not prevImageCount:
                 _item.thumbnail = thumbnail
         _item.name = request.form.get('name')
         _item.description = request.form.get('description')
-        print(request.form.get('author'))
         _item.isbn = request.form.get('isbn')
         _item.author = request.form.get('author')
         _item.user_id = current_user.id
@@ -175,8 +168,6 @@ def item_html(item_id, standalone=None):
         _item.category_id = request.form.get('category_id')
         _item.department_id = request.form.get('department_id')
         db.session.commit()
-        print(item_id)
-        # result = {'url': url_for('shop_api.item', item_id=item_id)}
     images = ItemImage.query.filter_by(item_id=item_id).all()
     item_class = ItemClass.query.get(_item.class_id)
     department = ItemDepartment.query.get(_item.department_id)
@@ -189,13 +180,9 @@ def item_html(item_id, standalone=None):
     edit_form.author.data = _item.author
     edit_form.item_class.data = item_class
     edit_form.item_department.data = department
-    print("1", item_class)
-    print("2", department)
-    print("3", _item.category_id)
     isBook = True if _item.category_id is None else False
     categories = ItemCategory.query.filter_by(school=session['school']).all()
     category = ItemCategory.query.get(_item.category_id)
-    print(isBook)
     # for messaging
     if current_user.is_authenticated:
         message_form.email.data = current_user.email

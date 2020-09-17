@@ -131,7 +131,7 @@ def confirm_email(token):
     login_user(user)
     user.confirmed = True
     db.session.commit()
-    return render_template('home.html')
+    return redirect(url_for('home.html'))
 
 
 def login_html(standalone=None, pattern=None, placeholder=None, error_message=None):
