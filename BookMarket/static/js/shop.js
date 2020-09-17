@@ -517,15 +517,15 @@ function initializeShopPage() {
             displayErrorMessage("Invalid show option!");
         }
     }
-
+    browseCollapse();
     getData(url.toString(), true);
 }
 
 const browseCollapse = () => {
     if (document.documentElement.clientWidth < 768) {
-        if (
-            $("#browse-categories")[0].classList.contains("collapsed") !== true
-        ) {
+        if ($("#browse-categories")[0].classList.contains("collapsed") !== true) {
+            console.log("COLLAPSE")
+            console.log($(".browse-collapse"))
             $(".browse-collapse").collapse("toggle");
         }
     }

@@ -3634,6 +3634,9 @@ label {
   box-shadow: 0 10px 10px rgba(153, 153, 153, 0.1);
   height: 80vh;
   overflow-y: scroll; }
+  @media (max-width: 768px) {
+    .sidebar-categories .main-categories {
+      height: 50vh; } }
 
 .sidebar-categories .main-nav-list a {
   font-size: 14px;

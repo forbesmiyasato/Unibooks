@@ -1396,6 +1396,10 @@
 		box-shadow: 0 10px 10px rgba(153, 153, 153, 0.1);
 		height: 80vh;
 		overflow-y: scroll;
+
+		@media (max-width: 768px) {
+			height: 50vh;
+		}
 	}
 	.main-nav-list {
 		a {
