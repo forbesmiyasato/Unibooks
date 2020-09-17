@@ -1,6 +1,7 @@
 import os
 import atexit
 import threading
+from datetime import datetime
 # from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session, Markup, make_response, current_app
 from flask_login import current_user, login_required, logout_user
@@ -97,7 +98,7 @@ def account():
     #     form.email.data = current_user.email
     # image_file = url_for(
     #     'static', filename='profile_pics/' + current_user.image_file)
-    return render_template('account.html', title='Account', confirmed=current_user.confirmed, standalone=standalone)
+    return render_template('account.html', title='Account', standalone=standalone)
 
 
 # @app.route("/files/<int:userid>", methods=['POST'])
@@ -234,6 +235,24 @@ def saved_for_later():
     if request.method == 'POST' and request.form.get('email'):
         item_id = request.args.get('item')
         _item = Item.query.get_or_404(item_id)
+        if current_user.last_buy_message_sent is None:
+            current_user.last_buy_message_sent = datetime.utcnow()
+            db.session.commit()
+        else:
+            time_difference = datetime.utcnow() - current_user.last_buy_message_sent
+            minutes = divmod(time_difference.total_seconds(), 60)[0]
+            if minutes >= 60.0:
+                current_user.last_buy_message_sent = datetime.utcnow()
+                current_user.num_buy_message_sent = 0
+                db.session.commit()
+            elif minutes < 60.0:
+                if current_user.num_buy_message_sent >= 10:
+                    return jsonify({'origin': 'wait'})
+                else:
+                    current_user.num_buy_message_sent += 1
+                    db.session.commit()
+            print("TIME", minutes)
+            print(type(minutes))
         msg = Message("Message regarding " + "\"" + _item.name + "\"",
                       sender=("Unibooks", 'unibooks@unibooks.io'),
                       recipients=[_item.owner.email], html=render_template("message_email.html", name=_item.name,
@@ -249,17 +268,13 @@ def saved_for_later():
             user_id=current_user.id).order_by(SaveForLater.id.desc()).all()
     else:
         if "saved" in session:
-            print(session["saved"])
             items_ids = session["saved"]
-            print(items_ids)
     items = []
     if items_ids is not None:
         for id in items_ids:
             item = Item.query.get(id)
-            print(item)
             if item:
                 items.append(item)
-    print(items)
     return render_template('saved_for_later.html', title=title, posts=items, standalone=standalone)
 
 
@@ -360,22 +375,16 @@ def get_edit_form(item_id=None):
     if request.method == 'POST':
         remains = request.form.get('remaining_files')
         images = request.files.getlist("files[]")
-        print(images)
-        print(remains)
         delete_non_remaining_images_from_s3_and_db(item_id, remains)
-        print("11111", _item.images)
-        print("2222", _item.thumbnail)
         if not _item.images:
             _item.thumbnail = "No_picture_available.png"
         if images:
             prevImageCount = _item.images
-            print(images)
             thumbnail = save_images_to_db_and_s3(images, item_id)
             if thumbnail and not prevImageCount:
                 _item.thumbnail = thumbnail
         _item.name = request.form.get('name')
         _item.description = request.form.get('description')
-        print(request.form.get('author'))
         _item.isbn = request.form.get('isbn')
         _item.author = request.form.get('author')
         _item.user_id = current_user.id
@@ -389,7 +398,6 @@ def get_edit_form(item_id=None):
     item_class = ItemClass.query.get(_item.class_id)
     department = ItemDepartment.query.get(_item.department_id)
     # for updating
-    print(department.department_name)
     departments = db.session.query(ItemDepartment).all()
     edit_form.name.data = _item.name
     edit_form.description.data = _item.description
@@ -414,13 +422,11 @@ def inject_schools():
 @app.route('/setschool/<int:school>')
 def set_school_in_session(school):
     state = request.args.get('state', None)
-    print(state)
     if state == "loggout":
         logout_user()
     elif state == 'emptycart':
         session.pop('saved')
     session['school'] = school
-    print("SCHOOL", session['school'])
     return ('', 204)
 
 

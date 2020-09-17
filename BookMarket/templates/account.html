@@ -20,7 +20,7 @@
     <div class="container">
         <div class="section-top-border">
             <div class="container no-results">
-                {% if confirmed %}
+                {% if current_user.confirmed == true %}
                 <h1 class="pt-3 pb-3">Your account is confirmed!</h1>
                 <a href="javascript:linkClicked(document.getElementById('sell'), '/item/new')"
                     class="genric-btn primary-border circle arrow">Start

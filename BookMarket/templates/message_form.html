@@ -81,6 +81,9 @@
                     toastr.success("Message Sent! Thank you for contacting us!");
                     document.getElementById('send-button').innerHTML = "Your message is sent. Thank you for contacting us!"
                 }
+                else if (response.origin === 'wait') {
+                    toastr.error("You reached the limit of messages you can send within an hour! Please wait an hour before messaging again.");
+                }
             },
             beforeSend: function () {
                 $("body").toggleClass("loading");

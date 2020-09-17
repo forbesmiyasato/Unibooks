@@ -19,9 +19,9 @@ class Users(db.Model, UserMixin):
     listings = db.Column(db.Integer, default=0)
     school = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
     last_confirm_email_sent = db.Column(db.DateTime, nullable=True,
-                                        default=datetime.utcnow)
-    last_message_sent = db.Column(db.DateTime, nullable=True)
-
+                                        default=datetime.now())
+    last_buy_message_sent = db.Column(db.DateTime, nullable=True)
+    num_buy_message_sent = db.Column(db.Integer, nullable=True, default=0)
     def __repr__(self):
         return f"Users('{self.username}', '{self.email}', '{self.image_file}')"
 
@@ -54,7 +54,7 @@ class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
-                            default=datetime.utcnow)
+                            default=datetime.now())
     description = db.Column(db.Text, nullable=True)
     price = db.Column(db.DECIMAL(10, 2), nullable=False)
     thumbnail = db.Column(db.String, nullable=False,

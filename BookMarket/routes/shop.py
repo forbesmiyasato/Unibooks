@@ -135,18 +135,7 @@ def item_html(item_id, standalone=None):
     _item = Item.query.get_or_404(item_id)
     edit_form = ItemForm()
     message_form = MessageForm()
-    if request.method == 'POST' and request.form.get('email'):
-        standalone = "standalone"
-        msg = Message("Message regarding " + "\"" + _item.name + "\"",
-                      sender=("Unibooks", 'unibooks@unibooks.io'),
-                      recipients=[_item.owner.email], html=render_template("message_email.html", name=_item.name,
-                                                                           email=request.form.get('email'), body=request.form.get('message')))
-        sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
-        sender.start()
-        return
-        # flash(
-        # f'Message sent! The seller will contact you soon.', 'success')
-    elif request.method == 'POST' and standalone != 'notfromnewitem':
+    if request.method == 'POST' and standalone != 'notfromnewitem':
         standalone = "standalone"
         remains = request.form.get('remaining_files')
         images = request.files.getlist("files[]")
@@ -196,8 +185,34 @@ def item_html(item_id, standalone=None):
 def item(item_id):
     standalone = request.args.get('standalone', None)
     if request.method == 'POST':
-        print("YES!")
-        return jsonify({'html': (item_html(item_id, standalone)), 'url': url_for('shop_api.item', item_id=item_id), 'origin': 'single'})
+        if request.method == 'POST' and request.form.get('email'):
+            standalone = "standalone"
+            if current_user.last_buy_message_sent is None:
+                current_user.last_buy_message_sent = datetime.utcnow()
+                db.session.commit()
+            else:
+                time_difference = datetime.utcnow() - current_user.last_buy_message_sent
+                minutes = divmod(time_difference.total_seconds(), 60)[0]
+                print("TIME", minutes)
+                if minutes >= 60.0:
+                    current_user.last_buy_message_sent = datetime.utcnow()
+                    current_user.num_buy_message_sent = 0
+                    db.session.commit()
+                elif minutes < 60.0:
+                    if current_user.num_buy_message_sent >= 10:
+                        return jsonify({'origin': 'wait'})
+                    else:
+                        current_user.num_buy_message_sent += 1
+                        db.session.commit()
+            msg = Message("Message regarding " + "\"" + _item.name + "\"",
+                        sender=("Unibooks", 'unibooks@unibooks.io'),
+                        recipients=[_item.owner.email], html=render_template("message_email.html", name=_item.name,
+                                                                           email=request.form.get('email'), body=request.form.get('message')))
+            sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
+            sender.start()
+            return
+        else:    
+            return jsonify({'html': (item_html(item_id, standalone)), 'url': url_for('shop_api.item', item_id=item_id), 'origin': 'single'})
     return item_html(item_id, standalone)
 
 
