@@ -61,9 +61,13 @@
                                                 href="javascript:void(0)">
                                                 Delete
                                             </a></p>
-                                        {% if current_user.is_authenticated %}
+                                        {% if current_user.confirmed == True %}
                                         <p class="hover-line"><a data-toggle="modal" class="saved-message single-edit"
                                                 data-target="#messageModal" id="{{post.id}}">Contact Seller</a>
+                                        </p>
+                                        {% elif current_user.confirmed == false %}
+                                        <p>
+                                            <a class="hover-line confirm-acc single-edit">Confirm your identity</a> to contact the seller
                                         </p>
                                         {% else %}
                                         <p>
@@ -144,6 +148,11 @@
         let loginButtons = document.getElementsByClassName('log-in');
         for (var i = 0; i < loginButtons.length; i++) {
             loginButtons[i].addEventListener('click', linkClicked.bind(null, null, "{{url_for('userAuth.login', next='saved?cart')}}"));
+        }
+
+        let confirmButtons = document.getElementsByClassName('confirm-acc');
+        for (var i = 0; i < confirmButtons.length; i++) {
+            confirmButtons[i].addEventListener('click', linkClicked.bind(null, null, "{{url_for('account')}}"));
         }
     });
 </script>

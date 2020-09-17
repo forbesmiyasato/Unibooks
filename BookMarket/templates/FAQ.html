@@ -213,36 +213,26 @@
 
     let count = 0;
     let x = num;
-    y = num;
     deLoad(elements[num], count);
     elements[num].onclick = null;
     console.log("!!", elements[num].onclick)
     count++;
-    x--;
-    y++;
-    while (x > 0 && y < elements.length) {
+    x++;
+    while (count < 6) {
+      if (x > 5) x = 0;
       deLoad(elements[x], count);
       elements[x].onclick = null;
-      x--;
-      deLoad(elements[y], count);
-      elements[y].onclick = null;
-      y++;
+      x++;
       count++;
     }
 
-    while (x >= 0) {
-      deLoad(elements[x], count);
-      elements[x].onclick = null;
-      count++;
-      x--;
-    }
+    // while (x >= 0) {
+    //   deLoad(elements[x], count);
+    //   elements[x].onclick = null;
+    //   count++;
+    //   x--;
+    // }
 
-    while (y < elements.length) {
-      deLoad(elements[y], count);
-      elements[y].onclick = null;
-      count++;
-      y++;
-    }
     setTimeout(changeContent.bind(null, num), 1200)
   }
 
