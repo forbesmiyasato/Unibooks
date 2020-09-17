@@ -45,14 +45,16 @@
         align-items: center;
         cursor: pointer;
         opacity: 0;
-        -webkit-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in;
-        -moz-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in;
-        -ms-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in;
-        -o-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in;
-        transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in;
+        transform: scale(0);
+        -webkit-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
+        -moz-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
+        -ms-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
+        -o-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
+        transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
         &.load {
             opacity: 1;
             height: auto;
+            transform: scale(1);
         }
 
         &:hover {
@@ -102,6 +104,15 @@
         border-radius: 10px;
         text-align: center;
         display: none;
+        transform: scale(0);
+        -webkit-transition: transform 0.2s ease-in-out;
+        -moz-transition: transform 0.2s ease-in-out;
+        -ms-transition: transform 0.2s ease-in-out;
+        -o-transition: transform 0.2s ease-in-out;
+        transition: transform 0.2s ease-in-out;
+        &.load {
+            transform: scale(1);
+        }
 
         & .send-button {
             padding-bottom: 15px;

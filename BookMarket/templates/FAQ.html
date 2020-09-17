@@ -183,7 +183,6 @@
   function deLoad(elem, i) {
     setTimeout(function () {
       elem.classList.remove("load");
-      elem.removeEventListener('click', fadeOut);
     }, 150 * i);
   }
 
@@ -205,6 +204,7 @@
     document.getElementsByClassName('help-grid')[0].style.display = 'none';
     $(`#help-detail-${num}`).fadeIn(500);
     $('#help-back').fadeIn(500);
+    load($('#help-back'), 0)
     change = num;
   }
 
@@ -239,6 +239,7 @@
   document.getElementById('help-back').addEventListener(
     "click", function () {
       $('#help-back').fadeOut(500);
+      deLoad($(`#help-detail-${change}`))
       $(`#help-detail-${change}`).fadeOut(500, function () {
         fadeIn();
         document.getElementsByClassName('help-grid')[0].style.display = 'grid'

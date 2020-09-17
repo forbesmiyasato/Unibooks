@@ -241,6 +241,7 @@ def saved_for_later():
         else:
             time_difference = datetime.utcnow() - current_user.last_buy_message_sent
             minutes = divmod(time_difference.total_seconds(), 60)[0]
+            print("TIME", minutes)
             if minutes >= 60.0:
                 current_user.last_buy_message_sent = datetime.utcnow()
                 current_user.num_buy_message_sent = 0
@@ -251,8 +252,6 @@ def saved_for_later():
                 else:
                     current_user.num_buy_message_sent += 1
                     db.session.commit()
-            print("TIME", minutes)
-            print(type(minutes))
         msg = Message("Message regarding " + "\"" + _item.name + "\"",
                       sender=("Unibooks", 'unibooks@unibooks.io'),
                       recipients=[_item.owner.email], html=render_template("message_email.html", name=_item.name,

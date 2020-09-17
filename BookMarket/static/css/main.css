@@ -6278,14 +6278,16 @@ label {
     align-items: center;
     cursor: pointer;
     opacity: 0;
-    -webkit-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in;
-    -moz-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in;
-    -ms-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in;
-    -o-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in;
-    transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in; }
+    transform: scale(0);
+    -webkit-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
+    -moz-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
+    -ms-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
+    -o-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
+    transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out; }
     .help-container .help-item.load {
       opacity: 1;
-      height: auto; }
+      height: auto;
+      transform: scale(1); }
     .help-container .help-item:hover {
       box-shadow: 0 10px 30px 1px rgba(0, 0, 0, 0.3); }
     .help-container .help-item:hover .help-item-icon {
@@ -6316,7 +6318,15 @@ label {
     background-color: #fff;
     border-radius: 10px;
     text-align: center;
-    display: none; }
+    display: none;
+    transform: scale(0);
+    -webkit-transition: transform 0.2s ease-in-out;
+    -moz-transition: transform 0.2s ease-in-out;
+    -ms-transition: transform 0.2s ease-in-out;
+    -o-transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out; }
+    .help-container .help-detail.load {
+      transform: scale(1); }
     .help-container .help-detail .send-button {
       padding-bottom: 15px; }
     .help-container .help-detail .contact-us-container {
