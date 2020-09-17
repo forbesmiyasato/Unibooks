@@ -226,11 +226,21 @@ def add_to_bag():
     return jsonify({'added': added})
 
 
-@app.route('/saved')
-# @login_required
+@app.route('/saved', methods=['GET', 'POST'])
 def saved_for_later():
     title = 'Saved'
     standalone = request.args.get('standalone')
+    print(request.form.get('email'))
+    if request.method == 'POST' and request.form.get('email'):
+        item_id = request.args.get('item')
+        _item = Item.query.get_or_404(item_id)
+        msg = Message("Message regarding " + "\"" + _item.name + "\"",
+                      sender=("Unibooks", 'unibooks@unibooks.io'),
+                      recipients=[_item.owner.email], html=render_template("message_email.html", name=_item.name,
+                                                                           email=request.form.get('email'), body=request.form.get('message')))
+        sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
+        sender.start()
+        return jsonify({'origin': 'single'})
     if 'cart' in request.args:
         title = 'Saved?cart'
     items_ids = None
@@ -334,6 +344,12 @@ def inject_num_items():
             return {'numItems': []}
     else:
         return {'numItems': []}
+
+
+@app.route("/messagebuyerform")
+def message_buyer_form():
+    message_form = MessageForm()
+    return render_template('message_form.html', message_form=message_form, message_title="Contact Seller", need_customization=True)
 
 
 @app.route("/editform/<int:item_id>")

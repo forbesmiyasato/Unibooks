@@ -714,7 +714,6 @@ const highlightNavLink = () => {
 let prevModal = null;
 const listingEditClicked = (id, item_class, item_department) => {
     let url = `/editform/${id}`;
-    console.log("!!!!!!!!!!!", url);
     if (prevModal) {
         prevModal.empty();
     }

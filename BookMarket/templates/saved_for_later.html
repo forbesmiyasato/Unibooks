@@ -7,7 +7,8 @@
             <div class="col-first">
                 <h1>Saved Items</h1>
                 <nav class="d-flex align-items-center">
-                    <a href="javascript:linkClicked(document.getElementById('home'), '/home')">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="javascript:linkClicked(document.getElementById('home'), '/home')">Home<span
+                            class="lnr lnr-arrow-right"></span></a>
                     <a class="nav-no-href">Saved Items</span></a>
                 </nav>
             </div>
@@ -21,7 +22,8 @@
             {% if posts|length == 0 %}
             <div class="container no-results">
                 <h1 class="pt-3 pb-3">There are no items in your bag :(</h1>
-                <a href="javascript:linkClicked(this, '{{ url_for('shop_api.shop')}}')" class="genric-btn primary-border circle arrow">Start Exploring<span
+                <a href="javascript:linkClicked(this, '{{ url_for('shop_api.shop')}}')"
+                    class="genric-btn primary-border circle arrow">Start Exploring<span
                         class="lnr lnr-arrow-right"></span></a>
             </div>
             {% else %}
@@ -46,14 +48,22 @@
                             <div class="single-product">
                                 <div class="product-details">
                                     <h6 class="hover-line"><a
-                                            href="javascript:onItemClick('{{url_for('shop_api.item', item_id=post.id)}}')">{{post.name}}</a></h6>
+                                            href="javascript:onItemClick('{{url_for('shop_api.item', item_id=post.id)}}')">{{post.name}}</a>
+                                    </h6>
                                     <div class="prd-bottom">
-                                        <a href="javascript:onItemClick('{{url_for('shop_api.item', item_id=post.id)}}')">
-                                            <p class="hover-line">View more</p>
-                                        </a>
-                                        <a onclick="onSavedDelete('{{loop.index}}', '{{post.name}}', '{{post.id}}', '{{url_for('delete_saved', item_name=post.name, item_id=post.id, user_id=current_user.id)}}')" href="javascript:void(0)">
-                                            <p class="hover-line">Delete</p>
-                                        </a>
+                                        <p class="hover-line"><a
+                                                href="javascript:onItemClick('{{url_for('shop_api.item', item_id=post.id)}}')">
+                                                View more
+                                            </a></p>
+                                        <p class="hover-line"><a
+                                                onclick="onSavedDelete('{{loop.index}}', '{{post.name}}', '{{post.id}}',
+                                        '{{url_for('delete_saved', item_name=post.name, item_id=post.id, user_id=current_user.id)}}')"
+                                                href="javascript:void(0)">
+                                                Delete
+                                            </a></p>
+                                        <p class="hover-line"><a data-toggle="modal" class="saved-message single-edit"
+                                                data-target="#messageModal" id="{{post.id}}">Contact Seller</a>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -64,30 +74,23 @@
                             </div>
                         </td>
                     </tr>
-                    <!-- Modal -->
-                    <!-- <div class="modal fade" id="deleteModal{{loop.index}}" tabindex="-1" role="dialog"
-                        aria-labelledby="deleteModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                    {% endfor %}
+                    <!-- Message Modal -->
+                    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog"
+                        aria-labelledby="editModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document" style="width:80%; margin: 1.75em auto;">
+                            <div class="modal-content" style="height: 381px;">
+                                <div class="list-overlay">
+                                    <div class="list-loader">Loading...</div>
+                                    <h3 class="list-loader-text" id="loader-text">Loading...</h3>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <form
-                                        action="{{url_for('delete_saved', item_name=post.name, item_id=post.id, user_id=current_user.id)}}"
-                                        method="POST">
-                                        <input type="submit" class="btn btn-danger" value="Delete">
-                                    </form>
+                                <div class="modal-body">
+                                    <div class="container" id="message-modal">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div> -->
-                    {% endfor %}
-                    
+                    </div>
                 </tbody>
             </table>
             {% endif %}
@@ -95,8 +98,41 @@
     </div>
 </div>
 
-<!-- <script>
-    let deletedItems = new Object();
+<script>
+    $('#messageModal').on('hidden.bs.modal', function (e) {
+        history.replaceState(null, '', window.location.pathname);
+    })
+    const messageClicked = (id) => {
+        console.log(id)
+        let url = `/messagebuyerform`;
+        history.replaceState(null, '', `?item=${id}`);
+        $.ajax({
+            url: url,
+            type: "GET",
+            async: true,
+            success: function (response) {
+                $(`#message-modal`).html('<div class="content-section"> \
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"> \
+            <span aria-hidden="true">&times;</span> \
+             </button>' + response + '</div>');
+            },
+            beforeSend: function () {
+                console.log("BEFORE");
+                $(`#message-modal`).html("");
+                $(`.modal-content`).toggleClass("loading");
+            },
+            complete: function () {
+                console.log("AFTER");
+                $(`.modal-content`).toggleClass("loading");
+            },
+        });
+        console.log(url);
+    };
 
-</script> -->
+    let messageButtons = document.getElementsByClassName('saved-message');
+    for (var i = 0; i < messageButtons.length; i++) {
+        console.log(messageButtons[i].id)
+        messageButtons[i].addEventListener('click', messageClicked.bind(null, messageButtons[i].id))
+    }
+</script>
 {% endblock content %}

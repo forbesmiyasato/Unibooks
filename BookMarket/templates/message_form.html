@@ -1,4 +1,12 @@
 {% block body_content %}
+{% if need_customization is defined %}
+<form method="POST" id="message-form" action="" enctype="multipart/form-data">
+    {{message_form.hidden_tag()}}
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">
+            {{message_title}}
+        </legend>
+{% endif %}
         <div class="form-group">
             {{ message_form.email.label(class="form-control-label") }} {{optional}}
             {% if message_form.email.errors %}
@@ -12,7 +20,8 @@
             {% if optional == '(optional)' %}
             {{ message_form.email(class="form-control form-control-lg", type="email") }}
             {% else %}
-            {{ message_form.email(class="form-control form-control-lg", type="email", required='required') }}
+            {{ message_form.email(class="form-control form-control-lg", type="email", required='required',
+            value=current_user.email, readonly="readonly") }}
             {% endif %}
             {% endif %}
         </div>
@@ -81,7 +90,7 @@
             data: formData,
             async: true,
             success: function (response) {
-                $('#block-content').html(response.html);
+                // $('#block-content').html(response.html);
                 toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
                 if (response.origin === 'single') {
                     toastr.success("Message Sent! The seller will contact you soon!");

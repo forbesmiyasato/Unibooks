@@ -144,6 +144,7 @@ def item_html(item_id, standalone=None):
                                                                            email=request.form.get('email'), body=request.form.get('message')))
         sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
         sender.start()
+        return
         # flash(
         # f'Message sent! The seller will contact you soon.', 'success')
     elif request.method == 'POST' and standalone != 'notfromnewitem':

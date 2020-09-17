@@ -101,4 +101,9 @@
     </div>	  
 </section>
 <!-- End How Area -->
+<script>
+var url = "{{ url_for('static', filename='js/home.js')}}";
+$.getScript(url);
+</script>
+
 {% endblock content %}
