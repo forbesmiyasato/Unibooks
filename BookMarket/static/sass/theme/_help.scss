@@ -81,7 +81,7 @@
         &:nth-of-type(4) {
             order: 6;
             @media (max-width: 560px) {
-                order: 3;
+                order: 6;
             }
         }
         &:nth-of-type(5) {
@@ -91,7 +91,7 @@
             order: 4;
 
             @media (max-width: 560px) {
-                order: 6;
+                order: 3;
             }
         }
     }
@@ -103,15 +103,15 @@
         text-align: center;
         display: none;
 
-        & #send-button {
+        & .send-button {
             padding-bottom: 15px;
         }
-        & #contact-us-container {
+        & .contact-us-container {
             border-left: none;
             width: 70%;
         }
 
-        & #contact-us-container.not-logged-in {
+        & .contact-us-container.not-logged-in {
             border-left: 4px solid #bd362f;
         }
 

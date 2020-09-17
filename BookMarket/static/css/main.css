@@ -6300,26 +6300,26 @@ label {
       order: 6; }
       @media (max-width: 560px) {
         .help-container .help-item:nth-of-type(4) {
-          order: 3; } }
+          order: 6; } }
     .help-container .help-item:nth-of-type(5) {
       order: 5; }
     .help-container .help-item:nth-of-type(6) {
       order: 4; }
       @media (max-width: 560px) {
         .help-container .help-item:nth-of-type(6) {
-          order: 6; } }
+          order: 3; } }
   .help-container .help-detail {
     box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
     background-color: #fff;
     border-radius: 10px;
     text-align: center;
     display: none; }
-    .help-container .help-detail #send-button {
+    .help-container .help-detail .send-button {
       padding-bottom: 15px; }
-    .help-container .help-detail #contact-us-container {
+    .help-container .help-detail .contact-us-container {
       border-left: none;
       width: 70%; }
-    .help-container .help-detail #contact-us-container.not-logged-in {
+    .help-container .help-detail .contact-us-container.not-logged-in {
       border-left: 4px solid #bd362f; }
     .help-container .help-detail fieldset.form-group {
       text-align: left; }

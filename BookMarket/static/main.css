@@ -948,14 +948,14 @@ body.need-school .school-overlay {
     border-left: 4px solid #70a9da;
 }
 
-#contact-us-container.not-logged-in {
+.contact-us-container.not-logged-in {
     border-left: 4px solid #bd362f;
 }
 
-#contact-us-container * #message-text-area {
+.contact-us-container * .message-text-area {
     min-height: 200px;
 }
-#contact-us-container.not-logged-in .message-overlay {
+.contact-us-container.not-logged-in .message-overlay {
     display: block;
 }
 .message-overlay {

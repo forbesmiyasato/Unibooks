@@ -1,6 +1,6 @@
 {% block body_content %}
 {% if need_customization is defined %}
-<form method="POST" id="message-form" action="" enctype="multipart/form-data">
+<form method="POST" id="message-form-2" action="" enctype="multipart/form-data">
     {{message_form.hidden_tag()}}
     <fieldset class="form-group">
         <legend class="border-bottom mb-4">
@@ -39,37 +39,37 @@
             {% endif %}
         </div>
     </fieldset>
-    <div class="form-group send-button" id="send-button">
+    <div class="form-group send-button" id="send-button-2">
         {{ message_form.message_submit(class="btn btn-outline-info", onclick="history.replaceState(null, null, ' ');")}}
     </div>
 </form>
 
 <script>
-    var $form = $('#message-form');
+    var $form2 = $('#message-form-2');
 
-    $form.on('submit', function (e) {
+    $form2.on('submit', function (e) {
         e.preventDefault();
         console.log("SUBMITTED")
 
-        var formData = new FormData()
+        var formData2 = new FormData()
         // append inputs to FormData
-        $.each($form.serializeArray(), function (key, field) {
+        $.each($form2.serializeArray(), function (key, field) {
             console.log(field.name, field.value)
-            formData.append(field.name, field.value);
+            formData2.append(field.name, field.value);
         });
 
-        for (var value of formData.values()) {
+        for (var value of formData2.values()) {
             console.log("1", value);
         }
 
         $.ajax({
             url: window.location.href,
-            type: $form.attr('method') || 'POST',
+            type: $form2.attr('method') || 'POST',
             enctype: $form.attr('enctype') || 'multipart/form-data',
             cache: false,
             contentType: false,
             processData: false,
-            data: formData,
+            data: formData2,
             async: true,
             success: function (response) {
                 // $('#block-content').html(response.html);
@@ -79,7 +79,7 @@
                 }
                 else if (response.origin === 'contactus') {
                     toastr.success("Message Sent! Thank you for contacting us!");
-                    document.getElementById('send-button').innerHTML = "Your message is sent. Thank you for contacting us!"
+                    document.getElementById('send-button-2').innerHTML = "Your message is sent. Thank you for contacting us!"
                 }
             },
             beforeSend: function () {

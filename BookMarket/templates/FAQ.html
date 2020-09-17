@@ -135,8 +135,7 @@
     <!-- Report a bug -->
     <div class="help-detail" id="help-detail-4">
       <h2>Report a bug</h2>
-      <div class="container-sm mb-5 {% if current_user.is_authenticated == False %}not-logged-in{% endif %}"
-        id="contact-us-container">
+      <div class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
         <div class="message-overlay">
           <div class="message-error-container">
             <div class="message-error">
@@ -155,8 +154,7 @@
     <!-- help -->
     <div class="help-detail" id="help-detail-5">
       <h2>Need Help?</h2>
-      <div class="container-sm mb-5 {% if current_user.is_authenticated == False %}not-logged-in{% endif %}"
-        id="contact-us-container">
+      <div class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
         <div class="message-overlay">
           <div class="message-error-container">
             <div class="message-error">
@@ -166,10 +164,10 @@
             </div>
           </div>
         </div>
-        <form method="POST" id="message-form" action="" enctype="multipart/form-data">
+        <form method="POST" id="message-form-2" action="" enctype="multipart/form-data">
           {{message_form.hidden_tag()}}
           <fieldset class="form-group">
-            {% include "message_form.html" %}
+            {% include "message_form_2.html" %}
       </div>
     </div>
   </div>
@@ -198,6 +196,12 @@
   }
 
   const changeContent = (num) => {
+    // if (num === 5) {
+    //   num = 4
+    //   document.getElementById('help-message-text').innerHTML = "Need Help"
+    // } else if (num === 4) {
+    //   document.getElementById('help-message-text').innerHTML = "Report a bug"
+    // }
     document.getElementsByClassName('help-grid')[0].style.display = 'none';
     $(`#help-detail-${num}`).fadeIn(1000);
     $('#help-back').fadeIn(1000);

@@ -73,7 +73,7 @@ def help():
                                                                                    email=email, body=request.form.get('message')))
         sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
         sender.start()
-        return jsonify(origin='contactus')
+        return jsonify({'origin': 'contactus'})
 
     return render_template('FAQ.html', standalone=standalone, title="Help", message_form=message_form,
                            message_title="Need help?", optional="(optional)")

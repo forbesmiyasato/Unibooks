@@ -17,8 +17,7 @@
 </section>
 <!-- End Banner Area -->
 <div style="padding-left:15px; padding-right: 15px;">
-    <div class="container-sm mb-5 {% if current_user.is_authenticated == False %}not-logged-in{% endif %}"
-        id="contact-us-container">
+    <div class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
         <div class="message-overlay">
             <div class="message-error-container">
                 <div class="message-error">
