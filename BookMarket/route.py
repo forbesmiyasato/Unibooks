@@ -403,13 +403,18 @@ def get_edit_form(item_id=None):
     edit_form.price.data = _item.price
     edit_form.isbn.data = _item.isbn
     edit_form.author.data = _item.author
-    edit_form.item_class.data = item_class
-    edit_form.item_department.data = department.department_name
+    if _item.category_id is not None:
+        print(_item.category_id)
+        edit_form.item_category.data = _item.category_id
+    else:
+        edit_form.item_class.data = item_class
+        edit_form.item_department.data = department
     isBook = True if _item.category_id is None else False
-    # for messaging
+    categories = ItemCategory.query.filter_by(school=session['school']).all()
+    category = ItemCategory.query.get(_item.category_id)    # for messaging
     return render_template('post_form.html', title=_item.name, item=_item, images=images,
                            item_class=item_class, department=department, form=edit_form, legend="Edit",
-                           item_id=item_id, departments=departments, isBook=isBook)
+                           item_id=item_id, departments=departments, isBook=isBook, categories=categories, category=category)
 
 
 @app.context_processor

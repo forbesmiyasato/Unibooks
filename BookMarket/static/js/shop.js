@@ -523,9 +523,11 @@ function initializeShopPage() {
 
 const browseCollapse = () => {
     if (document.documentElement.clientWidth < 768) {
-        if ($("#browse-categories")[0].classList.contains("collapsed") !== true) {
-            console.log("COLLAPSE")
-            console.log($(".browse-collapse"))
+        if (
+            $("#browse-categories")[0].classList.contains("collapsed") !== true
+        ) {
+            console.log("COLLAPSE");
+            console.log($(".browse-collapse"));
             $(".browse-collapse").collapse("toggle");
         }
     }
@@ -712,7 +714,7 @@ const highlightNavLink = () => {
 
 //listings
 let prevModal = null;
-const listingEditClicked = (id, item_class, item_department) => {
+const listingEditClicked = (id, item_category, item_class, item_department) => {
     let url = `/editform/${id}`;
     if (prevModal) {
         prevModal.empty();
@@ -726,21 +728,33 @@ const listingEditClicked = (id, item_class, item_department) => {
             console.log("test", item_class);
             console.log(item_department);
             //     window.location.hash = 'update';
-            let class_select = document.getElementById("class_list");
-            let department_select = document.getElementById("department_list");
-            console.log(class_select);
-            class_select.value = item_class;
-            department_select.value = item_department;
+            console.log("category", item_category);
+            if (item_category !== "None") {
+                let category_select = document.getElementById("category_list");
+                category_select.value = item_category;
 
-            var $department_select = $(
-                document.getElementById("department_list")
-            );
-            var department_selectize = $department_select[0].selectize;
-            department_selectize.setValue(item_department);
+                var $category_select = $(category_select)
+                var category_selectize = $category_select[0].selectize;
+                category_selectize.setValue(item_category);
+            } else {
+                let class_select = document.getElementById("class_list");
+                let department_select = document.getElementById(
+                    "department_list"
+                );
+                console.log(class_select);
+                class_select.value = item_class;
+                department_select.value = item_department;
 
-            var $class_select = $(document.getElementById("class_list"));
-            var class_selectize = $class_select[0].selectize;
-            class_selectize.setValue(item_class);
+                var $department_select = $(
+                    document.getElementById("department_list")
+                );
+                var department_selectize = $department_select[0].selectize;
+                department_selectize.setValue(item_department);
+
+                var $class_select = $(document.getElementById("class_list"));
+                var class_selectize = $class_select[0].selectize;
+                class_selectize.setValue(item_class);
+            }
         },
         beforeSend: function () {
             console.log("BEFORE");
