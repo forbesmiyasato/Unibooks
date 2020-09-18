@@ -1,20 +1,19 @@
 {% block body_content %}
 <section class="lattest-product-area pb-40 category-list" id="items-list">
     <!-- <div class="text-center mt-5 mb-5" id="posts-spinner"> -->
-    <h3>Did you mean:</h3></br>
     {% if foundCourse != None %}
-    <a onclick="return filterByClass({{foundCourse.id}})" href="/shop?class={{foundCourse.id}}">
-        Course: {{foundCourse.abbreviation}}
-    </a></br>
+    </br><h3>Did you mean this course:<a onclick="return filterByClass({{foundCourse.id}})" href="/shop?class={{foundCourse.id}}">
+        {{foundCourse.abbreviation}}
+    </a></h3></br>
     {% endif %}
     {% if foundDepartment != None %}
-    <a onclick="return filterByDepartment({{foundDepartment.id}})" href="/shop?department={{foundDepartment.id}}">
-        Department: {{foundDepartment.abbreviation}} -{{foundDepartment.department_name}}
-    </a></br>
+    <h3>Did you mean this department:<a onclick="return filterByDepartment({{foundDepartment.id}})" href="/shop?department={{foundDepartment.id}}">
+        {{foundDepartment.abbreviation}} - {{foundDepartment.department_name}}
+    </a></h3></br>
     {% endif %}
     {% if foundCategory != None %}
-    <a onclick="return filterByCategory({{foundCategory.id}})" href="/shop?nonbook={{foundCategory.id}}">Other:
-        {{foundCategory.category_name}} </a>
+    <h3>Did you mean:<a onclick="return filterByCategory({{foundCategory.id}})" href="/shop?nonbook={{foundCategory.id}}">Other:
+        {{foundCategory.category_name}} </a></h3>
     {% endif %}
     {% if posts.total == 0 %}
     <div class="container no-results mt-5">
