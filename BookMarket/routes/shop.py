@@ -1,6 +1,7 @@
 import re
 import threading
 import concurrent.futures
+import timeit
 from datetime import datetime
 from flask import render_template, request, Blueprint, jsonify, url_for, flash, session, redirect, current_app
 from flask_login import current_user
@@ -17,6 +18,7 @@ shop_api = Blueprint('shop_api', __name__,
 
 @shop_api.route("/shop")
 def shop():
+    start = timeit.timeit()
     standalone = request.args.get('standalone')
     if session.get('school') is None:
         flash("School Session Needed", 'error')
@@ -26,7 +28,8 @@ def shop():
     departments = ItemDepartment.query.filter_by(school=school).order_by(
             ItemDepartment.abbreviation).all()
     categories = ItemCategory.query.filter_by(school=session['school']).all()
-
+    end = timeit.timeit()
+    print ("EXECUTION TIME SHOP", end - start)
     return render_template('shop.html', title='Shop', departments=departments, standalone=standalone, categories=categories)
 
 
@@ -41,6 +44,7 @@ def findMatchingCategory(search_term):
 
 @shop_api.route("/shop/data")
 def getPosts():
+    start = timeit.timeit()
     num_results = 0
     department_id = request.args.get('department')
     category = request.args.get('nonbook')
@@ -126,6 +130,8 @@ def getPosts():
     if show_term == 'all':
         per_page = posts.count()
     posts = posts.paginate(page=page, per_page=per_page)
+    end = timeit.timeit()
+    print ("EXECUTION TIME SHOP DATA", end - start)
     return jsonify(html=render_template("shop-main.html", posts=posts, foundCourse=matchCourse, foundDepartment=matchDepartment, foundCategory=match_category),
                    department=department, course=course, sort=original_sort_term, filter=filter_term, show=show_term,
                    search=search, numResults=num_results)
