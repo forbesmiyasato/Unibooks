@@ -103,11 +103,12 @@ const getData = (url, first) => {
                         `<a class="text-white">"${search}"</a>`
                 );
                 $("#nav-course").html("");
-            } else {
-                // $("#nav-header").html("All Categories");
-                $("#nav-department").html("");
-                $("#nav-course").html("");
-            }
+            } 
+            // else {
+            //     // $("#nav-header").html("All Categories");
+            //     $("#nav-department").html("");
+            //     $("#nav-course").html("");
+            // }
 
             $("#reloading-content").html(response.html);
         },
@@ -222,13 +223,10 @@ const show = (ele, term, push) => {
 const filterByPrice = (ele, filter, push) => {
     let reclicked = false;
     let active = document.getElementsByClassName("filter dropdown-item active");
-    console.log(active);
     if (active.length > 0 && ele != active[0]) {
-        console.log(active[0]);
         active[0].classList.remove("active");
     }
 
-    console.log(ele);
     if (ele.classList.contains("active")) {
         ele.classList.remove("active");
         reclicked = true;
@@ -280,7 +278,9 @@ const getAll = () => {
 
     url.search = search_params.toString();
 
-    console.log("3");
+    let school = localStorage.getItem("school");
+    document.getElementById("nav-header").innerHTML = getSchoolName(school);
+
     getData(url);
 };
 
@@ -302,17 +302,10 @@ const getFromPage = (page_num) => {
     params = params.substring(params.lastIndexOf("/") + 1);
     history.pushState(null, "", params);
 
-    console.log(url.toString());
-    console.log("4");
     getData(url.toString());
 };
 
-const filterByClass = (
-    class_id,
-    class_name,
-    department_id,
-    department_name
-) => {
+const filterByClass = (class_id) => {
     browseCollapse();
 
     let url;
@@ -375,7 +368,7 @@ const filterByDepartment = (department_id) => {
     return false;
 };
 
-const filterByCategory = (term) => {
+const filterByCategory = (term, name) => {
     browseCollapse();
     let url;
     if (window.location.href.includes("?")) {
@@ -401,6 +394,24 @@ const filterByCategory = (term) => {
 
     history.pushState(null, "", `?nonbook=${term}`);
 
+    if (name === "All Non-Textbooks") {
+        $("#nav-header").html(name);
+        $("#nav-department").html(
+            '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
+                `<a class="text-white">Non-Textbooks</a>`
+        );
+        $("#nav-course").html("");
+    } else if (name) {
+        $("#nav-header").html(name);
+        $("#nav-department").html(
+            '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
+                `<a onclick="return filterByCategory('all', 'All Non-Textbooks')" href="/shop?nonbook=all">Non-Textbooks</a>`
+        );
+        $("#nav-course").html(
+            '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
+                `<a class="text-white">${name}</a>`
+        );
+    }
     getData(url.toString());
 
     return false;
@@ -726,7 +737,7 @@ const listingEditClicked = (id, item_category, item_class, item_department) => {
                 let category_select = document.getElementById("category_list");
                 category_select.value = item_category;
 
-                var $category_select = $(category_select)
+                var $category_select = $(category_select);
                 var category_selectize = $category_select[0].selectize;
                 category_selectize.setValue(item_category);
             } else {

@@ -22,7 +22,7 @@
                 <ul class="collapse" id="navOther" data-toggle="collapse" aria-expanded="false"
                     aria-controls="Other">
                     <li class="main-nav-list child">
-                        <a onclick="filterByCategory('all'); return false;"
+                        <a onclick="filterByCategory('all', 'All Non-Textbooks'); return false;"
                         href="{{url_for('shop_api.shop', nonbook='all')}}">All Others
                             <span class="number" id="other_total">
                                 {% if totalCategory != None %}
@@ -32,7 +32,7 @@
                         </a>
                     </li>
                     {% for category in categories %}
-                    <li class="main-nav-list child"><a onclick="filterByCategory({{category.id}}); return false;"
+                    <li class="main-nav-list child"><a onclick="filterByCategory({{category.id}}, '{{category.category_name}}'); return false;"
                         href="{{url_for('shop_api.shop', nonbook=category.id)}}">{{category.abbreviation}}<span
                                 class="number" id="category_total{{ category.id }}">{{ categoryObj[category.id] }}</span></a>
                     </li>
