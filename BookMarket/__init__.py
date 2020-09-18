@@ -4,6 +4,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+from flask_wtf.csrf import CSRFProtect
 from dotenv import load_dotenv
 from flask_mail import Mail
 from flask_talisman import Talisman
@@ -12,6 +13,8 @@ from flask_talisman import Talisman
 # from flask.ext.session import Session
 
 app = Flask(__name__)
+
+csrf = CSRFProtect(app)
 # Talisman(app)
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

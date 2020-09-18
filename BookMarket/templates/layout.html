@@ -3,11 +3,14 @@
 
 <head>
   <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-PTKJJXZ');</script>
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-PTKJJXZ');</script>
   <!-- End Google Tag Manager -->
 
   <!-- Required meta tags -->
@@ -130,9 +133,11 @@
             <ul class="nav navbar-nav menu_nav ml-auto">
               <li class="nav-item"><a id="home"
                   class="nav-link activable {% if (title == 'Home' or title == 'About Us' or title == 'Contact Us' or title == 'Help') %}active{% endif %}"
-                  onclick="linkClicked(this, '{{ url_for('home')}}'); return false;" href="{{ url_for('home')}}">Home</a></li>
+                  onclick="linkClicked(this, '{{ url_for('home')}}'); return false;"
+                  href="{{ url_for('home')}}">Home</a></li>
               <li class="nav-item"><a id="shop" class="nav-link activable {% if title == 'Shop' %}active{% endif %}"
-                  onclick="linkClicked(this, '{{ url_for('shop_api.shop')}}'); return false;" href="{{ url_for('shop_api.shop')}}">shop</a></li>
+                  onclick="linkClicked(this, '{{ url_for('shop_api.shop')}}'); return false;"
+                  href="{{ url_for('shop_api.shop')}}">shop</a></li>
               {% if current_user.is_authenticated %}
               <li class="nav-item"><a class="nav-link" href="{{ url_for('userAuth.logout')}}">Logout</a></li>
               <li class="nav-item submenu dropdown">
@@ -141,22 +146,28 @@
                   data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User</a>
                 <ul class="dropdown-menu">
                   <li class="nav-item"><a class="nav-link activable"
-                      onclick="linkClicked(this, '{{ url_for('account')}}'); return false;" href="{{ url_for('account')}}">Account</a></li>
+                      onclick="linkClicked(this, '{{ url_for('account')}}'); return false;"
+                      href="{{ url_for('account')}}">Account</a></li>
                   <li class="nav-item"><a class="nav-link activable"
-                      onclick="linkClicked(this, '{{ url_for('listings')}}'); return false;" href="{{ url_for('listings')}}">Listings</a></li>
+                      onclick="linkClicked(this, '{{ url_for('listings')}}'); return false;"
+                      href="{{ url_for('listings')}}">Listings</a></li>
                   <li class=" nav-item"><a class="nav-link"
-                      onclick="linkClicked(this, '{{ url_for('saved_for_later')}}'); return false;" href="{{ url_for('saved_for_later')}}">Saved</a></li>
+                      onclick="linkClicked(this, '{{ url_for('saved_for_later')}}'); return false;"
+                      href="{{ url_for('saved_for_later')}}">Saved</a></li>
                 </ul>
               </li>
               {% else %}
               <li class=" nav-item"><a id="login" class="nav-link activable {% if title == 'Login' %}active{% endif %}"
-                  onclick="linkClicked(this, '{{ url_for('userAuth.login')}}'); return false;" href="{{ url_for('userAuth.login')}}">Login</a></li>
+                  onclick="linkClicked(this, '{{ url_for('userAuth.login')}}'); return false;"
+                  href="{{ url_for('userAuth.login')}}">Login</a></li>
               <li class="nav-item"><a id="register"
                   class="nav-link activable {% if title == 'Register' %}active{% endif %}"
-                  onclick="linkClicked(this, '{{ url_for('userAuth.register')}}'); return false;" href="{{ url_for('userAuth.register')}}">Register</a></li>
+                  onclick="linkClicked(this, '{{ url_for('userAuth.register')}}'); return false;"
+                  href="{{ url_for('userAuth.register')}}">Register</a></li>
               {% endif %}
               <li class="nav-item"><a id="sell" class="nav-link activable {% if title == 'Sell' %}active{% endif %}"
-                  onclick="linkClicked(this, '{{ url_for('new_item')}}'); return false;" href="{{ url_for('new_item')}}">Sell</a></li>
+                  onclick="linkClicked(this, '{{ url_for('new_item')}}'); return false;"
+                  href="{{ url_for('new_item')}}">Sell</a></li>
             </ul>
             <ul class=" nav navbar-nav navbar-right">
               <li class="nav-item"><a id="shopping-cart"
@@ -192,7 +203,7 @@
     <script>
       toastr.options = { "positionClass": {% if message == 'Logged in!' or message == 'Logged out!' %} "toast-top-center" {% else %} "toast-top-center" {% endif %}
       , "closeButton": true, "timeOut": "6000" }
-      toastr.{{category}}("{{message}}");
+      toastr.{ { category } } ("{{message}}");
     </script>
     {% endfor %}
     {% endif %}
@@ -546,6 +557,16 @@
         $('.navbar-collapse').collapse("toggle")
       }
     }
+
+    var csrf_token = "{{ csrf_token() }}";
+
+    $.ajaxSetup({
+      beforeSend: function (xhr, settings) {
+        if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", csrf_token);
+        }
+      }
+    });
   </script>
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

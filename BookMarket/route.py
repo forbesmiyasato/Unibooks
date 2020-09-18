@@ -133,19 +133,19 @@ def new_item():
         db.session.commit()
         db.session.refresh(post)
         newId = post.id
+        item = Item.query.filter_by(id=newId).first()
         if images:
             print('before break 1')
             thumbnail = save_images_to_db_and_s3(images, newId)
             print('before break 2')
             if thumbnail:
-                item = Item.query.filter_by(id=newId).first()
                 item.thumbnail = thumbnail
         current_user.listings = current_user.listings + 1
         db.session.commit()
         # flash('Your post has been created!', 'success')
         # return redirect(url_for('home'))
         # result = {'url': url_for('shop_api.item', item_id=post.id)}
-        return jsonify({'html': (item_html(post.id, 'notfromnewitem')), 'url': url_for('shop_api.item', item_id=post.id)})
+        return jsonify({'html': (item_html(post.id, item, 'notfromnewitem')), 'url': url_for('shop_api.item', item_id=post.id)})
     if current_user.is_authenticated is False:
         if standalone:
             return jsonify({'state': "login-required"})

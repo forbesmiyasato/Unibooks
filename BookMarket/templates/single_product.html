@@ -70,7 +70,8 @@
                     </ul>
                     <p>{{item.description}}</p>
                     {% if current_user.confirmed != True %}
-                    <span><i class="fas fa-exclamation-triangle"></i> Confirm your account before sending messages</span>
+                    <span><i class="fas fa-exclamation-triangle"></i> Confirm your account before sending
+                        messages</span>
                     {% endif %}
                     <div class="card_area d-flex align-items-center">
                         {% if current_user.id == item.user_id %}
@@ -144,16 +145,18 @@
                                     <div class="modal-body">
                                         <div class="container">
                                             <div class="content-section">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
-                                                <form method="POST" id="message-form" action="" enctype="multipart/form-data">
+                                                <form method="POST" id="message-form" action=""
+                                                    enctype="multipart/form-data">
                                                     {{message_form.hidden_tag()}}
                                                     <fieldset class="form-group">
                                                         <legend class="border-bottom mb-4">
                                                             {{message_title}}
                                                         </legend>
-                                                {% include "message_form.html" %}
+                                                        {% include "message_form.html" %}
                                             </div>
                                         </div>
                                     </div>
@@ -211,18 +214,19 @@
 
     function addToBag(item_id, user_id) {
         document.querySelector('div.hover-text').innerHTML = 'Added!';
-        // const animation = document.createElement('span')
-        // animation.className = "ti-bag added-animation"
-
-        // document.getElementsByClassName('icon_btn')[0].append(animation);
-
-        // setTimeout(() => {
-        //     animation.remove();
-        // }, 1000);
 
         var url = "{{url_for('add_to_bag', item='tempItem', user='tempUser')}}"
             .replace('tempItem', item_id).replace('tempUser', user_id).replace('&amp;', '&')
 
+        var csrf_token = "{{ csrf_token() }}";
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                }
+            }
+        });
         $.post(url, null, (data, status) => {
             if (data.added) {
                 let bagIcon = document.getElementsByClassName("bag-icon")[0];

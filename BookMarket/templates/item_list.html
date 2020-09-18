@@ -98,6 +98,15 @@
         var url = "{{url_for('add_to_bag', item='tempItem', user='tempUser')}}"
             .replace('tempItem', item_id).replace('tempUser', user_id).replace('&amp;', '&')
 
+        var csrf_token = "{{ csrf_token() }}";
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                }
+            }
+        });
         $.post(url, null, (data, status) => {
             if (data.added) {
                 let bagIcon = document.getElementsByClassName("bag-icon")[0];
