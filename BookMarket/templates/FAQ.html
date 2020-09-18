@@ -222,12 +222,12 @@
     elements[num].onclick = null;
     console.log("!!", elements[num].onclick)
     count++;
-    x++;
+    x--;
     while (count < 6) {
-      if (x > 5) x = 0;
+      if (x < 0) x = 5;
       deLoad(elements[x], count);
       elements[x].onclick = null;
-      x++;
+      x--;
       count++;
     }
 
