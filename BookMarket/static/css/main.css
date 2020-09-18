@@ -6219,35 +6219,63 @@ label {
   width: 350px;
   height: 350px;
   margin: 20px auto 40px auto; }
-
-.about-forbes-insta {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  font-size: 100px; }
-
-.about-forbes-linkedin {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  font-size: 100px; }
-
-.about-forbes-insta,
-.about-forbes-linkedin {
-  -webkit-transition: transform 0.5s;
-  -moz-transition: transform 0.5s;
-  transition: transform 0.5s;
-  color: #007bff; }
-
-.about-forbes-linkedin:hover,
-.about-forbes-insta:hover {
-  color: #00BFFF;
-  -moz-transform: scale(1.2);
-  -webkit-transform: scale(1.2);
-  -o-transform: scale(1.2);
-  -ms-transform: scale(1.2);
-  -webkit-transform: scale(1.2);
-  transform: scale(1.2); }
+  .about-image-container .bubble {
+    opacity: 0;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    font-family: sans-serif;
+    font-size: 18px;
+    line-height: 24px;
+    width: 300px;
+    background: #fff;
+    border-radius: 40px;
+    padding: 24px;
+    text-align: center;
+    color: #000;
+    -webkit-transition: opacity 0.5s;
+    -moz-transition: opacity 0.5s;
+    transition: opacity 0.5s; }
+  .about-image-container .bubble-bottom-left:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 24px solid #fff;
+    border-right: 12px solid transparent;
+    border-top: 12px solid #fff;
+    border-bottom: 20px solid transparent;
+    left: 32px;
+    bottom: -24px; }
+  .about-image-container .about-forbes-insta {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 100px; }
+    .about-image-container .about-forbes-insta:hover ~ .bubble-insta {
+      opacity: 1 !important; }
+  .about-image-container .about-forbes-linkedin {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: 100px; }
+    .about-image-container .about-forbes-linkedin:hover ~ .bubble-linkedin {
+      opacity: 1 !important; }
+  .about-image-container .about-forbes-insta,
+  .about-image-container .about-forbes-linkedin {
+    -webkit-transition: transform 0.5s;
+    -moz-transition: transform 0.5s;
+    transition: transform 0.5s;
+    color: #007bff; }
+    .about-image-container .about-forbes-insta:hover,
+    .about-image-container .about-forbes-linkedin:hover {
+      color: #00BFFF;
+      -moz-transform: scale(1.2);
+      -webkit-transform: scale(1.2);
+      -o-transform: scale(1.2);
+      -ms-transform: scale(1.2);
+      -webkit-transform: scale(1.2);
+      transform: scale(1.2); }
 
 .help-container {
   max-width: 800px;
