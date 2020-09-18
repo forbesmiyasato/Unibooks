@@ -733,7 +733,7 @@ body.loading .overlay {
 #posts-spinner.loading .list-overlay {
     display: block;
     margin-top: 100px;
-    margin-bottom: 600px;
+    padding-bottom: 600px;
 }
 
 .modal-content.loading .list-overlay {

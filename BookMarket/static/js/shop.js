@@ -4,7 +4,6 @@ function getParameterByName(name) {
 }
 
 const showSwitch = (show_term) => {
-    console.log(show_term);
     switch (show_term) {
         case "all":
             $("#show-button-text").html("Showing All");
@@ -15,7 +14,6 @@ const showSwitch = (show_term) => {
     }
 };
 const filterSwitch = (filter_term) => {
-    console.log(filter_term);
     switch (filter_term) {
         case "0+25":
             $("#filter-button-text").html("Filter By: $0 - $25");
@@ -33,7 +31,6 @@ const filterSwitch = (filter_term) => {
             $("#filter-button-text").html("Filter By: Over $150");
             break;
         default:
-            console.log("default!!!");
             $("#filter-button-text").html("Filter By");
             break;
     }
@@ -69,14 +66,12 @@ const getData = (url, first) => {
                     location.reload();
                 }
             }
-            // console.log(response)
             let course = response.course;
             let department = response.department;
             let search = response.search;
             let numResults = response.numResults;
-            // let sort = response.sort
-            // let filter = response.filter
-            // let show = response.filter
+            let category = response.category;
+
             if (course) {
                 $("#nav-header").html(course.long);
                 $("#nav-department").html(
@@ -103,6 +98,25 @@ const getData = (url, first) => {
                         `<a class="text-white">"${search}"</a>`
                 );
                 $("#nav-course").html("");
+            } else if (category) {
+                if (category.long === "All Non-Textbooks") {
+                    $("#nav-header").html(category.long);
+                    $("#nav-department").html(
+                        '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
+                            `<a class="text-white">${category.short}</a>`
+                    );
+                    $("#nav-course").html("");
+                } else if (category.long) {
+                    $("#nav-header").html(category.long);
+                    $("#nav-department").html(
+                        '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
+                            `<a onclick="return filterByCategory('all', 'All Non-Textbooks')" href="/shop?nonbook=all">Non-Textbooks</a>`
+                    );
+                    $("#nav-course").html(
+                        '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
+                            `<a class="text-white">${category.short}</a>`
+                    );
+                }
             }
             // else {
             //     // $("#nav-header").html("All Categories");
@@ -113,7 +127,6 @@ const getData = (url, first) => {
             $("#reloading-content").html(response.html);
         },
         beforeSend: function () {
-            console.log("item list before send");
             $("#posts-spinner").toggleClass("loading");
             $("#items-list").hide();
         },
@@ -122,22 +135,19 @@ const getData = (url, first) => {
         },
         error: function (xhr) {
             displayErrorMessage("Error occurred due to invalid Behavior!");
-            getAll();
+            return;
         },
     });
-    if (first === true) {
-        console.log("FIRST!!!!!!!!!");
 
-        $(window).scrollTop(0);
-    } else {
-        console.log("!!!!!!!!!");
-
-        $(document.body).scrollTop($("#shop-top-bar").offset().top);
-    }
+    // //start at top of page on first load but then scroll to top bar everytime after
+    // if (first === true) {
+    //     $(window).scrollTop(0);
+    // } else {
+    //     $(document.body).scrollTop($("#shop-top-bar").offset().top);
+    // }
 };
 
 function clearAllActiveSelections() {
-    console.log("Activated");
     let sortActive = document.getElementsByClassName(
         "sort dropdown-item active"
     );
@@ -151,7 +161,6 @@ function clearAllActiveSelections() {
         "show dropdown-item active"
     );
 
-    console.log("111", filterActive);
     if (sortActive.length > 0) {
         sortActive[0].classList.remove("active");
         sortSwitch("default");
@@ -178,13 +187,10 @@ function insertBeforeLastOccurrence(strToSearch, strToFind, strToInsert) {
 const show = (ele, term, push) => {
     let reclicked = false;
     let active = document.getElementsByClassName("show dropdown-item active");
-    console.log(active);
     if (active.length > 0 && ele != active[0]) {
-        console.log(active[0]);
         active[0].classList.remove("active");
     }
 
-    console.log(ele);
     if (ele.classList.contains("active")) {
         ele.classList.remove("active");
         reclicked = true;
@@ -193,7 +199,6 @@ const show = (ele, term, push) => {
     }
 
     let url;
-    console.log(ele);
     if (window.location.href.includes("?")) {
         url = new URL(
             insertBeforeLastOccurrence(window.location.href, "?", "/data")
@@ -350,7 +355,6 @@ const filterByDepartment = (department_id) => {
     }
     let search_params = url.searchParams;
 
-    console.log(url);
 
     search_params.set("department", department_id);
     search_params.delete("class");
@@ -423,16 +427,13 @@ var disabled;
 const sort = (ele, order, push) => {
     let reclicked = false;
     let active = document.getElementsByClassName("sort dropdown-item active");
-    console.log(active);
     if (active.length > 0 && ele != active[0]) {
-        console.log(active[0]);
         active[0].classList.remove("active");
     }
     if (order === "newest") {
         ele.classList.add("disabled");
         disabled = ele;
     } else {
-        console.log(ele);
         if (ele.classList.contains("active")) {
             ele.classList.remove("active");
             reclicked = true;
@@ -465,7 +466,6 @@ const sort = (ele, order, push) => {
     params = params.substring(params.lastIndexOf("/") + 1);
 
     if (push) {
-        console.log("TESTTTTTTTTTTTTTTTTTTT");
         history.pushState(null, "", params);
         getData(url.toString());
     }
@@ -490,8 +490,6 @@ function initializeShopPage() {
     let filter_term = url.searchParams.get("filter");
     let show_term = url.searchParams.get("show");
 
-    console.log(sort_term, filter_term, show_term);
-
     if (sort_term) {
         const sort_element = document.getElementById(sort_term);
         if (sort_element) {
@@ -502,7 +500,6 @@ function initializeShopPage() {
     }
 
     if (filter_term) {
-        console.log("!!!!!!!!!!", filter_term);
         const filter_element = document.getElementById(filter_term);
         if (filter_element) {
             filterByPrice(
@@ -524,7 +521,7 @@ function initializeShopPage() {
         }
     }
     browseCollapse();
-    getData(url.toString(), true);
+    getData(url.toString());
 }
 
 const browseCollapse = () => {
@@ -532,24 +529,18 @@ const browseCollapse = () => {
         if (
             $("#browse-categories")[0].classList.contains("collapsed") !== true
         ) {
-            console.log("COLLAPSE");
-            console.log($(".browse-collapse"));
             $(".browse-collapse").collapse("toggle");
         }
     }
 };
-// $('document').ready(function () {
-//    initializeShopPage();
-// })
+
 let deletedItems = new Object();
 
 const onSavedDelete = (index, name, id, url) => {
     deletedItems[index] = document.getElementById(`row-${index}`).innerHTML;
 
     const deletedRow = $(`#row-${index}`);
-    console.log(url);
     const itemUrl = `/shop/${id}`;
-    console.log(itemUrl);
     deletedRow.html(
         `<td colspan='4' class='deleted-item'>Deleted <a href="javascript:;" onclick="onItemClick('${itemUrl}')">${name}</a> from your bag
         <a href="javascript:;" onclick="onSavedUndo(${index}, ${id})">Undo</a></td>`
@@ -577,11 +568,9 @@ const onSavedUndo = (index, id) => {
 };
 
 const initializeSingleProductPage = () => {
-    console.log("invoked");
     var numImages = document.getElementsByClassName("single-prd-item").length;
 
     if (numImages <= 1) {
-        console.log(numImages);
         $(".s_Product_carousel").owlCarousel({
             items: 1,
             autoplay: false,
@@ -598,12 +587,7 @@ const initializeSingleProductPage = () => {
     }
 };
 
-// $('document').ready(function () {
-//    initializeSingleProductPage();
-// })
-
 onItemDelete = (url, name, num, origin) => {
-    console.log(origin);
     $.ajax({
         url: url,
         type: "post",
@@ -627,19 +611,14 @@ onItemDelete = (url, name, num, origin) => {
         },
         beforeSend: function () {
             $("body").toggleClass("loading");
-            console.log(`#deleteModal${num}`);
             $(`#deleteModal${num}`).modal("hide");
             $("#loader-text").html(`Deleting "${name}"...`);
         },
         complete: function () {
             $("body").toggleClass("loading");
             $("#loader-text").html("Loading...");
-            // if (path === 'shop') {
-            //   initializeShopPage();
-            // }
         },
     });
-    console.log(url);
     listings_html = null;
 };
 
@@ -698,23 +677,16 @@ const highlightNavLink = () => {
         active = document.getElementById("home");
         document.title = "Help" + ending;
     } else {
-        console.log("!!!!!!!!!!!!", path.split("?")[0]);
         document.title = path.charAt(0).toUpperCase() + path.slice(1) + ending;
         active = document.getElementById(path.split("?")[0]);
     }
-    console.log(path, active);
     if (active) {
         let prevActive = document.getElementsByClassName("activable active")[0];
-        console.log("PREV ACTIVE", prevActive);
         if (prevActive) {
             prevActive.classList.remove("active");
-            console.log(prevActive.classList.contains("active"));
         }
 
-        console.log("PATH", path);
-
         active.classList.add("active");
-        console.log("ACTIVE", active);
     }
 };
 
@@ -731,10 +703,6 @@ const listingEditClicked = (id, item_category, item_class, item_department) => {
         async: true,
         success: function (response) {
             $(`#modal-body-${id}`).html(response);
-            console.log("test", item_class);
-            console.log(item_department);
-            //     window.location.hash = 'update';
-            console.log("category", item_category);
             if (item_category !== "None") {
                 let category_select = document.getElementById("category_list");
                 category_select.value = item_category;
@@ -747,7 +715,6 @@ const listingEditClicked = (id, item_category, item_class, item_department) => {
                 let department_select = document.getElementById(
                     "department_list"
                 );
-                console.log(class_select);
                 class_select.value = item_class;
                 department_select.value = item_department;
 
@@ -763,21 +730,17 @@ const listingEditClicked = (id, item_category, item_class, item_department) => {
             }
         },
         beforeSend: function () {
-            console.log("BEFORE");
             $(`#modal-body-${id}`).html("");
             $(`.modal-content-${id}`).toggleClass("loading");
         },
         complete: function () {
-            console.log("AFTER");
             $(`.modal-content-${id}`).toggleClass("loading");
             prevModal = $(`#modal-body-${id}`);
         },
     });
-    console.log(url);
 };
 
 const getSchoolName = (id) => {
-    console.log(id);
     switch (id) {
         case "1":
             return "Pacific University";

@@ -1,6 +1,7 @@
 import re
 import threading
 import concurrent.futures
+import time
 from datetime import datetime
 from flask import render_template, request, Blueprint, jsonify, url_for, flash, session, redirect, current_app
 from flask_login import current_user
@@ -112,9 +113,12 @@ def getPosts():
         if category == "all":
             posts = posts.filter(Item.category_id != None).order_by(
                 sort_by)
+            category = {"short": "Non-Textbooks", "long": "All Non-Textbooks"}
         else:
             posts = posts.filter_by(category_id=category).order_by(
             sort_by)
+            category = ItemCategory.query.filter_by(id=category).first()
+            category = {"short": category.abbreviation, "id": category.id, "long": category.category_name}
     else:
         posts = posts.order_by(
             sort_by)
@@ -128,7 +132,7 @@ def getPosts():
     posts = posts.paginate(page=page, per_page=per_page)
     return jsonify(html=render_template("shop-main.html", posts=posts, foundCourse=matchCourse, foundDepartment=matchDepartment, foundCategory=match_category),
                    department=department, course=course, sort=original_sort_term, filter=filter_term, show=show_term,
-                   search=search, numResults=num_results)
+                   search=search, numResults=num_results, category=category)
 
 
 def item_html(item_id, _item, standalone=None):

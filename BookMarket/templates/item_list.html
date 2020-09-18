@@ -1,5 +1,5 @@
 {% block body_content %}
-<section class="lattest-product-area pb-40 category-list">
+<section class="lattest-product-area pb-40 category-list" id="items-list">
     <!-- <div class="text-center mt-5 mb-5" id="posts-spinner"> -->
     <h3>Did you mean:</h3></br>
     {% if foundCourse != None %}
@@ -21,7 +21,7 @@
         <h1 class="pt-3 pb-3">Sorry there are no books that meet your search criteria at this moment</h1>
     </div>
     {% else %}
-    <div class="row" id="items-list">
+    <div class="row">
         {% for post in posts.items %}
         <!-- single product -->
         <div class="col-lg-4 col-md-6">
