@@ -103,7 +103,7 @@ const getData = (url, first) => {
                         `<a class="text-white">"${search}"</a>`
                 );
                 $("#nav-course").html("");
-            } 
+            }
             // else {
             //     // $("#nav-header").html("All Categories");
             //     $("#nav-department").html("");
@@ -281,6 +281,8 @@ const getAll = () => {
     let school = localStorage.getItem("school");
     document.getElementById("nav-header").innerHTML = getSchoolName(school);
 
+    $("#nav-department").html("");
+    $("#nav-course").html("");
     getData(url);
 };
 

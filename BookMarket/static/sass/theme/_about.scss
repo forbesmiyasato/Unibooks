@@ -1,5 +1,5 @@
 .founder-highlight {
-    color: $primary-color2;
+    color: $primary-color;
 }
 
 .about-image {
@@ -60,7 +60,8 @@
         bottom: 0;
         right: 0;
         font-size: 100px;
-
+        // background: #d6249f;
+        // background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
         &:hover ~ .bubble-insta {
             opacity: 1 !important;
         }
@@ -82,13 +83,17 @@
         -webkit-transition: transform 0.5s;
         -moz-transition: transform 0.5s;
         transition: transform 0.5s;
-        background: linear-gradient(to right bottom,$primary-color, $primary-color2);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
+
+        & img {
+            height: 100px;
+            width: 100px;
+        }
+        // background: linear-gradient(to right bottom,$primary-color, $primary-color2);
+        // -webkit-background-clip: text;
+        // background-clip: text;
+        // -webkit-text-fill-color: transparent;
 
         &:hover {
-            // color: $primary-color2;
             -moz-transform: scale(1.2);
             -webkit-transform: scale(1.2);
             -o-transform: scale(1.2);

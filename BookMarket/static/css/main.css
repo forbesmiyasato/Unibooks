@@ -6206,7 +6206,7 @@ label {
   margin-top: 10rem !important; }
 
 .founder-highlight {
-  color: #00BFFF; }
+  color: #87CEEB; }
 
 .about-image {
   width: 350px;
@@ -6269,11 +6269,11 @@ label {
   .about-image-container .about-forbes-linkedin {
     -webkit-transition: transform 0.5s;
     -moz-transition: transform 0.5s;
-    transition: transform 0.5s;
-    background: linear-gradient(to right bottom, #87CEEB, #00BFFF);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent; }
+    transition: transform 0.5s; }
+    .about-image-container .about-forbes-insta img,
+    .about-image-container .about-forbes-linkedin img {
+      height: 100px;
+      width: 100px; }
     .about-image-container .about-forbes-insta:hover,
     .about-image-container .about-forbes-linkedin:hover {
       -moz-transform: scale(1.2);
