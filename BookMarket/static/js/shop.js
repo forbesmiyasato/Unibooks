@@ -355,7 +355,6 @@ const filterByDepartment = (department_id) => {
     }
     let search_params = url.searchParams;
 
-
     search_params.set("department", department_id);
     search_params.delete("class");
     search_params.delete("search");
@@ -609,7 +608,13 @@ onItemDelete = (url, name, num, origin) => {
             };
             toastr.success(`Post ${name} Deleted!`);
         },
-        beforeSend: function () {
+        beforeSend: function (xhr, settings) {
+            if (
+                !/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) &&
+                !this.crossDomain
+            ) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            }
             $("body").toggleClass("loading");
             $(`#deleteModal${num}`).modal("hide");
             $("#loader-text").html(`Deleting "${name}"...`);
