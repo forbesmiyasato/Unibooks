@@ -7,7 +7,7 @@
             <div class="col-first">
                 <h1>Login</h1>
                 <nav class="d-flex align-items-center">
-                    <a href="javascript:linkClicked(document.getElementById('home'), '/home')">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a onclick="linkClicked(null, '/home'); return false;" href="/home">Home<span class="lnr lnr-arrow-right"></span></a>
                     <a class="nav-no-href">Login</a>
                 </nav>
             </div>
@@ -92,7 +92,8 @@
     </div>
     <div class="border-top pt-3 mb-4">
         <small class="text-muted">
-            Need An Account? <a class="ml-2" href="javascript:linkClicked(document.getElementById('register'), '{{ url_for('userAuth.register')}}')">Sign Up Now</a>
+            Need An Account? <a class="ml-2" onclick="linkClicked(null, '{{ url_for('userAuth.register')}}'); return false;"
+            href="{{ url_for('userAuth.register')}}">Sign Up Now</a>
         </small>
     </div>
 </div>

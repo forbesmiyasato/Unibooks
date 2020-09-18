@@ -1,57 +1,61 @@
 {% block body_content %}
 <section class="lattest-product-area pb-40 category-list">
     <!-- <div class="text-center mt-5 mb-5" id="posts-spinner"> -->
-    
+    <h3>Did you mean:</h3></br>
+    {% if foundCourse != None %}
+    <a onclick="return filterByClass({{foundCourse.id}})" href="/shop?class={{foundCourse.id}}">
+        Course: {{foundCourse.abbreviation}}
+    </a></br>
+    {% endif %}
+    {% if foundDepartment != None %}
+    <a onclick="return filterByDepartment({{foundDepartment.id}})" href="/shop?department={{foundDepartment.id}}">
+        Department: {{foundDepartment.abbreviation}} -{{foundDepartment.department_name}}
+    </a></br>
+    {% endif %}
+    {% if foundCategory != None %}
+    <a onclick="return filterByCategory({{foundCategory.id}})" href="/shop?nonbook={{foundCategory.id}}">Other:
+        {{foundCategory.category_name}} </a>
+    {% endif %}
     {% if posts.total == 0 %}
     <div class="container no-results mt-5">
         <h1 class="pt-3 pb-3">Sorry there are no books that meet your search criteria at this moment</h1>
-        <h3>Did you mean:</h3></br>
-        {% if foundCourse != None %}
-            <a href="javascript:filterByClass({{foundCourse.id}})">Course: {{foundCourse.abbreviation}}</a></br>
-        {% endif %}
-        {% if foundDepartment != None %}
-            <a href="javascript:filterByDepartment({{foundDepartment.id}})">Department: {{foundDepartment.abbreviation}} - {{foundDepartment.department_name}} </a></br>
-        {% endif %}
-        {% if foundCategory != None %}
-            <a href="javascript:filterByCategory({{foundCategory.id}})">Other: {{foundCategory.category_name}} </a>
-        {% endif %}
-        </div>
+    </div>
     {% else %}
     <div class="row" id="items-list">
         {% for post in posts.items %}
         <!-- single product -->
         <div class="col-lg-4 col-md-6">
             <div class="single-product">
-                <a href="javascript:onItemClick('{{url_for('shop_api.item', item_id=post.id)}}')"><img
-                        class="img-thumbnail list-image"
+                <a onclick="onItemClick('{{url_for('shop_api.item', item_id=post.id)}}'); return false"
+                    href="{{url_for('shop_api.item', item_id=post.id)}}"><img class="img-thumbnail list-image"
                         src="https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{post.thumbnail}}" alt=""></a>
                 <div class="product-details">
                     <h6 class="hover-line"><a
-                            href="javascript:onItemClick('{{url_for('shop_api.item', item_id=post.id)}}')">{{post.name}}</a>
+                            onclick="onItemClick('{{url_for('shop_api.item', item_id=post.id)}}'); return false"
+                            href="{{url_for('shop_api.item', item_id=post.id)}}">{{post.name}}</a>
                     </h6>
                     <div class="price">
                         <h6>{{post.price}}</h6>
                     </div>
                     <div class="prd-bottom">
-                        <a href="javascript:onItemClick('{{url_for('shop_api.item', item_id=post.id)}}')"
-                            class="social-info">
+                        <a onclick="onItemClick('{{url_for('shop_api.item', item_id=post.id)}}'); return false"
+                            href="{{url_for('shop_api.item', item_id=post.id)}}" class="social-info">
                             <span class="lnr lnr-move"></span>
                             <p class="hover-text">View more</p>
                         </a>
                         {% if current_user.id == post.user_id %}
-                        <a data-toggle="modal" data-target="#deleteModal{{loop.index}}" href="javascript:void(0)"
+                        <a data-toggle="modal" data-target="#deleteModal{{loop.index}}" href="javascript:;"
                             class="social-info">
                             <span class="lnr lnr-trash"></span>
                             <p class="hover-text">Delete</p>
                         </a>
                         {% else %}
-                        <a onclick="addToBag(this, {{post.id}}, {{current_user.id}})" href="javascript:void(0)"
+                        <a onclick="addToBag(this, {{post.id}}, {{current_user.id}})" href="javascript:;"
                             class="social-info">
                             <span class="ti-bag"></span>
                             <p class="hover-text">Add to bag</p>
                         </a>
-                        <a href="javascript:report({{post.id}})"
-                            class="social-info">
+                        <a onclick="report({{post.id}})" href="javascript:;" class="social-info">
                             <span class="lnr lnr-alarm"></span>
                             <p class="hover-text">Report</p>
                         </a>

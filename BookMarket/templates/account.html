@@ -7,7 +7,7 @@
             <div class="col-first">
                 <h1>Account</h1>
                 <nav class="d-flex align-items-center">
-                    <a href="javascript:linkClicked(document.getElementById('home'), '/home')">Home<span
+                    <a onclick="linkClicked(null, '/home'); return false" href="/home">Home<span
                             class="lnr lnr-arrow-right"></span></a>
                     <a class="nav-no-href">Account</span></a>
                 </nav>
@@ -22,13 +22,13 @@
             <div class="container no-results">
                 {% if current_user.confirmed == true %}
                 <h1 class="pt-3 pb-3">Your account is confirmed!</h1>
-                <a href="javascript:linkClicked(document.getElementById('sell'), '/item/new')"
+                <a onclick="linkClicked(document.getElementById('sell'), '/item/new'); return false;" href="/item/new"
                     class="genric-btn primary-border circle arrow">Start
                     Selling<span class="lnr lnr-arrow-right"></span></a>
                 {% else %}
                 <h1 class="pt-3 pb-3">Your account is not confirmed!</h1>
-                <a href="javascript:sendConfirmationEmail('{{url_for('userAuth.send_confirm_email')}}', '{{current_user.email}}')"
-                    class="genric-btn success circle">
+                <a onclick="sendConfirmationEmail('{{url_for('userAuth.send_confirm_email')}}', '{{current_user.email}}'); return false"
+                    href="javascript:;" class="genric-btn success circle">
                     Send Confirmation Email to {{ current_user.email}}</a>
                 {% endif %}
             </div>

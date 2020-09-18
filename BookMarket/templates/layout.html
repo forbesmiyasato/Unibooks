@@ -114,7 +114,7 @@
       <nav class="navbar navbar-expand-lg navbar-light main_box">
         <div class="header-container container">
           <!-- Brand and toggle get grouped for better mobile display -->
-          <a class="navbar-brand logo_h" href="javascript:linkClicked(document.getElementById('home'), '/home')"><img
+          <a class="navbar-brand logo_h" onclick="linkClicked(null, '/home'); return false;" href="/home"><img
               src="{{ url_for('static', filename='img/logo.png')}}" alt=""></a>
           <div class="switch-container-full">
             <span id="school-name-normal"></span>
@@ -130,9 +130,9 @@
             <ul class="nav navbar-nav menu_nav ml-auto">
               <li class="nav-item"><a id="home"
                   class="nav-link activable {% if (title == 'Home' or title == 'About Us' or title == 'Contact Us' or title == 'Help') %}active{% endif %}"
-                  onclick="linkClicked(this, '{{ url_for('home')}}')">Home</a></li>
+                  onclick="linkClicked(this, '{{ url_for('home')}}'); return false;" href="{{ url_for('home')}}">Home</a></li>
               <li class="nav-item"><a id="shop" class="nav-link activable {% if title == 'Shop' %}active{% endif %}"
-                  onclick="linkClicked(this, '{{ url_for('shop_api.shop')}}')">shop</a></li>
+                  onclick="linkClicked(this, '{{ url_for('shop_api.shop')}}'); return false;" href="{{ url_for('shop_api.shop')}}">shop</a></li>
               {% if current_user.is_authenticated %}
               <li class="nav-item"><a class="nav-link" href="{{ url_for('userAuth.logout')}}">Logout</a></li>
               <li class="nav-item submenu dropdown">
@@ -141,26 +141,27 @@
                   data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User</a>
                 <ul class="dropdown-menu">
                   <li class="nav-item"><a class="nav-link activable"
-                      onclick="linkClicked(this, '{{ url_for('account')}}')">Account</a></li>
+                      onclick="linkClicked(this, '{{ url_for('account')}}'); return false;" href="{{ url_for('account')}}">Account</a></li>
                   <li class="nav-item"><a class="nav-link activable"
-                      onclick="linkClicked(this, '{{ url_for('listings')}}')">Listings</a></li>
+                      onclick="linkClicked(this, '{{ url_for('listings')}}'); return false;" href="{{ url_for('listings')}}">Listings</a></li>
                   <li class=" nav-item"><a class="nav-link"
-                      onclick="linkClicked(this, '{{ url_for('saved_for_later')}}')">Saved</a></li>
+                      onclick="linkClicked(this, '{{ url_for('saved_for_later')}}'); return false;" href="{{ url_for('saved_for_later')}}">Saved</a></li>
                 </ul>
               </li>
               {% else %}
               <li class=" nav-item"><a id="login" class="nav-link activable {% if title == 'Login' %}active{% endif %}"
-                  onclick="linkClicked(this, '{{ url_for('userAuth.login')}}')">Login</a></li>
+                  onclick="linkClicked(this, '{{ url_for('userAuth.login')}}'); return false;" href="{{ url_for('userAuth.login')}}">Login</a></li>
               <li class="nav-item"><a id="register"
                   class="nav-link activable {% if title == 'Register' %}active{% endif %}"
-                  onclick="linkClicked(this, '{{ url_for('userAuth.register')}}')">Register</a></li>
+                  onclick="linkClicked(this, '{{ url_for('userAuth.register')}}'); return false;" href="{{ url_for('userAuth.register')}}">Register</a></li>
               {% endif %}
               <li class="nav-item"><a id="sell" class="nav-link activable {% if title == 'Sell' %}active{% endif %}"
-                  onclick="linkClicked(this, '{{ url_for('new_item')}}')">Sell</a></li>
+                  onclick="linkClicked(this, '{{ url_for('new_item')}}'); return false;" href="{{ url_for('new_item')}}">Sell</a></li>
             </ul>
             <ul class=" nav navbar-nav navbar-right">
               <li class="nav-item"><a id="shopping-cart"
-                  onclick="linkClicked(this, '{{ url_for('saved_for_later')}}?cart')"
+                  onclick="linkClicked(this, '{{ url_for('saved_for_later')}}?cart'); return false;"
+                  href="{{ url_for('saved_for_later')}}?cart"
                   class="cart activable {% if title == 'Saved?cart' %}active{% endif %}">
                   <span class="ti-bag"><span class="bag-icon">{{ numItems|length }}</span></span></a></li>
               <li class="nav-item switch-container-mobile">
@@ -440,7 +441,7 @@
         $('#block-content').html(login_html);
       } else if (path === 'register' && register_html) {
         $('#block-content').html(register_html);
-      } else if (path === 'shop' && shop_html && !other) {
+      } else if (path.includes('shop') && shop_html && !other) {
         $('#block-content').html(shop_html);
       } else if (path === 'aboutus' && about_html) {
         $('#block-content').html(about_html);
@@ -467,7 +468,7 @@
               register_html = response
             } else if (path.includes('login') && !login_html) {
               login_html = response
-            } else if (path === 'shop' && !shop_html) {
+            } else if (path.includes('shop') && !shop_html) {
               shop_html = response
             } else if (path === 'aboutus' && !about_html) {
               about_html = response

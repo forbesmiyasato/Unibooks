@@ -7,7 +7,7 @@
         <ul class="main-categories browse-collapse collapse show" id="main-categories" data-toggle="collapse"
             aria-expanded="false" aria-controls="">
             <li class="main-nav-list">
-                <a href="javascript:getAll()">All<span class="number">{{ items|length }}</span></a>
+                <a onclick="getAll(); return false;" href="{{url_for('shop_api.shop')}}">All<span class="number">{{ items|length }}</span></a>
             </li>
             <!-- Other -->
             <li class="main-nav-list">
@@ -22,7 +22,8 @@
                 <ul class="collapse" id="navOther" data-toggle="collapse" aria-expanded="false"
                     aria-controls="Other">
                     <li class="main-nav-list child">
-                        <a href="javascript:filterByCategory('all')">All Others
+                        <a onclick="filterByCategory('all'); return false;"
+                        href="{{url_for('shop_api.shop', nonbook='all')}}">All Others
                             <span class="number" id="other_total">
                                 {% if totalCategory != None %}
                                 {{ totalCategory }}
@@ -31,7 +32,8 @@
                         </a>
                     </li>
                     {% for category in categories %}
-                    <li class="main-nav-list child"><a href="javascript:filterByCategory({{category.id}})">{{category.abbreviation}}<span
+                    <li class="main-nav-list child"><a onclick="filterByCategory({{category.id}}); return false;"
+                        href="{{url_for('shop_api.shop', nonbook=category.id)}}">{{category.abbreviation}}<span
                                 class="number" id="category_total{{ category.id }}">{{ categoryObj[category.id] }}</span></a>
                     </li>
                     {% endfor %}

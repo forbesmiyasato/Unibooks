@@ -81,7 +81,7 @@ const getData = (url, first) => {
                 $("#nav-header").html(course.long);
                 $("#nav-department").html(
                     '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
-                        `<a href="javascript:filterByDepartment(${department.id})">${department.short}</a>`
+                        `<a onclick="return filterByDepartment(${department.id})" href="/shop?department=${department.id}">${department.short}</a>`
                 );
                 $("#nav-course").html(
                     '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
@@ -338,10 +338,9 @@ const filterByClass = (
 
     history.pushState(null, "", `?class=${class_id}`);
 
-    console.log(class_id, class_name, department_name, department_id);
-    console.log(url.toString());
-    console.log("5");
     getData(url.toString());
+
+    return false;
 };
 
 const filterByDepartment = (department_id) => {
@@ -367,15 +366,13 @@ const filterByDepartment = (department_id) => {
     search_params.delete("nonbook");
     clearAllActiveSelections();
 
-    console.log(url);
-
     url.search = search_params.toString();
 
     history.pushState(null, "", `?department=${department_id}`);
 
-    console.log(url.toString());
-    console.log("6");
     getData(url.toString());
+
+    return false;
 };
 
 const filterByCategory = (term) => {
@@ -390,8 +387,6 @@ const filterByCategory = (term) => {
     }
     let search_params = url.searchParams;
 
-    console.log(url);
-
     search_params.set("nonbook", term);
     search_params.delete("class");
     search_params.delete("show");
@@ -402,15 +397,13 @@ const filterByCategory = (term) => {
 
     clearAllActiveSelections();
 
-    console.log(url);
-
     url.search = search_params.toString();
 
     history.pushState(null, "", `?nonbook=${term}`);
 
-    console.log(url.toString());
-    console.log("7");
     getData(url.toString());
+
+    return false;
 };
 
 var disabled;
@@ -545,8 +538,8 @@ const onSavedDelete = (index, name, id, url) => {
     const itemUrl = `/shop/${id}`;
     console.log(itemUrl);
     deletedRow.html(
-        `<td colspan='4' class='deleted-item'>Deleted <a href="javascript:onItemClick('${itemUrl}')">${name}</a> from your bag
-        <a href="javascript:onSavedUndo(${index}, ${id})">Undo</a></td>`
+        `<td colspan='4' class='deleted-item'>Deleted <a href="javascript:;" onclick="onItemClick('${itemUrl}')">${name}</a> from your bag
+        <a href="javascript:;" onclick="onSavedUndo(${index}, ${id})">Undo</a></td>`
     );
     $.ajax({
         url: url,

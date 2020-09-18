@@ -2,24 +2,28 @@
 <div class="filter-bar d-flex flex-wrap align-items-center mb-5">
     <div class="pagination">
         {% if posts.has_prev %}
-        <a href="javascript:getFromPage({{posts.page - 1}})" class="persist-link prev-arrow"><i
-                class="fa fa-long-arrow-left" aria-hidden="true" class="persist-link"></i></a>
+        <a href="/shop?page={{posts.page - 1}})" onclick="getFromPage({{posts.page - 1}}); return false"
+            class="persist-link prev-arrow"><i class="fa fa-long-arrow-left" aria-hidden="true"
+                class="persist-link"></i></a>
         {% endif %}
         {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
         {% if page_num %}
         {% if posts.page == page_num %}
-        <a class="persist-link active" rel="keep-params" href="javascript:getFromPage({{page_num}})">
+        <a class="persist-link active" rel="keep-params" href="/shop?page={{page_num}})"
+            onclick="getFromPage({{page_num}}); return false">
             {{page_num}} </a>
         {% else %}
-        <a href="javascript:getFromPage({{page_num}})" class="persist-link"> {{page_num}} </a>
+        <a href="/shop?page={{page_num}})" onclick="getFromPage({{page_num}}); return false" class="persist-link">
+            {{page_num}} </a>
         {% endif %}
         {% else %}
         <div class="ellipsis"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></div>
         {% endif %}
         {% endfor %}
         {% if posts.has_next %}
-        <a href="javascript:getFromPage({{posts.page + 1}})" class="persist-link next-arrow"><i
-                class="fa fa-long-arrow-right" aria-hidden="true" class="persist-link"></i></a>
+        <a href="/shop?page={{posts.page + 1}})" onclick="getFromPage({{posts.page + 1}}); return false"
+            class="persist-link next-arrow"><i class="fa fa-long-arrow-right" aria-hidden="true"
+                class="persist-link"></i></a>
         {% endif %}
     </div>
 </div>

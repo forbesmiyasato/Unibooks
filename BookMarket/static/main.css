@@ -747,7 +747,7 @@ body.loading .overlay {
     top: 0;
     left: 0;
     z-index: 20;
-    background: rgba(255, 255, 255, 0.8) center no-repeat;
+    background: transparent center no-repeat;
     text-align: center;
     margin: 0 auto;
 }
@@ -1052,6 +1052,10 @@ select {
     text-overflow: ellipsis;
     white-space: nowrap;
     vertical-align: bottom;
+}
+
+.click-href {
+    cursor: pointer;
 }
 /* .icon_btn {
     position: relative;
