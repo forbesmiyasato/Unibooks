@@ -1,9 +1,10 @@
 import os
 import atexit
 import threading
-from datetime import datetime
+from datetime import datetime, timedelta
+
 # from PIL import Image
-from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session, Markup, make_response, current_app
+from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session, Markup, make_response, current_app, make_response
 from flask_login import current_user, login_required, logout_user
 from flask_mail import Message
 from .models import Users, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater, School, ItemCategory, Inappropriate
@@ -25,10 +26,32 @@ app.register_blueprint(shop_api)
 #     print(request.url)
 #     if not request.url.startswith('https') and request.url != "http://localhost:5000/":
 #         return redirect(request.url.replace('http', 'https', 1))
+@app.route('/sitemap.xml', methods=['GET'])
+def sitemap():
+    try:
+        """Generate sitemap.xml. Makes a list of urls and date modified."""
+        pages = []
+        ten_days_ago = (datetime.now() - timedelta(days=7)).date().isoformat()
+        # static pages
+        for rule in app.url_map.iter_rules():
+            if "GET" in rule.methods and len(rule.arguments) == 0:
+                pages.append(
+                    ["https://unibooks.io" +
+                        str(rule.rule), ten_days_ago]
+                )
 
-@app.route('/loaderio-d2cf780526acfac1fe150b2163a01707/')
-def loaderio():
-    return render_template('loaderio-d2cf780526acfac1fe150b2163a01707.txt')
+        sitemap_xml = render_template('sitemap_template.xml', pages=pages)
+        response = make_response(sitemap_xml)
+        response.headers["Content-Type"] = "application/xml"
+
+        return response
+    except Exception as e:
+        return(str(e))
+
+
+# @app.route('/loaderio-d2cf780526acfac1fe150b2163a01707/')
+# def loaderio():
+#     return render_template('loaderio-d2cf780526acfac1fe150b2163a01707.txt')
 
 
 @app.before_first_request
@@ -61,6 +84,7 @@ def about_us():
     #     standalone = False
     return render_template('about_us.html', standalone=standalone, title="About Us")
 
+
 @app.route('/help', methods=['GET', 'POST'])
 def help():
     message_form = MessageForm()
@@ -72,12 +96,14 @@ def help():
                       sender=("Unibooks", "Unibooks@unibooks.io"),
                       recipients=["pacificubooks@gmail.com"], html=render_template("message_email.html", name="feedback from user",
                                                                                    email=email, body=request.form.get('message')))
-        sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
+        sender = threading.Thread(name="mail_sender", target=send_message, args=(
+            current_app._get_current_object(), msg,))
         sender.start()
         return jsonify({'origin': 'contactus'})
 
     return render_template('FAQ.html', standalone=standalone, title="Help", message_form=message_form,
                            message_title="Need help?", optional="(optional)")
+
 
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
@@ -170,7 +196,7 @@ def new_item():
     departments = ItemDepartment.query.filter_by(
         school=session['school']).all()
     categories = ItemCategory.query.filter_by(school=session['school']).all()
-    isBook = True #default display is book item
+    isBook = True  # default display is book item
     # department_list = [(i.id, i.department_name) for i in departments]
     return render_template('create_post.html', title='Sell', form=form, legend='New', item_id=0, departments=departments,
                            standalone=standalone, categories=categories, isBook=isBook)
@@ -257,7 +283,8 @@ def saved_for_later():
                       sender=("Unibooks", 'unibooks@unibooks.io'),
                       recipients=[_item.owner.email], html=render_template("message_email.html", name=_item.name,
                                                                            email=request.form.get('email'), body=request.form.get('message')))
-        sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
+        sender = threading.Thread(name="mail_sender", target=send_message, args=(
+            current_app._get_current_object(), msg,))
         sender.start()
         return jsonify({'origin': 'single'})
     if 'cart' in request.args:
@@ -447,7 +474,8 @@ def leave_a_message():
                       sender=("Unibooks", "Unibooks@unibooks.io"),
                       recipients=["pacificubooks@gmail.com"], html=render_template("message_email.html", name="feedback from user",
                                                                                    email=email, body=request.form.get('message')))
-        sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
+        sender = threading.Thread(name="mail_sender", target=send_message, args=(
+            current_app._get_current_object(), msg,))
         sender.start()
         return jsonify(origin='contactus')
     return render_template('message_page.html', title="Contact Us", message_form=message_form, standalone=standalone,
