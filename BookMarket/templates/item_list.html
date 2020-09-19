@@ -2,18 +2,22 @@
 <section class="lattest-product-area pb-40 category-list" id="items-list">
     <!-- <div class="text-center mt-5 mb-5" id="posts-spinner"> -->
     {% if foundCourse != None %}
-    </br><h3>Did you mean this course:<a onclick="return filterByClass({{foundCourse.id}})" href="/shop?class={{foundCourse.id}}">
-        {{foundCourse.abbreviation}}
-    </a></h3></br>
+    </br>
+    <h3>Did you mean this course:<a onclick="return filterByClass({{foundCourse.id}})"
+            href="/shop?class={{foundCourse.id}}">
+            {{foundCourse.abbreviation}}
+        </a></h3></br>
     {% endif %}
     {% if foundDepartment != None %}
-    <h3>Did you mean this department:<a onclick="return filterByDepartment({{foundDepartment.id}})" href="/shop?department={{foundDepartment.id}}">
-        {{foundDepartment.abbreviation}} - {{foundDepartment.department_name}}
-    </a></h3></br>
+    <h3>Did you mean this department:<a onclick="return filterByDepartment({{foundDepartment.id}})"
+            href="/shop?department={{foundDepartment.id}}">
+            {{foundDepartment.abbreviation}} - {{foundDepartment.department_name}}
+        </a></h3></br>
     {% endif %}
     {% if foundCategory != None %}
-    <h3>Did you mean:<a onclick="return filterByCategory({{foundCategory.id}})" href="/shop?nonbook={{foundCategory.id}}">Other:
-        {{foundCategory.category_name}} </a></h3>
+    <h3>Did you mean:<a onclick="return filterByCategory({{foundCategory.id}})"
+            href="/shop?nonbook={{foundCategory.id}}">Other:
+            {{foundCategory.category_name}} </a></h3>
     {% endif %}
     {% if posts.total == 0 %}
     <div class="container no-results mt-5">
@@ -97,10 +101,11 @@
         var url = "{{url_for('add_to_bag', item='tempItem', user='tempUser')}}"
             .replace('tempItem', item_id).replace('tempUser', user_id).replace('&amp;', '&')
 
+        console.log("TEST")
         $.post(url, null, (data, status) => {
             if (data.added) {
-                let bagIcon = document.getElementsByClassName("bag-icon")[0];
-                bagIcon.innerHTML = parseInt(bagIcon.innerHTML) + 1;
+                let bagIcon = document.getElementsByClassName("fa-stack")[0];
+                bagIcon.setAttribute("data-count", parseInt(bagIcon.getAttribute("data-count")) + 1)
             }
         })
 

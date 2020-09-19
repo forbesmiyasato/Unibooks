@@ -548,8 +548,8 @@ const onSavedDelete = (index, name, id, url) => {
         url: url,
         type: "post",
         success: function () {
-            let bagIcon = document.getElementsByClassName("bag-icon")[0];
-            bagIcon.innerHTML = parseInt(bagIcon.innerHTML) - 1;
+            let bagIcon = document.getElementsByClassName("fa-stack")[0];
+            bagIcon.setAttribute("data-count", parseInt(bagIcon.getAttribute("data-count")) - 1)
         },
     });
 
@@ -559,11 +559,12 @@ const onSavedDelete = (index, name, id, url) => {
 const onSavedUndo = (index, id) => {
     $.post(`/add-to-bag?item=${id}`, null, (data, status) => {
         if (data.added) {
-            let bagIcon = document.getElementsByClassName("bag-icon")[0];
-            bagIcon.innerHTML = parseInt(bagIcon.innerHTML) + 1;
+            let bagIcon = document.getElementsByClassName("fa-stack")[0];
+            bagIcon.setAttribute("data-count", parseInt(bagIcon.getAttribute("data-count")) + 1)
         }
     });
     document.getElementById(`row-${index}`).innerHTML = deletedItems[index];
+    document.getElementsByClassName('confirm-acc')[index - 1].addEventListener('click', linkClicked.bind(null, null, "/account"));
 };
 
 const initializeSingleProductPage = () => {

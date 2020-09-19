@@ -43,8 +43,8 @@
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/main.css')}}">
   <!-- From Karma -->
   <link rel="stylesheet" href="{{ url_for('static', filename='/css/linearicons.css')}}">
-  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='/css/font-awesome.min.css')}}"> -->
-  <script src="https://kit.fontawesome.com/58d8160f79.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='/css/font-awesome.min.css')}}">
+  <!-- <script src="https://kit.fontawesome.com/58d8160f79.js" crossorigin="anonymous"></script> -->
   <link rel="stylesheet" href="{{ url_for('static', filename='/css/themify-icons.css')}}">
   <!-- <link rel="stylesheet" href="{{ url_for('static', filename='/css/bootstrap.css')}}"> -->
   <link rel="stylesheet" href="{{ url_for('static', filename='/css/owl.carousel.css')}}">
@@ -173,7 +173,10 @@
                   onclick="linkClicked(this, '{{ url_for('saved_for_later')}}?cart'); return false;"
                   href="{{ url_for('saved_for_later')}}?cart"
                   class="cart activable {% if title == 'Saved?cart' %}active{% endif %}">
-                  <span class="ti-bag"><span class="bag-icon">{{ numItems|length }}</span></span></a></li>
+                  <span class="fa-stack fa-1x has-badge" data-count="{{ numItems|length }}">
+                    <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+                    <i class="fa fa-shopping-cart fa-stack-2x cart"></i>
+                  </span>                </a></li>
               <li class="nav-item switch-container-mobile">
                 <span id="school-name-mobile"></span>
               </li>

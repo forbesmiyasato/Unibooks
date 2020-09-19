@@ -220,8 +220,8 @@
 
         $.post(url, null, (data, status) => {
             if (data.added) {
-                let bagIcon = document.getElementsByClassName("bag-icon")[0];
-                bagIcon.innerHTML = parseInt(bagIcon.innerHTML) + 1;
+                let bagIcon = document.getElementsByClassName("fa-stack")[0];
+                bagIcon.setAttribute("data-count", parseInt(bagIcon.getAttribute("data-count")) + 1)
             }
         })
     }

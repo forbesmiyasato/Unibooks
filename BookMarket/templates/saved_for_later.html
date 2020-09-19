@@ -21,6 +21,7 @@
         <div class="section-top-border">
             {% if posts|length == 0 %}
             <div class="container no-results">
+                <img class="icon-img" src="{{ url_for('static', filename='img/icons/Cart_or_list_Is_Empty.svg')}}" alt="Cart empty">
                 <h1 class="pt-3 pb-3">There are no items in your bag :(</h1>
                 <a onclick="linkClicked(this, '{{ url_for('shop_api.shop')}}'); return false;"
                     href="{{url_for('shop_api.shop')}}" class="genric-btn primary-border circle arrow">Start

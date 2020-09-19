@@ -21,6 +21,7 @@
         <div class="section-top-border">
             {% if listings|length == 0 %}
             <div class="container no-results">
+                <img class="icon-img" src="{{ url_for('static', filename='img/icons/Empty_Box.svg')}}" alt="No Listings">
                 <h1 class="pt-3 pb-3">You have no items for sale</h1>
                 <a href="javascript:linkClicked(this, '{{ url_for('new_item')}}')"
                     class="genric-btn primary-border circle arrow">Start Selling<span

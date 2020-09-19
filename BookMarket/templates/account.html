@@ -21,12 +21,14 @@
         <div class="section-top-border">
             <div class="container no-results">
                 {% if current_user.confirmed == true %}
-                <h1 class="pt-3 pb-3">Your account is confirmed!</h1>
+                <img class="icon-img" src="{{ url_for('static', filename='img/icons/Done.svg')}}" alt="Account confirmed">
+                <h2 class="pt-3 pb-3">Your account is confirmed!</h2>
                 <a onclick="linkClicked(document.getElementById('sell'), '/item/new'); return false;" href="/item/new"
                     class="genric-btn primary-border circle arrow">Start
                     Selling<span class="lnr lnr-arrow-right"></span></a>
                 {% else %}
-                <h1 class="pt-3 pb-3">Your account is not confirmed!</h1>
+                <img class="icon-img" src="{{ url_for('static', filename='img/icons/Fatal_Error.svg')}}" alt="Account not confirmed">
+                <h2 class="pt-3 pb-3">Your account is not confirmed!</h2>
                 <a onclick="sendConfirmationEmail('{{url_for('userAuth.send_confirm_email')}}', '{{current_user.email}}'); return false"
                     href="javascript:;" class="genric-btn success circle">
                     Send Confirmation Email to {{ current_user.email}}</a>
