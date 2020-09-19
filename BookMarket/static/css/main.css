@@ -6404,11 +6404,14 @@ label {
     display: none;
     border: none;
     background-color: white;
-    color: #87CEEB; }
+    color: #87CEEB;
+    padding: 0 10px 0 10px; }
     @media (max-width: 550px) {
       .help-container #help-back {
-        padding: 0 15px;
+        padding-top: 10px;
         line-height: 30px; } }
+    .help-container #help-back .fas.fa-arrow-left {
+      font-size: 2em; }
   .help-container .sell-notes {
     text-align: right; }
   .help-container .sell-links {

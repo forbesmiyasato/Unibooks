@@ -39,7 +39,7 @@
     sendConfirmationEmail = (url, email) => {
         $.ajax({
             url: url || '#',
-            type: 'GET',
+            type: 'POST',
             contentType: false,
             success: function (response) {
                 toastr.options = { "positionClass": "toast-top-center", "closeButton": true }

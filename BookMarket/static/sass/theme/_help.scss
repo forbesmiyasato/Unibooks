@@ -150,7 +150,7 @@
     #help-back {
         z-index: 90;
         @media (max-width: 550px) {
-            padding: 0 15px;
+            padding-top: 10px;
             line-height: 30px;
         }
         position: absolute;
@@ -158,6 +158,10 @@
         border: none;
         background-color: white;
         color: $primary-color;
+        padding: 0 10px 0 10px;
+        & .fas.fa-arrow-left {
+            font-size: 2em;
+        }
     }
 
     .sell-notes {

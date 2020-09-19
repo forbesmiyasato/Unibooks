@@ -53,9 +53,14 @@ def register():
                            pattern=pattern, errorMessage=error_message, placeholder=placeholder)
 
 
-@userAuth.route('/confirm_email/send/')
-@login_required
+@userAuth.route('/confirm_email/send/', methods=['POST'])
 def send_confirm_email():
+    if current_user.is_authenticated is False:
+        flash('Your must be logged in to send confirmation emails', 'error')
+        return redirect(url_for('home'))
+    if current_user.confirmed:
+        flash('Your account is already confirmed.', 'info')
+        return redirect(url_for('home'))
     email = current_user.email
     token = serializer.dumps(email, salt=salt)  # salt is optional
     link = url_for('userAuth.confirm_email', token=token, _external=True)

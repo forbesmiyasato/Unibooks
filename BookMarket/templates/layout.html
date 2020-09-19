@@ -202,7 +202,7 @@
     <script>
       toastr.options = { "positionClass": {% if message == 'Logged in!' or message == 'Logged out!' %} "toast-top-center" {% else %} "toast-top-center" {% endif %}
       , "closeButton": true, "timeOut": "6000" }
-      toastr.{ { category } } ("{{message}}");
+      toastr.{{category}}("{{message}}");
     </script>
     {% endfor %}
     {% endif %}
