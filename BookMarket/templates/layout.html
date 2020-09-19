@@ -26,13 +26,13 @@
 
   <!-- Google Tag Manager -->
   <script>(function (w, d, s, l, i) {
-    w[l] = w[l] || []; w[l].push({
-      'gtm.start':
-        new Date().getTime(), event: 'gtm.js'
-    }); var f = d.getElementsByTagName(s)[0],
-      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-  })(window, document, 'script', 'dataLayer', 'GTM-PTKJJXZ');</script>
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-PTKJJXZ');</script>
   <!-- End Google Tag Manager -->
 
   <!-- Bootstrap CSS -->
@@ -444,7 +444,6 @@
       console.log("PATH", paths.split('/'))
       path = paths.split('/')[1]
       other = paths.split('/')[2]
-      console.log(path === "")
       if ((path === 'home' || path === "") && home_html) {
         $('#block-content').html(home_html);
       } else if (path.includes('login') && login_html) {
@@ -546,7 +545,12 @@
     }
 
     window.addEventListener('popstate', (event) => {
-      console.log(event)
+      //Bootstrap modal doesn't close on back button clicked
+      if ($('.modal').length > 0) {
+        $('.modal').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+      }
       highlightNavLink()
       redirect(window.location.pathname + location.search);
     });
