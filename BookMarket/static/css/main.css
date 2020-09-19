@@ -6369,7 +6369,8 @@ label {
     background-color: #fff;
     border-radius: 10px;
     text-align: center;
-    display: none; }
+    display: none;
+    padding: 30px; }
     .help-container .help-detail .send-button {
       padding-bottom: 15px; }
     .help-container .help-detail .contact-us-container {
@@ -6400,7 +6401,10 @@ label {
   .help-container #help-back {
     z-index: 90;
     position: absolute;
-    display: none; }
+    display: none;
+    border: none;
+    background-color: white;
+    color: #87CEEB; }
     @media (max-width: 550px) {
       .help-container #help-back {
         padding: 0 15px;
