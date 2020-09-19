@@ -45,7 +45,13 @@
                 toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
                 toastr.success(`Confirmation Email Sent to ${email}!`);
             },
-            beforeSend: function () {
+            beforeSend: function (xhr, settings) {
+                if (
+                    !/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) &&
+                    !this.crossDomain
+                ) {
+                    xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                }
                 $("body").toggleClass("loading");
                 $("#loader-text").html('Sending Confirmation Email...')
             },

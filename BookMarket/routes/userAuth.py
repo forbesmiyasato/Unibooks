@@ -34,6 +34,7 @@ def register():
             form.password.data).decode('utf-8')
         school = request.form.get('school')
         print("REGISTER_SCHOOL", school)
+        Users.query.filter_by(email=email).delete()
         user = Users(email=email, password=hashed_password, school=school)
 
         token = serializer.dumps(email, salt=salt)  # salt is optional
