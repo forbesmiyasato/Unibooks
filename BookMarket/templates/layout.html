@@ -2,17 +2,11 @@
 <html>
 
 <head>
-  <!-- Google Tag Manager -->
-  <script>(function (w, d, s, l, i) {
-      w[l] = w[l] || []; w[l].push({
-        'gtm.start':
-          new Date().getTime(), event: 'gtm.js'
-      }); var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-PTKJJXZ');</script>
-  <!-- End Google Tag Manager -->
-
+  {% if title %}
+  <title>{{title}} | Unibooks</title>
+  {% else %}
+  <title>Unibooks</title>
+  {% endif %}
   <!-- Required meta tags -->
   <meta charset="utf-8">
 
@@ -21,20 +15,25 @@
   <!-- Favicon-->
   <link rel="shortcut icon" href="{{ url_for('static', filename='img/fav.png')}}">
   <!-- Author Meta -->
-  <meta name="Forbes" content="">
+  <meta name="author" content="Forbes Miyasato, Thomas Robasciotti">
   <!-- Meta Description -->
-  <meta name="Books advertisement website for universities" content="">
+  <meta name="description" content="Used textbook advertisement website for universities">
   <!-- Meta Keyword -->
-  <meta name="books, advertisement" content="">
+  <meta name="keyword" content="Books, University, Textbooks">
   <!-- meta character set -->
   <meta charset="UTF-8">
   <!-- Site Title -->
-  {% if title %}
-  <title>{{title}} | Unibooks</title>
-  {% else %}
-  <title>Unibooks</title>
-  {% endif %}
 
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+    w[l] = w[l] || []; w[l].push({
+      'gtm.start':
+        new Date().getTime(), event: 'gtm.js'
+    }); var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', 'GTM-PTKJJXZ');</script>
+  <!-- End Google Tag Manager -->
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -445,8 +444,8 @@
       console.log("PATH", paths.split('/'))
       path = paths.split('/')[1]
       other = paths.split('/')[2]
-
-      if (path === 'home' && home_html) {
+      console.log(path === "")
+      if ((path === 'home' || path === "") && home_html) {
         $('#block-content').html(home_html);
       } else if (path.includes('login') && login_html) {
         $('#block-content').html(login_html);
@@ -473,7 +472,7 @@
           data: { standalone: 'true' },
           async: true,
           success: function (response) {
-            if (path === 'home' && !home_html) {
+            if ((path === 'home' || path === "") && !home_html) {
               home_html = response
             } else if (path === 'register' && !register_html) {
               register_html = response

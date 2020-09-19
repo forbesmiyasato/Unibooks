@@ -2564,6 +2564,13 @@ label {
     .section-tutorial .fullscreen {
       /*height: 650px !important;*/ } }
 
+.banner-content h1 {
+  font-size: 30px !important;
+  font-weight: 500 !important; }
+
+.home-h2 {
+  font-size: 36px; }
+
 .load-product {
   display: none; }
 

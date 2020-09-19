@@ -681,6 +681,9 @@ const highlightNavLink = () => {
     } else if (path === "help") {
         active = document.getElementById("home");
         document.title = "Help" + ending;
+    } else if (path === "home" || path === "") {
+        active = document.getElementById("home");
+        document.title = "Home" + ending;
     } else {
         document.title = path.charAt(0).toUpperCase() + path.slice(1) + ending;
         active = document.getElementById(path.split("?")[0]);

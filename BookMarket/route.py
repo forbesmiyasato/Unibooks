@@ -234,6 +234,7 @@ def saved_for_later():
     print(request.form.get('email'))
     if request.method == 'POST' and request.form.get('email'):
         item_id = request.args.get('item')
+        print("ID", item_id)
         _item = Item.query.get_or_404(item_id)
         if current_user.last_buy_message_sent is None:
             current_user.last_buy_message_sent = datetime.utcnow()
