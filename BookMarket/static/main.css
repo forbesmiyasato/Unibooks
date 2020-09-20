@@ -287,9 +287,9 @@ li.options {
   color: white !important;
 } */
 
-.ti-bag:hover {
+/* .ti-bag:hover {
     color: #87ceeb !important;
-}
+} */
 
 .lnr.lnr-magnifier {
     padding: 3px;
@@ -693,12 +693,12 @@ body.loading .overlay {
 /* version two */
 .toast-top-center {
     margin-top: 100px;
-    right: auto !important;
+    /* right: auto !important;
     left: 50%;
-    width: auto !important;
+    width: auto !important; */
 }
 
-.toast-top-left {
+/* .toast-top-left {
     width: 300px !important;
 }
 
@@ -714,7 +714,7 @@ body.loading .overlay {
     display: inline-block;
     white-space: nowrap;
     padding-right: 20px !important;
-}
+} */
 @media (max-width: 992px) {
     .toast-top-left,
     .toast-top-center {

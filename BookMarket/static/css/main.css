@@ -6476,3 +6476,32 @@ label {
 
 .icon-img {
   height: 150px; }
+
+/* https://stackoverflow.com/questions/33068754/css-animate-text-from-left-to-right-in-div-container-with-overflow-hidden */
+.animate-overflow {
+  display: inline-block;
+  position: relative;
+  left: 40px !important; }
+
+.social-info:hover .animate-overflow {
+  animation: 3s linear 0s infinite alternate advanced; }
+
+.advanced {
+  position: relative;
+  animation: 3s linear 0s infinite alternate advanced; }
+
+@keyframes animate {
+  from {
+    transform: translateX(0%); }
+  to {
+    transform: translateX(-100%); } }
+
+@keyframes advanced {
+  0%,
+  25% {
+    transform: translateX(0%);
+    left: 0%; }
+  75%,
+  100% {
+    transform: translateX(-100%);
+    left: 100%; } }

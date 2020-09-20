@@ -2,7 +2,9 @@
 <html>
 
 <head>
-  {% if title %}
+  {% if title == "Home" %}
+  <title> Unibooks | The Ultimate University Marketplace</title>
+  {% elif title %}
   <title>{{title}} | Unibooks</title>
   {% else %}
   <title>Unibooks</title>
@@ -43,8 +45,7 @@
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/main.css')}}">
   <!-- From Karma -->
   <link rel="stylesheet" href="{{ url_for('static', filename='/css/linearicons.css')}}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='/css/font-awesome.min.css')}}">
-  <!-- <script src="https://kit.fontawesome.com/58d8160f79.js" crossorigin="anonymous"></script> -->
+  <script src="https://kit.fontawesome.com/58d8160f79.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='/css/themify-icons.css')}}">
   <!-- <link rel="stylesheet" href="{{ url_for('static', filename='/css/bootstrap.css')}}"> -->
   <link rel="stylesheet" href="{{ url_for('static', filename='/css/owl.carousel.css')}}">

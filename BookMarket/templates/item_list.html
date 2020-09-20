@@ -52,7 +52,7 @@
                             <span class="lnr lnr-trash"></span>
                             <p class="hover-text">Delete</p>
                         </a>
-                        {% else %}
+                        {% elif current_user.is_authenticated %}
                         <a onclick="addToBag(this, {{post.id}}, {{current_user.id}})" href="javascript:;"
                             class="social-info">
                             <span class="ti-bag"></span>
@@ -62,6 +62,21 @@
                             <span class="lnr lnr-alarm"></span>
                             <p class="hover-text">Report</p>
                         </a>
+                        {% else %}
+                        <div class="social-info">
+                            <span class="ti-bag"></span>
+                            <p class="hover-text animate-overflow">
+                                <a class="click-href" onclick="linkClicked(null, '{{url_for('userAuth.login')}}')">
+                                    Log in </a> to add to cart
+                            </p>
+                        </div>
+                        <div class="social-info">
+                            <span class="lnr lnr-alarm"></span>
+                            <p class="hover-text animate-overflow">
+                                <a class="click-href" onclick="linkClicked(null, '{{url_for('userAuth.login')}}')">
+                                    Log in </a> to report this post
+                            </p>
+                        </div>
                         {% endif %}
                     </div>
                 </div>
