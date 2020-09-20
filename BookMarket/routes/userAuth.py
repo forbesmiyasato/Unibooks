@@ -1,4 +1,5 @@
 import threading
+from datetime import datetime
 from flask import render_template, url_for, flash, request, redirect, Blueprint, jsonify, session, current_app
 from flask_login import login_user, logout_user, current_user, login_required
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
@@ -56,6 +57,11 @@ def register():
 
 @userAuth.route('/confirm_email/send/', methods=['POST'])
 def send_confirm_email():
+    time_difference = datetime.utcnow() - current_user.last_confirm_email_sent
+    minutes = divmod(time_difference.total_seconds(), 60)[0]
+    print("TIME", minutes)
+    if minutes < 60.0:
+        return jsonify({"result": "failure-too-soon"})
     if current_user.is_authenticated is False:
         flash('Your must be logged in to send confirmation emails', 'error')
         return redirect(url_for('home'))
@@ -70,9 +76,11 @@ def send_confirm_email():
     sender = threading.Thread(name="mail_sender", target=send_message, args=(
         current_app._get_current_object(), msg,))
     sender.start()
-    flash(
-        f'Confirmation email sent to {current_user.email}', 'success')
-    return redirect(url_for('account'))
+    current_user.last_confirm_email_sent = datetime.utcnow()
+    db.session.commit()
+    # flash(
+    #     f'Confirmation email sent to {current_user.email}', 'success')
+    return jsonify({"result": "success"})
 
 
 @userAuth.route('/password_reset', methods=['POST'])
@@ -146,9 +154,10 @@ def login_html(standalone=None, pattern=None, placeholder=None, error_message=No
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
         if (user and bcrypt.check_password_hash(user.password, form.password.data)):
+            print(form.remember.data)
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            if current_user.confirmed == True:
+            if current_user.confirmed:
                 flash('Logged in!', 'success')
             else:
                 flash("Your account isn't confirmed yet! You can't sell or message until your account is confirmed.", 'info')

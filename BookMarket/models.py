@@ -18,8 +18,7 @@ class Users(db.Model, UserMixin):
     confirmed = db.Column(db.Boolean, default=False, nullable=False)
     listings = db.Column(db.Integer, default=0)
     school = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
-    last_confirm_email_sent = db.Column(db.DateTime, nullable=True,
-                                        default=datetime.now())
+    last_confirm_email_sent = db.Column(db.DateTime, nullable=True)
     last_buy_message_sent = db.Column(db.DateTime, nullable=True)
     num_buy_message_sent = db.Column(db.Integer, nullable=True, default=0)
     def __repr__(self):

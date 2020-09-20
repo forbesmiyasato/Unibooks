@@ -21,13 +21,15 @@
         <div class="section-top-border">
             <div class="container no-results">
                 {% if current_user.confirmed == true %}
-                <img class="icon-img" src="{{ url_for('static', filename='img/icons/Done.svg')}}" alt="Account confirmed">
+                <img class="icon-img" src="{{ url_for('static', filename='img/icons/Done.svg')}}"
+                    alt="Account confirmed">
                 <h2 class="pt-3 pb-3">Your account is confirmed!</h2>
                 <a onclick="linkClicked(document.getElementById('sell'), '/item/new'); return false;" href="/item/new"
                     class="genric-btn primary-border circle arrow">Start
                     Selling<span class="lnr lnr-arrow-right"></span></a>
                 {% else %}
-                <img class="icon-img" src="{{ url_for('static', filename='img/icons/Fatal_Error.svg')}}" alt="Account not confirmed">
+                <img class="icon-img" src="{{ url_for('static', filename='img/icons/Fatal_Error.svg')}}"
+                    alt="Account not confirmed">
                 <h2 class="pt-3 pb-3">Your account is not confirmed!</h2>
                 <a onclick="sendConfirmationEmail('{{url_for('userAuth.send_confirm_email')}}', '{{current_user.email}}'); return false"
                     href="javascript:;" class="genric-btn success circle">
@@ -44,8 +46,14 @@
             type: 'POST',
             contentType: false,
             success: function (response) {
-                toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
-                toastr.success(`Confirmation Email Sent to ${email}!`);
+                console.log(response);
+                if (response.result === 'failure-too-soon') {
+                    toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
+                    toastr.error('We sent a confirmation email within an hour! Please check your inbox or try again later.');
+                } else if (response.result === 'success') {
+                    toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
+                    toastr.success(`Confirmation Email Sent to ${email}!`);
+                }
             },
             beforeSend: function (xhr, settings) {
                 if (
