@@ -40,7 +40,7 @@ def register():
 
         token = serializer.dumps(email, salt=salt)  # salt is optional
         link = url_for('userAuth.confirm_email', token=token, _external=True)
-        msg = Message('Confirm Email', sender=("Unibooks", "Unibooks@unibooks.io"), recipients=[email],
+        msg = Message('Confirm Email', sender=("Unibooks", "do-not-reply@unibooks.io"), recipients=[email],
                       html=render_template('confirmation_email.html', email=email, link=link))
 
         sender = threading.Thread(name="mail_sender", target=send_message, args=(
@@ -71,7 +71,7 @@ def send_confirm_email():
     email = current_user.email
     token = serializer.dumps(email, salt=salt)  # salt is optional
     link = url_for('userAuth.confirm_email', token=token, _external=True)
-    msg = Message('Confirm Email', sender=("Unibooks", "Unibooks@unibooks.io"), recipients=[email],
+    msg = Message('Confirm Email', sender=("Unibooks", "do-not-reply@unibooks.io"), recipients=[email],
                   html=render_template('confirmation_email.html', email=email, link=link))
     sender = threading.Thread(name="mail_sender", target=send_message, args=(
         current_app._get_current_object(), msg,))
@@ -94,7 +94,7 @@ def send_password_reset():
     print("!!!!!!!!!!!!!!!!!!", email)
     token = serializer.dumps(email, salt=salt)  # salt is optional
     link = url_for('userAuth.reset_password', token=token, _external=True)
-    msg = Message('Password Reset', sender=("Unibooks", "Unibooks@unibooks.io"), recipients=[email],
+    msg = Message('Password Reset', sender=("Unibooks", "do-not-reply@unibooks.io"), recipients=[email],
                   html=render_template('password_email.html', link=link))
     sender = threading.Thread(name="mail_sender", target=send_message, args=(
         current_app._get_current_object(), msg,))

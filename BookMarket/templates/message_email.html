@@ -1,6 +1,31 @@
-<h1>Message regarding {{name}}</h1>
+{% extends "email_layout.html"%}
 
-<h2>From: {{email}}</h2>
+{% block content %}
 
-<h3>Description</h3>
-<p>{{body}}</p>
+{% set p_style = "font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;" %}
+
+<div style="text-align: center;">
+<a href="http://www.unibooks.io"><img src="http://unibooks.io/static/img/logo.png"></img></a>
+
+<p style="{{ p_style }}"></br></p>
+</div>
+
+<p style="{{ p_style }}">Message regarding: <strong>{{ name }}</strong></p>
+
+<p style="{{ p_style }} color: #848484;">From:</p>
+<p style="{{p_style }}">{{ email }}</p>
+
+<p style="{{ p_style }} color: #848484;">Message:</p>
+<p style="{{p_style }}">{{ body }}</p>
+
+<p style="margin-top: 1em;">
+    <small style="color:#8899a6;text-decoration:none;"></small>
+</p>
+
+{% endblock %}
+
+{% block footer %}
+
+<p style="{{p_style }} color: #848484;">Do not reply to this email. </br>Please reply directly to the potential buyer's email address.</p>
+
+{% endblock %}

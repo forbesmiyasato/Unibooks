@@ -209,7 +209,7 @@ def item(item_id):
                         current_user.num_buy_message_sent += 1
                         db.session.commit()
             msg = Message("Message regarding " + "\"" + _item.name + "\"",
-                        sender=("Unibooks", 'unibooks@unibooks.io'),
+                        sender=("Unibooks", 'do-not-reply@unibooks.io'),
                         recipients=[_item.owner.email], html=render_template("message_email.html", name=_item.name,
                                                                            email=request.form.get('email'), body=request.form.get('message')))
             sender = threading.Thread(name="mail_sender", target=send_message, args=(current_app._get_current_object(), msg,))
