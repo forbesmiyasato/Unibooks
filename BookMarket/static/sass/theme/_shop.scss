@@ -1,39 +1,86 @@
 /* https://stackoverflow.com/questions/33068754/css-animate-text-from-left-to-right-in-div-container-with-overflow-hidden */
 
 .animate-overflow {
-    // display: inline-block;
+    display: block;
     position: relative;
     left: 40px !important;
 }
 
 .social-info:hover .animate-overflow {
     // animation: 3s linear 0s infinite alternate animate;
-    animation: 3s linear 0s infinite alternate advanced;
-
-}
-
-.advanced {
-    position: relative;
+    -webkit-animation: 3s linear 0s infinite alternate advanced;
+    -moz-animation: 3s linear 0s infinite alternate advanced;
+    -o-animation: 3s linear 0s infinite alternate advanced;
+    -ms-animation: 3s linear 0s infinite alternate advanced;
     animation: 3s linear 0s infinite alternate advanced;
 }
 
-@keyframes animate {
-    from {
+// .advanced {
+//     position: relative;
+//     animation: 3s linear 0s infinite alternate advanced;
+// }
+
+// @keyframes animate {
+//     from {
+//         transform: translateX(0%);
+//     }
+//     to {
+//         transform: translateX(-100%);
+//     }
+// }
+@-webkit-keyframes example {
+    0% {
+        -webkit-transform: translateX(0%);
         transform: translateX(0%);
+        left: 0%;
     }
-    to {
+    25% {
+        -webkit-transform: translateX(0%);
+        transform: translateX(0%);
+        left: 0%;
+    }
+    75% {
+        -webkit-transform: translateX(-100%);
         transform: translateX(-100%);
+        left: 100%;
+    }
+    100% {
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
+        left: 100%;
     }
 }
 
 @keyframes advanced {
-    0%,
-    25% {
+    0% {
+        -webkit-transform: translateX(0%);
+        -moz-transform: translateX(0%);
+        -ms-transform: translateX(0%);
+        -o-transform: translateX(0%);
         transform: translateX(0%);
         left: 0%;
     }
-    75%,
+    25% {
+        -webkit-transform: translateX(0%);
+        -moz-transform: translateX(0%);
+        -ms-transform: translateX(0%);
+        -o-transform: translateX(0%);
+        transform: translateX(0%);
+        left: 0%;
+    }
+    75% {
+        -webkit-transform: translateX(-100%);
+        -moz-transform: translateX(-100%);
+        -ms-transform: translateX(-100%);
+        -o-transform: translateX(-100%);
+        transform: translateX(-100%);
+        left: 100%;
+    }
     100% {
+        -webkit-transform: translateX(-100%);
+        -moz-transform: translateX(-100%);
+        -ms-transform: translateX(-100%);
+        -o-transform: translateX(-100%);
         transform: translateX(-100%);
         left: 100%;
     }
