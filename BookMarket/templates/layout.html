@@ -343,20 +343,18 @@
 
     const switchSchool = () => {
       toastr.remove()
-      // $("body").toggleClass("need-school");
       let message;
       const ending = "Click to "
-      toastr.options = { "positionClass": "toast-top-center", "closeButton": true, "timeOut": "15000" }
-      // toastr.options.onclick = function() {
-      // $("body").toggleClass("need-school");
-      // }
-      console.log(document.getElementsByClassName('bag-icon')[0].innerHTML)
+      toastr.options = { "positionClass": "toast-top-center", "timeOut": "0", "extendedTimeOut": "0", 
+      "tapToDismiss": false}
+
+      // else if (document.getElementsByClassName('bag-icon')[0].innerHTML > 0) {
+      //   message = "Are you sure? You'll lose all the items saved in cart if you change schools."
+      //   state = 'emptycart'
+      // } 
       if ('{{current_user.is_authenticated}}' === 'True') {
         message = 'Are you sure? You will be logged out if you change schools.'
         state = 'loggout'
-      } else if (document.getElementsByClassName('bag-icon')[0].innerHTML > 0) {
-        message = "Are you sure? You'll lose all the items saved in cart if you change schools."
-        state = 'emptycart'
       } else {
         message = 'Are you sure you want to switch schools?'
       }
