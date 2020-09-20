@@ -632,9 +632,10 @@ onItemDelete = (url, name, num, origin) => {
 };
 
 //shop
+var itemRequest = null;
 function onItemClick(url) {
     history.pushState(null, null, url);
-    $.ajax({
+    itemRequest = $.ajax({
         url: url,
         type: "get",
         data: { standalone: "true" },

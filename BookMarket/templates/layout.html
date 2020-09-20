@@ -447,6 +447,12 @@
     const redirect = (paths) => {
       console.log("PATH", paths.split('/'))
       path = window.location.pathname
+
+      //to abort the single product page request when backtracking to shop page
+      if (itemRequest) {
+        itemRequest.abort()
+        itemRequest = null;
+      }
       // path = paths.split('/')[1]
       // other = paths.split('/')[2]
       if ((path === '/home' || path === "/") && home_html) {
