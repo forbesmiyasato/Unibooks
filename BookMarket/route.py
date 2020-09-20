@@ -105,7 +105,7 @@ def help():
                            message_title="Need help?", optional="(optional)")
 
 
-@app.route("/account", methods=['GET', 'POST'])
+@app.route("/account", methods=['GET'])
 @login_required
 def account():
     standalone = request.args.get('standalone')
@@ -127,17 +127,15 @@ def account():
     return render_template('account.html', title='Account', standalone=standalone)
 
 
-# @app.route("/files/<int:userid>", methods=['POST'])
-# def post_item_files(userid):
-#     if request.method == "POST":
-#         images = request.files
-#         print(images)
-#         if images:
-#             thumbnail = save_images_to_db_and_s3(images, newId)
-#             if thumbnail:
-#                 item = Item.query.filter_by(id=newId).first()
-#                 item.thumbnail = thumbnail
-#     return jsonify({'added': 'added'})
+@app.route("/account/delete", methods=['POST'])
+@login_required
+def account_delete():
+    db.session.delete(current_user)
+    db.session.commit()
+    logout_user()
+    flash('Your account has been successfully deleted. Please register again to use our service.', 'success')
+    return redirect(url_for('home'))
+
 
 @app.route("/item/new", methods=['GET', 'POST'])
 def new_item():
