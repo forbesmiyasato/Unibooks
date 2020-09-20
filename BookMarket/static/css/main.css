@@ -6503,7 +6503,7 @@ label {
   -ms-animation: 3s linear 0s infinite alternate advanced;
   animation: 3s linear 0s infinite alternate advanced; }
 
-@-webkit-keyframes example {
+@-webkit-keyframes advanced {
   0% {
     -webkit-transform: translateX(0%);
     transform: translateX(0%);
