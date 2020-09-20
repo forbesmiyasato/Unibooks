@@ -19,7 +19,15 @@
 <div class="whole-wrap pb-100 mt-3">
     <div class="container">
         <div class="section-top-border">
-            {% if posts|length == 0 %}
+            {% if current_user.is_authenticated == False %}
+            <div class="container no-results">
+                <img class="icon-img" src="{{ url_for('static', filename='img/icons/warning.svg')}}" alt="Get started to save items">
+                <h1 class="pt-3 pb-3">You need an account to save items :(</h1>
+                <a onclick="linkClicked(this, '{{ url_for('userAuth.register')}}'); return false;"
+                    href="{{url_for('userAuth.register')}}" class="genric-btn primary-border circle arrow">
+                    Get Started<span class="lnr lnr-arrow-right"></span></a>
+            </div>
+            {% elif posts|length == 0 %}
             <div class="container no-results">
                 <img class="icon-img" src="{{ url_for('static', filename='img/icons/Cart_or_List_Is_Empty.svg')}}" alt="Cart empty">
                 <h1 class="pt-3 pb-3">There are no items in your bag :(</h1>

@@ -74,7 +74,7 @@
                         <a class="single-edit"
                             onclick="linkClicked(null, '{{url_for('userAuth.login', next=url_for('shop_api.item', item_id=item.id))}}')">Log
                             in</a>
-                        to send messages and saved item to cart</span>
+                        to send messages and save items to cart</span>
                     {% elif current_user.confirmed != True %}
                     <span><i class="fas fa-exclamation-triangle"></i>
                         <a class="single-edit" onclick="linkClicked(null, '{{url_for('account')}}')">Confirm</a> your
