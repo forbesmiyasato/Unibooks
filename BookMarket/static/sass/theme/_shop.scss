@@ -40,14 +40,14 @@
         left: 40px;
     }
     75% {
-        -webkit-transform: translateX(-100%);
-        transform: translateX(-100%);
-        left: calc(100% + 40px);
+        -webkit-transform: translateX(-170%);
+        transform: translateX(-170%);
+        left: 100%;
     }
     100% {
-        -webkit-transform: translateX(-100%);
-        transform: translateX(-100%);
-        left: calc(100% + 40px);
+        -webkit-transform: translateX(-170%);
+        transform: translateX(-170%);
+        left: 100%;
     }
 }
 
@@ -69,19 +69,19 @@
         left: 40px;
     }
     75% {
-        -webkit-transform: translateX(-100%);
-        -moz-transform: translateX(-100%);
-        -ms-transform: translateX(-100%);
-        -o-transform: translateX(-100%);
-        transform: translateX(-100%);
-        left: calc(100% + 40px);
+        -webkit-transform: translateX(-170%);
+        -moz-transform: translateX(-170%);
+        -ms-transform: translateX(-170%);
+        -o-transform: translateX(-170%);
+        transform: translateX(-170%);
+        left: 100%;
     }
     100% {
-        -webkit-transform: translateX(-100%);
-        -moz-transform: translateX(-100%);
-        -ms-transform: translateX(-100%);
-        -o-transform: translateX(-100%);
-        transform: translateX(-100%);
-        left: calc(100% + 40px);
+        -webkit-transform: translateX(-170%);
+        -moz-transform: translateX(-170%);
+        -ms-transform: translateX(-170%);
+        -o-transform: translateX(-170%);
+        transform: translateX(-170%);
+        left: 100%;
     }
 }
