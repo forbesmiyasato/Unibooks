@@ -93,7 +93,7 @@ def help():
         email = request.form.get('email', "None")
         standalone = "standalone"
         msg = Message("Feedback from user",
-                      sender=("Unibooks", "Unibooks@unibooks.io"),
+                      sender=("Unibooks", "do-not-reply@unibooks.io"),
                       recipients=["pacificubooks@gmail.com"], html=render_template("message_email.html", name="feedback from user",
                                                                                    email=email, body=request.form.get('message')))
         sender = threading.Thread(name="mail_sender", target=send_message, args=(
@@ -280,7 +280,7 @@ def saved_for_later():
                     current_user.num_buy_message_sent += 1
                     db.session.commit()
         msg = Message("Message regarding " + "\"" + _item.name + "\"",
-                      sender=("Unibooks", 'unibooks@unibooks.io'),
+                      sender=("Unibooks", 'do-not-reply@unibooks.io'),
                       recipients=[_item.owner.email], html=render_template("message_email.html", name=_item.name,
                                                                            email=request.form.get('email'), body=request.form.get('message')))
         sender = threading.Thread(name="mail_sender", target=send_message, args=(
@@ -471,7 +471,7 @@ def leave_a_message():
         email = request.form.get('email', "None")
         standalone = "standalone"
         msg = Message("Feedback from user",
-                      sender=("Unibooks", "Unibooks@unibooks.io"),
+                      sender=("Unibooks", "do-not-reply@unibooks.io"),
                       recipients=["pacificubooks@gmail.com"], html=render_template("message_email.html", name="feedback from user",
                                                                                    email=email, body=request.form.get('message')))
         sender = threading.Thread(name="mail_sender", target=send_message, args=(

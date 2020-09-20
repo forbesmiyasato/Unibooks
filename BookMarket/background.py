@@ -23,6 +23,6 @@ def query_for_reminder(app):
         if expiring_item_ids:
             for item_id in expiring_item_ids:
                 item = Item.query.get_or_404(item_id)
-                msg = Message("Post Will Expire Soon", sender=("Unibooks", "Unibooks@unibooks.io"), recipients=[item.owner.email], html=render_template("message_email.html", name=item.name, email="Unibooks@unibooks.io", 
+                msg = Message("Post Will Expire Soon", sender=("Unibooks", "do-not-reply@unibooks.io"), recipients=[item.owner.email], html=render_template("message_email.html", name=item.name, email="do-not-reply@unibooks.io", 
                     body="You have an item for sale that will expire soon."))
                 mail.send(msg)
