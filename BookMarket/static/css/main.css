@@ -5343,6 +5343,10 @@ label {
   .s_product_text .card_area .single-product-button .material-icons {
     margin-left: 5px; }
 
+.button-disabled {
+  pointer-events: none;
+  filter: brightness(0.8); }
+
 /* Latest Blog Area css
 ============================================================================================ */
 .l_blog_item .l_blog_text .date {
