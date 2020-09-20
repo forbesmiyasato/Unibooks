@@ -207,9 +207,8 @@
     {% if messages %}
     {% for category, message in messages %}
     <script>
-      toastr.options = { "positionClass": {% if message == 'Logged in!' or message == 'Logged out!' %} "toast-top-center" {% else %} "toast-top-center" {% endif %}
-      , "closeButton": true, "timeOut": "6000" }
-      toastr.{ { category } } ("{{message}}");
+      toastr.options = { "positionClass": "toast-top-center", "closeButton": true, "timeOut": "5000" }
+      toastr.{{category}}("{{message}}");
     </script>
     {% endfor %}
     {% endif %}
@@ -449,27 +448,28 @@
 
     const redirect = (paths) => {
       console.log("PATH", paths.split('/'))
-      path = paths.split('/')[1]
-      other = paths.split('/')[2]
-      if ((path === 'home' || path === "") && home_html) {
+      path = window.location.pathname
+      // path = paths.split('/')[1]
+      // other = paths.split('/')[2]
+      if ((path === '/home' || path === "/") && home_html) {
         $('#block-content').html(home_html);
-      } else if (path.includes('login') && login_html) {
+      } else if (path === '/login' && login_html) {
         $('#block-content').html(login_html);
-      } else if (path === 'register' && register_html) {
+      } else if (path === '/register' && register_html) {
         $('#block-content').html(register_html);
-      } else if (path.includes('shop') && shop_html && !other) {
+      } else if (path === '/shop' && shop_html) {
         $('#block-content').html(shop_html);
-      } else if (path === 'aboutus' && about_html) {
+      } else if (path === '/aboutus' && about_html) {
         $('#block-content').html(about_html);
-      } else if (path === 'contactus' && message_html) {
+      } else if (path === '/contactus' && message_html) {
         $('#block-content').html(message_html);
-      } else if (path === 'help' && help_html) {
+      } else if (path === '/help' && help_html) {
         $('#block-content').html(help_html);
-      } else if (path.includes('account') && account_html) {
+      } else if (path === '/account' && account_html) {
         $('#block-content').html(account_html);
-      } else if (path.includes('listings') && listings_html) {
+      } else if (path === '/listings' && listings_html) {
         $('#block-content').html(listings_html);
-      } else if ((path === 'saved' || path === 'saved?cart') && saved_html) {
+      } else if (path === '/saved' && saved_html) {
         $('#block-content').html(saved_html);
       } else {
         call = $.ajax({
@@ -478,25 +478,25 @@
           data: { standalone: 'true' },
           async: true,
           success: function (response) {
-            if ((path === 'home' || path === "") && !home_html) {
+            if ((path === '/home' || path === "/") && !home_html) {
               home_html = response
-            } else if (path === 'register' && !register_html) {
+            } else if (path === '/register' && !register_html) {
               register_html = response
-            } else if (path.includes('login') && !login_html) {
+            } else if (path === '/login' && !login_html) {
               login_html = response
-            } else if (path.includes('shop') && !shop_html) {
+            } else if (path === '/shop' && !shop_html) {
               shop_html = response
-            } else if (path === 'aboutus' && !about_html) {
+            } else if (path === '/aboutus' && !about_html) {
               about_html = response
-            } else if (path === 'contactus' && !message_html) {
+            } else if (path === '/contactus' && !message_html) {
               message_html = response
-            } else if (path === 'help' && !help_html) {
+            } else if (path === '/help' && !help_html) {
               help_html = response
-            } else if (path.includes('listings') && !listings_html) {
+            } else if (path === '/listings' && !listings_html) {
               listings_html = response
-            } else if (path.includes('account') && !account_html) {
+            } else if (path === '/account' && !account_html) {
               account_html = response
-            } else if ((path === 'saved' || path === 'saved?cart') && !saved_html) {
+            } else if (path === 'saved' && !saved_html) {
               saved_html = response
             }
             if (response.state) {
