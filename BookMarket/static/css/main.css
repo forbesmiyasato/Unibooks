@@ -2503,7 +2503,6 @@ label {
     left: 0;
     top: 3px;
     width: 100px;
-    left: -40px;
     text-transform: uppercase;
     font-family: "Poppins", sans-serif;
     font-weight: 500;
@@ -6493,7 +6492,6 @@ label {
 
 /* https://stackoverflow.com/questions/33068754/css-animate-text-from-left-to-right-in-div-container-with-overflow-hidden */
 .animate-overflow {
-  display: inline-block;
   position: relative;
   left: 40px !important; }
 
