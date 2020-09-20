@@ -241,7 +241,7 @@
 
 .fa-stack[data-count]:after {
     position: absolute;
-    right: -20%;
+    right: -10%;
     top: -20%;
     content: attr(data-count);
     font-size: 60%;
@@ -261,7 +261,7 @@
 }
 
 #shopping-cart.active {
-    .cart {
+    .shopping-cart {
         color: $primary-color;
         background: white;
     }
@@ -272,7 +272,7 @@
 }
 
 #shopping-cart {
-    &:hover .cart {
+    &:hover .shopping-cart {
         color: $primary-color;
         background: white;
     }
@@ -281,9 +281,11 @@
         color: $primary-color;
     }
 }
-.cart {
+
+.material-icons-outlined.shopping-cart {
     color: $title-color;
-    background: white;
+	background: white;
+	font-size: 30px;
 }
 
 button.search {

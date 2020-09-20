@@ -69,8 +69,16 @@
                         {% endif %}
                     </ul>
                     <p>{{item.description}}</p>
-                    {% if current_user.confirmed != True %}
-                    <span><i class="fas fa-exclamation-triangle"></i> Confirm your account before sending
+                    {% if current_user.is_authenticated != True %}
+                    <span><i class="fas fa-exclamation-triangle"></i>
+                        <a class="single-edit"
+                            onclick="linkClicked(null, '{{url_for('userAuth.login', next=url_for('shop_api.item', item_id=item.id))}}')">Log
+                            in</a>
+                        to send messages and saved item to cart</span>
+                    {% elif current_user.confirmed != True %}
+                    <span><i class="fas fa-exclamation-triangle"></i>
+                        <a class="single-edit" onclick="linkClicked(null, '{{url_for('account')}}')">Confirm</a> your
+                        account before sending
                         messages</span>
                     {% endif %}
                     <div class="card_area d-flex align-items-center">
@@ -125,18 +133,32 @@
                         </div>
                         {% else %}
                         {% if current_user.confirmed == True %}
-                        <a class="primary-btn" href="javascript:void(0)" data-toggle="modal"
+                        <a class="primary-btn single-product-button" href="javascript:void(0)" data-toggle="modal"
                             data-target="#messageModal">
-                            Message Seller <i class="lnr lnr-envelope"></i></a>
+                            Message Seller <span class="material-icons">
+                                mail_outline
+                            </span></a>
                         {% else %}
-                        <a class="primary-btn" style="pointer-events: none;" href="javascript:void(0)">
-                            Message Seller <i class="lnr lnr-envelope"></i></a>
-                        {% endif %}
-                        <a class="add-icon-social social-info" onclick="addToBag({{item.id}}, {{current_user.id}})"
+                        <a class="primary-btn single-product-button" style="pointer-events: none;"
                             href="javascript:void(0)">
-                            <span class="add-icon-single ti-bag"></span>
-                            <div class="hover-text">Add to bag</div>
+                            Message Seller <span class="material-icons">
+                                mail_outline
+                            </span>
                         </a>
+                        {% endif %}
+                        {% if current_user.is_authenticated == True %}
+                        <a class="gray_btn default radius single-product-button"
+                            onclick="addToBag({{item.id}}, {{current_user.id}})">
+                            <span class="add-text">Add to Cart</span>
+                            <span class="material-icons">
+                                add_shopping_cart
+                            </span></a>
+                        {% else %}
+                        <a disabled style="pointer-events: none;" class="gray_btn default radius single-product-button">
+                            Add to Cart <span class="material-icons">
+                                add_shopping_cart
+                            </span></a>
+                        {% endif %}
                         <!-- Message Modal -->
                         <div class="modal fade" id="messageModal" tabindex="-1" role="dialog"
                             aria-labelledby="messageModalLabel" aria-hidden="true">
@@ -213,7 +235,7 @@
     };
 
     function addToBag(item_id, user_id) {
-        document.querySelector('div.hover-text').innerHTML = 'Added!';
+        document.querySelector('span.add-text').innerHTML = 'Added!';
 
         var url = "{{url_for('add_to_bag', item='tempItem', user='tempUser')}}"
             .replace('tempItem', item_id).replace('tempUser', user_id).replace('&amp;', '&')
@@ -224,6 +246,8 @@
                 bagIcon.setAttribute("data-count", parseInt(bagIcon.getAttribute("data-count")) + 1)
             }
         })
+
+        saved_html = null;
     }
 </script>
 {% endblock content %}

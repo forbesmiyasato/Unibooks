@@ -1123,16 +1123,23 @@
 		}
 	}
 }
+
+//DOn't delete
 .gray_btn{
 	line-height: 38px;
 	background: #e8f0f2;
 	border: 1px solid #eeeeee;
-	border-radius: 3px;
-	padding: 0px 40px;
-	display: inline-block;
+	border-radius: 5px;
+	padding: 0px 20px;
+	display: flex;
+	align-items: center;
 	color: $title-color;
 	text-transform: uppercase;
 	font-weight: 500;
+
+	&:hover {
+		color: $primary-color2
+	}
 }
 /* End Cart Area css
 ============================================================================================ */
@@ -1809,4 +1816,15 @@
 
 .radion_btn input[type=radio]:checked ~ label{
     color: #000;
+}
+
+//forbes
+.s_product_text .card_area .single-product-button {
+	display: flex;
+	align-items: center;
+	padding: 0 20px;
+
+	& .material-icons {
+		margin-left: 5px;
+	}
 }

@@ -148,8 +148,10 @@ def login_html(standalone=None, pattern=None, placeholder=None, error_message=No
         if (user and bcrypt.check_password_hash(user.password, form.password.data)):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            flash('Logged in!', 'success')
-            print("!!!", next_page)
+            if current_user.confirmed == True:
+                flash('Logged in!', 'success')
+            else:
+                flash("Your account isn't confirmed yet! You can't sell or message until your account is confirmed.", 'info')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check email and password',

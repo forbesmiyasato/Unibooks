@@ -127,7 +127,7 @@ ORDER: Base + typography > general layout + grid > page layout > components
   .primary-btn:hover {
     color: #fff; }
     .primary-btn:hover:before {
-      left: 180px;
+      left: 196px;
       opacity: .3; }
 
 body {
@@ -1446,7 +1446,7 @@ h6 {
 
 .fa-stack[data-count]:after {
   position: absolute;
-  right: -20%;
+  right: -10%;
   top: -20%;
   content: attr(data-count);
   font-size: 60%;
@@ -1464,23 +1464,24 @@ h6 {
 .fa-circle {
   color: #222222; }
 
-#shopping-cart.active .cart {
+#shopping-cart.active .shopping-cart {
   color: #87CEEB;
   background: white; }
 
 #shopping-cart.active .fa-stack[data-count]:after {
   color: #87CEEB; }
 
-#shopping-cart:hover .cart {
+#shopping-cart:hover .shopping-cart {
   color: #87CEEB;
   background: white; }
 
 #shopping-cart:hover .fa-stack[data-count]:after {
   color: #87CEEB; }
 
-.cart {
+.material-icons-outlined.shopping-cart {
   color: #222222;
-  background: white; }
+  background: white;
+  font-size: 30px; }
 
 button.search {
   font-size: 20px;
@@ -4787,12 +4788,15 @@ label {
   line-height: 38px;
   background: #e8f0f2;
   border: 1px solid #eeeeee;
-  border-radius: 3px;
-  padding: 0px 40px;
-  display: inline-block;
+  border-radius: 5px;
+  padding: 0px 20px;
+  display: flex;
+  align-items: center;
   color: #222222;
   text-transform: uppercase;
   font-weight: 500; }
+  .gray_btn:hover {
+    color: #00BFFF; }
 
 /* End Cart Area css
 ============================================================================================ */
@@ -5331,6 +5335,13 @@ label {
 
 .radion_btn input[type=radio]:checked ~ label {
   color: #000; }
+
+.s_product_text .card_area .single-product-button {
+  display: flex;
+  align-items: center;
+  padding: 0 20px; }
+  .s_product_text .card_area .single-product-button .material-icons {
+    margin-left: 5px; }
 
 /* Latest Blog Area css
 ============================================================================================ */
@@ -6447,10 +6458,9 @@ label {
     border: none;
     background-color: white;
     color: #87CEEB;
-    padding: 0 10px 0 10px; }
+    padding: 5px 10px 0 10px; }
     @media (max-width: 550px) {
       .help-container #help-back {
-        padding-top: 10px;
         line-height: 30px; } }
     .help-container #help-back .fas.fa-arrow-left {
       font-size: 2em; }
