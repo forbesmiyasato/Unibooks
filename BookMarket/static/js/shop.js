@@ -564,7 +564,10 @@ const onSavedUndo = (index, id) => {
         }
     });
     document.getElementById(`row-${index}`).innerHTML = deletedItems[index];
-    document.getElementsByClassName('confirm-acc')[index - 1].addEventListener('click', linkClicked.bind(null, null, "/account"));
+    const confirmAcc = document.getElementsByClassName('confirm-acc')[index - 1];
+    if (confirmAcc) confirmAcc.addEventListener('click', linkClicked.bind(null, null, "/account"));
+    const savedMessage = document.getElementsByClassName('saved-message')[index - 1];
+    if (savedMessage) savedMessage.addEventListener('click', messageClicked.bind(null, savedMessage.id));
 };
 
 const initializeSingleProductPage = () => {
