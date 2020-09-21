@@ -49,9 +49,9 @@ def sitemap():
         return(str(e))
 
 
-# @app.route('/loaderio-d2cf780526acfac1fe150b2163a01707/')
-# def loaderio():
-#     return render_template('loaderio-d2cf780526acfac1fe150b2163a01707.txt')
+@app.route('/loaderio-d2cf780526acfac1fe150b2163a01707/')
+def loaderio():
+    return render_template('loaderio-d2cf780526acfac1fe150b2163a01707.txt')
 
 
 @app.before_first_request
