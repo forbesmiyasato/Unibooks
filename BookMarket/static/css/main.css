@@ -6515,11 +6515,11 @@ label {
   75% {
     -webkit-transform: translateX(-115px);
     transform: translateX(-115px);
-    left: 100%; }
+    left: 100% !important; }
   100% {
     -webkit-transform: translateX(-115px);
     transform: translateX(-115px);
-    left: 100%; } }
+    left: 100% !important; } }
 
 @keyframes advanced {
   0% {
@@ -6542,11 +6542,11 @@ label {
     -ms-transform: translateX(-115px);
     -o-transform: translateX(-115px);
     transform: translateX(-115px);
-    left: 100%; }
+    left: 100% !important; }
   100% {
     -webkit-transform: translateX(-115px);
     -moz-transform: translateX(-115px);
     -ms-transform: translateX(-115px);
     -o-transform: translateX(-115px);
     transform: translateX(-115px);
-    left: 100%; } }
+    left: 100% !important; } }
