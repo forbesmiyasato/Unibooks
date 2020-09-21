@@ -37,6 +37,8 @@
     })(window, document, 'script', 'dataLayer', 'GTM-PTKJJXZ');</script>
   <!-- End Google Tag Manager -->
 
+  <link href="https://fonts.googleapis.com/css2?family=Maven+Pro&family=Sacramento&display=swap" rel="stylesheet">
+
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -117,8 +119,9 @@
       <nav class="navbar navbar-expand-lg navbar-light main_box">
         <div class="header-container container">
           <!-- Brand and toggle get grouped for better mobile display -->
-          <a class="navbar-brand logo_h" onclick="linkClicked(null, '/home'); return false;" href="/home"><img
-              src="{{ url_for('static', filename='img/logo.png')}}" alt=""></a>
+          <a class="navbar-brand" onclick="linkClicked(null, '/home'); return false;" href="/home">
+            <h1 class="logo-header">Uni<span class="logo-highlight">books</span></h1>
+          </a>
           <div class="switch-container-full">
             <span id="school-name-normal"></span>
           </div>
