@@ -51,6 +51,11 @@ def save_images_to_db_and_s3(form_images, item_id):
     #         os.remove(current_picture_path)
 
 
+def delete_all_user_listings__images_from_s3_and_db(user):
+    for item in user.items:
+        delete_images_from_s3_and_db(item.id)
+    db.session.commit()
+
 def delete_images_from_s3_and_db(item_id):
     s3_resource = boto3.resource('s3')
     my_bucket = s3_resource.Bucket(S3_BUCKET)

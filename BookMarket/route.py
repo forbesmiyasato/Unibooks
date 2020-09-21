@@ -12,7 +12,8 @@ from .forms import UpdateAccountForm, ItemForm, MessageForm
 from . import app, db, mail
 from .routes.userAuth import userAuth, login_html
 from .routes.shop import shop_api, item_html
-from .utility_funcs import save_images_to_db_and_s3, delete_images_from_s3_and_db, delete_non_remaining_images_from_s3_and_db, send_message
+from .utility_funcs import (save_images_to_db_and_s3, delete_images_from_s3_and_db,
+                            delete_non_remaining_images_from_s3_and_db, send_message, delete_all_user_listings__images_from_s3_and_db)
 from apscheduler.schedulers.background import BackgroundScheduler
 from .background import query_for_reminder
 # from werkzeug.utils import secure_filename
@@ -130,6 +131,7 @@ def account():
 @app.route("/account/delete", methods=['POST'])
 @login_required
 def account_delete():
+    delete_all_user_listings__images_from_s3_and_db(current_user)
     db.session.delete(current_user)
     db.session.commit()
     logout_user()

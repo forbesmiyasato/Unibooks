@@ -14,7 +14,7 @@ class Users(db.Model, UserMixin):
     image_file = db.Column(db.String(50), nullable=False,
                            default='default.jpg')
     password = db.Column(db.String(100), nullable=False)
-    items = db.relationship('Item', backref='owner', lazy=True)
+    items = db.relationship('Item', backref='owner', lazy=True, cascade="all, delete", passive_deletes=True)
     confirmed = db.Column(db.Boolean, default=False, nullable=False)
     listings = db.Column(db.Integer, default=0)
     school = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
@@ -58,7 +58,7 @@ class Item(db.Model):
     price = db.Column(db.DECIMAL(10, 2), nullable=False)
     thumbnail = db.Column(db.String, nullable=False,
                           default='No_picture_available.png')
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="CASCADE"), nullable=False)
     class_id = db.Column(db.Integer, db.ForeignKey(
         'itemclass.id'), nullable=True)
     department_id = db.Column(db.Integer, db.ForeignKey(
@@ -66,7 +66,7 @@ class Item(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey(
         'itemcategory.id'), nullable=True)
     images = db.relationship(
-        'ItemImage', cascade="all,delete", backref='owner', lazy=True)
+        'ItemImage', cascade="all,delete", backref='owner', lazy=True, passive_deletes=True)
     saved_by = db.relationship(
         'SaveForLater', cascade="all, delete", passive_deletes=True)
     isbn = db.Column(db.String(15), nullable=True)
@@ -80,7 +80,7 @@ class Item(db.Model):
 class ItemImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image_file = db.Column(db.String(100), nullable=False)
-    item_id = db.Column(db.Integer, db.ForeignKey('item.id'), nullable=False)
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id', ondelete="CASCADE"), nullable=False)
     image_name = db.Column(db.String(30), nullable=True)
     image_size = db.Column(db.String(20), nullable=True)
 
@@ -90,7 +90,7 @@ class SaveForLater(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     item_id = db.Column(db.Integer, db.ForeignKey(
         'item.id', ondelete='CASCADE'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="CASCADE"), nullable=False)
 
 
 class School(db.Model):
@@ -105,7 +105,7 @@ class School(db.Model):
 
 
 class Inappropriate(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, db.ForeignKey('item.id', ondelete="CASCADE"), primary_key=True)
     count = db.Column(db.Integer, nullable=True)
 
 
