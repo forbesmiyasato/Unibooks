@@ -153,6 +153,11 @@
                         {% endfor %}
                     </div>
                     {% else %}
+                    <div class="help-tip">
+                        <p> Limit of 8 images. Max image size per upload is 10 MB. Allowed image formats are JPEG and PNG.
+                            You can still add/remove images after your post is created. 
+                        </p>
+                    </div>
                     <div>
                         {{ form.files(id="files", type="file") }}
                     </div>

@@ -49,7 +49,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash(
-            f'Your account has been created, please check your inbox to confirm your email!', 'success')
+            f'Your account has been created! please check your inbox to confirm your account.', 'success')
         return redirect(url_for('userAuth.login'))
     return render_template('register.html', title='Register', form=form, standalone=standalone,
                            pattern=pattern, errorMessage=error_message, placeholder=placeholder)
@@ -57,11 +57,12 @@ def register():
 
 @userAuth.route('/confirm_email/send/', methods=['POST'])
 def send_confirm_email():
-    time_difference = datetime.utcnow() - current_user.last_confirm_email_sent
-    minutes = divmod(time_difference.total_seconds(), 60)[0]
-    print("TIME", minutes)
-    if minutes < 60.0:
-        return jsonify({"result": "failure-too-soon"})
+    if current_user.last_confirm_email_sent:
+        time_difference = datetime.utcnow() - current_user.last_confirm_email_sent
+        minutes = divmod(time_difference.total_seconds(), 60)[0]
+        print("TIME", minutes)
+        if minutes < 60.0:
+            return jsonify({"result": "failure-too-soon"})
     if current_user.is_authenticated is False:
         flash('Your must be logged in to send confirmation emails', 'error')
         return redirect(url_for('home'))
@@ -145,7 +146,7 @@ def confirm_email(token):
     login_user(user)
     user.confirmed = True
     db.session.commit()
-    return redirect(url_for('home.html'))
+    return redirect(url_for('home'))
 
 
 def login_html(standalone=None, pattern=None, placeholder=None, error_message=None):

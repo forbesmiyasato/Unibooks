@@ -33,7 +33,8 @@
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{ form.email(class="form-control form-control-lg", type="email", placeholder=placeholder) }}
+                    {{ form.email(class="form-control form-control-lg", type="email",
+                    pattern=pattern, placeholder=placeholder) }}
                     {% endif %}
                 </div>
                 <div class="form-group">
