@@ -40,13 +40,13 @@
         left: 40px;
     }
     75% {
-        -webkit-transform: translateX(-115px);
-        transform: translateX(-115px);
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
         left: 100% !important;
     }
     100% {
-        -webkit-transform: translateX(-115px);
-        transform: translateX(-115px);
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
         left: 100% !important;
     }
 }
@@ -69,19 +69,19 @@
         left: 40px;
     }
     75% {
-        -webkit-transform: translateX(-115px);
-        -moz-transform: translateX(-115px);
-        -ms-transform: translateX(-115px);
-        -o-transform: translateX(-115px);
-        transform: translateX(-115px);
+        -webkit-transform: translateX(-100%);
+        -moz-transform: translateX(-100%);
+        -ms-transform: translateX(-100%);
+        -o-transform: translateX(-100%);
+        transform: translateX(-100%);
         left: 100% !important;
     }
     100% {
-        -webkit-transform: translateX(-115px);
-        -moz-transform: translateX(-115px);
-        -ms-transform: translateX(-115px);
-        -o-transform: translateX(-115px);
-        transform: translateX(-115px);
+        -webkit-transform: translateX(-100%);
+        -moz-transform: translateX(-100%);
+        -ms-transform: translateX(-100%);
+        -o-transform: translateX(-100%);
+        transform: translateX(-100%);
         left: 100% !important;
     }
 }
