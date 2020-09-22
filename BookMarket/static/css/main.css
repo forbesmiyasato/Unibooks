@@ -5365,7 +5365,8 @@ label {
 
 #main-categories::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, #ffd98e), color-stop(0.72, #feae7c), color-stop(0.86, #fd8369)); }
+  background-color: #F90;
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent); }
 
 /* Latest Blog Area css
 ============================================================================================ */
@@ -6592,9 +6593,12 @@ label {
 .help-tip:hover p {
   display: block;
   transform-origin: 100% 0%;
-  left: -10px;
+  left: -40px;
   -webkit-animation: fadeIn 0.3s ease-in-out;
   animation: fadeIn 0.3s ease-in-out; }
+  @media (max-width: 450px) {
+    .help-tip:hover p {
+      left: -60px; } }
 
 .help-tip p {
   /* The tooltip */
@@ -6619,8 +6623,11 @@ label {
   height: 0;
   border: 7px solid transparent;
   border-top-color: #1E2021;
-  left: 15px;
+  left: 45px;
   bottom: -14px; }
+  @media (max-width: 450px) {
+    .help-tip p:after {
+      left: 64px; } }
 
 /* CSS animation */
 @-webkit-keyframes fadeIn {

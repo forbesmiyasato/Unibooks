@@ -21,10 +21,12 @@
 .help-tip:hover p{
     display:block;
     transform-origin: 100% 0%;
-    left: -10px;
+    left: -40px;
     -webkit-animation: fadeIn 0.3s ease-in-out;
     animation: fadeIn 0.3s ease-in-out;
-
+    @media (max-width: 450px) {
+        left: -60px;
+    }
 }
 
 .help-tip p{    /* The tooltip */
@@ -61,8 +63,11 @@
     height: 0;
     border: 7px solid transparent;
     border-top-color: #1E2021;
-    left: 15px;
+    left: 45px;
     bottom: -14px;
+    @media (max-width: 450px) {
+        left: 64px;
+    }
 }
 
 /* CSS animation */
