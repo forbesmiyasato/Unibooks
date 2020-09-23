@@ -4,7 +4,8 @@ import threading
 from datetime import datetime, timedelta
 
 # from PIL import Image
-from flask import render_template, url_for, flash, redirect, request, abort, jsonify, session, Markup, make_response, current_app, make_response
+from flask import (render_template, url_for, flash, redirect, request, abort, jsonify, session,
+                   Markup, make_response, current_app, make_response, copy_current_request_context)
 from flask_login import current_user, login_required, logout_user
 from flask_mail import Message
 from .models import Users, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater, School, ItemCategory, Inappropriate
@@ -131,9 +132,14 @@ def account():
 @app.route("/account/delete", methods=['POST'])
 @login_required
 def account_delete():
-    delete_all_user_listings__images_from_s3_and_db(current_user)
-    db.session.delete(current_user)
-    db.session.commit()
+    user = current_user
+    @copy_current_request_context
+    def delete_user_data(user):
+        delete_all_user_listings__images_from_s3_and_db(user)
+        db.session.delete(user)
+        db.session.commit()
+    async_task = threading.Thread(name="delete_user", target=delete_user_data, args=(user,))
+    async_task.start()
     logout_user()
     flash('Your account has been successfully deleted. Please register again to use our service.', 'success')
     return redirect(url_for('home'))

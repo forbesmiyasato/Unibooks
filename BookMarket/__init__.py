@@ -18,13 +18,13 @@ csrf = CSRFProtect(app)
 # Talisman(app)
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_SERVER'] = os.getenv('EMAIL_SES_SERVER')
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 # app.config['MAIL_DEBUG'] =
-app.config['MAIL_USERNAME'] = 'pacificubooks@gmail.com'
-app.config['MAIL_PASSWORD'] = os.getenv('EMAIL_PW')
+app.config['MAIL_USERNAME'] = os.getenv('EMAIL_SES_USERNAME')
+app.config['MAIL_PASSWORD'] = os.getenv('EMAIL_SES_PW')
 app.config['MAIL_DEFAULT_SENDER'] = 'do-not-reply@unibooks.io'
 # app.config['MAIL_MAX_EMAILS'] =
 # app.config['MAIL_SUPPRESS_SEND'] =
