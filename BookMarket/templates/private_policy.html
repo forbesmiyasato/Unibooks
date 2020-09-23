@@ -1,0 +1,25 @@
+{% if not standalone %} {% extends "layout.html" %} {% endif %}
+{% block content %}
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Private Policy</h1>
+                <nav class="d-flex align-items-center">
+                    <a onclick="linkClicked(null, '/home'); return false" href="/home">Home<span
+                            class="lnr lnr-arrow-right"></span></a>
+                    <a class="nav-no-href">Private Policy</span></a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<a href="https://www.iubenda.com/privacy-policy/51011060" class="iubenda-white no-brand iubenda-embed iub-body-embed"
+    title="Privacy Policy">Privacy Policy</a>
+<script type="text/javascript">
+    var loader = function () { var s = document.createElement("script"), tag = document.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); };
+    loader();
+</script>
+{% endblock content %}

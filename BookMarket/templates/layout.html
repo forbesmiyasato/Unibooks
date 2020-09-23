@@ -267,7 +267,7 @@
               <a class="footer-item" onclick="linkClicked(this, '{{url_for('help')}}')">FAQ</a>
             </p>
             <p>
-              <a class="footer-item" onclick="linkClicked(this, '{{url_for('help')}}')">Private Policy</a>
+              <a class="footer-item" onclick="linkClicked(this, '{{url_for('private_policy')}}')">Private Policy</a>
             </p>
             <!-- <p>
               <a class="footer-item"href ="{{url_for('about_us')}}">Meet the founders</a>
@@ -446,6 +446,7 @@
     let account_html = null;
     let message_html = null;
     let help_html = null;
+    let privacy_html = null;
 
     const redirect = (paths) => {
       console.log("PATH", paths.split('/'))
@@ -478,6 +479,8 @@
         $('#block-content').html(listings_html);
       } else if (path === '/saved' && saved_html) {
         $('#block-content').html(saved_html);
+      } else if (path === '/privacy' && privacy_html) {
+        $('#block-content').html(privacy_html);
       } else {
         call = $.ajax({
           url: location.href,
@@ -503,8 +506,10 @@
               listings_html = response
             } else if (path === '/account' && !account_html) {
               account_html = response
-            } else if (path === 'saved' && !saved_html) {
+            } else if (path === '/saved' && !saved_html) {
               saved_html = response
+            } else if (path === '/privacy' && !privacy_html) {
+              privacy_html = response
             }
             if (response.state) {
               toastr.options = { "positionClass": "toast-top-center", "closeButton": true }

@@ -500,3 +500,8 @@ def report_item(item_id):
         db.session.commit()
 
     return 'added'
+
+@app.route('/privacy')
+def private_policy():
+    standalone = request.args.get('standalone', None)
+    return render_template('private_policy.html', standalone=standalone)

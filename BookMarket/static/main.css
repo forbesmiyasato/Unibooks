@@ -1058,6 +1058,11 @@ select {
 .click-href {
     cursor: pointer;
 }
+
+#iub-pp-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
 /* .icon_btn {
     position: relative;
 }
