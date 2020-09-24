@@ -7,7 +7,8 @@
         <ul class="main-categories browse-collapse collapse show" id="main-categories" data-toggle="collapse"
             aria-expanded="false" aria-controls="">
             <li class="main-nav-list">
-                <a onclick="getAll(); return false;" href="{{url_for('shop_api.shop')}}">All<span class="number">{{ items|length }}</span></a>
+                <a onclick="getAll(); return false;" href="{{url_for('shop_api.shop')}}">
+                    All<span class="number">{% if items|length != 0 %}{{ items|length }}{% endif %}</span></a>
             </li>
             <!-- Other -->
             <li class="main-nav-list">
@@ -25,7 +26,7 @@
                         <a onclick="filterByCategory('all', 'All Non-Textbooks'); return false;"
                         href="{{url_for('shop_api.shop', nonbook='all')}}">All Others
                             <span class="number" id="other_total">
-                                {% if totalCategory != None %}
+                                {% if totalCategory != 0 %}
                                 {{ totalCategory }}
                                 {% endif %}
                             </span>

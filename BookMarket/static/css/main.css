@@ -6569,6 +6569,11 @@ label {
     transform: translateX(-100%);
     left: 100% !important; } }
 
+.sidebar-categories ul {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+
 .help-tip {
   position: relative;
   display: inline-block;
