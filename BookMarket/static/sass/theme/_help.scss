@@ -46,11 +46,16 @@
         cursor: pointer;
         opacity: 0;
         transform: scale(0);
-        -webkit-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
-        -moz-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
-        -ms-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
-        -o-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
-        transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
+        -webkit-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in,
+            transform 0.2s ease-in-out;
+        -moz-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in,
+            transform 0.2s ease-in-out;
+        -ms-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in,
+            transform 0.2s ease-in-out;
+        -o-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in,
+            transform 0.2s ease-in-out;
+        transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in,
+            transform 0.2s ease-in-out;
         &.load {
             opacity: 1;
             height: auto;
@@ -146,7 +151,7 @@
             transform: scale(1);
         }
     }
-    
+
     #help-back {
         z-index: 90;
         @media (max-width: 550px) {
@@ -167,14 +172,6 @@
         text-align: right;
     }
 
-    .sell-links {
-        color: $primary-color;
-        cursor: pointer;
-        &:hover {
-            color: $primary-color2;
-        }
-    }
-
     .help-item-icon {
         font-size: 6em;
         background: linear-gradient(to right bottom, #ffd98e, #fd8369);
@@ -187,5 +184,13 @@
         -ms-transition: font-size 0.2s ease-in;
         -o-transition: font-size 0.2s ease-in;
         transition: font-size 0.2s ease-in;
+    }
+}
+
+.nav-text {
+    color: $primary-color;
+    cursor: pointer;
+    &:hover {
+        color: $primary-color2;
     }
 }

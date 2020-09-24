@@ -142,11 +142,6 @@ html,
 body {
   height: 100%; }
 
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none; }
-
 h1,
 h2,
 h3,
@@ -6408,11 +6403,11 @@ label {
     cursor: pointer;
     opacity: 0;
     transform: scale(0);
-    -webkit-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
-    -moz-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
-    -ms-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
-    -o-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
-    transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out; }
+    -webkit-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
+    -moz-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
+    -ms-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
+    -o-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
+    transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out; }
     .help-container .help-item.load {
       opacity: 1;
       height: auto;
@@ -6491,11 +6486,6 @@ label {
       font-size: 2em; }
   .help-container .sell-notes {
     text-align: right; }
-  .help-container .sell-links {
-    color: #87CEEB;
-    cursor: pointer; }
-    .help-container .sell-links:hover {
-      color: #00BFFF; }
   .help-container .help-item-icon {
     font-size: 6em;
     background: linear-gradient(to right bottom, #ffd98e, #fd8369);
@@ -6508,6 +6498,12 @@ label {
     -ms-transition: font-size 0.2s ease-in;
     -o-transition: font-size 0.2s ease-in;
     transition: font-size 0.2s ease-in; }
+
+.nav-text {
+  color: #87CEEB;
+  cursor: pointer; }
+  .nav-text:hover {
+    color: #00BFFF; }
 
 .icon-img {
   height: 150px; }

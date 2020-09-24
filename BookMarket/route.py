@@ -505,3 +505,8 @@ def report_item(item_id):
 def private_policy():
     standalone = request.args.get('standalone', None)
     return render_template('private_policy.html', standalone=standalone)
+
+@app.route('/legal')
+def terms_of_service():
+    standalone = request.args.get('standalone', None)
+    return render_template('terms_of_service.html', standalone=standalone)
