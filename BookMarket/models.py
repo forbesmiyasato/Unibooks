@@ -24,6 +24,7 @@ class Users(db.Model, UserMixin):
     last_contact_message_sent = db.Column(db.DateTime, nullable=True)
     num_contact_message_sent = db.Column(db.Integer, nullable=True, default=0)
     num_reports = db.Column(db.Integer, nullable=True, default=0)
+    total_listings = db.Column(db.Integer, nullable=True, default=0)
     date_created = db.Column(db.DateTime, nullable=False,
                             default=datetime.utcnow)
     def __repr__(self):

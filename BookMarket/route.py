@@ -8,7 +8,7 @@ from flask import (render_template, url_for, flash, redirect, request, abort, js
                    Markup, make_response, current_app, make_response, copy_current_request_context)
 from flask_login import current_user, login_required, logout_user
 from flask_mail import Message
-from .models import Users, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater, School, ItemCategory, Inappropriate
+from .models import Users, Item, ItemClass, ItemDepartment, ItemImage, SaveForLater, School, ItemCategory, Inappropriate, Statistics
 from .forms import UpdateAccountForm, ItemForm, MessageForm
 from . import app, db, mail
 from .routes.userAuth import userAuth, login_html
@@ -167,12 +167,17 @@ def new_item():
         newId = post.id
         item = Item.query.filter_by(id=newId).first()
         if images:
-            print('before break 1')
             thumbnail = save_images_to_db_and_s3(images, newId)
-            print('before break 2')
             if thumbnail:
                 item.thumbnail = thumbnail
         current_user.listings = current_user.listings + 1
+        current_user.total_listings += 1
+        stats = Statistics.query.first()
+        if stats is None:
+            new_stats = Statistics(total_listings=1)
+            db.session.add(new_stats)
+        else:
+            stats.total_listings += 1
         db.session.commit()
         # flash('Your post has been created!', 'success')
         # return redirect(url_for('home'))
@@ -200,7 +205,7 @@ def new_item():
     form = ItemForm()
     # form.item_class.choices = class_list
     departments = ItemDepartment.query.filter_by(
-        school=session['school']).all()
+        school=session['school']).order_by(ItemDepartment.abbreviation).all()
     categories = ItemCategory.query.filter_by(school=session['school']).all()
     isBook = True  # default display is book item
     # department_list = [(i.id, i.department_name) for i in departments]
@@ -491,6 +496,7 @@ def leave_a_message():
 @app.route('/report/<int:item_id>')
 def report_item(item_id):
     item = Inappropriate.query.filter_by(id=item_id).first()
+    current_user.num_reports += 1
     if item is None:
         new = Inappropriate(id=item_id, count=1)
         db.session.add(new)

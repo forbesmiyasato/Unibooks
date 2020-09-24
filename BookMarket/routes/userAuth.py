@@ -23,18 +23,11 @@ def register():
     pattern = school.email_pattern
     placeholder = "Your " + school.name + " email address"
     error_message = "Must be a " + school.name + " email address!"
-    print(pattern)
-    print(form.email.data)
-    print(form.password.data)
-    print(error_message)
     if form.validate_on_submit():
-        print(form.email.data)
-        print(form.password.data)
         email = form.email.data
         hashed_password = bcrypt.generate_password_hash(
             form.password.data).decode('utf-8')
         school = request.form.get('school')
-        print("REGISTER_SCHOOL", school)
         Users.query.filter_by(email=email).delete()
         user = Users(email=email, password=hashed_password, school=school)
 
