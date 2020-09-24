@@ -108,7 +108,7 @@ def send_password_reset():
 @userAuth.route('/password_reset/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     try:
-        email = serializer.loads(token, salt=salt, max_age=60)
+        email = serializer.loads(token, salt=salt, max_age=3600)
         print(email)
     except SignatureExpired:
         flash("The token is expired! Click \"Forgot password\" below to send another one.", 'error')
@@ -131,7 +131,7 @@ def reset_password(token):
 @userAuth.route('/confirm_email/<token>')
 def confirm_email(token):
     try:
-        email = serializer.loads(token, salt=salt, max_age=60)
+        email = serializer.loads(token, salt=salt, max_age=3600)
         print(email)
     except SignatureExpired:
         # return '<h1>The token is expired!<h1>'

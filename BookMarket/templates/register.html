@@ -35,7 +35,21 @@
                     </div>
                     {% else %}
                     {{ form.email(class="form-control form-control-lg", type="email",
-                    pattern=pattern, placeholder=placeholder) }}
+                    pattern=pattern, placeholder=placeholder, onload="setCustomValidity('')") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.confirm_email.label(class="form-control-label") }}
+                    {% if form.confirm_email.errors %}
+                    {{ form.confirm_email(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.confirm_email.errors %}
+                        <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.confirm_email(class="form-control form-control-lg", type="confirm_email",
+                    pattern=pattern, onload="setCustomValidity('')") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
@@ -80,7 +94,9 @@
 <script>
     // checkSchool();
     const email = document.getElementById('email')
-    email.setCustomValidity('{{errorMessage}}')
+    if (!email.checkValidity()) {
+        email.setCustomValidity('{{errorMessage}}')
+    }
     email.onchange = function (ele) {
         console.log(ele.target.value)
         ele.target.setCustomValidity('');

@@ -11,6 +11,7 @@ from wtforms import (
 class RegistrationForm(FlaskForm):
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
+    confirm_email = StringField('Confirm Email', validators=[DataRequired(), Email(), EqualTo('email')])
     password = PasswordField('Password',
                              validators=[DataRequired(), Length(min=8, max=50)])
     confirm_password = PasswordField('Confirm Password',

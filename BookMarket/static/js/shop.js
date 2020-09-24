@@ -689,6 +689,11 @@ const highlightNavLink = () => {
     } else if (path === "home" || path === "") {
         active = document.getElementById("home");
         document.title = "Unibooks | The Ultimate University Marketplace"
+    } else if (path === "legal") {
+        active = document.getElementById("home");
+        document.title = "Terms of Service" + ending;
+    } else if (path === "privacy") {
+        document.title = "Private Policy" + ending;
     } else {
         document.title = path.charAt(0).toUpperCase() + path.slice(1) + ending;
         active = document.getElementById(path.split("?")[0]);

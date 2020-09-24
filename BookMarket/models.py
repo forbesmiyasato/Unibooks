@@ -21,6 +21,11 @@ class Users(db.Model, UserMixin):
     last_confirm_email_sent = db.Column(db.DateTime, nullable=True)
     last_buy_message_sent = db.Column(db.DateTime, nullable=True)
     num_buy_message_sent = db.Column(db.Integer, nullable=True, default=0)
+    last_contact_message_sent = db.Column(db.DateTime, nullable=True)
+    num_contact_message_sent = db.Column(db.Integer, nullable=True, default=0)
+    num_reports = db.Column(db.Integer, nullable=True, default=0)
+    date_created = db.Column(db.DateTime, nullable=False,
+                            default=datetime.utcnow)
     def __repr__(self):
         return f"Users('{self.username}', '{self.email}', '{self.image_file}')"
 
@@ -33,6 +38,8 @@ class ItemClass(db.Model):
     department_id = db.Column(db.Integer, db.ForeignKey(
         'itemdepartment.id'), nullable=False)
     school = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
+    count = db.Column(db.Integer, nullable=True, default=0)
+
 
 class ItemCategory(db.Model):
     __tablename__ = 'itemcategory'
@@ -40,6 +47,8 @@ class ItemCategory(db.Model):
     category_name = db.Column(db.String(100), nullable=False)
     abbreviation = db.Column(db.String(20), nullable=True)
     school = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
+    count = db.Column(db.Integer, nullable=True, default=0)
+
 class ItemDepartment(db.Model):
     __tablename__ = 'itemdepartment'
     id = db.Column(db.Integer, primary_key=True)
@@ -47,6 +56,7 @@ class ItemDepartment(db.Model):
     abbreviation = db.Column(db.String(20), nullable=True)
     classes = db.relationship('ItemClass', backref='parent', lazy=True)
     school = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
+    count = db.Column(db.Integer, nullable=True, default=0)
 
 
 class Item(db.Model):
@@ -107,6 +117,10 @@ class School(db.Model):
 class Inappropriate(db.Model):
     id = db.Column(db.Integer, db.ForeignKey('item.id', ondelete="CASCADE"), primary_key=True)
     count = db.Column(db.Integer, nullable=True)
+
+class Statistics(db.Model):
+    total_registrations = db.Column(db.Integer, nullable=True, default=0)
+    total_listings = db.Column(db.Integer, nullable=True, default=0)
 
 
 
