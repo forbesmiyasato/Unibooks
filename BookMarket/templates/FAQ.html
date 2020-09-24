@@ -164,13 +164,19 @@
         <h2>Report a bug</h2>
         <div
           class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
+          {% if current_user.is_authenticated == True %}
+          <p>Email us at bugs@unibooks.io</p>
+          <p>OR</p>
+          {% endif %}
           <div class="message-overlay">
             <div class="message-error-container">
               <div class="message-error">
-                <span>Please <a class="log-in-text"
+                <p>Please <a class="log-in-text"
                     onclick="linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/help')}}'); return false"
                     href="{{url_for('userAuth.login', next='/help')}}">log
-                    in</a> to contact us</span>
+                    in</a> to contact us</p>
+                    <p>OR</p>
+                    <p>Reach us at contact@unibooks.io</p>
               </div>
             </div>
           </div>
@@ -185,13 +191,17 @@
         <h2>Need Help?</h2>
         <div
           class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
+          <p>Email us at help@unibooks.io</p>
+          <p>OR</p>
           <div class="message-overlay">
             <div class="message-error-container">
               <div class="message-error">
-                <span>Please <a class="log-in-text"
+                <p>Please <a class="log-in-text"
                     onclick="linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/help')}}'); return false"
                     href="{{url_for('userAuth.login', next='/help')}}">log
-                    in</a> to contact us</span>
+                    in</a> to contact us</p>
+                    <p>OR</p>
+                    <p>Reach us at contact@unibooks.io</p>
               </div>
             </div>
           </div>

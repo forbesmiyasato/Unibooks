@@ -126,7 +126,7 @@ def getPosts():
         low = int(low)
         high = int(high)
         posts = posts.filter(Item.price >= low).filter(Item.price <= high)
-    per_page = 12
+    per_page = 9
     if show_term == 'all':
         per_page = posts.count()
     posts = posts.paginate(page=page, per_page=per_page)

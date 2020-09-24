@@ -16,7 +16,7 @@
                         class="lnr lnr-arrow-right"></span>
                     Other<span class="number" id="navOtherNumber">
                         {% if totalCategory != 0 %}
-                        {{ totalCategory }}
+                        {{- totalCategory -}}
                         {% endif %}
                     </span>
                 </a>
@@ -27,7 +27,7 @@
                         href="{{url_for('shop_api.shop', nonbook='all')}}">All Others
                             <span class="number" id="other_total">
                                 {% if totalCategory != 0 %}
-                                {{ totalCategory }}
+                                {{- totalCategory -}}
                                 {% endif %}
                             </span>
                         </a>
@@ -55,8 +55,9 @@
                                 id="dep_total{{ department.id }}">{{ depObj[department.id] }}</span></a>
                     </li>
                     {% for class in department.classes|sort(attribute='id') %}
-                    <li class="main-nav-list child"><a href="javascript:filterByClass({{class.id}}, '{{class.class_name}}',
-                            '{{- department.id}}', '{{department.department_name}}')">{{class.abbreviation}}<span
+                    <li class="main-nav-list child">
+                        <a href="javascript:filterByClass({{class.id}}, '{{class.class_name}}', '{{- department.id}}', '{{department.department_name}}')">
+                            {{- class.abbreviation}}<span
                                 class="number" id="class_total{{ class.id }}">{{ classObj[class.id] }}</span></a>
                     </li>
                     {% endfor %}

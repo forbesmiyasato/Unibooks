@@ -17,14 +17,17 @@
 </section>
 <!-- End Banner Area -->
 <div style="padding-left:15px; padding-right: 15px;">
-    <div class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
+    <div
+        class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
         <div class="message-overlay">
             <div class="message-error-container">
                 <div class="message-error">
-                    <span>Please <a class="log-in-text"
+                    <p>Please <a class="log-in-text"
                             onclick="linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/contactus')}}'); return false;"
                             href="{{url_for('userAuth.login', next='/contactus')}}">log
-                            in</a> to contact us</span>
+                            in</a> to leave a message</p>
+                    <p>OR</p>
+                    <p>Reach us at contact@unibooks.io</p>
                 </div>
             </div>
         </div>
@@ -36,7 +39,7 @@
                     <legend class="border-bottom mb-4">
                         {{message_title}}
                     </legend>
-            {% include "message_form.html" %}
+                    {% include "message_form.html" %}
         </div>
     </div>
 </div>

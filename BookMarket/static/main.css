@@ -957,7 +957,8 @@ body.need-school .school-overlay {
     min-height: 200px;
 }
 .contact-us-container.not-logged-in .message-overlay {
-    display: block;
+    display: flex;
+    align-items: center;
 }
 .message-overlay {
     position: absolute; /* Sit on top of the page content */
@@ -973,16 +974,11 @@ body.need-school .school-overlay {
 }
 
 .message-error-container {
-    position: relative;
-    top: 50%;
-    left: 50%;
-    width: 200px;
+    width: 100%;
+    text-align: center;
 }
 
 .message-error {
-    position: absolute;
-    top: -50%;
-    left: -50%;
     color: white;
     font-size: 18px;
 }
