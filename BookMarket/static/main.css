@@ -266,7 +266,7 @@ li.options {
 
 .no-results a {
     font-size: 20px;
-    color: #00BFFF;
+    color: #00bfff;
 }
 
 .no-results a:hover {
@@ -279,7 +279,7 @@ li.options {
 }
 
 .ti-bag-active:before {
-    color: #87CEEB !important;
+    color: #87ceeb !important;
     content: "\e655";
 }
 
@@ -336,9 +336,12 @@ a.nav-link {
 
 #sticky-sticky-wrapper {
     width: 100vw;
-    margin-top: 30px;
 }
-
+@media (min-width: 1300px) {
+    #sticky-sticky-wrapper {
+        margin-top: 30px;
+    }
+}
 .dropdown-top {
     margin-top: 10px;
     display: inherit;
@@ -452,7 +455,6 @@ input.form-control:focus:invalid {
     border-bottom: 3px solid #ff7730;
 }
 
-
 input.form-control:focus {
     border-bottom: 3px solid #7ed56f;
 }
@@ -544,7 +546,6 @@ input.form-control:focus:valid {
     -ms-transform: translate(0px, 0px);
     transform: translate3d(0px, 0px, 0px);
 }
-
 
 .alert.alert-info,
 .alert.alert-success,
@@ -1017,7 +1018,7 @@ select {
 }
 
 .fas.fa-exclamation-triangle {
-    color: #F89406;
+    color: #f89406;
 }
 
 .social-info.add-icon-social {
@@ -1026,7 +1027,7 @@ select {
 .add-icon-single {
     width: 40px !important;
     height: 40px !important;
-} 
+}
 
 .add-icon-social .add-icon-single.ti-bag {
     line-height: 40px;
@@ -1038,7 +1039,7 @@ select {
 
 .side-bar-text {
     text-overflow: ellipsis;
-    overflow: hidden; 
+    overflow: hidden;
     white-space: nowrap;
 }
 

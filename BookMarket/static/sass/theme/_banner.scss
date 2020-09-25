@@ -110,13 +110,13 @@
         padding: 200px 200px 100px;
 
         @media (max-width: 1382px) {
-            padding: 50px 180px 50px !important;
+            padding: 200px 180px 50px !important;
         }
         @media (max-width: 768px) {
-            padding: 30px 80px 50px !important;
+            padding: 150px 80px 50px !important;
         }
         @media (max-width: 320px) {
-            padding: 15px !important;
+            padding: 100px 15px !important;
         }
         h1 {
             font-size: 60px;
