@@ -310,5 +310,7 @@ button.search {
 }
 
 nav.d-flex.align-items-center {
-    justify-content: center;
+    @media (max-width: 768px) {
+        justify-content: center;
+    }
 }
