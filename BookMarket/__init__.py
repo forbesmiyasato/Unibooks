@@ -15,7 +15,7 @@ from flask_talisman import Talisman
 app = Flask(__name__)
 
 csrf = CSRFProtect(app)
-# Talisman(app)
+Talisman(app)
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAIL_SERVER'] = os.getenv('EMAIL_SES_SERVER')
