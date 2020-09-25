@@ -1,4 +1,5 @@
 import threading
+import re
 from datetime import datetime
 from flask import render_template, url_for, flash, request, redirect, Blueprint, jsonify, session, current_app
 from flask_login import login_user, logout_user, current_user, login_required
@@ -25,10 +26,12 @@ def register():
     error_message = "Must be a " + school.name + " email address!"
     if form.validate_on_submit():
         email = form.email.data
+        if re.match(pattern, email) is None:
+            flash('Invalid Email Domain', 'Error')
+            return redirect(url_for('userAuth.register'))
         hashed_password = bcrypt.generate_password_hash(
             form.password.data).decode('utf-8')
         school = request.form.get('school')
-        Users.query.filter_by(email=email).delete()
         user = Users(email=email, password=hashed_password, school=school)
 
         token = serializer.dumps(email, salt=salt)  # salt is optional
@@ -38,7 +41,7 @@ def register():
 
         sender = threading.Thread(name="mail_sender", target=send_message, args=(
             current_app._get_current_object(), msg,))
-        sender.start()
+        # sender.start()
         db.session.add(user)
         db.session.commit()
         flash(

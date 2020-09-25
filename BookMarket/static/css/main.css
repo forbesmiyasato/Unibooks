@@ -1385,14 +1385,10 @@ h6 {
   margin-bottom: 50px; }
   @media (max-width: 991px) {
     .organic-breadcrumb {
-      padding-top: 80px; } }
+      padding-top: 140px; } }
   @media (max-width: 767px) {
     .organic-breadcrumb {
-      background: none;
-      background: -webkit-linear-gradient(90deg, #87CEEB 0%, #00BFFF 100%);
-      background: -moz-linear-gradient(90deg, #87CEEB 0%, #00BFFF 100%);
-      background: -o-linear-gradient(90deg, #87CEEB 0%, #00BFFF 100%);
-      background: linear-gradient(90deg, #87CEEB 0%, #00BFFF 100%); } }
+      padding-top: 100px; } }
 
 #category .organic-breadcrumb {
   margin-bottom: 100px; }
@@ -1475,7 +1471,7 @@ button.search {
 
 nav.d-flex.align-items-center {
   justify-content: flex-end; }
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     nav.d-flex.align-items-center {
       justify-content: center; } }
 
@@ -5361,7 +5357,7 @@ label {
 
 .img-fluid {
   height: auto !important;
-  width: auto !important; }
+  width: 100%; }
 
 .single-prd-item {
   max-width: 600px;

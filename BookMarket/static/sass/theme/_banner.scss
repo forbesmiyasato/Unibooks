@@ -186,11 +186,12 @@
     padding-top: 160px;
     margin-bottom: 50px;
     @media (max-width: 991px) {
-        padding-top: 80px;
+        padding-top: 140px;
     }
     @media (max-width: 767px) {
-        background: none;
-        @include gradient(90deg, $primary-color 0%, $primary-color2 100%);
+        padding-top: 100px;
+        // background: none;
+        // @include gradient(90deg, $primary-color 0%, $primary-color2 100%);
     }
 }
 #category {
@@ -311,7 +312,7 @@ button.search {
 
 nav.d-flex.align-items-center {
     justify-content: flex-end;
-    @media (max-width: 768px) {
+    @media (max-width: 991px) {
         justify-content: center;
     }
 }
