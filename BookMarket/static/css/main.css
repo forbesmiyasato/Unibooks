@@ -1245,15 +1245,6 @@ h6 {
   position: relative;
   text-align: center;
   align-content: center; }
-  @media (max-width: 1382px) {
-    .banner-area {
-      margin-top: 60px; } }
-  @media (max-width: 768px) {
-    .banner-area {
-      margin-top: 60px; } }
-  @media (max-width: 320px) {
-    .banner-area {
-      margin-top: 60px; } }
   .banner-area .banner-row {
     margin: 0 120px; }
     .banner-area .banner-row .swing-in-top-bck {
