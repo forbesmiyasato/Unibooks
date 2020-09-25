@@ -36,7 +36,8 @@ def sitemap():
         ten_days_ago = (datetime.now() - timedelta(days=7)).date().isoformat()
         # static pages
         for rule in app.url_map.iter_rules():
-            if "GET" in rule.methods and len(rule.arguments) == 0:
+            if ("GET" in rule.methods and len(rule.arguments) == 0 and "loader" not in rule.rule
+                    and "sitemap" not in rule.rule and "logout" not in rule.rule):
                 pages.append(
                     ["https://unibooks.io" +
                         str(rule.rule), ten_days_ago]
@@ -138,7 +139,8 @@ def account_delete():
         delete_all_user_listings__images_from_s3_and_db(user)
         db.session.delete(user)
         db.session.commit()
-    async_task = threading.Thread(name="delete_user", target=delete_user_data, args=(user,))
+    async_task = threading.Thread(
+        name="delete_user", target=delete_user_data, args=(user,))
     async_task.start()
     logout_user()
     flash('Your account has been successfully deleted. Please register again to use our service.', 'success')
@@ -504,10 +506,12 @@ def report_item(item_id):
 
     return 'added'
 
+
 @app.route('/privacy')
 def private_policy():
     standalone = request.args.get('standalone', None)
     return render_template('private_policy.html', standalone=standalone, title="Private Policy")
+
 
 @app.route('/legal')
 def terms_of_service():

@@ -11,7 +11,6 @@ def save_images_to_db_and_s3(form_images, item_id):
     for index, images in enumerate(form_images):
         if images:
             # print(images.filesize)
-            print(images)
             random_hex = secrets.token_hex(8)
             _, f_ext = os.path.splitext(images.filename)
             picture_fn = random_hex + f_ext
@@ -22,7 +21,6 @@ def save_images_to_db_and_s3(form_images, item_id):
             #     app.root_path, 'static/item_pics', picture_fn)
             image = Image.open(images)
             image_format = image.format
-            print(image.size)
             if image.height > 600 or image.width > 600:
                 output_size = (600, 600)
                 # image = image.resize(output_size, Image.ANTIALIAS)
@@ -35,12 +33,10 @@ def save_images_to_db_and_s3(form_images, item_id):
             # # resizedImage.thumbnail(output_resolution)
             s3_resource = boto3.resource('s3')
             my_bucket = s3_resource.Bucket(S3_BUCKET)
-            print(images)
             my_bucket.Object(picture_fn).put(Body=in_mem_file.getvalue())
             image_name = images.filename[:30]
             # images.seek(0, os.SEEK_END)
             size = in_mem_file.tell()
-            print(size)
             newImage = ItemImage(item_id=item_id, image_file=picture_fn, image_name=image_name, image_size=size)
             db.session.add(newImage)
             db.session.commit()
@@ -62,19 +58,14 @@ def delete_images_from_s3_and_db(item_id):
     my_bucket = s3_resource.Bucket(S3_BUCKET)
     images = ItemImage.query.filter_by(item_id=item_id).all()
     for image in images:
-        print(image)
-        print(image.image_file)
         db.session.delete(image)
         my_bucket.Object(image.image_file).delete()
 
 def delete_non_remaining_images_from_s3_and_db(item_id, remains):
-    print(remains)
     s3_resource = boto3.resource('s3')
     my_bucket = s3_resource.Bucket(S3_BUCKET)
     images = ItemImage.query.filter_by(item_id=item_id).all()
     for image in images:
-        print(image)
-        print(image.image_file)
         if image.image_file not in remains:
             db.session.delete(image)
             my_bucket.Object(image.image_file).delete()
