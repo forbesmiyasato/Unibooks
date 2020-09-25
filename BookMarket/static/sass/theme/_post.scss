@@ -34,11 +34,11 @@
     top: -120px;
     display: none;
     text-align: left;
-    background-color: #1E2021;
+    background-color: #4d4e4f;
     padding: 20px;
     width: 300px;
     position: absolute;
-    border-radius: 3px;
+    border-radius: 5px;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
     color: #FFF;
     font-size: 13px;
@@ -62,7 +62,7 @@
     width: 0;
     height: 0;
     border: 7px solid transparent;
-    border-top-color: #1E2021;
+    border-top-color: #4d4e4f;
     left: 45px;
     bottom: -14px;
     @media (max-width: 450px) {

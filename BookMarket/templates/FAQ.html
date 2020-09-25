@@ -63,8 +63,8 @@
       <!-- sell -->
       <div class="help-detail" id="help-detail-0">
         <h2>How to start selling</h2>
-        <p>1. <a class="nav-text" onclick="linkClicked(this, '/register')">Create an account</a> or <a
-            class="nav-text" onclick="linkClicked(this, '/login')">Log
+        <p>1. <a class="nav-text" onclick="linkClicked(this, '/register')">Create an account</a> or <a class="nav-text"
+            onclick="linkClicked(this, '/login')">Log
             in</a>&nbsp;&nbsp;<i class="fas fa-user"></i></p>
         <p>2. Make sure your account is <a class="nav-text" onclick="linkClicked(this, '/account')">confirmed</a> (if
           you haven't already)
@@ -90,8 +90,8 @@
       <!-- buy -->
       <div class="help-detail" id="help-detail-1">
         <h2>How to start buying</h2>
-        <p>1. <a class="nav-text" onclick="linkClicked(this, '/register')">Create an account</a> or <a
-            class="nav-text" onclick="linkClicked(this, '/login')">Log
+        <p>1. <a class="nav-text" onclick="linkClicked(this, '/register')">Create an account</a> or <a class="nav-text"
+            onclick="linkClicked(this, '/login')">Log
             in</a>&nbsp;&nbsp;<i class="fas fa-user"></i></p>
         <p>2. Make sure your account is <a class="nav-text" onclick="linkClicked(this, '/account')">confirmed</a> (if
           you haven't already)
@@ -128,6 +128,16 @@
           departments get top priority <i class="fas fa-smile"></i></p>
         <p>Consider making a donation - Unibooks is free, but adding coverage means increased costs. To keep it free, we
           rely on the kindness of our users!</p>
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+          <input type="hidden" name="cmd" value="_donations" />
+          <input type="hidden" name="business" value="RBD2T8UZRX8PN" />
+          <input type="hidden" name="item_name"
+            value="Maintain the website and allow us to support more users and schools" />
+          <input type="hidden" name="currency_code" value="USD" />
+          <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0"
+            name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+          <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+        </form>
       </div>
       <!-- common questions -->
       <div class="help-detail" id="help-detail-3">
@@ -142,11 +152,11 @@
           </p>
           <h6>2. How do I confirm my account?</h6>
           <p>We automatically send you a confirmation email after you sign up. After that you can send a confirmation
-            email every hour at your account page. 
-            <br/>
-            <a class="nav-text" onclick="linkClicked(this, '/register')">Create an account</a> or <a
-            class="nav-text" onclick="linkClicked(this, '/login')">Log
-            in</a> &#x2192; User &#x2192; Account &#x2192;
+            email every hour at your account page.
+            <br />
+            <a class="nav-text" onclick="linkClicked(this, '/register')">Create an account</a> or <a class="nav-text"
+              onclick="linkClicked(this, '/login')">Log
+              in</a> &#x2192; User &#x2192; Account &#x2192;
             <a class="genric-btn success circle" style="padding: 0 20px;">Send Confirmation Email to ...</a>
           </p>
           <h6>3. What personal information is given during transactions?</h6>
@@ -155,7 +165,7 @@
           </p>
           <p>
             For the <b>Seller</b>: You have no personal information exposed until you decide to respond to the buyer.
-            Using what method to reach out to the buyer is at your choice. 
+            Using what method to reach out to the buyer is at your choice.
           </p>
         </div>
       </div>
@@ -175,8 +185,8 @@
                     onclick="linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/help')}}'); return false"
                     href="{{url_for('userAuth.login', next='/help')}}">log
                     in</a> to contact us</p>
-                    <p>OR</p>
-                    <p>Reach us at support@unibooks.io</p>
+                <p>OR</p>
+                <p>Reach us at support@unibooks.io</p>
               </div>
             </div>
           </div>
@@ -200,8 +210,8 @@
                     onclick="linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/help')}}'); return false"
                     href="{{url_for('userAuth.login', next='/help')}}">log
                     in</a> to contact us</p>
-                    <p>OR</p>
-                    <p>Reach us at support@unibooks.io</p>
+                <p>OR</p>
+                <p>Reach us at support@unibooks.io</p>
               </div>
             </div>
           </div>
