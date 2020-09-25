@@ -235,6 +235,10 @@ li.options {
     }
 }
 
+.hover-line {
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
 .hover-line:hover {
     text-decoration: underline;
 }

@@ -1871,3 +1871,13 @@
 	// 										transparent 75%,
 	// 										transparent)
 }
+
+.img-fluid {
+	height: auto !important;
+	width: auto !important;
+}
+
+.single-prd-item {
+	max-width: 600px;
+    max-height: 600px;
+}

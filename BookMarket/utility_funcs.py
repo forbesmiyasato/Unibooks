@@ -25,7 +25,8 @@ def save_images_to_db_and_s3(form_images, item_id):
             print(image.size)
             if image.height > 600 or image.width > 600:
                 output_size = (600, 600)
-                image = image.resize(output_size, Image.ANTIALIAS)
+                # image = image.resize(output_size, Image.ANTIALIAS)
+                image.thumbnail(output_size, Image.ANTIALIAS)
             in_mem_file = io.BytesIO()
             image = ImageOps.exif_transpose(image)
             image.save(in_mem_file, optimize=True, format=image_format)
