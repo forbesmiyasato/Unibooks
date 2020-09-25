@@ -168,15 +168,10 @@
             options[i].innerHTML = "";
             var url = "{{url_for('shop_api.items_for_class', class_id=class1.id, order=request.args.get('order'))}}".replace('&amp;', '&')
             url += `?&per_page=${(index - 2) * 3}`;
-            console.log(url);
             url = url.replace(/(\?[^\?]*)\?/g, '$1');
-            console.log(url);
             b.setAttribute('href', url);
             b.setAttribute('style', 'color:rgb(119, 119, 119)')
             b.setAttribute('class', 'persist-link li-link')
-            // b.onclick(() => {
-            //     window.location.href = 'newPage.html';
-            // });
             options[i].appendChild(b);
             index++;
         }

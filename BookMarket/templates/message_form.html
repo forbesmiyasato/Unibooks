@@ -49,18 +49,12 @@
 
     $form.on('submit', function (e) {
         e.preventDefault();
-        console.log("SUBMITTED")
 
         var formData = new FormData()
         // append inputs to FormData
         $.each($form.serializeArray(), function (key, field) {
-            console.log(field.name, field.value)
             formData.append(field.name, field.value);
         });
-
-        for (var value of formData.values()) {
-            console.log("1", value);
-        }
 
         $.ajax({
             url: window.location.href,

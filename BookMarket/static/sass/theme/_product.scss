@@ -470,8 +470,7 @@
 /* Single Product Area css
 ============================================================================================ */
 .product_image_area{
-	padding-top: 120px;
-	
+	// padding-top: 30px;
 }
 .s_product_inner{
 	
@@ -1823,6 +1822,7 @@
 	display: flex;
 	align-items: center;
 	padding: 0 20px;
+	cursor: pointer;
 
 	& .material-icons {
 		margin-left: 5px;

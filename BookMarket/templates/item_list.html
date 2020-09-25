@@ -66,14 +66,14 @@
                         <div class="social-info">
                             <span class="ti-bag"></span>
                             <p class="hover-text animate-overflow">
-                                <a class="click-href" onclick="linkClicked(null, '{{url_for('userAuth.login')}}')">
+                                <a class="click-href" onclick="linkClicked(null, '{{url_for('userAuth.login', next='/shop')}}')">
                                     Log in </a> to add to cart
                             </p>
                         </div>
                         <div class="social-info">
                             <span class="lnr lnr-alarm"></span>
                             <p class="hover-text animate-overflow">
-                                <a class="click-href" onclick="linkClicked(null, '{{url_for('userAuth.login')}}')">
+                                <a class="click-href" onclick="linkClicked(null, '{{url_for('userAuth.login', next='/shop')}}')">
                                     Log in </a> to report this post
                             </p>
                         </div>
@@ -116,7 +116,6 @@
         var url = "{{url_for('add_to_bag', item='tempItem', user='tempUser')}}"
             .replace('tempItem', item_id).replace('tempUser', user_id).replace('&amp;', '&')
 
-        console.log("TEST")
         $.post(url, null, (data, status) => {
             if (data.added) {
                 let bagIcon = document.getElementsByClassName("fa-stack")[0];

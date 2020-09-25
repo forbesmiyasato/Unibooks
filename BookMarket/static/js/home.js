@@ -32,7 +32,6 @@ $(document).ready(function () {
     var $window = $(window);
 
     function check_if_in_view() {
-        // console.log("Triggered")
         var window_height = $window.height();
         var window_top_position = $window.scrollTop();
         var window_bottom_position = window_top_position + window_height;

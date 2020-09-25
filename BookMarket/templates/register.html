@@ -98,11 +98,9 @@
         email.setCustomValidity('{{errorMessage}}')
     }
     email.onchange = function (ele) {
-        console.log(ele.target.value)
         ele.target.setCustomValidity('');
 
         if (ele.target.checkValidity()) {
-            console.log("valid")
             ele.target.setCustomValidity('');
         } else {
             ele.target.setCustomValidity('{{errorMessage}}')

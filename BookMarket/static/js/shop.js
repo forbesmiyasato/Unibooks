@@ -662,18 +662,15 @@ const highlightNavLink = () => {
     let active;
     let ending = " | Unibooks";
 
-    if (path === "saved?cart") {
+    if (path === "saved?cart" || path === "saved") {
         active = document.getElementById("shopping-cart");
-        document.title = "Saved" + ending;
+        document.title = "Shopping Cart" + ending;
     } else if (path === "listings") {
         active = document.getElementById("user");
         document.title = "Listings" + ending;
     } else if (path === "account") {
         active = document.getElementById("user");
         document.title = "Account" + ending;
-    } else if (path === "saved") {
-        active = document.getElementById("user");
-        document.title = "Saved" + ending;
     } else if (path === "item") {
         active = document.getElementById("sell");
         document.title = "Create Posting" + ending;

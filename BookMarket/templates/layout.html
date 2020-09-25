@@ -267,7 +267,7 @@
               <a class="footer-item" onclick="linkClicked(this, '{{url_for('help')}}')">FAQ</a>
             </p>
             <p>
-              <a class="footer-item" onclick="linkClicked(this, '{{url_for('private_policy')}}')">Private Policy</a>
+              <a class="footer-item" onclick="linkClicked(this, '{{url_for('private_policy')}}')">Privacy Policy</a>
             </p>
             <p>
               <a class="footer-item" onclick="linkClicked(this, '{{url_for('terms_of_service')}}')">Terms of Service</a>
@@ -329,14 +329,9 @@
     selectListInput.setCustomValidity('You must select a school!');
 
     selectList.onchange = function () {
-      console.log("CHANGE")
-
-      console.log(selectList.value)
       if (!selectList.value) {
-        console.log('invalid');
         selectListInput.setCustomValidity('You must select a school!');
       } else {
-        console.log('valid');
         selectListInput.setCustomValidity('');
       }
     };
@@ -375,7 +370,6 @@
       var school = localStorage.getItem('school');
 
       if (school && sessionStorage.justChangedSchool === 'true') {
-        console.log("IN IF")
         toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
         toastr.success(`Your school is set to ${getSchoolName(school)}`);
         sessionStorage.justChangedSchool = false;
@@ -398,10 +392,8 @@
       // form submit
       $schoolForm.on('submit', function (e) {
         e.preventDefault()
-        console.log(selectize.getValue())
         localStorage.setItem('school', selectize.getValue())
         var school = localStorage.getItem('school');
-        console.log(school)
         if (school || school != null || school !== 'undefined') {
           $("body").toggleClass("need-school");
         }
@@ -419,7 +411,6 @@
         })
         // setSchoolName(school)
       })
-      console.log("SCHOOL", school)
     }
 
     checkSchool();
@@ -428,7 +419,6 @@
     function search(event) {
       event.preventDefault();
       search_input = document.getElementById('search_input').value;
-      console.log(search_input);
       // window.location = '/shop?search=' + search_input;
       const searchDropdown = $('.search_input')[0]
       if (searchDropdown) {
@@ -454,7 +444,6 @@
     let terms_html = null;
 
     const redirect = (paths) => {
-      console.log("PATH", paths.split('/'))
       path = window.location.pathname
 
       //to abort the single product page request when backtracking to shop page
@@ -554,7 +543,6 @@
       $(window).scrollTop(0);
     }
     const linkClicked = (ele, url) => {
-      console.log('url', url)
       if (document.documentElement.clientWidth < 992) {
         navbarCollapse();
       }

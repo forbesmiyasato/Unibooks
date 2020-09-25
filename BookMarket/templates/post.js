@@ -9,8 +9,6 @@
     class_select.required = true;
     department_select.required = true;
 
-    console.log(department_select)
-
     department_select.onchange = function () {
         var $select = $(document.getElementById('class_list'))
         var selectize = $select[0].selectize;
@@ -33,7 +31,6 @@
                 }).then(function () {
                     {% if item_class is defined %}
                     if ('{{ item_class.id }}') {
-                        console.log("!!!")
                         selectize.setValue('{{item_class.id}}')
                         selectize.refreshItems()
                         selectize.close()
@@ -49,7 +46,6 @@
 
         department_input.setCustomValidity('')
 
-        console.log(!department_input.checkValidity())
         if (!department_input.checkValidity()) {
             department_input.setCustomValidity("Please Select Department")
         } else {
@@ -62,7 +58,6 @@
 
         class_input.setCustomValidity('')
 
-        console.log(!class_input.checkValidity())
         if (!class_input.checkValidity()) {
             class_input.setCustomValidity("Please Select Course")
         } else {
@@ -165,7 +160,6 @@
         onItemRemove: function (html, listEl, parentEl, newInputEl, inputEl) {
             var plusInput = listEl.find('.fileuploader-thumbnails-input'),
                 api = $.fileuploader.getInstance(inputEl.get(0));
-            console.log(inputEl)
             html.children().animate({ 'opacity': 0 }, 200, function () {
                 html.remove();
 
@@ -203,7 +197,6 @@
 
         // append inputs to FormData
         $.each($form.serializeArray(), function (key, field) {
-            console.log(field.name, field.value)
             formData.append(field.name, field.value);
         });
 
@@ -223,12 +216,10 @@
             _fileuploaderFields.push($input);
         }
 
-        console.log(files);
         for (var i = 0; i < files.length; i++) {
             formData.append(name, (files[i].file ? files[i].file : files[i]), (files[i].name ? files[i].name : false));
         }
 
-        console.log("???", formData.get("fileuploader-list-files").split("\""))
         let fileArray = formData.get("fileuploader-list-files").split("\"");
 
         var blob = null;
@@ -236,9 +227,6 @@
         let remainingFiles = []
 
         for (var i = 3; i < fileArray.length; i += 4) {
-            // console.log(fileArray[i])
-            // console.log(fileArray[i]);
-            // let file = new File([fileArray[i]], "test." + type, {type: "image/" + type})
             if (fileArray[i].startsWith("https://")) {
                 let type = fileArray[i].split('.').pop()
                 let image_name = fileArray[i].split('/').pop()

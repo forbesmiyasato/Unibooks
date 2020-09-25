@@ -266,7 +266,6 @@ def add_to_bag():
 
 @app.route('/saved', methods=['GET', 'POST'])
 def saved_for_later():
-    title = 'Saved'
     standalone = request.args.get('standalone')
     print(request.form.get('email'))
     if request.method == 'POST' and request.form.get('email'):
@@ -298,8 +297,6 @@ def saved_for_later():
             current_app._get_current_object(), msg,))
         sender.start()
         return jsonify({'origin': 'single'})
-    if 'cart' in request.args:
-        title = 'Saved?cart'
     items_ids = None
     if current_user.is_authenticated:
         items_ids = db.session.query(SaveForLater.item_id).filter_by(
@@ -313,7 +310,7 @@ def saved_for_later():
             item = Item.query.get(id)
             if item:
                 items.append(item)
-    return render_template('saved_for_later.html', title=title, posts=items, standalone=standalone)
+    return render_template('saved_for_later.html', title="Shopping Cart", posts=items, standalone=standalone)
 
 
 @app.route('/saved/delete', methods=['POST'])

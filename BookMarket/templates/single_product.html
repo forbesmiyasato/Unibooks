@@ -194,24 +194,18 @@
 </div>
 
 <script>
-    // window.location.reload(false);
     initializeSingleProductPage();
     highlightNavLink();
 
     $('#editModal').on("hidden.bs.modal", function () {
-        // console.log("Hidden")
-        console.log(deleted)
         if (deleted && !post) {
             location.reload();
         }
     });
 
     function editBookClicked(item_class, item_department) {
-        console.log("test", item_class)
-        console.log(item_department)
         let class_select = document.getElementById('class_list');
         let department_select = document.getElementById('department_list')
-        console.log(class_select)
         class_select.value = item_class
         department_select.value = item_department
 
@@ -225,7 +219,6 @@
     };
 
     function editOtherClicked(item_category) {
-        console.log("test", item_category)
         let category_select = document.getElementById('category_list')
         category_select.value = item_category
 

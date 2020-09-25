@@ -1418,7 +1418,7 @@ label {
 /* start tutorial area css
 ============================================================================================ */
 .section-tutorial {
-    padding: 1rem 0 10rem;
+    padding: 1rem 0 1rem;
     margin-top: 1rem;
     text-align: center;
     align-content: center;
@@ -1453,7 +1453,7 @@ label {
     }
 
     .tutorial-row {
-        margin: 0 0 4rem !important;
+        margin: 0 0 5rem !important;
         @media (max-width: 1382px) {
             margin: 0 0 2rem !important;
         }
@@ -1494,6 +1494,10 @@ label {
                 width: 100%;
                 padding-top: 30px !important;
             }
+        }
+
+        &:last-of-type {
+            margin: 0 !important;
         }
     }
 
@@ -1545,7 +1549,7 @@ label {
 }
 
 .logo-header {
-	font-size: 40px;
+    font-size: 40px;
     font-family: "Maven Pro", sans-serif;
     // font-family: "Sacramento", cursive;
 }

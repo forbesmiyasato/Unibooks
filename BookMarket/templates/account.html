@@ -75,7 +75,6 @@
             type: 'POST',
             contentType: false,
             success: function (response) {
-                console.log(response);
                 if (response.result === 'failure-too-soon') {
                     toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
                     toastr.error('We sent a confirmation email within an hour! Please check your inbox or try again later.');

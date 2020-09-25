@@ -198,9 +198,7 @@
         $('#book-department').toggleClass('hide');
         $('#book-course').toggleClass('hide');
         $('#book-category').toggleClass('hide');
-        console.log("ISCHECKED", document.getElementById('checkbox').checked)
         if (document.getElementById('checkbox').checked) {
-            console.log("CHECKED!")
             department_input.setCustomValidity('')
             course_input.setCustomValidity('')
             department_selectize.clear();
@@ -213,7 +211,6 @@
             category_input.setCustomValidity("Please Select category")
             // category_input.required = true;
         } else {
-            console.log("UNCHECKED!")
             if (department_input) { department_input.setCustomValidity("Please Select Department") }
             if (course_input) { course_input.setCustomValidity("Please Select Course") }
             category_selectize.clear();
@@ -221,10 +218,6 @@
             category_select.required = false;
             category_input.required = false;
         }
-        // console.log("1", category_select.required)
-        // console.log(category_input.required)
-        // category_input.setCustomValidity('')
-        // console.log(category_input.checkValidity())
     }
 
     document.getElementById('checkbox').addEventListener('click', checkboxClicked)
@@ -232,15 +225,11 @@
     {% endif %}
     {% if isBook != True or legend == "New" %}
 
-    console.log("TRIGGERD")
     category_select.onchange = function () {
         let category_input = document.getElementById('category_list-selectized');
 
         category_input.setCustomValidity('')
 
-        console.log(category_input.checkValidity());
-
-        console.log(category_select.value)
         if (!category_select.value) {
             category_input.setCustomValidity("Please Select category")
         } else {
@@ -265,24 +254,18 @@
         selectize.enable()
         selectize.clear();
         if (department) {
-            console.log("INVAOKEDDD!")
             fetch('/class/' + department).then(function (response) {
                 response.json().then(function (data) {
                     let optionHTML = '';
                     selectize.clearOptions();
-                    // optionHTML += '<option data-display="Select Class">Select</option>'
                     for (let item_class of data.classes) {
-                        // optionHTML += `<option value="${item_class.id}">${item_class.class_name}</option>`;
-                        console.log(item_class.abbreviation)
                         selectize.addOption({ value: item_class.id, text: item_class.class_name });
                         selectize.refreshOptions()
                     }
                     class_select.innerHTML = optionHTML;
-                    // class_select.removeAttribute("disabled");
                 }).then(function () {
                     {% if item_class is defined %}
                     if ('{{ item_class.id }}') {
-                        console.log("!!!")
                         selectize.setValue('{{item_class.id}}')
                         selectize.refreshItems()
                         selectize.close()
@@ -296,13 +279,8 @@
 
         let department_input = document.getElementById('department_list-selectized');
 
-        console.log("VALIDITY", !department_input.checkValidity())
-
-        console.log(department_input.value);
-        console.log(department_select.value)
         department_input.setCustomValidity('')
 
-        console.log("VALIDITY", !department_input.checkValidity())
         if (!department_input.checkValidity()) {
             department_input.setCustomValidity("Please Select Department")
         } else {
@@ -315,8 +293,6 @@
 
         class_input.setCustomValidity('')
 
-        console.log("class", class_input.value)
-        console.log(!class_input.checkValidity())
         if (!class_input.checkValidity()) {
             class_input.setCustomValidity("Please Select Course")
         } else {
@@ -340,9 +316,6 @@
         {% if item_class is defined %}
         class_input.value = '{{item_class.abbreviation|safe}}'
         {% endif %}
-
-        console.log("!!!", department_select.required)
-        console.log(department_input.required);
 
         {% endif %}
         // enable fileuploader plugin
@@ -427,7 +400,6 @@
         onItemRemove: function (html, listEl, parentEl, newInputEl, inputEl) {
             var plusInput = listEl.find('.fileuploader-thumbnails-input'),
                 api = $.fileuploader.getInstance(inputEl.get(0));
-            console.log(inputEl)
             html.children().animate({ 'opacity': 0 }, 200, function () {
                 html.remove();
 
@@ -466,7 +438,6 @@
 
         // append inputs to FormData
         $.each($form.serializeArray(), function (key, field) {
-            console.log(field.name, field.value)
             formData.append(field.name, field.value);
         });
 
@@ -486,37 +457,23 @@
             _fileuploaderFields.push($input);
         }
 
-        console.log(files);
         for (var i = 0; i < files.length; i++) {
             formData.append(name, (files[i].file ? files[i].file : files[i]), (files[i].name ? files[i].name : false));
-            console.log(typeof (files[i].file ? files[i].file : files[i]), (files[i].name ? files[i].name : false))
         }
 
-        console.log("???", formData.get("fileuploader-list-files").split("\""))
         let fileArray = formData.get("fileuploader-list-files").split("\"");
 
         let remainingFiles = []
 
-        console.log(remainingFiles);
-
         for (var i = 3; i < fileArray.length; i += 4) {
-            // console.log(fileArray[i])
-            // console.log(fileArray[i]);
-            // let file = new File([fileArray[i]], "test." + type, {type: "image/" + type})
             if (fileArray[i].startsWith("https://")) {
                 let type = fileArray[i].split('.').pop()
                 let image_name = fileArray[i].split('/').pop()
-                console.log(image_name)
-                console.log(type);
                 remainingFiles.push(image_name);
             }
         }
 
         formData.append('remaining_files', remainingFiles);
-        // Display the values
-        for (var value of formData.values()) {
-            console.log("1", value);
-        }
 
         post_url = '{{legend}}' === "New" ? "{{url_for('new_item')}}" : '{{item}}' ? "{{url_for('shop_api.item', item_id=item_id)}}" : null
         $.ajax({
