@@ -233,7 +233,7 @@
         <select required name="school-list" class="school-list" id='school-list' placeholder="Select School">
           <option value="">Select School</option>
           {% for school in schools %}
-          <option value='{{ school.id }}'>{{school.name}}</option>
+          <option value='{{ school.id }}' {%if school.id == 2 or school.id == 3%} disabled {% endif %}>{{school.name}}</option>
           {% endfor %}
           <!-- <option value="1">Pacific University</option>
           <option value="2">Portland State</option>
@@ -318,7 +318,6 @@
     const togglePopup = () => {
       const popup = document.getElementById('popup-message-right');
       if (localStorage.getItem('school') && !sessionStorage.getItem('popup')) {
-        console.log("SHOW")
         document.getElementById('popup-close-btn').onclick = () => {
           popup.style.display = 'none';
         }
