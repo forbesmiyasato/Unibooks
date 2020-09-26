@@ -13,13 +13,15 @@
   <meta charset="utf-8">
 
   <!-- Mobile Specific Meta -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
   <!-- Favicon-->
   <link rel="shortcut icon" href="{{ url_for('static', filename='img/fav.png')}}">
   <!-- Author Meta -->
   <meta name="author" content="Forbes Miyasato, Thomas Robasciotti">
   <!-- Meta Description -->
-  <meta name="description" content="The ultimate university online marketplace where students can buy, sell, or trade used textbooks (and other stuff too)">
+  <meta name="description"
+    content="The ultimate university online marketplace where students can buy, sell, or trade used textbooks (and other stuff too)">
   <!-- Meta Keyword -->
   <meta name="keyword" content="Books, University, Textbooks">
   <!-- meta character set -->
@@ -37,7 +39,8 @@
     })(window, document, 'script', 'dataLayer', 'GTM-PTKJJXZ');</script>
   <!-- End Google Tag Manager -->
 
-  <script data-ad-client="ca-pub-4274492069096850" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script data-ad-client="ca-pub-4274492069096850" async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 
   <link href="https://fonts.googleapis.com/css2?family=Maven+Pro&family=Sacramento&display=swap" rel="stylesheet">
@@ -212,7 +215,7 @@
     {% for category, message in messages %}
     <script>
       toastr.options = { "positionClass": "toast-top-center", "closeButton": true, "timeOut": "5000" }
-      toastr.{{category}}("{{message}}");
+      toastr.{ { category } } ("{{message}}");
     </script>
     {% endfor %}
     {% endif %}
@@ -298,9 +301,35 @@
       </div>
     </div>
   </footer>
+  <div id="popup-message-right">
+    <div class="popup-message-content">
+      <span id="popup-close-btn">&#215;</span>
+      <span class="lnr lnr-warning"></span>
+      <p>Unibooks is undergoing it's final testing before official release.
+      <p>If you find any bugs or have any suggestions please email us at
+        contact@unibooks.io</p>
+      <p>We'll also be emailing a simple survey according to the registerd email.</p>
+      <p><b>Thank you for using Unibooks!</b></p>
+    </div>
+  </div>
   <!-- End footer Area -->
   <!-- Optional JavaScript -->
   <script>
+    const togglePopup = () => {
+      const popup = document.getElementById('popup-message-right');
+      if (localStorage.getItem('school') && !sessionStorage.getItem('popup')) {
+        console.log("SHOW")
+        document.getElementById('popup-close-btn').onclick = () => {
+          popup.style.display = 'none';
+        }
+        sessionStorage.setItem('popup', 'showed');
+      } else {
+        popup.style.display = 'none';
+      }
+    }
+
+    togglePopup();
+
     highlightNavLink();
     var call;
     // initialize the Selectize control
@@ -348,8 +377,10 @@
       toastr.remove()
       let message;
       const ending = "Click to "
-      toastr.options = { "positionClass": "toast-top-center", "timeOut": "0", "extendedTimeOut": "0", 
-      "tapToDismiss": false}
+      toastr.options = {
+        "positionClass": "toast-top-center", "timeOut": "0", "extendedTimeOut": "0",
+        "tapToDismiss": false
+      }
 
       // else if (document.getElementsByClassName('bag-icon')[0].innerHTML > 0) {
       //   message = "Are you sure? You'll lose all the items saved in cart if you change schools."

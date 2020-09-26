@@ -2610,6 +2610,45 @@ label {
   font-size: 40px;
   font-family: "Maven Pro", sans-serif; }
 
+#popup-message-right {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  height: 400px;
+  width: 230px;
+  animation: slide-in 1s ease-out; }
+  #popup-message-right .popup-message-content {
+    height: 100%;
+    width: 100%;
+    top: -50%;
+    background-color: white;
+    box-shadow: 0 10px 30px 1px rgba(0, 0, 0, 0.3);
+    position: relative;
+    display: flex;
+    border-left: 4px #00BFFF solid;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 15px 15px 15px; }
+    #popup-message-right .popup-message-content .lnr-warning {
+      color: #F89406;
+      font-size: 50px;
+      margin-bottom: 5px; }
+
+@keyframes slide-in {
+  0% {
+    right: -230px; }
+  100% {
+    right: 0px; } }
+  #popup-message-right #popup-close-btn {
+    position: absolute;
+    left: 5px;
+    top: 0;
+    font-size: 20px;
+    cursor: pointer; }
+
 .load-product {
   display: none; }
 
