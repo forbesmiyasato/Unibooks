@@ -1561,7 +1561,8 @@ label {
     height: 370px;
     width: 230px;
     animation: slide-in 1s ease-out;
-
+    z-index: 111;
+    
     & .popup-message-content {
         height: 100%;
         width: 100%;
