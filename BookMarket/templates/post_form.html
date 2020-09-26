@@ -167,17 +167,16 @@
 
             </fieldset>
             <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info", onclick="history.replaceState(null, null, ' ');")}}
+                {% if legend == 'Post' %}
+                {{ form.submit(class="btn btn-outline-info")}}
+                {% else %}
+                {{ form.edit(class="btn btn-outline-info")}}
+                {% endif %}
             </div>
         </form>
     </div>
 </div>
-<div>
-    <img id="input">
-</div>
-<div>
-    <img id="output">
-</div>
+
 <script>
     let class_select = document.getElementById('class_list');
     let department_select = document.getElementById('department_list')

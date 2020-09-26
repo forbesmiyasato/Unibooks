@@ -64,6 +64,7 @@ class ItemForm(FlaskForm):
     item_category = SelectField('Category')
 
     submit = SubmitField('Post')
+    edit = SubmitField('Edit')
 
 
 # class EditForm(FlaskForm):
