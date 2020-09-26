@@ -10,7 +10,10 @@ def save_images_to_db_and_s3(form_images, item_id):
     thumbnail = None
     for index, images in enumerate(form_images):
         if images:
-            # print(images.filesize)
+            # print(images)
+            # images.seek(0, os.SEEK_END)
+            # file_length = images.tell()
+            # print(file_length)
             random_hex = secrets.token_hex(8)
             _, f_ext = os.path.splitext(images.filename)
             picture_fn = random_hex + f_ext

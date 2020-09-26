@@ -111,6 +111,8 @@
   <!-- meterial icons -->
   <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
 
+  <script src="https://cdn.jsdelivr.net/gh/WangYuLue/image-conversion/build/conversion.js"></script>
+
 </head>
 
 <body>
@@ -214,7 +216,7 @@
     {% for category, message in messages %}
     <script>
       toastr.options = { "positionClass": "toast-top-center", "closeButton": true, "timeOut": "5000" }
-      toastr.{ { category } } ("{{message}}");
+      toastr.{{category}}("{{message}}");
     </script>
     {% endfor %}
     {% endif %}

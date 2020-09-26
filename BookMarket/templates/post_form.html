@@ -24,7 +24,7 @@
                 {% if legend == "New" %}
                 <div class="form-group">
                     <input type="checkbox" id="checkbox">
-                    <label class="form-control-label" for="checkbox">Not a book?</label>
+                    <label class="form-control-label" for="checkbox">Not a Textbook?</label>
                 </div>
                 {% endif %}
                 {% if isBook == False %}
@@ -154,8 +154,9 @@
                     </div>
                     {% else %}
                     <div class="help-tip">
-                        <p> Limit of 8 images. Max image size per upload is 10 MB. Allowed image formats are JPEG and PNG.
-                            You can still add/remove images after your post is created. 
+                        <p> Limit of 8 images. Max image size per upload is 10 MB. Allowed image formats are JPEG and
+                            PNG.
+                            You can still add/remove images after your post is created.
                         </p>
                     </div>
                     <div>
@@ -171,7 +172,12 @@
         </form>
     </div>
 </div>
-
+<div>
+    <img id="input">
+</div>
+<div>
+    <img id="output">
+</div>
 <script>
     let class_select = document.getElementById('class_list');
     let department_select = document.getElementById('department_list')
@@ -336,7 +342,7 @@
             "file": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
                 "type": "image/",
                     "size": {{image.image_size}},
-                        "data": {
+        "data": {
             "thumbnail": "https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{image.image_file}}",
         }
     },
@@ -457,74 +463,94 @@
             _fileuploaderFields.push($input);
         }
 
-        for (var i = 0; i < files.length; i++) {
-            formData.append(name, (files[i].file ? files[i].file : files[i]), (files[i].name ? files[i].name : false));
-        }
+        // formData.append(name, (files[i].file ? files[i].file : files[i]), (files[i].name ? files[i].name : false));
+        // console.log(files[i].file ? files[i].file : files[i])
+        // console.log(files[i].name)
 
-        let fileArray = formData.get("fileuploader-list-files").split("\"");
-
-        let remainingFiles = []
-
-        for (var i = 3; i < fileArray.length; i += 4) {
-            if (fileArray[i].startsWith("https://")) {
-                let type = fileArray[i].split('.').pop()
-                let image_name = fileArray[i].split('/').pop()
-                remainingFiles.push(image_name);
+        async function view() {
+            for (var i = 0; i < files.length; i++) {
+                const file = files[i].file ? files[i].file : files[i]
+                const res = await imageConversion.compressAccurately(file, {
+                    size: 100,
+                    accuracy: 0.9,
+                    width: 600,
+                    height: 600,
+                });
+                let newFile = await new File([res], file.name)
+                formData.append(name, newFile);
             }
         }
 
-        formData.append('remaining_files', remainingFiles);
+        view().then(() => {
 
-        post_url = '{{legend}}' === "New" ? "{{url_for('new_item')}}" : '{{item}}' ? "{{url_for('shop_api.item', item_id=item_id)}}" : null
-        $.ajax({
-            url: post_url || '#',
-            data: formData,
-            type: $form.attr('method') || 'POST',
-            enctype: $form.attr('enctype') || 'multipart/form-data',
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                console.log("success")
-                toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
-                if ($('#editModal').length) {
-                    $('#editModal').modal('hide')
-                    toastr.success("Updated Post!");
-                } else {
-                    listings_html = null;
-                    toastr.success("Post created!");
+            let fileArray = formData.get("fileuploader-list-files").split("\"");
+
+            let remainingFiles = []
+
+            for (var i = 3; i < fileArray.length; i += 4) {
+                if (fileArray[i].startsWith("https://")) {
+                    let type = fileArray[i].split('.').pop()
+                    let image_name = fileArray[i].split('/').pop()
+                    remainingFiles.push(image_name);
                 }
-                history.pushState(null, null, response.url)
-                $('#block-content').html(response.html);
-                $(window).scrollTop(0);
-            },
-            beforeSend: function () {
-                $("body").toggleClass("loading");
-                if ($('#editModal').length) {
-                    $('#editModal').modal('hide')
-                    $("#loader-text").html('Updating Post...')
-                } else if ($('#editModal{{item_id}}').length) {
-                    $('#editModal{{item_id}}').modal('hide')
-                    $("#loader-text").html('Updating Post...')
-                } else {
-                    $("#loader-text").html('Creating Post...')
-                }
-            },
-            complete: function () {
-                $("body").toggleClass("loading");
-                if ($('#editModal').length) {
-                    $('#editModal').modal('hide')
-                }
-                $("#loader-text").html('Loading...')
             }
+
+            formData.append('remaining_files', remainingFiles);
+            // for (var value of formData.values()) {
+            //     console.log("1", value);
+            // }
+            post_url = '{{legend}}' === "New" ? "{{url_for('new_item')}}" : '{{item}}' ? "{{url_for('shop_api.item', item_id=item_id)}}" : null
+            $.ajax({
+                url: post_url || '#',
+                data: formData,
+                type: $form.attr('method') || 'POST',
+                enctype: $form.attr('enctype') || 'multipart/form-data',
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    console.log("success")
+                    toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
+                    if ($('#editModal').length) {
+                        $('#editModal').modal('hide')
+                        toastr.success("Updated Post!");
+                    } else {
+                        listings_html = null;
+                        toastr.success("Post created!");
+                    }
+                    history.pushState(null, null, response.url)
+                    $('#block-content').html(response.html);
+                    $(window).scrollTop(0);
+                },
+                beforeSend: function () {
+                    $("body").toggleClass("loading");
+                    if ($('#editModal').length) {
+                        $('#editModal').modal('hide')
+                        $("#loader-text").html('Updating Post...')
+                    } else if ($('#editModal{{item_id}}').length) {
+                        $('#editModal{{item_id}}').modal('hide')
+                        $("#loader-text").html('Updating Post...')
+                    } else {
+                        $("#loader-text").html('Creating Post...')
+                    }
+                },
+                complete: function () {
+                    $("body").toggleClass("loading");
+                    if ($('#editModal').length) {
+                        $('#editModal').modal('hide')
+                    }
+                    $("#loader-text").html('Loading...')
+                }
+            });
+
+
+            // $('form').submit(function () {
+            //     $(this).find(':submit').attr('disabled', 'disabled');
+            // });
         });
-
-
-        // $('form').submit(function () {
-        //     $(this).find(':submit').attr('disabled', 'disabled');
-        // });
     });
-    });
+});
+
 </script>
 
 {% endblock %}
