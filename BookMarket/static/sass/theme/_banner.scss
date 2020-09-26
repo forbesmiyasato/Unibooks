@@ -21,6 +21,10 @@
         margin: 0 120px;
 
         .swing-in-top-bck {
+            @media (max-width: 768px) {
+                padding: 0 30px !important;
+            }
+
             -webkit-animation: swing-in-top-bck 3s
                 cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
             animation: swing-in-top-bck 3s
@@ -109,12 +113,20 @@
         background: $offwhite;
         padding: 200px 200px 100px;
 
-        @media (max-width: 1382px) {
+        @media (max-width: 1400px) {
+            padding: 200px 120px 50px !important;
+        }
+        @media (max-width: 992px) {
             padding: 200px 180px 50px !important;
         }
         @media (max-width: 768px) {
             padding: 150px 80px 50px !important;
         }
+
+        @media (max-width: 540px) {
+            padding: 150px 50px 50px !important;
+        }
+
         @media (max-width: 320px) {
             padding: 100px 15px !important;
         }

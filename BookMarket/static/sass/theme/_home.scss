@@ -1558,7 +1558,7 @@ label {
     position: fixed;
     right: 0;
     top: 50%;
-    height: 400px;
+    height: 370px;
     width: 230px;
     animation: slide-in 1s ease-out;
 
@@ -1576,12 +1576,16 @@ label {
         align-items: center;
         flex-direction: column;
         text-align: center;
-        padding: 0 15px 15px 15px;
+        padding: 0 15px 0px 15px;
 
         & .lnr-warning {
             color: #F89406;
             font-size: 50px;
             margin-bottom: 5px;
+        }
+
+        & p:last-of-type {
+            margin-bottom: 0;
         }
     }
 
@@ -1598,7 +1602,7 @@ label {
         position: absolute;
         left: 5px;
         top: 0;
-        font-size: 20px;
+        font-size: 25px;
         cursor: pointer;
     }
 }

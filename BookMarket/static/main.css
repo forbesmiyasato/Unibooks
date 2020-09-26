@@ -606,7 +606,9 @@ body.loading {
     overflow: hidden;
 }
 body.loading .overlay {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* https://projects.lukehaas.me/css-loaders/ */
@@ -624,7 +626,7 @@ body.loading .overlay {
 .loader {
     color: #87ceeb;
     font-size: 10px;
-    margin: 20% auto 50px auto;
+    margin: 0 auto 50px;
     position: relative;
     text-indent: -9999em;
     -webkit-transform: translateZ(0);
@@ -946,6 +948,7 @@ body.need-school .school-overlay {
 
 .content-section:not(.message-content-section) {
     border-left: 4px solid #70a9da;
+    border-radius: 5px;
 }
 
 .contact-us-container {
@@ -954,10 +957,12 @@ body.need-school .school-overlay {
     padding-left: 0px;
     padding-right: 0px;
     border-left: 4px solid #70a9da;
+    border-radius: 5px;
 }
 
 .contact-us-container.not-logged-in {
     border-left: 4px solid #bd362f;
+    border-radius: 5px;
 }
 
 .contact-us-container * .message-text-area {

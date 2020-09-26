@@ -1249,6 +1249,9 @@ h6 {
     .banner-area .banner-row .swing-in-top-bck {
       -webkit-animation: swing-in-top-bck 3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
       animation: swing-in-top-bck 3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
+      @media (max-width: 768px) {
+        .banner-area .banner-row .swing-in-top-bck {
+          padding: 0 30px !important; } }
 
 @-webkit-keyframes swing-in-top-bck {
   0% {
@@ -1320,12 +1323,18 @@ h6 {
   .banner-area .banner-content {
     background: #fcfcfc;
     padding: 200px 200px 100px; }
-    @media (max-width: 1382px) {
+    @media (max-width: 1400px) {
+      .banner-area .banner-content {
+        padding: 200px 120px 50px !important; } }
+    @media (max-width: 992px) {
       .banner-area .banner-content {
         padding: 200px 180px 50px !important; } }
     @media (max-width: 768px) {
       .banner-area .banner-content {
         padding: 150px 80px 50px !important; } }
+    @media (max-width: 540px) {
+      .banner-area .banner-content {
+        padding: 150px 50px 50px !important; } }
     @media (max-width: 320px) {
       .banner-area .banner-content {
         padding: 100px 15px !important; } }
@@ -2614,7 +2623,7 @@ label {
   position: fixed;
   right: 0;
   top: 50%;
-  height: 400px;
+  height: 370px;
   width: 230px;
   animation: slide-in 1s ease-out; }
   #popup-message-right .popup-message-content {
@@ -2631,11 +2640,13 @@ label {
     align-items: center;
     flex-direction: column;
     text-align: center;
-    padding: 0 15px 15px 15px; }
+    padding: 0 15px 0px 15px; }
     #popup-message-right .popup-message-content .lnr-warning {
       color: #F89406;
       font-size: 50px;
       margin-bottom: 5px; }
+    #popup-message-right .popup-message-content p:last-of-type {
+      margin-bottom: 0; }
 
 @keyframes slide-in {
   0% {
@@ -2646,7 +2657,7 @@ label {
     position: absolute;
     left: 5px;
     top: 0;
-    font-size: 20px;
+    font-size: 25px;
     cursor: pointer; }
 
 .load-product {

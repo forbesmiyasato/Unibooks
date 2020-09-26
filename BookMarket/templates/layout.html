@@ -223,8 +223,10 @@
   </header>
   <!-- End Header Area -->
   <div class="overlay">
-    <div class="loader">Loading...</div>
-    <h3 class="loader-text" id="loader-text">Loading...</h3>
+    <div>
+      <div class="loader">Loading...</div>
+      <h3 class="loader-text" id="loader-text">Loading...</h3>
+    </div>
   </div>
   <div class="school-overlay">
     <div class="school-modal">
@@ -308,7 +310,7 @@
       <p>Unibooks is undergoing it's final testing before official release.
       <p>If you find any bugs or have any suggestions please email us at
         contact@unibooks.io</p>
-      <p>We'll also be emailing a simple survey according to the registerd email.</p>
+      <p>We'll also be emailing a simple survey according to the registered email.</p>
       <p><b>Thank you for using Unibooks!</b></p>
     </div>
   </div>
@@ -349,10 +351,6 @@
     var selectize = $select[0].selectize;
 
     let selectList = document.getElementById('school-list');
-    // $('#school-list-selectized').on('invalid', function () {
-    //   console.log("INVALID")
-    //   selectList.setCustomValidity('You must select a school!');
-    // })
 
     let selectListInput = document.getElementById('school-list-selectized')
     selectListInput.setCustomValidity('You must select a school!');
@@ -564,7 +562,7 @@
             $("body").toggleClass("loading");
           },
           complete: function () {
-            $("body").toggleClass("loading");
+            // $("body").toggleClass("loading");
             // if (path === 'shop') {
             //   initializeShopPage();
             // }
