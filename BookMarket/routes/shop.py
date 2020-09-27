@@ -22,7 +22,6 @@ def shop():
     if session.get('school') is None:
         flash("School Session Needed", 'error')
         return redirect(url_for('home'))
-        # return jsonify(state="no school in session")
     school = session['school']
     departments = ItemDepartment.query.filter_by(school=school).order_by(
             ItemDepartment.abbreviation).all()

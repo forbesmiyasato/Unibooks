@@ -22,12 +22,6 @@ from .background import query_for_reminder
 app.register_blueprint(userAuth)
 app.register_blueprint(shop_api)
 
-
-# @app.before_request
-# def beforeRequest():
-#     print(request.url)
-#     if not request.url.startswith('https') and request.url != "http://localhost:5000/":
-#         return redirect(request.url.replace('http', 'https', 1))
 @app.route('/sitemap.xml', methods=['GET'])
 def sitemap():
     try:
@@ -53,6 +47,15 @@ def sitemap():
         return response
     except Exception as e:
         return(str(e))
+
+@app.before_request
+def before_request():
+    print("!!!!!!!!!!!", request.path)
+    if session.get('school') is None:
+        path = request.path
+        if path == '/item/new':
+            flash('School Session Needed!', 'error')
+            return redirect(url_for('home'))
 
 
 @app.route('/loaderio-d2cf780526acfac1fe150b2163a01707/')
@@ -152,12 +155,14 @@ def account_delete():
 
 @app.route("/item/new", methods=['GET', 'POST'])
 def new_item():
+    if session.get('school') is None:
+        flash('School Session Needed!', 'error')
+        return redirect(url_for('home'))
     standalone = request.args.get('standalone', None)
     if request.method == 'POST':
         # images = form.images.data  # without plugin
         images = request.files.getlist('files[]')
-        print(images)
-        print("POST SCHOOL", current_user.school)
+
         if not request.form.get('category_id'):
             post = Item(name=request.form.get('name'), description=request.form.get('description'), user_id=current_user.id,
                         price=request.form.get('price'), class_id=request.form.get('class_id'), department_id=request.form.get('department_id'),
@@ -213,6 +218,7 @@ def new_item():
         school=session['school']).order_by(ItemDepartment.abbreviation).all()
     categories = ItemCategory.query.filter_by(school=session['school']).all()
     isBook = True  # default display is book item
+    print(session['school'])
     # department_list = [(i.id, i.department_name) for i in departments]
     return render_template('create_post.html', title='Sell', form=form, legend='New', item_id=0, departments=departments,
                            standalone=standalone, categories=categories, isBook=isBook)
@@ -464,13 +470,17 @@ def inject_schools():
     return {'schools': schools}
 
 
-@app.route('/setschool/<int:school>')
-def set_school_in_session(school):
-    state = request.args.get('state', None)
+@app.route('/setschool', methods=['POST'])
+def set_school_in_session():
+    state = request.form.get('state', None)
     if state == "loggout":
+        print("TESTTTTTTTTTTTTT")
         logout_user()
-    elif state == 'emptycart':
-        session.pop('saved')
+        return ('', 204)
+    school = request.form.get('school', None)
+    if school is None:
+        flash('Invalid Behavior! No school session found.')
+        return ('', 400)
     session['school'] = school
     return ('', 204)
 

@@ -46,7 +46,6 @@
   <script src="https://kit.fontawesome.com/58d8160f79.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/themify-icons.css')}}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.css')}}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css')}}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
 
   <script src="{{ url_for('static', filename='js/vendor/jquery-2.2.4.min.js')}}"></script>
@@ -214,7 +213,8 @@
         <select required name="school-list" class="school-list" id='school-list' placeholder="Select School">
           <option value="">Select School</option>
           {% for school in schools %}
-          <option value='{{ school.id }}' {%if school.id == 2 or school.id == 3%} disabled {% endif %}>{{school.name}}</option>
+          <option value='{{ school.id }}' {%if school.id == 2 or school.id == 3%} disabled {% endif %}>{{school.name}}
+          </option>
           {% endfor %}
         </select>
         <button class="genric-btn primary" type="submit">That's my school!</button>
@@ -364,6 +364,8 @@
         style="margin: 0 8px 0 8px">Yes</button></div>`, message);
     }
 
+    var csrf_token = "{{ csrf_token() }}";
+
     const checkSchool = () => {
       var school = localStorage.getItem('school');
 
@@ -377,10 +379,15 @@
         $("body").toggleClass("need-school");
       } else {
         $.ajax({
-          url: `/setschool/${school}`,
-          type: "get",
-          // data: { school: school },
-          async: true
+          url: '/setschool',
+          type: "post",
+          data: { 'school': school },
+          async: true,
+          beforeSend: function (xhr, settings) {
+            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+              xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            }
+          }
         })
         setSchoolName(school);
       }
@@ -394,18 +401,26 @@
         if (school || school != null || school !== 'undefined') {
           $("body").toggleClass("need-school");
         }
-        $.ajax({
-          url: `/setschool/${school}`,
-          type: "get",
-          data: { 'state': state },
-          async: true,
-          success: function () {
-            sessionStorage.justChangedSchool = true;
-            $(window).scrollTop(0);
-            location.reload();
-            state = null;
-          }
-        })
+
+        if (state === "loggout") {
+          $.ajax({
+            url: `/setschool`,
+            type: "post",
+            data: { 'state': state },
+            async: true,
+            success: function () {
+              sessionStorage.justChangedSchool = true;
+              $(window).scrollTop(0);
+              location.reload();
+              state = null;
+            }
+          })
+        } else {
+          sessionStorage.justChangedSchool = true;
+          $(window).scrollTop(0);
+          location.reload();
+          state = null;
+        }
       })
     }
 
@@ -566,8 +581,6 @@
         $('.navbar-collapse').collapse("toggle")
       }
     }
-
-    var csrf_token = "{{ csrf_token() }}";
 
     $.ajaxSetup({
       global: true,

@@ -20,6 +20,8 @@ salt = "email_confirm"
 def register():
     standalone = request.args.get('standalone')
     form = RegistrationForm()
+    if session.get('school') is None:
+        return render_template('register.html', title='Register', form=form)
     school = School.query.filter_by(id=session['school']).first()
     pattern = school.email_pattern
     placeholder = "Your " + school.name + " email address"
@@ -38,10 +40,9 @@ def register():
         link = url_for('userAuth.confirm_email', token=token, _external=True)
         msg = Message('Confirm Email', sender=("Unibooks", "do-not-reply@unibooks.io"), recipients=[email],
                       html=render_template('confirmation_email.html', email=email, link=link))
-
         sender = threading.Thread(name="mail_sender", target=send_message, args=(
             current_app._get_current_object(), msg,))
-        # sender.start()
+        sender.start()
         db.session.add(user)
         db.session.commit()
         flash(
@@ -146,7 +147,6 @@ def confirm_email(token):
 
 
 def login_html(standalone=None, pattern=None, placeholder=None, error_message=None):
-    print("111", standalone)
     form = LoginForm()
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
@@ -169,8 +169,11 @@ def login_html(standalone=None, pattern=None, placeholder=None, error_message=No
 @userAuth.route("/login", methods=['GET', 'POST'])
 def login():
     standalone = request.args.get('standalone')
+    if session.get('school') is None:
+        return login_html()
     school = School.query.filter_by(id=session['school']).first()
     pattern = school.email_pattern
+    print(pattern)
     placeholder = "e.g. xxxx@" + school.email_domain
     error_message = "Must be a " + school.name + " email address!"
     return login_html(standalone, pattern, placeholder, error_message)
