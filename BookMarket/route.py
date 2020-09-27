@@ -37,7 +37,10 @@ def sitemap():
         # static pages
         for rule in app.url_map.iter_rules():
             if ("GET" in rule.methods and len(rule.arguments) == 0 and "loader" not in rule.rule
-                    and "sitemap" not in rule.rule and "logout" not in rule.rule):
+                    and "sitemap" not in rule.rule and "logout" not in rule.rule
+                    and "messagebuyerform" not in rule.rule and "item/new" not in rule.rule
+                    and "listings" not in rule.rule and "account" not in rule.rule
+                    and "shop/data" not in rule.rule):
                 pages.append(
                     ["https://unibooks.io" +
                         str(rule.rule), ten_days_ago]
