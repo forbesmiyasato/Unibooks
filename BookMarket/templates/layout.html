@@ -373,40 +373,40 @@
         toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
         toastr.success(`Your school is set to ${getSchoolName(school)}`);
         sessionStorage.justChangedSchool = false;
-      }
-
-      if (!school || school == null || school === 'undefined') {
-        $("body").toggleClass("need-school");
       } else {
-        $.ajax({
-          url: '/setschool',
-          type: "post",
-          data: { 'school': school },
-          async: true,
-          beforeSend: function (xhr, settings) {
-            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
-              xhr.setRequestHeader("X-CSRFToken", csrf_token);
-            }
-          }
-        })
-        setSchoolName(school);
-      }
-      var $schoolForm = $('#school-form');
 
-      // form submit
-      $schoolForm.on('submit', function (e) {
-        e.preventDefault()
-        localStorage.setItem('school', selectize.getValue())
-        var school = localStorage.getItem('school');
-        if (school || school != null || school !== 'undefined') {
+        if (!school || school == null || school === 'undefined') {
           $("body").toggleClass("need-school");
+        } else {
+          $.ajax({
+            url: '/setschool',
+            type: "post",
+            data: { 'school': school },
+            async: true,
+            beforeSend: function (xhr, settings) {
+              if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+              }
+            }
+          })
+          setSchoolName(school);
         }
 
-        if (state === "loggout") {
+        var $schoolForm = $('#school-form');
+
+        // form submit
+        $schoolForm.on('submit', function (e) {
+          e.preventDefault()
+          localStorage.setItem('school', selectize.getValue())
+          var school = localStorage.getItem('school');
+          if (school || school != null || school !== 'undefined') {
+            $("body").toggleClass("need-school");
+          }
+
           $.ajax({
             url: `/setschool`,
             type: "post",
-            data: { 'state': state },
+            data: { 'state': state, 'school': school },
             async: true,
             success: function () {
               sessionStorage.justChangedSchool = true;
@@ -415,13 +415,8 @@
               state = null;
             }
           })
-        } else {
-          sessionStorage.justChangedSchool = true;
-          $(window).scrollTop(0);
-          location.reload();
-          state = null;
-        }
-      })
+        })
+      }
     }
 
     checkSchool();
@@ -493,6 +488,11 @@
           data: { standalone: 'true' },
           async: true,
           success: function (response) {
+            toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
+
+            if (response['missing-session']) {
+              window.location.href = response['missing-session'];
+            }
             if ((path === '/home' || path === "/") && !home_html) {
               home_html = response
             } else if (path === '/register' && !register_html) {
@@ -519,7 +519,6 @@
               terms_html = response
             }
             if (response.state) {
-              toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
               if (response.state === 'login-required') {
                 linkClicked(null, "{{url_for('userAuth.login', next='/item/new')}}")
                 toastr.info("You must sign in before selling!");

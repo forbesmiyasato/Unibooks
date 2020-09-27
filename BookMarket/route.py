@@ -50,12 +50,15 @@ def sitemap():
 
 @app.before_request
 def before_request():
-    print("!!!!!!!!!!!", request.path)
-    if session.get('school') is None:
+    standalone = request.args.get('standalone')
+    print(standalone)
+    if standalone and session.get('school') is None:
         path = request.path
-        if path == '/item/new':
-            flash('School Session Needed!', 'error')
-            return redirect(url_for('home'))
+        # if path == '/item/new':
+        #     flash('School Session Needed!', 'error')
+        #     return redirect(url_for('home'))
+        flash('School Session Needed!', 'error')
+        return jsonify({'missing-session': path})
 
 
 @app.route('/loaderio-d2cf780526acfac1fe150b2163a01707/')
