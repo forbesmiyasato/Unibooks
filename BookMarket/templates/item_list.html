@@ -93,20 +93,20 @@
                 </div>
             </div>
         </div>
-        <!-- Modal -->
+        <!-- Delete Modal -->
         <div class="modal fade" id="deleteModal{{loop.index}}" tabindex="-1" role="dialog"
             aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+                        <h5 class="modal-title" id="deleteModalLabel{{loop.index}}">Delete Post?</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <!-- <div class="modal-body">
-      Are you sure you want to delete the post?
-    </div> -->
+                    <div class="modal-body">
+                        <b>Warning:</b> Deleting your accout is irreversible.
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <input type="submit" class="btn btn-danger" value="Delete"
@@ -116,6 +116,27 @@
             </div>
         </div>
         {% endfor %}
+        <!-- report modal-->
+        <div class="modal fade" id="report-modal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="reportModalLabel">Report Post</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to report this post?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="report-submit" type="button" class="btn btn-primary">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     {% endif %}
 </section>
@@ -138,13 +159,17 @@
     }
 
     function report(item_id) {
-        $.ajax({
-            url: `/report/${item_id}`,
-            success: function (response) {
-                toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
-                toastr.success("Thanks for reporting the inappropriate post!");
-            }
-        })
+        $('#report-modal').modal('show')
+        document.getElementById('report-submit').onclick = () => {
+            $.ajax({
+                url: `/report/${item_id}`,
+                beforeSend: function (response) {
+                    toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
+                    toastr.success("Thanks for reporting the inappropriate post!");
+                    $('#report-modal').modal('hide')
+                }
+            })
+        }
     }
 </script>
 {% endblock %}
