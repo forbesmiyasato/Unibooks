@@ -1125,7 +1125,8 @@ h6 {
             height: 0;
             border-style: solid;
             border-width: 10px 10px 0 10px;
-            border-color: #eeeeee transparent transparent transparent;
+            border-color: #eeeeee transparent transparent
+ transparent;
             position: absolute;
             right: 24px;
             top: 45px;
@@ -1239,7 +1240,6 @@ h6 {
 /* banner area css
 ============================================================================================ */
 .banner-area {
-  background: url(../img/banner/banner-bg.jpg) center no-repeat;
   background-size: cover;
   position: relative;
   text-align: center;
@@ -1391,7 +1391,8 @@ h6 {
   background-size: contain;
   background-position: right;
   padding-top: 160px;
-  margin-bottom: 50px; }
+  margin-bottom: 50px;
+  background-repeat: no-repeat; }
   @media (max-width: 991px) {
     .organic-breadcrumb {
       padding-top: 140px; } }
@@ -6456,11 +6457,16 @@ label {
     cursor: pointer;
     opacity: 0;
     transform: scale(0);
-    -webkit-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
-    -moz-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
-    -ms-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
-    -o-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
-    transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out; }
+    -webkit-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in,
+ transform 0.2s ease-in-out;
+    -moz-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in,
+ transform 0.2s ease-in-out;
+    -ms-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in,
+ transform 0.2s ease-in-out;
+    -o-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in,
+ transform 0.2s ease-in-out;
+    transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in,
+ transform 0.2s ease-in-out; }
     .help-container .help-item.load {
       opacity: 1;
       height: auto;

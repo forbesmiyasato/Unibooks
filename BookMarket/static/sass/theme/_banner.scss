@@ -1,7 +1,7 @@
 /* banner area css
 ============================================================================================ */
 .banner-area {
-    background: url(../img/banner/banner-bg.jpg) center no-repeat;
+    // background: url(../img/banner/banner-bg.jpg) center no-repeat;
     background-size: cover;
     position: relative;
     text-align: center;
@@ -197,6 +197,7 @@
     background-position: right;
     padding-top: 160px;
     margin-bottom: 50px;
+    background-repeat: no-repeat;
     @media (max-width: 991px) {
         padding-top: 140px;
     }
