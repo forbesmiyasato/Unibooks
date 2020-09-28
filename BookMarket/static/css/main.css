@@ -1125,8 +1125,7 @@ h6 {
             height: 0;
             border-style: solid;
             border-width: 10px 10px 0 10px;
-            border-color: #eeeeee transparent transparent
- transparent;
+            border-color: #eeeeee transparent transparent transparent;
             position: absolute;
             right: 24px;
             top: 45px;
@@ -1722,9 +1721,10 @@ nav.d-flex.align-items-center {
   .single-product .product-details .prd-bottom {
     position: relative;
     margin-top: 20px;
-    white-space: nowrap;
-    display: flex;
-    column-gap: 5px; }
+    white-space: nowrap; }
+    .single-product .product-details .prd-bottom.list-item-prd-bottom {
+      display: flex;
+      column-gap: 5px; }
     .single-product .product-details .prd-bottom .social-info {
       position: relative;
       display: inline-block;
@@ -6457,16 +6457,11 @@ label {
     cursor: pointer;
     opacity: 0;
     transform: scale(0);
-    -webkit-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in,
- transform 0.2s ease-in-out;
-    -moz-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in,
- transform 0.2s ease-in-out;
-    -ms-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in,
- transform 0.2s ease-in-out;
-    -o-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in,
- transform 0.2s ease-in-out;
-    transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in,
- transform 0.2s ease-in-out; }
+    -webkit-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
+    -moz-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
+    -ms-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
+    -o-transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out;
+    transition: opacity 0.25s ease-in, box-shadow 0.2s ease-in, transform 0.2s ease-in-out; }
     .help-container .help-item.load {
       opacity: 1;
       height: auto;

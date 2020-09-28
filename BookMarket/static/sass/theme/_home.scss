@@ -317,8 +317,11 @@
             position: relative;
             margin-top: 20px;
             white-space: nowrap;
-            display: flex;
-            column-gap: 5px;
+
+            &.list-item-prd-bottom {
+                display: flex;
+                column-gap: 5px;
+            }
             .social-info {
                 position: relative;
                 display: inline-block;
