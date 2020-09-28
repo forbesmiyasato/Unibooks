@@ -51,7 +51,6 @@ def sitemap():
 @app.before_request
 def before_request():
     standalone = request.args.get('standalone')
-    print(standalone)
     if standalone and session.get('school') is None:
         path = request.path
         # if path == '/item/new':

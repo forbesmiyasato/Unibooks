@@ -294,7 +294,11 @@
       const popup = document.getElementById('popup-message-right');
       if (localStorage.getItem('school') && !sessionStorage.getItem('popup')) {
         document.getElementById('popup-close-btn').onclick = () => {
-          popup.style.display = 'none';
+          $("#popup-message-right").animate({
+            right: "-230px"
+          }, 1000, function () {
+            $('#popup-message-right').hide();
+          })
         }
         sessionStorage.setItem('popup', 'showed');
       } else {
