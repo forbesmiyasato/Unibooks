@@ -32,15 +32,13 @@
                 <a onclick="onItemClick('{{url_for('shop_api.item', item_id=post.id)}}'); return false"
                     href="{{url_for('shop_api.item', item_id=post.id)}}">
                     {% if post.thumbnail == 'No_picture_available.png' %}
-                    <img class="img-fluid"
-                    src="/static/item_pics/No_picture_available.png"
-                    alt="No Image Available">
+                    <img class="img-fluid" src="/static/item_pics/No_picture_available.png" alt="No Image Available">
                     {% else %}
                     <img class="img-thumbnail list-image"
                         src="https://book-advertisement-site.s3-us-west-2.amazonaws.com/{{post.thumbnail}}"
                         alt="User posting image">
                     {% endif %}
-                    </a>
+                </a>
                 <div class="product-details">
                     <h6 class="hover-line"><a
                             onclick="onItemClick('{{url_for('shop_api.item', item_id=post.id)}}'); return false"
@@ -52,7 +50,9 @@
                     <div class="prd-bottom">
                         <a onclick="onItemClick('{{url_for('shop_api.item', item_id=post.id)}}'); return false"
                             href="{{url_for('shop_api.item', item_id=post.id)}}" class="social-info">
-                            <span class="lnr lnr-move"></span>
+                            <span class="material-icons">
+                                more_horiz
+                            </span>
                             <p class="hover-text">View more</p>
                         </a>
                         {% if current_user.id == post.user_id %}
@@ -75,14 +75,16 @@
                         <div class="social-info">
                             <span class="ti-bag"></span>
                             <p class="hover-text animate-overflow">
-                                <a class="click-href" onclick="linkClicked(null, '{{url_for('userAuth.login', next='/shop')}}')">
+                                <a class="click-href"
+                                    onclick="linkClicked(null, '{{url_for('userAuth.login', next='/shop')}}')">
                                     Log in </a> to add to cart
                             </p>
                         </div>
                         <div class="social-info">
                             <span class="lnr lnr-alarm"></span>
                             <p class="hover-text animate-overflow">
-                                <a class="click-href" onclick="linkClicked(null, '{{url_for('userAuth.login', next='/shop')}}')">
+                                <a class="click-href"
+                                    onclick="linkClicked(null, '{{url_for('userAuth.login', next='/shop')}}')">
                                     Log in </a> to report this post
                             </p>
                         </div>

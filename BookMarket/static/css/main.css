@@ -1721,7 +1721,9 @@ nav.d-flex.align-items-center {
   .single-product .product-details .prd-bottom {
     position: relative;
     margin-top: 20px;
-    white-space: nowrap; }
+    white-space: nowrap;
+    display: flex;
+    column-gap: 5px; }
     .single-product .product-details .prd-bottom .social-info {
       position: relative;
       display: inline-block;
@@ -2643,7 +2645,7 @@ label {
     text-align: center;
     padding: 0 15px 0px 15px; }
     #popup-message-right .popup-message-content .lnr-warning {
-      color: #F89406;
+      color: #f89406;
       font-size: 50px;
       margin-bottom: 5px; }
     #popup-message-right .popup-message-content p:last-of-type {
