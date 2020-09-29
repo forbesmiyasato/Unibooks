@@ -43,8 +43,8 @@
             <!-- Books -->
             {% for department in departments %}
             <li class="main-nav-list">
-                <a class="side-bar-text" aria-expanded="false" {% if department.classes|length > 0 %}data-toggle="collapse"
-                    href="#nav{{department.id}}" aria-controls="{{department_id}}"{% endif %}>
+                <a class="side-bar-text" aria-expanded="false" data-toggle="collapse"
+                    href="#nav{{department.id}}" aria-controls="{{department_id}}">
                     <span class="side-department-name">{{- department.abbreviation}} - {{department.department_name}}</span><span class="number"
                         id="dep{{ department.id }}">{{ depObj[department.id] }}</span>
                 </a>
