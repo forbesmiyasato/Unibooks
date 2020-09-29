@@ -475,8 +475,11 @@ function displayErrorMessage(message) {
     toastr.error(message);
 }
 
+var loadedDepartment = {};
+
 function initializeShopPage() {
     let url;
+    loadedDepartment = {};
     if (window.location.href.includes("?")) {
         url = new URL(
             insertBeforeLastOccurrence(window.location.href, "?", "/data")
@@ -795,8 +798,6 @@ const setSchoolName = (id) => {
     mobile.innerHTML = name;
     footer.innerHTML = name + " - ";
 };
-
-var loadedDepartment = {};
 
 const loadCourses = (department) => {
     if (!(department in loadedDepartment)) {
