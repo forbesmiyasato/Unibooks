@@ -20,11 +20,10 @@
                         {% endif %}
                     </span>
                 </a>
-                <ul class="collapse" id="navOther" data-toggle="collapse" aria-expanded="false"
-                    aria-controls="Other">
+                <ul class="collapse" id="navOther" data-toggle="collapse" aria-expanded="false" aria-controls="Other">
                     <li class="main-nav-list child">
                         <a onclick="filterByCategory('all', 'All Non-Textbooks'); return false;"
-                        href="{{url_for('shop_api.shop', nonbook='all')}}">All Others
+                            href="{{url_for('shop_api.shop', nonbook='all')}}">All Others
                             <span class="number" id="other_total">
                                 {% if totalCategory != 0 %}
                                 {{- totalCategory -}}
@@ -33,9 +32,11 @@
                         </a>
                     </li>
                     {% for category in categories %}
-                    <li class="main-nav-list child"><a onclick="filterByCategory({{category.id}}, '{{category.category_name}}'); return false;"
-                        href="{{url_for('shop_api.shop', nonbook=category.id)}}">{{category.abbreviation}}<span
-                                class="number" id="category_total{{ category.id }}">{{ categoryObj[category.id] }}</span></a>
+                    <li class="main-nav-list child"><a
+                            onclick="filterByCategory({{category.id}}, '{{category.category_name}}'); return false;"
+                            href="{{url_for('shop_api.shop', nonbook=category.id)}}">{{category.abbreviation}}<span
+                                class="number"
+                                id="category_total{{ category.id }}">{{ categoryObj[category.id] }}</span></a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -43,28 +44,47 @@
             <!-- Books -->
             {% for department in departments %}
             <li class="main-nav-list">
-                <a class="side-bar-text" aria-expanded="false" data-toggle="collapse"
-                    href="#nav{{department.id}}" aria-controls="{{department_id}}">
-                    <span class="side-department-name">{{- department.abbreviation}} - {{department.department_name}}</span><span class="number"
+                <a class="side-bar-text" aria-expanded="false" data-toggle="collapse" href="#nav{{department.id}}"
+                    aria-controls="{{department_id}}" onclick="loadCourses({{department.id}})">
+                    <span class="side-department-name">{{- department.abbreviation}} -
+                        {{department.department_name}}</span><span class="number"
                         id="dep{{ department.id }}">{{ depObj[department.id] }}</span>
                 </a>
                 <ul class="collapse" id="nav{{department.id}}" data-toggle="collapse" aria-expanded="false"
                     aria-controls="{{department_id}}">
-                    <li class="main-nav-list child"><a class="side-bar-text" href="javascript:filterByDepartment({{department.id}})">All in
+                    <li class="main-nav-list child"><a class="side-bar-text"
+                            href="javascript:filterByDepartment({{department.id}})">All in
                             {{department.abbreviation}}<span class="number"
                                 id="dep_total{{ department.id }}">{{ depObj[department.id] }}</span></a>
                     </li>
-                    {% for class in department.classes|sort(attribute='id') %}
-                    <li class="main-nav-list child">
-                        <a href="javascript:filterByClass({{class.id}}, '{{class.class_name}}', '{{- department.id}}', '{{department.department_name}}')">
-                            {{- class.abbreviation}}<span
-                                class="number" id="class_total{{ class.id }}">{{ classObj[class.id] }}</span></a>
-                    </li>
-                    {% endfor %}
+
                 </ul>
             </li>
             {% endfor %}
         </ul>
     </div>
 </div>
+<script>
+    var map = {};
+
+    const loadCourses = (department) => {
+        if (!(department in map)) {
+            $(`#nav${department}`).append(`<div class="d-flex justify-content-center">
+        <div class="spinner-border text-secondary" role="status"><span class="sr-only">Loading...</span></div></div>`)
+            fetch('/class/' + department).then(function (response) {
+                response.json().then(function (data) {
+                    console.log(data)
+                    for (let item_class of data.classes) {
+                        $(`#nav${department}`).append(`<li class="main-nav-list child"><a href="javascript:filterByClass(${item_class.id})"> \
+                    ${item_class.class_name}<span class="number" \
+                    id="class_total${item_class.id}"></span></a></li>`);
+                    }
+                })
+            }).then(res => {
+                $(`.spinner-border.text-secondary`).remove();
+            })
+            map[department] = true;
+        }
+    }
+</script>
 {% endblock %}

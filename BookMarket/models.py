@@ -55,7 +55,7 @@ class ItemDepartment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     department_name = db.Column(db.String(100), nullable=False)
     abbreviation = db.Column(db.String(20), nullable=True)
-    classes = db.relationship('ItemClass', backref='parent', lazy='joined')
+    classes = db.relationship('ItemClass', backref='parent', lazy='dynamic')
     school = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
     count = db.Column(db.Integer, nullable=True, default=0)
 
