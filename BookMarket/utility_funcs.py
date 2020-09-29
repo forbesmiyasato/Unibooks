@@ -8,9 +8,9 @@ from . import db, S3_BUCKET, mail
 # Utility functions
 def save_images_to_db_and_s3(form_images, item_id):
     thumbnail = None
+    print(form_images)
     for index, images in enumerate(form_images):
         if images:
-            # print(images)
             # images.seek(0, os.SEEK_END)
             # file_length = images.tell()
             # print(file_length)
@@ -22,7 +22,9 @@ def save_images_to_db_and_s3(form_images, item_id):
                 thumbnail = picture_fn
             # picture_path = os.path.join(
             #     app.root_path, 'static/item_pics', picture_fn)
+            print(images)
             image = Image.open(images)
+            print("PASS")
             image_format = image.format
             if image.height > 600 or image.width > 600:
                 output_size = (600, 600)
@@ -42,7 +44,8 @@ def save_images_to_db_and_s3(form_images, item_id):
             size = in_mem_file.tell()
             newImage = ItemImage(item_id=item_id, image_file=picture_fn, image_name=image_name, image_size=size)
             db.session.add(newImage)
-            db.session.commit()
+            image.close()
+    db.session.commit()
     return thumbnail
     # #remove use previous profile pic in file system so it doesn't get overloaded
     # if (current_user.image_file != 'default.jpg'):

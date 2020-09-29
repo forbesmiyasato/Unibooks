@@ -6,7 +6,7 @@ from datetime import datetime
 from flask import render_template, request, Blueprint, jsonify, url_for, flash, session, redirect, current_app
 from flask_login import current_user
 from flask_mail import Message
-from ..models import Item, ItemClass, ItemDepartment, ItemImage, School, ItemCategory
+from ..models import Item, ItemClass, ItemDepartment, ItemImage, School, ItemCategory, Statistics
 from ..forms import ItemForm, MessageForm
 from .. import app, db, mail
 from ..utility_funcs import (delete_images_from_s3_and_db, save_images_to_db_and_s3, 
@@ -26,8 +26,11 @@ def shop():
     departments = ItemDepartment.query.filter_by(school=school).order_by(
             ItemDepartment.abbreviation).all()
     categories = ItemCategory.query.filter_by(school=session['school']).all()
-
-    return render_template('shop.html', title='Shop', departments=departments, standalone=standalone, categories=categories)
+    stats = Statistics.query.first()
+    current_listings = stats.current_listings
+    total_category = stats.non_textbooks
+    return render_template('shop.html', title='Shop', departments=departments, standalone=standalone,
+    categories=categories, all=current_listings, totalCategory=total_category)
 
 
 def findMatchingCourse(courseSearch):
@@ -219,68 +222,30 @@ def item(item_id):
     return item_html(item_id, _item, standalone)
 
 
-# @shop_api.route("/shop/class/<int:class_id>")
-# def items_for_class(class_id):
-#     search_term = request.args.get('search')
-#     per_page = request.args.get('per_page', 6, type=int)
-#     page = request.args.get('page', 1, type=int)
-#     departments = db.session.query(ItemDepartment).all()
-#     order = request.args.get('order', 'desc')
-#     date_sorted = getattr(Item.date_posted, order)()
-#     item_class = ItemClass.query.get_or_404(class_id)
-#     if search_term:
-#         search_term = '%{0}%'.format(search_term)
-#         posts = Item.query.filter(Item.name.ilike(search_term)).filter_by(class_id=class_id).order_by(
-#             date_sorted).paginate(page=page, per_page=per_page)
-#     else:
-#         posts = Item.query.filter_by(class_id=class_id).order_by(
-#             date_sorted).paginate(page=page, per_page=per_page)
-#     return render_template('shop_class.html', title='Shop', posts=posts, departments=departments, class1=item_class)
+# @shop_api.context_processor
+# def get_totals_depts():
+#     items = db.session.query(Item).filter(Item.school==session['school']).all()
+#     depObj = {}
+#     classObj = {}
+#     categoryObj = {}
+#     total_category = 0
+#     if items:
+#         for item in items:
+#             if item.category_id == None:
+#                 if item.department_id not in depObj:
+#                     depObj[item.department_id] = 1
+#                 else:
+#                     depObj[item.department_id] += 1
+#                 if item.class_id not in classObj:
+#                     classObj[item.class_id] = 1
+#                 else:
+#                     classObj[item.class_id] += 1
+#             else:
+#                 if item.category_id not in categoryObj:
+#                     categoryObj[item.category_id] = 1
+#                     total_category += 1
+#                 else:
+#                     categoryObj[item.category_id] += 1
+#                     total_category += 1
 
-
-# @shop_api.route("/shop/department/<int:department_id>")
-# def items_for_department(department_id):
-#     search_term = request.args.get('search')
-#     per_page = request.args.get('per_page', 6, type=int)
-#     page = request.args.get('page', 1, type=int)
-#     departments = db.session.query(ItemDepartment).all()
-#     order = request.args.get('order', 'desc')
-#     date_sorted = getattr(Item.date_posted, order)()
-#     department = ItemDepartment.query.get_or_404(department_id)
-#     if search_term:
-#         search_term = '%{0}%'.format(search_term)
-#         posts = Item.query.filter(Item.name.ilike(search_term)).filter_by(department_id=department_id).order_by(
-#             date_sorted).paginate(page=page, per_page=per_page)
-#     else:
-#         posts = Item.query.filter_by(department_id=department_id).order_by(
-#             date_sorted).paginate(page=page, per_page=per_page)
-#     return render_template('shop_department.html', title='Shop', posts=posts, departments=departments, department=department)
-
-
-@shop_api.context_processor
-def get_totals_depts():
-    items = db.session.query(Item).filter(Item.school==session['school']).all()
-    depObj = {}
-    classObj = {}
-    categoryObj = {}
-    total_category = 0
-    if items:
-        for item in items:
-            if item.category_id == None:
-                if item.department_id not in depObj:
-                    depObj[item.department_id] = 1
-                else:
-                    depObj[item.department_id] += 1
-                if item.class_id not in classObj:
-                    classObj[item.class_id] = 1
-                else:
-                    classObj[item.class_id] += 1
-            else:
-                if item.category_id not in categoryObj:
-                    categoryObj[item.category_id] = 1
-                    total_category += 1
-                else:
-                    categoryObj[item.category_id] += 1
-                    total_category += 1
-
-    return {'depObj': depObj, 'classObj': classObj, 'items': items, 'categoryObj': categoryObj, 'totalCategory': total_category}
+#     return {'depObj': depObj, 'classObj': classObj, 'items': items, 'categoryObj': categoryObj, 'totalCategory': total_category}

@@ -123,8 +123,8 @@ class Statistics(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     total_registrations = db.Column(db.Integer, nullable=True, default=0)
     total_listings = db.Column(db.Integer, nullable=True, default=0)
-
-
+    current_listings = db.Column(db.Integer, nullable=True, default=0)
+    non_textbooks = db.Column(db.Integer, nullable=True, default=0)
 
 
 # class PastItem(db.Model):

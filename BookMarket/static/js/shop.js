@@ -549,7 +549,10 @@ const onSavedDelete = (index, name, id, url) => {
         type: "post",
         success: function () {
             let bagIcon = document.getElementsByClassName("fa-stack")[0];
-            bagIcon.setAttribute("data-count", parseInt(bagIcon.getAttribute("data-count")) - 1)
+            bagIcon.setAttribute(
+                "data-count",
+                parseInt(bagIcon.getAttribute("data-count")) - 1
+            );
         },
     });
 
@@ -560,14 +563,29 @@ const onSavedUndo = (index, id) => {
     $.post(`/add-to-bag?item=${id}`, null, (data, status) => {
         if (data.added) {
             let bagIcon = document.getElementsByClassName("fa-stack")[0];
-            bagIcon.setAttribute("data-count", parseInt(bagIcon.getAttribute("data-count")) + 1)
+            bagIcon.setAttribute(
+                "data-count",
+                parseInt(bagIcon.getAttribute("data-count")) + 1
+            );
         }
     });
     document.getElementById(`row-${index}`).innerHTML = deletedItems[index];
-    const confirmAcc = document.getElementsByClassName('confirm-acc')[index - 1];
-    if (confirmAcc) confirmAcc.addEventListener('click', linkClicked.bind(null, null, "/account"));
-    const savedMessage = document.getElementsByClassName('saved-message')[index - 1];
-    if (savedMessage) savedMessage.addEventListener('click', messageClicked.bind(null, savedMessage.id));
+    const confirmAcc = document.getElementsByClassName("confirm-acc")[
+        index - 1
+    ];
+    if (confirmAcc)
+        confirmAcc.addEventListener(
+            "click",
+            linkClicked.bind(null, null, "/account")
+        );
+    const savedMessage = document.getElementsByClassName("saved-message")[
+        index - 1
+    ];
+    if (savedMessage)
+        savedMessage.addEventListener(
+            "click",
+            messageClicked.bind(null, savedMessage.id)
+        );
 };
 
 const initializeSingleProductPage = () => {
@@ -685,7 +703,7 @@ const highlightNavLink = () => {
         document.title = "Help" + ending;
     } else if (path === "home" || path === "") {
         active = document.getElementById("home");
-        document.title = "Unibooks | The Ultimate University Marketplace"
+        document.title = "Unibooks | The Ultimate University Marketplace";
     } else if (path === "legal") {
         active = document.getElementById("home");
         document.title = "Terms of Service" + ending;
@@ -776,4 +794,33 @@ const setSchoolName = (id) => {
     normal.innerHTML = name;
     mobile.innerHTML = name;
     footer.innerHTML = name + " - ";
+};
+
+var loadedDepartment = {};
+
+const loadCourses = (department) => {
+    if (!(department in loadedDepartment)) {
+        $(`#nav${department}`)
+            .append(`<div class="d-flex justify-content-center">
+    <div class="spinner-border text-secondary" role="status"><span class="sr-only">Loading...</span></div></div>`);
+        fetch("/class/" + department)
+            .then(function (response) {
+                response.json().then(function (data) {
+                    for (let item_class of data.classes) {
+                        $(`#nav${department}`)
+                            .append(`<li class="main-nav-list child"><a href="javascript:filterByClass(${
+                            item_class.id
+                        })"> \
+                ${item_class.class_name}<span class="number" \
+                id="class_total${item_class.id}">${
+                            item_class.count ? item_class.count : ""
+                        }</span></a></li>`);
+                    }
+                });
+            })
+            .then((res) => {
+                $(`.spinner-border.text-secondary`).remove();
+            });
+        loadedDepartment[department] = true;
+    }
 };

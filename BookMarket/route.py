@@ -22,6 +22,7 @@ from .background import query_for_reminder
 app.register_blueprint(userAuth)
 app.register_blueprint(shop_api)
 
+
 @app.route('/sitemap.xml', methods=['GET'])
 def sitemap():
     try:
@@ -47,6 +48,7 @@ def sitemap():
         return response
     except Exception as e:
         return(str(e))
+
 
 @app.before_request
 def before_request():
@@ -164,36 +166,59 @@ def new_item():
     if request.method == 'POST':
         # images = form.images.data  # without plugin
         images = request.files.getlist('files[]')
-
+        department_id = None
+        course_id = None
+        category_id = None
         if not request.form.get('category_id'):
+            department_id = request.form.get('department_id')
+            course_id = request.form.get('class_id')
             post = Item(name=request.form.get('name'), description=request.form.get('description'), user_id=current_user.id,
-                        price=request.form.get('price'), class_id=request.form.get('class_id'), department_id=request.form.get('department_id'),
+                        price=request.form.get('price'), class_id=course_id, department_id=department_id,
                         isbn=request.form.get('isbn'), author=request.form.get('author'), school=current_user.school)
         else:
+            category_id = request.form.get('category_id')
             post = Item(name=request.form.get('name'), description=request.form.get('description'), user_id=current_user.id,
-                        price=request.form.get('price'), category_id=request.form.get('category_id'),
+                        price=request.form.get('price'), category_id=category_id,
                         isbn=request.form.get('isbn'), author=request.form.get('author'), school=current_user.school)
+
+        @copy_current_request_context
+        def add_counts(department_id, course_id, category_id):
+            if not category_id:
+                course = ItemClass.query.filter_by(id=course_id).first()
+                course.count += 1
+                department = ItemDepartment.query.filter_by(
+                    id=department_id).first()
+                department.count += 1
+            else:
+                category = ItemCategory.query.filter_by(id=category_id).first()
+                category.count += 1
+            db.session.commit()
+        add_count_async = threading.Thread(name="add counts", target=add_counts, args=(
+            department_id, course_id, category_id,))
+        add_count_async.start()
         db.session.add(post)
         db.session.commit()
         db.session.refresh(post)
         newId = post.id
         item = Item.query.filter_by(id=newId).first()
         if images:
-            thumbnail = save_images_to_db_and_s3(images, newId)
+            try:
+                thumbnail = save_images_to_db_and_s3(images, newId)
+            except ValueError:
+                return ('', 400)
             if thumbnail:
                 item.thumbnail = thumbnail
         current_user.listings = current_user.listings + 1
         current_user.total_listings += 1
         stats = Statistics.query.first()
         if stats is None:
-            new_stats = Statistics(total_listings=1)
+            new_stats = Statistics(total_listings=1, current_listings=1, non_textbooks=1)
             db.session.add(new_stats)
         else:
             stats.total_listings += 1
+            stats.current_listings += 1
+            stats.non_textbooks += 1
         db.session.commit()
-        # flash('Your post has been created!', 'success')
-        # return redirect(url_for('home'))
-        # result = {'url': url_for('shop_api.item', item_id=post.id)}
         return jsonify({'html': (item_html(post.id, item, 'notfromnewitem')), 'url': url_for('shop_api.item', item_id=post.id)})
     if current_user.is_authenticated is False:
         if standalone:
@@ -215,20 +240,19 @@ def new_item():
             flash("There is a max of 10 listings at a time! Please wait or delete listings before selling.", 'error')
             return redirect(url_for('listings', standalone=standalone))
     form = ItemForm()
-    # form.item_class.choices = class_list
     departments = ItemDepartment.query.filter_by(
         school=session['school']).order_by(ItemDepartment.abbreviation).all()
     categories = ItemCategory.query.filter_by(school=session['school']).all()
     isBook = True  # default display is book item
     print(session['school'])
-    # department_list = [(i.id, i.department_name) for i in departments]
     return render_template('create_post.html', title='Sell', form=form, legend='New', item_id=0, departments=departments,
                            standalone=standalone, categories=categories, isBook=isBook)
 
 
 @app.route('/class/<department>')
 def item_class(department):
-    classes = ItemClass.query.filter_by(department_id=department).all()
+    classes = ItemClass.query.filter_by(department_id=department).order_by(
+        ItemClass.id).all()
     classArray = []
     for item_class in classes:
         classObj = {}
@@ -236,6 +260,7 @@ def item_class(department):
         classObj['department_id'] = item_class.department_id
         classObj['class_name'] = item_class.abbreviation
         classObj['class_full_name'] = item_class.class_name
+        classObj['count'] = item_class.count
         classArray.append(classObj)
     return jsonify({'classes': classArray})
 
@@ -261,20 +286,15 @@ def add_to_bag():
             db.session.add(new)
             db.session.commit()
             added = True
-        # user_saved_items = SaveForLater.query.filter_by(user_id=user).count()
     else:
-        # user_saved_items = 1
-        print(session.get('saved'))
         if session.get('saved') is None:
             session["saved"] = []
-        print(session["saved"])
         saved_items = session["saved"]
         if item not in saved_items:
             saved_items.append(item)
             session["saved"] = saved_items
             session.modified = True
             added = True
-    # return jsonify({'num_saved': user_saved_items})
     return jsonify({'added': added})
 
 
@@ -284,7 +304,6 @@ def saved_for_later():
     print(request.form.get('email'))
     if request.method == 'POST' and request.form.get('email'):
         item_id = request.args.get('item')
-        print("ID", item_id)
         _item = Item.query.get_or_404(item_id)
         if current_user.last_buy_message_sent is None:
             current_user.last_buy_message_sent = datetime.utcnow()
@@ -292,7 +311,6 @@ def saved_for_later():
         else:
             time_difference = datetime.utcnow() - current_user.last_buy_message_sent
             minutes = divmod(time_difference.total_seconds(), 60)[0]
-            print("TIME", minutes)
             if minutes >= 60.0:
                 current_user.last_buy_message_sent = datetime.utcnow()
                 current_user.num_buy_message_sent = 1
@@ -354,11 +372,31 @@ def delete_saved():
 @app.route('/post/delete', methods=['POST'])
 @login_required
 def delete_item():
+    print("TEST")
     item = request.args.get('item_id')
     standalone = request.form['standalone']
+    deleting_item = Item.query.get_or_404(item)
+    @copy_current_request_context
+    def decrement_counts(department_id, course_id, category_id):
+        stats = Statistics.query.first()
+        stats.current_listings -= 1
+        stats.non_textbooks -= 1
+        if not category_id:
+            course = ItemClass.query.filter_by(id=course_id).first()
+            course.count -= 1
+            department = ItemDepartment.query.filter_by(
+                id=department_id).first()
+            department.count -= 1
+        else:
+            category = ItemCategory.query.filter_by(id=category_id).first()
+            category.count -= 1
+        db.session.commit()
+    decrement_count_async = threading.Thread(name="decrement counts",
+                                             target=decrement_counts,
+                                             args=(deleting_item.department_id, deleting_item.class_id, deleting_item.category_id,))
+    decrement_count_async.start()
     # standalone = "standlone"
     print(standalone)
-    deleting_item = Item.query.get_or_404(item)
     delete_images_from_s3_and_db(item)
     item_name = deleting_item.name
     current_user.listings = current_user.listings - 1
