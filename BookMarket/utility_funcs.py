@@ -8,7 +8,6 @@ from . import db, S3_BUCKET, mail
 # Utility functions
 def save_images_to_db_and_s3(form_images, item_id):
     thumbnail = None
-    print(form_images)
     for index, images in enumerate(form_images):
         if images:
             # images.seek(0, os.SEEK_END)
@@ -22,9 +21,7 @@ def save_images_to_db_and_s3(form_images, item_id):
                 thumbnail = picture_fn
             # picture_path = os.path.join(
             #     app.root_path, 'static/item_pics', picture_fn)
-            print(images)
             image = Image.open(images)
-            print("PASS")
             image_format = image.format
             if image.height > 600 or image.width > 600:
                 output_size = (600, 600)

@@ -136,6 +136,9 @@ def item_html(item_id, _item, standalone=None):
     message_form = MessageForm()
     if request.method == 'POST' and standalone != 'notfromnewitem':
         standalone = "standalone"
+        old_course = _item.class_id
+        old_department = _item.department_id
+        old_category = _item.category_id
         remains = request.form.get('remaining_files')
         images = request.files.getlist("files[]")
         delete_non_remaining_images_from_s3_and_db(item_id, remains)
@@ -155,6 +158,21 @@ def item_html(item_id, _item, standalone=None):
         _item.class_id = request.form.get('class_id')
         _item.category_id = request.form.get('category_id')
         _item.department_id = request.form.get('department_id')
+        if not _item.category_id:
+            course = ItemClass.query.filter_by(id=_item.class_id).first()
+            course.count += 1
+            department = ItemDepartment.query.filter_by(
+                id=_item.department_id).first()
+            department.count += 1
+            prev_course = ItemClass.query.filter_by(id=old_course).first()
+            prev_course.count -= 1
+            prev_department = ItemDepartment.query.filter_by(id=old_department).first()
+            prev_department.count -= 1
+        else:
+            category = ItemCategory.query.filter_by(id=_item.category_id).first()
+            category.count += 1
+            prev_category = ItemCategory.query.filter_by(id=old_category).first()
+            prev_category.count -= 1
         db.session.commit()
     images = ItemImage.query.filter_by(item_id=item_id).all()
     item_class = ItemClass.query.get(_item.class_id)

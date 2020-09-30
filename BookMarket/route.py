@@ -276,7 +276,7 @@ def user_posts(username):
 
 @app.route('/add-to-bag', methods=['POST'])
 def add_to_bag():
-    item = request.args.get('item')
+    item = request.form.get('item_id')
     added = False
     if current_user.is_authenticated is True:
         exist = SaveForLater.query.filter_by(
@@ -546,8 +546,9 @@ def leave_a_message():
                            message_title="Contact Us", optional="(optional)")
 
 
-@app.route('/report/<int:item_id>')
-def report_item(item_id):
+@app.route('/report', methods=['POST'])
+def report_item():
+    item_id = request.form.get('item_id')
     item = Inappropriate.query.filter_by(id=item_id).first()
     current_user.num_reports += 1
     if item is None:

@@ -233,13 +233,21 @@
     function addToBag(item_id, user_id) {
         document.querySelector('span.add-text').innerHTML = 'Added!';
 
-        var url = "{{url_for('add_to_bag', item='tempItem', user='tempUser')}}"
-            .replace('tempItem', item_id).replace('tempUser', user_id).replace('&amp;', '&')
-
-        $.post(url, null, (data, status) => {
-            if (data.added) {
-                let bagIcon = document.getElementsByClassName("fa-stack")[0];
-                bagIcon.setAttribute("data-count", parseInt(bagIcon.getAttribute("data-count")) + 1)
+        $.ajax({
+            type: 'POST',
+            url: "{{url_for('add_to_bag')}}",
+            data: { 'item_id': item_id},
+            success: function (data) {
+                console.log(data)
+                if (data.added) {
+                    let bagIcon = document.getElementsByClassName("fa-stack")[0];
+                    bagIcon.setAttribute("data-count", parseInt(bagIcon.getAttribute("data-count")) + 1)
+                }
+            },
+            beforeSend: function (xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                }
             }
         })
 

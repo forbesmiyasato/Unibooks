@@ -98,6 +98,9 @@
       style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
   <!-- Start Header Area -->
+  <script>
+    var csrf_token = "{{ csrf_token() }}";
+  </script>
   <header id="sticky" class="header_area sticky-header">
     <div class="main_menu">
       <nav class="navbar navbar-expand-lg navbar-light main_box">
@@ -368,8 +371,6 @@
         style="margin: 0 8px 0 8px">Yes</button></div>`, message);
     }
 
-    var csrf_token = "{{ csrf_token() }}";
-
     const checkSchool = () => {
       var school = localStorage.getItem('school');
 
@@ -584,15 +585,6 @@
         $('.navbar-collapse').collapse("toggle")
       }
     }
-
-    $.ajaxSetup({
-      global: true,
-      beforeSend: function (xhr, settings) {
-        if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
-          xhr.setRequestHeader("X-CSRFToken", csrf_token);
-        }
-      }
-    });
   </script>
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
