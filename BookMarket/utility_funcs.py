@@ -41,7 +41,7 @@ def save_images_to_db_and_s3(form_images, item_id):
             my_bucket.Object(picture_fn).put(Body=images)
             image_name = images.filename[:30]
             # images.seek(0, os.SEEK_END)
-            # size = images.tell()
+            size = images.tell()
             # print(size)
             newImage = ItemImage(item_id=item_id, image_file=picture_fn, image_name=image_name, image_size=size)
             db.session.add(newImage)
