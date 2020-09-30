@@ -47,7 +47,6 @@ def getPosts():
     num_results = 0
     department_id = request.args.get('department')
     category = request.args.get('nonbook')
-    print(category)
     department = None
     class_id = request.args.get('class')
     course = None
@@ -61,19 +60,15 @@ def getPosts():
     match_category = None
     low = None
     high = None
-    print(filter_term)
     if filter_term and re.match("(^0\\+25$|^25\\+50$|^50\\+100$|^100\\+150$|^150\\+99999$)", filter_term):
-        print("matched")
         split = filter_term.split('+')
         low = split[0]
         high = split[1]
 
     original_sort_term = sort_term
-    print(session.get('school') is None)
     if session.get('school') is None:
         return jsonify(error='no school in session')
     posts = Item.query.filter_by(school=session['school'])
-    print(posts)
     if sort_term == "lowest":
         sort_term = "asc"
         sort_by = getattr(Item.price, sort_term)()
@@ -96,7 +91,6 @@ def getPosts():
         courseSearch = insert_space_before_first_number(search_term)
         matchCourse = findMatchingCourse(courseSearch)
         match_category = findMatchingCategory(search_term)
-        print (matchDepartment)
         num_results = posts.count()
     elif class_id:
         posts = posts.filter_by(class_id=class_id).order_by(

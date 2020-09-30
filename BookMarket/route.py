@@ -181,32 +181,31 @@ def new_item():
                         price=request.form.get('price'), category_id=category_id,
                         isbn=request.form.get('isbn'), author=request.form.get('author'), school=current_user.school)
 
-        @copy_current_request_context
-        def add_counts(department_id, course_id, category_id):
-            nonbook = 0
-            stats = Statistics.query.first()
-            if not category_id:
-                course = ItemClass.query.filter_by(id=course_id).first()
-                course.count += 1
-                department = ItemDepartment.query.filter_by(
-                    id=department_id).first()
-                department.count += 1
-            else:
-                nonbook = 1
-                category = ItemCategory.query.filter_by(id=category_id).first()
-                category.count += 1
-            if stats is None:
-                new_stats = Statistics(
-                    total_listings=1, current_listings=1, non_textbooks=nonbook)
-                db.session.add(new_stats)
-            else:
-                stats.total_listings += 1
-                stats.current_listings += 1
-                stats.non_textbooks += nonbook
-            db.session.commit()
-        add_count_async = threading.Thread(name="add counts", target=add_counts, args=(
-            department_id, course_id, category_id,))
-        add_count_async.start()
+        nonbook = 0
+        stats = Statistics.query.first()
+        if not category_id:
+            course = ItemClass.query.filter_by(id=course_id).first()
+            course.count += 1
+            department = ItemDepartment.query.filter_by(
+                id=department_id).first()
+            department.count += 1
+        else:
+            nonbook = 1
+            category = ItemCategory.query.filter_by(id=category_id).first()
+            category.count += 1
+        if stats is None:
+            new_stats = Statistics(
+                total_listings=1, current_listings=1, non_textbooks=nonbook)
+            db.session.add(new_stats)
+        else:
+            stats.total_listings += 1
+            stats.current_listings += 1
+            stats.non_textbooks += nonbook
+        # add_count_async = threading.Thread(name="add counts", target=add_counts, args=(
+        #     department_id, course_id, category_id,))
+        # add_count_async.start()
+        current_user.listings = current_user.listings + 1
+        current_user.total_listings += 1
         db.session.add(post)
         db.session.commit()
         db.session.refresh(post)
@@ -214,14 +213,11 @@ def new_item():
         item = Item.query.filter_by(id=newId).first()
         if images:
             try:
-                print(images)
                 thumbnail = save_images_to_db_and_s3(images, newId)
             except ValueError:
                 return ('', 400)
             if thumbnail:
                 item.thumbnail = thumbnail
-        current_user.listings = current_user.listings + 1
-        current_user.total_listings += 1
         db.session.commit()
         return jsonify({'html': (item_html(post.id, item, 'notfromnewitem')), 'url': url_for('shop_api.item', item_id=post.id)})
     if current_user.is_authenticated is False:
