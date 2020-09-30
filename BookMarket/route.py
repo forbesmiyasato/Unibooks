@@ -196,13 +196,17 @@ def new_item():
                 category = ItemCategory.query.filter_by(id=category_id).first()
                 category.count += 1
             if stats is None:
-                new_stats = Statistics(total_listings=1, current_listings=1, non_textbooks=nonbook)
+                new_stats = Statistics(
+                    total_listings=1, current_listings=1, non_textbooks=nonbook)
                 db.session.add(new_stats)
             else:
                 stats.total_listings += 1
                 stats.current_listings += 1
                 stats.non_textbooks += nonbook
             db.session.commit()
+        add_count_async = threading.Thread(name="add counts", target=add_counts, args=(
+            department_id, course_id, category_id,))
+        add_count_async.start()
         db.session.add(post)
         db.session.commit()
         db.session.refresh(post)
@@ -216,9 +220,6 @@ def new_item():
                 return ('', 400)
             if thumbnail:
                 item.thumbnail = thumbnail
-        add_count_async = threading.Thread(name="add counts", target=add_counts, args=(
-            department_id, course_id, category_id,))
-        add_count_async.start()
         current_user.listings = current_user.listings + 1
         current_user.total_listings += 1
         db.session.commit()
@@ -255,7 +256,7 @@ def new_item():
 @app.route('/class/<department>')
 def item_class(department):
     classes = ItemClass.query.filter_by(department_id=department).order_by(
-        ItemClass.id).all()
+        ItemClass.abbreviation).all()
     classArray = []
     for item_class in classes:
         classObj = {}

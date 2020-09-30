@@ -8,7 +8,7 @@ from . import db, S3_BUCKET, mail
 # Utility functions
 def save_images_to_db_and_s3(form_images, item_id):
     thumbnail = None
-    print(form_images)
+    # print(form_images)
     for index, images in enumerate(form_images):
         if images:
             # images.seek(0, os.SEEK_END)
@@ -22,29 +22,30 @@ def save_images_to_db_and_s3(form_images, item_id):
                 thumbnail = picture_fn
             # picture_path = os.path.join(
             #     app.root_path, 'static/item_pics', picture_fn)
-            print(images)
-            image = Image.open(images)
-            print("PASS")
-            image_format = image.format
-            if image.height > 600 or image.width > 600:
-                output_size = (600, 600)
-                # image = image.resize(output_size, Image.ANTIALIAS)
-                image.thumbnail(output_size, Image.ANTIALIAS)
-            in_mem_file = io.BytesIO()
-            image = ImageOps.exif_transpose(image)
-            image.save(in_mem_file, optimize=True, format=image_format)
+            # print(images)
+            # image = Image.open(images)
+            # print("PASS")
+            # image_format = image.format
+            # if image.height > 600 or image.width > 600:
+            #     output_size = (600, 600)
+            #     # image = image.resize(output_size, Image.ANTIALIAS)
+            #     image.thumbnail(output_size, Image.ANTIALIAS)
+            # in_mem_file = io.BytesIO()
+            # image = ImageOps.exif_transpose(image)
+            # image.save(in_mem_file, optimize=True, format=image_format)
             # # output_resolution = (1000, 1000)
             # resizedImage = Image.open(images)
             # # resizedImage.thumbnail(output_resolution)
             s3_resource = boto3.resource('s3')
             my_bucket = s3_resource.Bucket(S3_BUCKET)
-            my_bucket.Object(picture_fn).put(Body=in_mem_file.getvalue())
+            my_bucket.Object(picture_fn).put(Body=images)
             image_name = images.filename[:30]
             # images.seek(0, os.SEEK_END)
-            size = in_mem_file.tell()
+            # size = images.tell()
+            # print(size)
             newImage = ItemImage(item_id=item_id, image_file=picture_fn, image_name=image_name, image_size=size)
             db.session.add(newImage)
-            image.close()
+            # image.close()
     db.session.commit()
     return thumbnail
     # #remove use previous profile pic in file system so it doesn't get overloaded

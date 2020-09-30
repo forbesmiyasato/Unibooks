@@ -436,7 +436,17 @@
     // form submit
     $form.on('submit', function (e) {
         e.preventDefault();
-
+        console.log("HIT")
+        $("body").toggleClass("loading");
+        if ($('#editModal').length) {
+            $('#editModal').modal('hide')
+            $("#loader-text").html('Updating Post...')
+        } else if ($('#editModal{{item_id}}').length) {
+            $('#editModal{{item_id}}').modal('hide')
+            $("#loader-text").html('Updating Post...')
+        } else {
+            $("#loader-text").html('Optimizing Images...')
+        }
         post = true;
         var formData = new FormData(),
             _fileuploaderFields = [];
@@ -470,9 +480,8 @@
             for (var i = 0; i < files.length; i++) {
                 const file = files[i].file ? files[i].file : files[i]
                 const res = await imageConversion.compressAccurately(file, {
-                    size: 100,
+                    size: 50,
                     accuracy: 0.9,
-                    width: 600,
                     height: 600,
                 });
                 let newFile = await new File([res], file.name)
@@ -522,16 +531,18 @@
                     $(window).scrollTop(0);
                 },
                 beforeSend: function () {
-                    $("body").toggleClass("loading");
-                    if ($('#editModal').length) {
-                        $('#editModal').modal('hide')
-                        $("#loader-text").html('Updating Post...')
-                    } else if ($('#editModal{{item_id}}').length) {
-                        $('#editModal{{item_id}}').modal('hide')
-                        $("#loader-text").html('Updating Post...')
-                    } else {
+                    if ($('#editModal').length == 0 && $('#editModal{{item_id}}').length == 0) {
                         $("#loader-text").html('Creating Post...')
                     }
+                    // if ($('#editModal').length) {
+                    //     $('#editModal').modal('hide')
+                    //     $("#loader-text").html('Updating Post...')
+                    // } else if ($('#editModal{{item_id}}').length) {
+                    //     $('#editModal{{item_id}}').modal('hide')
+                    //     $("#loader-text").html('Updating Post...')
+                    // } else {
+                    //     $("#loader-text").html('Creating Post...')
+                    // }
                 },
                 complete: function () {
                     $("body").toggleClass("loading");
@@ -541,11 +552,6 @@
                     $("#loader-text").html('Loading...')
                 }
             });
-
-
-            // $('form').submit(function () {
-            //     $(this).find(':submit').attr('disabled', 'disabled');
-            // });
         });
     });
 });
