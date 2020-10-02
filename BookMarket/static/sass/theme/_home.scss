@@ -1612,15 +1612,27 @@ label {
         cursor: pointer;
     }
 }
-// .get-started-bg {
-// 	width: 80%;
-// 	height: 500px;
-// 	background-size: cover;
-//     background-repeat: no-repeat;
-//     margin: 0 auto;
-// 	background: linear-gradient(
-// 		rgba(112, 169, 218, 0.45),
-// 		rgba(112, 169, 218, 0.35)
-// 	),
-// 	url("../img/get_started.jpg");
-// }
+
+.banner-blob-left {
+    bottom: 0;
+    left: -27%;
+    position: absolute;
+    width: 60vw;
+    opacity: 0.2;
+
+    @media (max-width: 1396px) {
+        display: none;
+    }
+}
+
+.banner-blob-right {
+    top: -10%;
+    right: -10%;
+    position: absolute;
+    width: 30vw;
+    opacity: 0.2;
+
+    @media (max-width: 1396px) {
+        display: none;
+    }
+}

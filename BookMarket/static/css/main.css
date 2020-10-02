@@ -2664,6 +2664,26 @@ label {
     font-size: 25px;
     cursor: pointer; }
 
+.banner-blob-left {
+  bottom: 0;
+  left: -27%;
+  position: absolute;
+  width: 60vw;
+  opacity: 0.2; }
+  @media (max-width: 1396px) {
+    .banner-blob-left {
+      display: none; } }
+
+.banner-blob-right {
+  top: -10%;
+  right: -10%;
+  position: absolute;
+  width: 30vw;
+  opacity: 0.2; }
+  @media (max-width: 1396px) {
+    .banner-blob-right {
+      display: none; } }
+
 .load-product {
   display: none; }
 
