@@ -602,6 +602,14 @@ a.footer-item {
     margin: 0 auto;
 }
 
+.single-product.loading .overlay {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.9) center no-repeat;
+}
+
 body.loading {
     overflow: hidden;
 }
