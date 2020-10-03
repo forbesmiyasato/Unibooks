@@ -550,6 +550,11 @@ const onSavedDelete = (index, name, id, url) => {
     $.ajax({
         url: url,
         type: "post",
+        beforeSend: function (xhr, settings) {
+            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            }
+        },
         success: function () {
             let bagIcon = document.getElementsByClassName("fa-stack")[0];
             bagIcon.setAttribute(
@@ -562,16 +567,48 @@ const onSavedDelete = (index, name, id, url) => {
     saved_html = null;
 };
 
-const onSavedUndo = (index, id) => {
-    $.post(`/add-to-bag?item=${id}`, null, (data, status) => {
-        if (data.added) {
-            let bagIcon = document.getElementsByClassName("fa-stack")[0];
-            bagIcon.setAttribute(
-                "data-count",
-                parseInt(bagIcon.getAttribute("data-count")) + 1
-            );
-        }
+const messageClicked = (id) => {
+    let url = `/messagebuyerform`;
+    history.replaceState(null, '', `?item=${id}`);
+    $.ajax({
+        url: url,
+        type: "GET",
+        async: true,
+        success: function (response) {
+            $(`#message-modal`).html('<div class="content-section"> \
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> \
+        <span aria-hidden="true">&times;</span> \
+         </button>' + response + '</div>');
+        },
+        beforeSend: function () {
+            $(`#message-modal`).html("");
+            $(`.modal-content`).toggleClass("loading");
+        },
+        complete: function () {
+            $(`.modal-content`).toggleClass("loading");
+        },
     });
+};
+
+const onSavedUndo = (index, id) => {
+
+    $.ajax({
+        type: 'POST',
+        url: "/add-to-bag",
+        data: { 'item_id': id },
+        success: function (data) {
+            if (data.added) {
+                let bagIcon = document.getElementsByClassName("fa-stack")[0];
+                bagIcon.setAttribute("data-count", parseInt(bagIcon.getAttribute("data-count")) + 1)
+            }
+        },
+        beforeSend: function (xhr, settings) {
+            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            }
+        }
+    })
+
     document.getElementById(`row-${index}`).innerHTML = deletedItems[index];
     const confirmAcc = document.getElementsByClassName("confirm-acc")[
         index - 1

@@ -124,28 +124,6 @@
     $('#messageModal').on('hidden.bs.modal', function (e) {
         history.replaceState(null, '', window.location.pathname);
     })
-    const messageClicked = (id) => {
-        let url = `/messagebuyerform`;
-        history.replaceState(null, '', `?item=${id}`);
-        $.ajax({
-            url: url,
-            type: "GET",
-            async: true,
-            success: function (response) {
-                $(`#message-modal`).html('<div class="content-section"> \
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"> \
-            <span aria-hidden="true">&times;</span> \
-             </button>' + response + '</div>');
-            },
-            beforeSend: function () {
-                $(`#message-modal`).html("");
-                $(`.modal-content`).toggleClass("loading");
-            },
-            complete: function () {
-                $(`.modal-content`).toggleClass("loading");
-            },
-        });
-    };
 
     let messageButtons = document.getElementsByClassName('saved-message');
     for (var i = 0; i < messageButtons.length; i++) {

@@ -144,15 +144,12 @@
     function addToBag(ele, item_id) {
         let text = ele.children[1]
         text.innerHTML = 'Added!'
-        // var url = "{{url_for('add_to_bag', item='tempItem', user='tempUser')}}"
-        //     .replace('tempItem', item_id).replace('tempUser', user_id).replace('&amp;', '&')
 
         $.ajax({
             type: 'POST',
             url: "{{url_for('add_to_bag')}}",
             data: { 'item_id': item_id },
             success: function (data) {
-                console.log(data)
                 if (data.added) {
                     let bagIcon = document.getElementsByClassName("fa-stack")[0];
                     bagIcon.setAttribute("data-count", parseInt(bagIcon.getAttribute("data-count")) + 1)
@@ -164,13 +161,6 @@
                 }
             }
         })
-        // $.post(url, null, (data, status) => {
-        //     if (data.added) {
-        //         let bagIcon = document.getElementsByClassName("fa-stack")[0];
-        //         bagIcon.setAttribute("data-count", parseInt(bagIcon.getAttribute("data-count")) + 1)
-        //     }
-        // })
-
         saved_html = null;
     }
 

@@ -364,9 +364,9 @@ def delete_saved():
             saved_items.remove(item)
             session["saved"] = saved_items
             session.modified = True
-    flash(Markup(
-        f'<a href="/shop/{item}">{item_name}</a> has been removed from your bag'), 'success')
-    return redirect(url_for('saved_for_later'))
+    # flash(Markup(
+    #     f'<a href="/shop/{item}">{item_name}</a> has been removed from your bag'), 'success')
+    return jsonify({'saved': 'deleted'})
 
 
 @app.route('/post/delete', methods=['POST'])
