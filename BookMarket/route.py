@@ -182,7 +182,7 @@ def new_item():
                         isbn=request.form.get('isbn'), author=request.form.get('author'), school=current_user.school)
 
         nonbook = 0
-        stats = Statistics.query.first()
+        stats = Statistics.query.filter_by(school=session['school']).first()
         if not category_id:
             course = ItemClass.query.filter_by(id=course_id).first()
             course.count += 1
@@ -195,7 +195,7 @@ def new_item():
             category.count += 1
         if stats is None:
             new_stats = Statistics(
-                total_listings=1, current_listings=1, non_textbooks=nonbook)
+                total_listings=1, current_listings=1, non_textbooks=nonbook, school=session['school'])
             db.session.add(new_stats)
         else:
             stats.total_listings += 1
@@ -378,7 +378,7 @@ def delete_item():
     deleting_item = Item.query.get_or_404(item)
     @copy_current_request_context
     def decrement_counts(department_id, course_id, category_id):
-        stats = Statistics.query.first()
+        stats = Statistics.query.filter_by(school=session['school']).first()
         stats.current_listings -= 1
         if not category_id:
             course = ItemClass.query.filter_by(id=course_id).first()

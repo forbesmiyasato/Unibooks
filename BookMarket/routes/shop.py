@@ -26,7 +26,7 @@ def shop():
     departments = ItemDepartment.query.filter_by(school=school).order_by(
             ItemDepartment.abbreviation).all()
     categories = ItemCategory.query.filter_by(school=session['school']).all()
-    stats = Statistics.query.first()
+    stats = Statistics.query.filter_by(school=session['school']).first()
     current_listings = stats.current_listings
     total_category = stats.non_textbooks
     return render_template('shop.html', title='Shop', departments=departments, standalone=standalone,

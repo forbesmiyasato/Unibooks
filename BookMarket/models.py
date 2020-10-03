@@ -125,6 +125,7 @@ class Statistics(db.Model):
     total_listings = db.Column(db.Integer, nullable=True, default=0)
     current_listings = db.Column(db.Integer, nullable=True, default=0)
     non_textbooks = db.Column(db.Integer, nullable=True, default=0)
+    school = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
 
 
 # class PastItem(db.Model):
