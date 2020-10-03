@@ -174,6 +174,35 @@
         saved_html = null;
     }
 
+    const addReportOverlay = (parent, item_id) => {
+        const overlay = document.createElement("div");
+        overlay.classList.add('overlay');
+        parent.classList.add('loading')
+        parent.appendChild(overlay);
+        const unreport = document.createElement("a");
+        unreport.classList.add('unreport-text');
+        unreport.textContent = "Unreport Post";
+        overlay.appendChild(unreport);
+        unreport.onclick = function () {
+            var reported = JSON.parse(localStorage.getItem('reportedPosts'));
+            const index = reported.indexOf(parseInt(item_id));
+            overlay.remove();
+            if (index > -1) {
+                reported.splice(index, 1);
+                localStorage.setItem('reportedPosts', JSON.stringify(reported));
+                $.ajax({
+                    type: 'POST',
+                    url: '/unreport',
+                    data: { 'item_id': item_id },
+                    beforeSend: function (xhr, settings) {
+                        if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                            xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                        }
+                    }
+                })
+            }
+        }
+    }
 
     function report(ele, item_id) {
         $('#report-modal').modal('show')
@@ -196,10 +225,7 @@
 
                     const flaggedProduct = ele.parentNode.parentNode.parentNode;
 
-                    const overlay = document.createElement("div");
-                    overlay.classList.add('overlay');
-                    flaggedProduct.classList.add('loading')
-                    flaggedProduct.appendChild(overlay);
+                    addReportOverlay(flaggedProduct, item_id);
                 }
             })
         }
@@ -208,16 +234,11 @@
     $(document).ready(function () {
         const items = document.querySelectorAll('.single-product');
         var reported = JSON.parse(localStorage.getItem('reportedPosts')) || [];
-        console.log(items);
-        console.log(reported)
 
         if (reported.length > 0) {
             for (let i = 0; i < items.length; i++) {
                 if (reported.includes(parseInt(items[i].id))) {
-                    const overlay = document.createElement("div");
-                    overlay.classList.add('overlay');
-                    items[i].classList.add('loading')
-                    items[i].appendChild(overlay);
+                    addReportOverlay(items[i], items[i].id);
                 }
             }
         }

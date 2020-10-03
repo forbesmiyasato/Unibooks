@@ -559,7 +559,17 @@ def report_item():
         item.count += 1
         db.session.commit()
 
-    return 'added'
+    return 'reported'
+
+@app.route('/unreport', methods=['POST'])
+def unreport_item():
+    item_id = request.form.get('item_id')
+    item = Inappropriate.query.filter_by(id=item_id).first()
+    if item is not None:
+        item.count -= 1
+        db.session.commit()
+
+    return 'unreported'
 
 
 @app.route('/privacy')
