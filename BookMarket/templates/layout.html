@@ -603,6 +603,14 @@
     crossorigin="anonymous"></script> -->
   <script src="{{ url_for('static', filename='js/jquery.sticky.js')}}"></script>
   <script src="{{ url_for('static', filename='js/main.js')}}"></script>
+
+  <script>
+    if (! $.fn.modal) {
+      console.log("failover")
+      document.write('<script src="{{ url_for('static', filename='js/vendor/bootstrap.js')}}"><//script>');
+      document.write('<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}">');
+    }
+  </script>
 </body>
 
 </html>
