@@ -28,7 +28,7 @@
         {% for post in posts.items %}
         <!-- single product -->
         <div class="col-lg-4 col-md-6">
-            <div class="single-product">
+            <div class="single-product" id="{{post.id}}">
                 <a onclick="onItemClick('{{url_for('shop_api.item', item_id=post.id)}}'); return false"
                     href="{{url_for('shop_api.item', item_id=post.id)}}">
                     {% if post.thumbnail == 'No_picture_available.png' %}
@@ -62,12 +62,11 @@
                             <p class="hover-text">Delete</p>
                         </a>
                         {% elif current_user.is_authenticated %}
-                        <a onclick="addToBag(this, {{post.id}})" href="javascript:;"
-                            class="social-info">
+                        <a onclick="addToBag(this, {{post.id}})" href="javascript:;" class="social-info">
                             <span class="ti-bag"></span>
                             <p class="hover-text">Add to bag</p>
                         </a>
-                        <a onclick="report({{post.id}})" href="javascript:;" class="social-info">
+                        <a onclick="report(this, {{post.id}})" href="javascript:;" class="social-info">
                             <span class="lnr lnr-alarm"></span>
                             <p class="hover-text">Report</p>
                         </a>
@@ -151,7 +150,7 @@
         $.ajax({
             type: 'POST',
             url: "{{url_for('add_to_bag')}}",
-            data: { 'item_id': item_id},
+            data: { 'item_id': item_id },
             success: function (data) {
                 console.log(data)
                 if (data.added) {
@@ -175,8 +174,37 @@
         saved_html = null;
     }
 
+    const addReportOverlay = (parent, item_id) => {
+        const overlay = document.createElement("div");
+        overlay.classList.add('overlay');
+        parent.classList.add('loading')
+        parent.appendChild(overlay);
+        const unreport = document.createElement("a");
+        unreport.classList.add('unreport-text');
+        unreport.textContent = "Unreport Post";
+        overlay.appendChild(unreport);
+        unreport.onclick = function () {
+            var reported = JSON.parse(localStorage.getItem('reportedPosts'));
+            const index = reported.indexOf(parseInt(item_id));
+            overlay.remove();
+            if (index > -1) {
+                reported.splice(index, 1);
+                localStorage.setItem('reportedPosts', JSON.stringify(reported));
+                $.ajax({
+                    type: 'POST',
+                    url: '/unreport',
+                    data: { 'item_id': item_id },
+                    beforeSend: function (xhr, settings) {
+                        if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                            xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                        }
+                    }
+                })
+            }
+        }
+    }
 
-    function report(item_id) {
+    function report(ele, item_id) {
         $('#report-modal').modal('show')
         document.getElementById('report-submit').onclick = () => {
             $.ajax({
@@ -190,9 +218,30 @@
                     toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
                     toastr.success("Thanks for reporting the inappropriate post!");
                     $('#report-modal').modal('hide')
+
+                    var reported = JSON.parse(localStorage.getItem('reportedPosts')) || [];
+                    reported.push(item_id);
+                    localStorage.setItem('reportedPosts', JSON.stringify(reported));
+
+                    const flaggedProduct = ele.parentNode.parentNode.parentNode;
+
+                    addReportOverlay(flaggedProduct, item_id);
                 }
             })
         }
     }
+
+    $(document).ready(function () {
+        const items = document.querySelectorAll('.single-product');
+        var reported = JSON.parse(localStorage.getItem('reportedPosts')) || [];
+
+        if (reported.length > 0) {
+            for (let i = 0; i < items.length; i++) {
+                if (reported.includes(parseInt(items[i].id))) {
+                    addReportOverlay(items[i], items[i].id);
+                }
+            }
+        }
+    })
 </script>
 {% endblock %}

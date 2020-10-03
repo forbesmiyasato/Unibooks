@@ -602,6 +602,24 @@ a.footer-item {
     margin: 0 auto;
 }
 
+.single-product.loading .overlay {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.9) center no-repeat;
+}
+
+.unreport-text {
+    color:#87CEEB;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.unreport-text:hover {
+    color: rgba(0, 191, 255);
+}
+
 body.loading {
     overflow: hidden;
 }
@@ -1051,6 +1069,8 @@ select {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    display: flex !important;
+    justify-content: space-between !important;
 }
 
 .side-department-name {

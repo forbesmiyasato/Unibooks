@@ -7,27 +7,26 @@
         <ul class="main-categories browse-collapse collapse show" id="main-categories" data-toggle="collapse"
             aria-expanded="false" aria-controls="">
             <li class="main-nav-list">
-                <a onclick="getAll(); return false;" href="{{url_for('shop_api.shop')}}">
-                    All<span class="number">{{all}}</span></a>
+                <a onclick="getAll(); return false;" href="{{url_for('shop_api.shop')}}">All<span
+                        class="number">{{all}}</span></a>
             </li>
             <!-- Other -->
             <li class="main-nav-list">
-                <a aria-expanded="false" data-toggle="collapse" href="#navOther" aria-controls="{{department_id}}"><span
-                        class="lnr lnr-arrow-right"></span>
-                    Other<span class="number" id="navOtherNumber">
-                        {% if totalCategory != 0 %}
+                <a aria-expanded="false" data-toggle="collapse" href="#navOther"
+                    aria-controls="{{department_id}}">Other<span class="number" id="navOtherNumber">
+                        {%- if totalCategory != 0 -%}
                         {{- totalCategory -}}
-                        {% endif %}
+                        {%- endif -%}
                     </span>
                 </a>
                 <ul class="collapse" id="navOther" data-toggle="collapse" aria-expanded="false" aria-controls="Other">
                     <li class="main-nav-list child">
                         <a onclick="filterByCategory('all', 'All Non-Textbooks'); return false;"
-                            href="{{url_for('shop_api.shop', nonbook='all')}}">All Others
-                            <span class="number" id="other_total">
-                                {% if totalCategory != 0 %}
+                            href="{{url_for('shop_api.shop', nonbook='all')}}">All Others<span class="number"
+                                id="other_total">
+                                {%- if totalCategory != 0 -%}
                                 {{- totalCategory -}}
-                                {% endif %}
+                                {%- endif -%}
                             </span>
                         </a>
                     </li>
@@ -46,16 +45,18 @@
             <li class="main-nav-list">
                 <a class="side-bar-text" aria-expanded="false" data-toggle="collapse" href="#nav{{department.id}}"
                     aria-controls="{{department_id}}" onclick="loadCourses({{department.id}})">
-                    <span class="side-department-name">{{- department.abbreviation}} -
-                        {{department.department_name}}</span><span class="number"
+                    <span class="side-department-name">
+                        {{- department.abbreviation}} - {{department.department_name -}}
+                    </span>
+                    <span class="number"
                         id="dep{{ department.id }}">{{ department.count if department.count != 0 }}</span>
                 </a>
                 <ul class="collapse" id="nav{{department.id}}" data-toggle="collapse" aria-expanded="false"
                     aria-controls="{{department_id}}">
                     <li class="main-nav-list child"><a class="side-bar-text"
-                            href="javascript:filterByDepartment({{department.id}})">All in
-                            {{department.abbreviation}}<span class="number"
-                                id="dep_total{{ department.id }}">{{ department.count if department.count != 0 }}</span></a>
+                            href="javascript:filterByDepartment({{department.id}})">All in {{department.abbreviation -}}
+                            <span class="number"
+                                id="dep_total{{ department.id }}">{{- department.count if department.count != 0 }}</span></a>
                     </li>
                 </ul>
             </li>

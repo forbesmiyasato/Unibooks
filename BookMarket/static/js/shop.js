@@ -786,7 +786,7 @@ const getSchoolName = (id) => {
             return "Portland Community College";
     }
 
-    return "Unknown";
+    return "School Not Set";
 };
 
 const setSchoolName = (id) => {
@@ -811,8 +811,7 @@ const loadCourses = (department) => {
                         $(`#nav${department}`)
                             .append(`<li class="main-nav-list child"><a href="javascript:filterByClass(${
                             item_class.id
-                        })"> \
-                ${item_class.class_name}<span class="number" \
+                        })">${item_class.class_name}<span class="number" \
                 id="class_total${item_class.id}">${
                             item_class.count ? item_class.count : ""
                         }</span></a></li>`);
