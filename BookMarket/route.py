@@ -301,7 +301,6 @@ def add_to_bag():
 @app.route('/saved', methods=['GET', 'POST'])
 def saved_for_later():
     standalone = request.args.get('standalone')
-    print(request.form.get('email'))
     if request.method == 'POST' and request.form.get('email'):
         item_id = request.args.get('item')
         _item = Item.query.get_or_404(item_id)
@@ -328,19 +327,24 @@ def saved_for_later():
         sender = threading.Thread(name="mail_sender", target=send_message, args=(
             current_app._get_current_object(), msg,))
         sender.start()
-        return jsonify({'origin': 'single'})
-    items_ids = None
+        savedRelationship = SaveForLater.query.filter_by(user_id=current_user.id, item_id=item_id).first()
+        savedRelationship.messaged_date = datetime.utcnow()
+        db.session.commit()
+        return jsonify({'origin': 'single', "messaged_date": datetime.utcnow()})
+    saved_items = None
     if current_user.is_authenticated:
-        items_ids = db.session.query(SaveForLater.item_id).filter_by(
+        saved_items = db.session.query(SaveForLater.item_id, SaveForLater.messaged_date).filter_by(
             user_id=current_user.id).order_by(SaveForLater.id.desc()).all()
     else:
         if "saved" in session:
-            items_ids = session["saved"]
+            saved_items = session["saved"]
     items = []
-    if items_ids is not None:
-        for id in items_ids:
-            item = Item.query.get(id)
+    if saved_items is not None:
+        for saved_item in saved_items:
+            item = Item.query.get(saved_item.item_id)
             if item:
+                if saved_item.messaged_date:
+                    item.messaged_date = saved_item.messaged_date.strftime("%m/%d/%Y, %H:%M:%S")
                 items.append(item)
     return render_template('saved_for_later.html', title="Shopping Cart", posts=items, standalone=standalone)
 

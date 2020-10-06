@@ -102,6 +102,7 @@ class SaveForLater(db.Model):
     item_id = db.Column(db.Integer, db.ForeignKey(
         'item.id', ondelete='CASCADE'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="CASCADE"), nullable=False)
+    messaged_date = db.Column(db.DateTime, nullable=True)
 
 
 class School(db.Model):

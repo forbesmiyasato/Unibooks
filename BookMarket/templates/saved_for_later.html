@@ -86,6 +86,9 @@
                                             <a class="hover-line log-in single-edit">Log in</a> to contact the seller
                                         </p>
                                         {% endif %}
+                                        {% if post.messaged_date %}
+                                        <p>Messaged seller on: {{ post.messaged_date }}</p>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
