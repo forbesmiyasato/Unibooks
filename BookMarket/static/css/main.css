@@ -6633,6 +6633,11 @@ label {
   .sidebar-categories {
     margin-bottom: 100px; } }
 
+.price {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px; }
+
 .help-tip {
   position: relative;
   display: inline-block;
