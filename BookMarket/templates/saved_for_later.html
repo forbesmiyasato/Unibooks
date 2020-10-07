@@ -58,24 +58,24 @@
                         <td>
                             <div class="single-product">
                                 <div class="product-details">
-                                    <h6 class="hover-line"><a
+                                    <h6><a  class="hover-line"
                                             onclick="onItemClick('{{url_for('shop_api.item', item_id=post.id)}}'); return false"
                                             href="{{url_for('shop_api.item', item_id=post.id)}}">{{post.name}}</a>
                                     </h6>
                                     <div class="prd-bottom">
-                                        <p class="hover-line"><a
+                                        <p><a  class="hover-line"
                                                 onclick="onItemClick('{{url_for('shop_api.item', item_id=post.id)}}'); return false"
                                                 href="{{url_for('shop_api.item', item_id=post.id)}}">
                                                 View more
                                             </a></p>
-                                        <p class="hover-line"><a
-                                                onclick="onSavedDelete('{{loop.index}}', '{{post.name}}', '{{post.id}}',
+                                        <p><a class="hover-line"
+                                            onclick="onSavedDelete('{{loop.index}}', '{{post.name}}', '{{post.id}}',
                                         '{{url_for('delete_saved', item_name=post.name, item_id=post.id, user_id=current_user.id)}}')"
                                                 href="javascript:;">
                                                 Delete
                                             </a></p>
                                         {% if current_user.confirmed == True %}
-                                        <p class="hover-line"><a data-toggle="modal"
+                                        <p><a data-toggle="modal"
                                                 class="saved-message genric-btn primary circle"
                                                 data-target="#messageModal" id="{{post.id}}">Contact Seller</a>
                                             {% if post.messaged_date %}
