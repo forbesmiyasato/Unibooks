@@ -256,6 +256,9 @@
             <p>
               <a class="footer-item" onclick="linkClicked(this, '{{url_for('terms_of_service')}}')">Terms of Service</a>
             </p>
+            <p>
+              <a class="footer-item" onclick="linkClicked(this, '{{url_for('donate')}}')">Donate</a>
+            </p>
           </div>
         </div>
         <div class="col-lg-2 col-md-6 col-sm-6">
@@ -456,6 +459,7 @@
     let help_html = null;
     let privacy_html = null;
     let terms_html = null;
+    let donate_html = null;
 
     const redirect = (paths) => {
       path = window.location.pathname
@@ -490,6 +494,8 @@
         $('#block-content').html(privacy_html);
       } else if (path === '/legal' && terms_html) {
         $('#block-content').html(terms_html);
+      } else if (path === '/donate' && donate_html) {
+        $('#block-content').html(donate_html);
       } else {
         call = $.ajax({
           url: location.href,
@@ -526,6 +532,8 @@
               privacy_html = response
             } else if (path === '/legal' && !terms_html) {
               terms_html = response
+            } else if (path === '/donate' && !donate_html) {
+              donate_html = response;
             }
             if (response.state) {
               if (response.state === 'login-required') {
