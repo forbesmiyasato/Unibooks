@@ -134,11 +134,9 @@ const getData = (url, first) => {
                 $("#posts-spinner").addClass("loading");
 
                 $("#items-list").hide();
-                console.log("before");
             },
             complete: function () {
                 $("#posts-spinner").removeClass("loading");
-                console.log("after");
                 getDataRequest = false;
             },
             error: function (xhr) {
