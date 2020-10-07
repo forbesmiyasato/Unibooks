@@ -1702,7 +1702,6 @@ nav.d-flex.align-items-center {
         right: 28%; } }
 
 .single-product {
-  margin-bottom: 50px;
   position: relative; }
   .single-product img {
     margin-bottom: 20px;
@@ -6632,6 +6631,14 @@ label {
 @media (min-width: 768px) {
   .sidebar-categories {
     margin-bottom: 100px; } }
+
+.price {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px; }
+
+#shop-bottom-bar {
+  margin-top: 50px; }
 
 .help-tip {
   position: relative;

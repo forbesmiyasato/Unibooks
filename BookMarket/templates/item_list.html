@@ -46,6 +46,7 @@
                     </h6>
                     <div class="price">
                         <h6>{{post.price}}</h6>
+                        <h6>{{post.date_posted.strftime('%b %d')}}</h6>
                     </div>
                     <div class="prd-bottom list-item-prd-bottom">
                         <a onclick="onItemClick('{{url_for('shop_api.item', item_id=post.id)}}'); return false"

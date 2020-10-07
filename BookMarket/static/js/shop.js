@@ -54,91 +54,99 @@ const sortSwitch = (sort_term) => {
             break;
     }
 };
-const getData = (url, first) => {
-    $.ajax({
-        url: url,
-        type: "get",
-        data: null,
-        async: true,
-        success: function (response) {
-            if (response.error) {
-                if (response.error === "no school in session") {
-                    location.reload();
-                }
-            }
-            let course = response.course;
-            let department = response.department;
-            let search = response.search;
-            let numResults = response.numResults;
-            let category = response.category;
 
-            if (course) {
-                $("#nav-header").html(course.long);
-                $("#nav-department").html(
-                    '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
-                        `<a onclick="return filterByDepartment(${department.id})" href="/shop?department=${department.id}">${department.short}</a>`
-                );
-                $("#nav-course").html(
-                    '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
-                        `<a class="text-white">${course.short}</a>`
-                );
-            } else if (department) {
-                $("#nav-header").html(department.long);
-                $("#nav-department").html(
-                    '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
-                        `<a class="text-white">${department.short}</a>`
-                );
-                $("#nav-course").html("");
-            } else if (search) {
-                $("#nav-header").html(
-                    `${numResults} results found for "${search}"`
-                );
-                $("#nav-department").html(
-                    '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
-                        `<a class="text-white">"${search}"</a>`
-                );
-                $("#nav-course").html("");
-            } else if (category) {
-                if (category.long === "All Non-Textbooks") {
-                    $("#nav-header").html(category.long);
+var getDataRequest = false;
+const getData = (url, first) => {
+    if (!getDataRequest) {
+        getDataRequest = true;
+
+        $.ajax({
+            url: url,
+            type: "get",
+            data: null,
+            async: true,
+            success: function (response) {
+                if (response.error) {
+                    if (response.error === "no school in session") {
+                        location.reload();
+                    }
+                }
+                let course = response.course;
+                let department = response.department;
+                let search = response.search;
+                let numResults = response.numResults;
+                let category = response.category;
+
+                if (course) {
+                    $("#nav-header").html(course.long);
                     $("#nav-department").html(
                         '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
-                            `<a class="text-white">${category.short}</a>`
-                    );
-                    $("#nav-course").html("");
-                } else if (category.long) {
-                    $("#nav-header").html(category.long);
-                    $("#nav-department").html(
-                        '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
-                            `<a onclick="return filterByCategory('all', 'All Non-Textbooks')" href="/shop?nonbook=all">Non-Textbooks</a>`
+                            `<a onclick="return filterByDepartment(${department.id})" href="/shop?department=${department.id}">${department.short}</a>`
                     );
                     $("#nav-course").html(
                         '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
-                            `<a class="text-white">${category.short}</a>`
+                            `<a class="text-white">${course.short}</a>`
                     );
+                } else if (department) {
+                    $("#nav-header").html(department.long);
+                    $("#nav-department").html(
+                        '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
+                            `<a class="text-white">${department.short}</a>`
+                    );
+                    $("#nav-course").html("");
+                } else if (search) {
+                    $("#nav-header").html(
+                        `${numResults} results found for "${search}"`
+                    );
+                    $("#nav-department").html(
+                        '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
+                            `<a class="text-white">"${search}"</a>`
+                    );
+                    $("#nav-course").html("");
+                } else if (category) {
+                    if (category.long === "All Non-Textbooks") {
+                        $("#nav-header").html(category.long);
+                        $("#nav-department").html(
+                            '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
+                                `<a class="text-white">${category.short}</a>`
+                        );
+                        $("#nav-course").html("");
+                    } else if (category.long) {
+                        $("#nav-header").html(category.long);
+                        $("#nav-department").html(
+                            '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
+                                `<a onclick="return filterByCategory('all', 'All Non-Textbooks')" href="/shop?nonbook=all">Non-Textbooks</a>`
+                        );
+                        $("#nav-course").html(
+                            '<span class="lnr lnr-arrow-right banner-arrow"></span>' +
+                                `<a class="text-white">${category.short}</a>`
+                        );
+                    }
                 }
-            }
-            // else {
-            //     // $("#nav-header").html("All Categories");
-            //     $("#nav-department").html("");
-            //     $("#nav-course").html("");
-            // }
+                // else {
+                //     // $("#nav-header").html("All Categories");
+                //     $("#nav-department").html("");
+                //     $("#nav-course").html("");
+                // }
+                $("#reloading-content").html(response.html);
+            },
+            beforeSend: function () {
+                $("#posts-spinner").addClass("loading");
 
-            $("#reloading-content").html(response.html);
-        },
-        beforeSend: function () {
-            $("#posts-spinner").toggleClass("loading");
-            $("#items-list").hide();
-        },
-        complete: function () {
-            $("#posts-spinner").toggleClass("loading");
-        },
-        error: function (xhr) {
-            displayErrorMessage("Error occurred due to invalid Behavior!");
-            return;
-        },
-    });
-
+                $("#items-list").hide();
+                console.log("before");
+            },
+            complete: function () {
+                $("#posts-spinner").removeClass("loading");
+                console.log("after");
+                getDataRequest = false;
+            },
+            error: function (xhr) {
+                displayErrorMessage("Error occurred due to invalid Behavior!");
+                return;
+            },
+        });
+    }
     // //start at top of page on first load but then scroll to top bar everytime after
     // if (first === true) {
     //     $(window).scrollTop(0);
@@ -551,7 +559,10 @@ const onSavedDelete = (index, name, id, url) => {
         url: url,
         type: "post",
         beforeSend: function (xhr, settings) {
-            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+            if (
+                !/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) &&
+                !this.crossDomain
+            ) {
                 xhr.setRequestHeader("X-CSRFToken", csrf_token);
             }
         },
@@ -569,16 +580,20 @@ const onSavedDelete = (index, name, id, url) => {
 
 const messageClicked = (id) => {
     let url = `/messagebuyerform`;
-    history.replaceState(null, '', `?item=${id}`);
+    history.replaceState(null, "", `?item=${id}`);
     $.ajax({
         url: url,
         type: "GET",
         async: true,
         success: function (response) {
-            $(`#message-modal`).html('<div class="content-section"> \
+            $(`#message-modal`).html(
+                '<div class="content-section"> \
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> \
         <span aria-hidden="true">&times;</span> \
-         </button>' + response + '</div>');
+         </button>' +
+                    response +
+                    "</div>"
+            );
         },
         beforeSend: function () {
             $(`#message-modal`).html("");
@@ -591,23 +606,28 @@ const messageClicked = (id) => {
 };
 
 const onSavedUndo = (index, id) => {
-
     $.ajax({
-        type: 'POST',
+        type: "POST",
         url: "/add-to-bag",
-        data: { 'item_id': id },
+        data: { item_id: id },
         success: function (data) {
             if (data.added) {
                 let bagIcon = document.getElementsByClassName("fa-stack")[0];
-                bagIcon.setAttribute("data-count", parseInt(bagIcon.getAttribute("data-count")) + 1)
+                bagIcon.setAttribute(
+                    "data-count",
+                    parseInt(bagIcon.getAttribute("data-count")) + 1
+                );
             }
         },
         beforeSend: function (xhr, settings) {
-            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+            if (
+                !/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) &&
+                !this.crossDomain
+            ) {
                 xhr.setRequestHeader("X-CSRFToken", csrf_token);
             }
-        }
-    })
+        },
+    });
 
     document.getElementById(`row-${index}`).innerHTML = deletedItems[index];
     const confirmAcc = document.getElementsByClassName("confirm-acc")[

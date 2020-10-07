@@ -66,7 +66,7 @@
             data: formData,
             async: true,
             success: function (response) {
-                // $('#block-content').html(response.html);
+                console.log(response)
                 toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
                 if (response.origin === 'single') {
                     toastr.success("Message Sent! The seller will contact you soon!");
