@@ -1,0 +1,131 @@
+{% if not standalone %} {% extends "layout.html" %} {% endif %}
+{% block content %}
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Support Unibooks</h1>
+                <nav class="d-flex align-items-center">
+                    <a onclick="linkClicked(document.getElementById('home'), '/home'); return false;"
+                        href="/home">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a class="nav-no-href">Donate</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="donate">
+    <div class="donate-container container">
+        <div class="donate-content">
+            <div class="donate-header-container">
+                <h2>SUPPORT OUR SERVICE </h2>
+            </div>
+            <p>Your support enables us to provide this service</p>
+            <h6>We are strictly going to use the donations to:</h6>
+            <ul id="donation-reason-list">
+                <li><b>Pay for the production cost</b></li>
+                <li>Support more schools</li>
+                <li>Add more features</li>
+                <li>Improve the UI</li>
+                <li>Fight against the needs of ads</li>
+                <li>Continuous improvement</li>
+            </ul>
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <input type="hidden" name="cmd" value="_donations" />
+                <input type="hidden" name="business" value="RBD2T8UZRX8PN" />
+                <input type="hidden" name="item_name"
+                    value="Maintain the website and allow us to support more users and schools" />
+                <input type="hidden" name="currency_code" value="USD" />
+                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0"
+                    name="submit" title="PayPal - The safer, easier way to pay online!"
+                    alt="Donate with PayPal button" />
+                <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+            </form>
+            <p>If you have any questions regarding donations<br/>please reach us at contact@unibooks.io</p>
+        </div>
+        <div id="donor-list-container">
+            <button class="genric-btn primary circle" id="help-back"><span class="material-icons">
+                    keyboard_backspace
+                </span></button>
+            <!-- add school -->
+            <div class="donar-list">
+                <div class="donar-header-container">
+                    <h2>Donolar List</h2>
+                    <p>We truly appreciate all of your support!</p>
+                    <ul>
+                        <li></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    let change = null;
+    function load(elem, i) {
+        setTimeout(function () {
+            elem.classList.add("load");
+        }, 150 * i);
+    }
+
+    function deLoad(elem, i) {
+        setTimeout(function () {
+            elem.classList.remove("load");
+        }, 150 * i);
+    }
+
+    const fadeIn = () => {
+        let elements = document.querySelectorAll(".help-item");
+        for (var i = 0; i < elements.length; i++) {
+            load(elements[i], i);
+            elements[i].onclick = fadeOut.bind(null, i);
+        }
+    }
+
+    const changeContent = (num) => {
+        document.getElementsByClassName('help-grid')[0].style.display = 'none';
+        $(`#help-detail-${num}`).fadeIn(500);
+        $('#help-back').fadeIn(500);
+        load(document.getElementById(`help-detail-container`), 0)
+        change = num;
+    }
+
+    const fadeOut = (num) => {
+        let elements = document.querySelectorAll(".help-item");
+
+        let count = 0;
+        let x = num;
+        deLoad(elements[num], count);
+        elements[num].onclick = null;
+        count++;
+        x--;
+        while (count < 6) {
+            if (x < 0) x = 5;
+            deLoad(elements[x], count);
+            elements[x].onclick = null;
+            x--;
+            count++;
+        }
+
+        setTimeout(changeContent.bind(null, num), 1000)
+    }
+
+    document.getElementById('help-back').addEventListener(
+        "click", function () {
+            $('#help-back').fadeOut(500);
+            deLoad(document.getElementById(`help-detail-container`))
+            $(`#help-detail-${change}`).fadeOut(500, function () {
+                fadeIn();
+                document.getElementsByClassName('help-grid')[0].style.display = 'grid'
+            });
+            let details = document.querySelectorAll(".help-detail");
+        }
+    )
+    fadeIn();
+
+
+</script>
+{% endblock content %}

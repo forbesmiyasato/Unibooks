@@ -586,3 +586,8 @@ def private_policy():
 def terms_of_service():
     standalone = request.args.get('standalone', None)
     return render_template('terms_of_service.html', standalone=standalone, title="Terms of Service")
+
+@app.route('/donate')
+def donate():
+    standalone = request.args.get('standalone', None)
+    return render_template('donate.html', standalone=standalone, title="Donate")
