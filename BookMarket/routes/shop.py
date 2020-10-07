@@ -25,8 +25,8 @@ def shop():
     school = session['school']
     departments = ItemDepartment.query.filter_by(school=school).order_by(
             ItemDepartment.abbreviation).all()
-    categories = ItemCategory.query.filter_by(school=session['school']).all()
-    stats = Statistics.query.filter_by(school=session['school']).first()
+    categories = ItemCategory.query.filter_by(school=school).all()
+    stats = Statistics.query.filter_by(school=school).first()
     current_listings = stats.current_listings
     total_category = stats.non_textbooks
     return render_template('shop.html', title='Shop', departments=departments, standalone=standalone,
@@ -200,7 +200,10 @@ def item_html(item_id, _item, standalone=None):
 
 @shop_api.route("/shop/<int:item_id>", methods=['GET', 'POST'])
 def item(item_id):
-    _item = Item.query.get_or_404(item_id)
+    if session.get('school') is None:
+        flash("School Session Needed", 'error')
+        return redirect(url_for('home'))
+    _item = Item.query.filter(Item.school==session['school'], Item.id==item_id).first_or_404()
     standalone = request.args.get('standalone', None)
     if request.method == 'POST':
         if request.method == 'POST' and request.form.get('email'):
