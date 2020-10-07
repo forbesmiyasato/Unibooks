@@ -85,6 +85,7 @@ def error404(error):
 @app.route('/')
 @app.route('/home')
 def home():
+    print(request.args.get('school-list'))
     standalone = request.args.get('standalone')
     return render_template('home.html', title="Home", standalone=standalone)
 
@@ -519,13 +520,12 @@ def inject_schools():
 def set_school_in_session():
     state = request.form.get('state', None)
     if state == "loggout":
-        print("TESTTTTTTTTTTTTT")
         logout_user()
-        return ('', 204)
     school = request.form.get('school', None)
     if school is None:
         flash('Invalid Behavior! No school session found.')
         return ('', 400)
+    print(school)
     session['school'] = school
     return ('', 204)
 

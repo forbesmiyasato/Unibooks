@@ -218,7 +218,7 @@
         <select required name="school-list" class="school-list" id='school-list' placeholder="Select School">
           <option value="">Select School</option>
           {% for school in schools %}
-          <option value='{{ school.id }}' {%if school.id == 2 or school.id == 3%} disabled {% endif %}>{{school.name}}
+          <option value='{{ school.id }}' {%if school.id == 3%} disabled {% endif %}>{{school.name}}
           </option>
           {% endfor %}
         </select>
@@ -260,7 +260,8 @@
               <a class="footer-item" onclick="linkClicked(this, '{{url_for('terms_of_service')}}')">Terms of Service</a>
             </p>
             <p>
-              <a class="footer-item" onclick="linkClicked(this, '{{url_for('donate')}}')">Donate<span style="color: #ff2400;">&#10084;</span></a>
+              <a class="footer-item" onclick="linkClicked(this, '{{url_for('donate')}}')">Donate<span
+                  style="color: #ff2400;">&#10084;</span></a>
             </p>
           </div>
         </div>
@@ -400,41 +401,41 @@
             }
           })
         }
-
-        var $schoolForm = $('#school-form');
-
-        // form submit
-        $schoolForm.on('submit', function (e) {
-          e.preventDefault()
-          localStorage.setItem('school', selectize.getValue())
-          var school = localStorage.getItem('school');
-          if (school || school != null || school !== 'undefined') {
-            $("body").toggleClass("need-school");
-          }
-
-          $.ajax({
-            url: `/setschool`,
-            type: "post",
-            data: { 'state': state, 'school': school },
-            async: true,
-            beforeSend: function (xhr, settings) {
-              if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
-                xhr.setRequestHeader("X-CSRFToken", csrf_token);
-              }
-            },
-            success: function () {
-              sessionStorage.justChangedSchool = true;
-              $(window).scrollTop(0);
-              location.reload();
-              state = null;
-            }
-          })
-        })
       }
       setSchoolName(school);
     }
 
     checkSchool();
+
+    var $schoolForm = $('#school-form');
+
+    // form submit
+    $schoolForm.on('submit', function (e) {
+      e.preventDefault()
+      localStorage.setItem('school', selectize.getValue())
+      var school = localStorage.getItem('school');
+      if (school || school != null || school !== 'undefined') {
+        $("body").toggleClass("need-school");
+      }
+
+      $.ajax({
+        url: `/setschool`,
+        type: "post",
+        data: { 'state': state, 'school': school },
+        async: true,
+        beforeSend: function (xhr, settings) {
+          if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrf_token);
+          }
+        },
+        success: function () {
+          sessionStorage.justChangedSchool = true;
+          $(window).scrollTop(0);
+          location.reload();
+          state = null;
+        }
+      })
+    })
 
     search_form = document.getElementById('search_form');
     function search(event) {
@@ -616,10 +617,9 @@
   <script src="{{ url_for('static', filename='js/main.js')}}"></script>
 
   <script>
-    if (! $.fn.modal) {
-      console.log("failover")
-      document.write('<script src="{{ url_for('static', filename='js/vendor/bootstrap.js')}}"><//script>');
-      document.write('<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}">');
+    if (!$.fn.modal) {
+      document.write('<script src="{{ url_for('static', filename='js / vendor / bootstrap.js')}}"><//script>');
+      document.write('<link rel="stylesheet" href="{{ url_for('static', filename='css / bootstrap.css')}}">');
     }
   </script>
 </body>
