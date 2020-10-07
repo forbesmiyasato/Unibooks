@@ -1,7 +1,7 @@
 import os
 import atexit
 import threading
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 # from PIL import Image
 from flask import (render_template, url_for, flash, redirect, request, abort, jsonify, session,
@@ -344,7 +344,7 @@ def saved_for_later():
             item = Item.query.get(saved_item.item_id)
             if item:
                 if saved_item.messaged_date:
-                    item.messaged_date = saved_item.messaged_date.strftime("%m/%d/%Y, %H:%M:%S")
+                    item.messaged_date = saved_item.messaged_date.replace(tzinfo=timezone.utc).astimezone(tz=None).strftime("%m/%d/%Y, %H:%M:%S")
                 items.append(item)
     return render_template('saved_for_later.html', title="Shopping Cart", posts=items, standalone=standalone)
 

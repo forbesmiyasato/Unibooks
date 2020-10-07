@@ -21,7 +21,8 @@
         <div class="section-top-border">
             {% if current_user.is_authenticated == False %}
             <div class="container no-results">
-                <img class="icon-img" src="{{ url_for('static', filename='img/icons/warning.svg')}}" alt="Get started to save items">
+                <img class="icon-img" src="{{ url_for('static', filename='img/icons/warning.svg')}}"
+                    alt="Get started to save items">
                 <h1 class="pt-3 pb-3">You need an account to save items :(</h1>
                 <a onclick="linkClicked(this, '{{ url_for('userAuth.register')}}'); return false;"
                     href="{{url_for('userAuth.register')}}" class="genric-btn primary-border circle arrow">
@@ -29,7 +30,8 @@
             </div>
             {% elif posts|length == 0 %}
             <div class="container no-results">
-                <img class="icon-img" src="{{ url_for('static', filename='img/icons/Cart_or_List_Is_Empty.svg')}}" alt="Cart empty">
+                <img class="icon-img" src="{{ url_for('static', filename='img/icons/Cart_or_List_Is_Empty.svg')}}"
+                    alt="Cart empty">
                 <h1 class="pt-3 pb-3">There are no items in your bag :(</h1>
                 <a onclick="linkClicked(this, '{{ url_for('shop_api.shop')}}'); return false;"
                     href="{{url_for('shop_api.shop')}}" class="genric-btn primary-border circle arrow">Start
@@ -73,8 +75,12 @@
                                                 Delete
                                             </a></p>
                                         {% if current_user.confirmed == True %}
-                                        <p class="hover-line"><a data-toggle="modal" class="saved-message single-edit"
+                                        <p class="hover-line"><a data-toggle="modal"
+                                                class="saved-message genric-btn primary circle"
                                                 data-target="#messageModal" id="{{post.id}}">Contact Seller</a>
+                                            {% if post.messaged_date %}
+                                            Messaged seller on: {{ post.messaged_date }}
+                                            {% endif %}
                                         </p>
                                         {% elif current_user.confirmed == false %}
                                         <p>
@@ -85,9 +91,6 @@
                                         <p>
                                             <a class="hover-line log-in single-edit">Log in</a> to contact the seller
                                         </p>
-                                        {% endif %}
-                                        {% if post.messaged_date %}
-                                        <p>Messaged seller on: {{ post.messaged_date }}</p>
                                         {% endif %}
                                     </div>
                                 </div>
