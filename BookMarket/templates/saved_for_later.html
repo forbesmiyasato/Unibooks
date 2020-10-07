@@ -79,7 +79,7 @@
                                                 class="saved-message genric-btn primary circle"
                                                 data-target="#messageModal" id="{{post.id}}">Contact Seller</a>
                                             {% if post.messaged_date %}
-                                            Messaged seller on: {{ post.messaged_date }}
+                                            <span style="display: block; white-space: normal;">Messaged seller on: {{ post.messaged_date }}</span>
                                             {% endif %}
                                         </p>
                                         {% elif current_user.confirmed == false %}

@@ -1,5 +1,5 @@
 .donate-container {
-    max-width: 800px;
+    max-width: 600px;
     margin-bottom: 50px;
 
     .donate-content {
@@ -16,8 +16,12 @@
             ),
             url(../img/donate/donate_small.jpg);
         background-size: auto;
-        background-position: right;
-        background-position-y: 85%;
+        background-position-y: 60%;
+        background-position-x: 60%;
+
+        @media (max-width: 580px) {
+            background-position-x: 80%;
+        }
 
         #donation-reason-list {
             list-style: none;
@@ -31,6 +35,15 @@
                 content: "-";
                 margin-right: 5px;
             }
+        }
+
+        .donation-note {
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            width: 250px;
+            float: left;
+            text-align: left;
         }
     }
 

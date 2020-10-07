@@ -102,6 +102,20 @@
         .nav {
             .nav-item {
                 margin-right: 45px;
+
+                &.icon {
+                    margin-top: 8px;
+                }
+
+                &.nav-donate {
+                    & a {
+                        color: $secondary-color2;
+                    }
+
+                    & a:hover {
+                        color: $secondary-color;
+                    }
+                }
                 .nav-link {
                     text-transform: uppercase;
                     padding: 0px;
