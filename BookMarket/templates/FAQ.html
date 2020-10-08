@@ -240,6 +240,7 @@
   }
 
   const fadeIn = () => {
+    console.log("FADE IN")
     let elements = document.querySelectorAll(".help-item");
     for (var i = 0; i < elements.length; i++) {
       load(elements[i], i);
@@ -268,43 +269,14 @@
         param = "faq";
         break;
       case num = 4:
-      param = "report-bug";
+        param = "report-bug";
         break;
       case num = 5:
-      param = "need-help";
+        param = "need-help";
         break;
     }
     window.history.pushState(null, null, "?d=" + param);
   }
-
-  const initializeHelpPage = () => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const detail = urlParams.get('d');
-    console.log(detail);
-    switch (detail) {
-      case "how-to-sell":
-        changeContent(0);
-        break;
-      case "how-to-buy":
-        changeContent(1);
-        break;
-      case "request-add-school":
-        changeContent(2);
-        break;
-      case "need-help":
-        changeContent(5);
-        break;
-      case "report-bug":
-        changeContent(4);
-        break;
-      case "faq":
-        changeContent(3);
-        break;
-    }
-  }
-
-  initializeHelpPage();
 
   const fadeOut = (num) => {
     let elements = document.querySelectorAll(".help-item");
@@ -325,6 +297,37 @@
 
     setTimeout(changeContent.bind(null, num), 1000)
   }
+  
+  const initializeHelpPage = () => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const detail = urlParams.get('d');
+    switch (detail) {
+      case "how-to-sell":
+        changeContent(0);
+        break;
+      case "how-to-buy":
+        changeContent(1);
+        break;
+      case "request-add-school":
+        changeContent(2);
+        break;
+      case "need-help":
+        changeContent(5);
+        break;
+      case "report-bug":
+        changeContent(4);
+        break;
+      case "faq":
+        changeContent(3);
+        break;
+      default:
+        fadeIn();
+        break;
+    }
+  }
+
+  initializeHelpPage();
 
   document.getElementById('help-back').addEventListener(
     "click", function () {
@@ -338,8 +341,5 @@
       window.history.pushState(null, null, window.location.pathname);
     }
   )
-  fadeIn();
-
-
 </script>
 {% endblock content %}
