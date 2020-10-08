@@ -141,16 +141,21 @@
       </div>
       <!-- common questions -->
       <div class="help-detail" id="help-detail-3">
-        <h2>Common questions</h2>
+        <h2 class="mb-5">Common questions</h2>
         <div style="text-align: left;">
-          <h6>1. How safe are in person transactions?</h6>
+          <h6>What to do if I can't find the subject or course for my textbook?</h6>
+          <p>Please contact us at contact@unibooks.io with information regarding the subject or course. 
+            Preferably with a link to the course or subject page from the University website. If it's a course 
+            place it under the "Other" section for now. We'll get back to you once the subject or course is added.
+          </p>
+          <h6>How safe are in person transactions?</h6>
           <p>We promote user safety by limiting all the sellers and buyers to local university students.
             We do so by enforcing registration with the local university email domain and restricting the user
             from selling items and messaging sellers before they confirm their account with their university email.
             However, we still cannot guarantee that the buyer or seller does NOT have a malicious intent. Therefore,
             <b>we strongly recommend performing the transaction at a public place on campus during the day.</b>
           </p>
-          <h6>2. How do I confirm my account?</h6>
+          <h6>How do I confirm my account?</h6>
           <p>We automatically send you a confirmation email after you sign up. After that you can send a confirmation
             email every hour at your account page.
             <br />
@@ -159,13 +164,18 @@
               in</a> &#x2192; User &#x2192; Account &#x2192;
             <a class="genric-btn success circle" style="padding: 0 20px;">Send Confirmation Email to ...</a>
           </p>
-          <h6>3. What personal information is given during transactions?</h6>
+          <h6>What personal information is given during transactions?</h6>
           <p>
             For the <b>Buyer</b>: Your university email address is given to the seller to let them reach you with.
           </p>
           <p>
             For the <b>Seller</b>: You have no personal information exposed until you decide to respond to the buyer.
             Using what method to reach out to the buyer is at your choice.
+          </p>
+          <h6>Is Unibooks a free service?</h6>
+          <p>
+            Yes! Unibooks is 100% free for you as a user. But it's not free for us to provide :( check out <a class="nav-text"
+            onclick="linkClicked(this, '/donate')">this page</a> to learn more about how you can help us provide this service.
           </p>
         </div>
       </div>
@@ -297,7 +307,7 @@
 
     setTimeout(changeContent.bind(null, num), 1000)
   }
-  
+
   const initializeHelpPage = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
