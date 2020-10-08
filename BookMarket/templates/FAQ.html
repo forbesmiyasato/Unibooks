@@ -226,6 +226,7 @@
 </div>
 <script>
   let change = null;
+
   function load(elem, i) {
     setTimeout(function () {
       elem.classList.add("load");
@@ -252,7 +253,58 @@
     $('#help-back').fadeIn(500);
     load(document.getElementById(`help-detail-container`), 0)
     change = num;
+    let param = null;
+    switch (num) {
+      case num = 0:
+        param = "how-to-sell";
+        break;
+      case num = 1:
+        param = "how-to-buy";
+        break;
+      case num = 2:
+        param = "request-add-school";
+        break;
+      case num = 3:
+        param = "faq";
+        break;
+      case num = 4:
+      param = "report-bug";
+        break;
+      case num = 5:
+      param = "need-help";
+        break;
+    }
+    window.history.pushState(null, null, "?d=" + param);
   }
+
+  const initializeHelpPage = () => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const detail = urlParams.get('d');
+    console.log(detail);
+    switch (detail) {
+      case "how-to-sell":
+        changeContent(0);
+        break;
+      case "how-to-buy":
+        changeContent(1);
+        break;
+      case "request-add-school":
+        changeContent(2);
+        break;
+      case "need-help":
+        changeContent(5);
+        break;
+      case "report-bug":
+        changeContent(4);
+        break;
+      case "faq":
+        changeContent(3);
+        break;
+    }
+  }
+
+  initializeHelpPage();
 
   const fadeOut = (num) => {
     let elements = document.querySelectorAll(".help-item");
@@ -283,6 +335,7 @@
         document.getElementsByClassName('help-grid')[0].style.display = 'grid'
       });
       let details = document.querySelectorAll(".help-detail");
+      window.history.pushState(null, null, window.location.pathname);
     }
   )
   fadeIn();

@@ -756,7 +756,7 @@ const highlightNavLink = () => {
     } else if (path === "contactus") {
         active = document.getElementById("home");
         document.title = "Contact Us" + ending;
-    } else if (path === "help") {
+    } else if (path.includes("help?d=")) {
         active = document.getElementById("home");
         document.title = "Help" + ending;
     } else if (path === "home" || path === "") {
