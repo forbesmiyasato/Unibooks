@@ -144,8 +144,8 @@
         <h2 class="mb-5">Common questions</h2>
         <div style="text-align: left;">
           <h6>What to do if I can't find the subject or course for my textbook?</h6>
-          <p>Please contact us at contact@unibooks.io with information regarding the subject or course. 
-            Preferably with a link to the course or subject page from the University website. If it's a course 
+          <p>Please contact us at contact@unibooks.io with information regarding the subject or course.
+            Preferably with a link to the course or subject page from the University website. If it's a course
             place it under the "Other" section for now. We'll get back to you once the subject or course is added.
           </p>
           <h6>How safe are in person transactions?</h6>
@@ -174,8 +174,9 @@
           </p>
           <h6>Is Unibooks a free service?</h6>
           <p>
-            Yes! Unibooks is 100% free for you as a user. But it's not free for us to provide :( check out <a class="nav-text"
-            onclick="linkClicked(this, '/donate')">this page</a> to learn more about how you can help us provide this service.
+            Yes! Unibooks is 100% free for you as a user. But it's not free for us to provide :( check out <a
+              class="nav-text" onclick="linkClicked(this, '/donate')">this page</a> to learn more about how you can help
+            us provide this service.
           </p>
         </div>
       </div>
@@ -264,9 +265,13 @@
     $('#help-back').fadeIn(500);
     load(document.getElementById(`help-detail-container`), 0)
     change = num;
+  }
+
+  const changeContentWrapper = (num) => {
+    changeContent(num)
     let param = null;
     switch (num) {
-      case  0:
+      case 0:
         param = "how-to-sell";
         break;
       case 1:
@@ -285,9 +290,9 @@
         param = "need-help";
         break;
     }
+    console.log("PUSH")
     window.history.pushState(null, null, "?d=" + param);
   }
-
   const fadeOut = (num) => {
     let elements = document.querySelectorAll(".help-item");
 
@@ -305,7 +310,7 @@
       count++;
     }
 
-    setTimeout(changeContent.bind(null, num), 1000)
+    setTimeout(changeContentWrapper.bind(null, num), 1000)
   }
 
   const initializeHelpPage = () => {
