@@ -124,9 +124,9 @@
         </div>
         <p>Contact us at addmyschool@unibooks.io - please include the school name, location, and contact details. <i
             class="fas fa-envelope"></i></p>
-        <p>Requesters that inlcude an easilly-parsable list of their school's course numbers, names, and associated
+        <p>Requesters that include an easilly-parsable list of their school's course numbers, names, and associated
           departments get top priority <i class="fas fa-smile"></i></p>
-        <p>Consider making a donation - Unibooks is free, but adding coverage means increased costs. To keep it free, we
+        <p>Consider making a donation - Unibooks is free, but adding coverage means increased costs. To maintain the service, we
           rely on the kindness of our users!</p>
         <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
           <input type="hidden" name="cmd" value="_donations" />
@@ -313,7 +313,6 @@
   }
 
   const fadeIn = () => {
-    console.log("FADE IN")
     let elements = document.querySelectorAll(".help-item");
     for (var i = 0; i < elements.length; i++) {
       load(elements[i], i);
@@ -352,7 +351,6 @@
         param = "need-help";
         break;
     }
-    console.log("PUSH")
     window.history.pushState(null, null, "?d=" + param);
   }
   const fadeOut = (num) => {
