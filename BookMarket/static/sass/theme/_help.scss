@@ -138,6 +138,18 @@
             width: 70%;
             margin: 0 auto;
         }
+
+        .collapsed .lnr-circle-minus {
+            display: none;
+        }
+
+        button:not(.collapsed) .lnr-plus-circle {
+            display: none;
+        }
+        
+        .collapsed .lnr-plus-circle {
+            display: block;
+        }
     }
 
     #help-detail-container {

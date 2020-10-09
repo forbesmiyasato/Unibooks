@@ -38,8 +38,8 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css')}}?ver=2">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css')}}?ver=2">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css')}}?ver=3">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css')}}?ver=3">
 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/linearicons.css')}}">
   <script src="https://kit.fontawesome.com/58d8160f79.js" crossorigin="anonymous"></script>
@@ -78,7 +78,7 @@
   <script src="{{ url_for('static', filename='js/owl.carousel.min.js')}}"></script>
 
   <!-- javascript -->
-  <script src="{{ url_for('static', filename='js/shop.js')}}?ver=2"></script>
+  <script src="{{ url_for('static', filename='js/shop.js')}}?ver=3"></script>
 
   <!-- toastr -->
   <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
@@ -292,8 +292,8 @@
       <p>Unibooks is undergoing it's final testing before official release.
       <p>If you find any bugs or have any suggestions please email us at
         contact@unibooks.io</p>
-      <p>If the textbook's subject or course is missing <a 
-        class="click-href" onclick="linkClicked(null, '{{url_for('help', d='faq')}}')">click here</a> to learn what to do.</p>
+      <p>If your textbook's subject or course is missing visit the <a 
+        class="click-href" onclick="linkClicked(null, '{{url_for('help', d='faq')}}')">FAQ page</a> to learn what to do.</p>
       <p><b>Thank you for using Unibooks!</b></p>
     </div>
   </div>
@@ -593,6 +593,7 @@
         $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();
       }
+      console.log(event.state)
       highlightNavLink()
       redirect(window.location.pathname + location.search);
     });

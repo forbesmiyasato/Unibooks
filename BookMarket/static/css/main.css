@@ -6522,6 +6522,12 @@ label {
     .help-container .help-detail .help-header-container {
       width: 70%;
       margin: 0 auto; }
+    .help-container .help-detail .collapsed .lnr-circle-minus {
+      display: none; }
+    .help-container .help-detail button:not(.collapsed) .lnr-plus-circle {
+      display: none; }
+    .help-container .help-detail .collapsed .lnr-plus-circle {
+      display: block; }
   .help-container #help-detail-container {
     transform: scale(0);
     -webkit-transition: transform 0.2s ease-in-out;

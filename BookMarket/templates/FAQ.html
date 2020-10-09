@@ -142,98 +142,160 @@
       <!-- common questions -->
       <div class="help-detail" id="help-detail-3">
         <h2 class="mb-5">Common questions</h2>
-        <div style="text-align: left;">
-          <h6>What to do if I can't find the subject or course for my textbook?</h6>
-          <p>Please contact us at contact@unibooks.io with information regarding the subject or course.
-            Preferably with a link to the course or subject page from the University website. If it's a course
-            place it under the "Other" section for now. We'll get back to you once the subject or course is added.
-          </p>
-          <h6>How safe are in person transactions?</h6>
-          <p>We promote user safety by limiting all the sellers and buyers to local university students.
-            We do so by enforcing registration with the local university email domain and restricting the user
-            from selling items and messaging sellers before they confirm their account with their university email.
-            However, we still cannot guarantee that the buyer or seller does NOT have a malicious intent. Therefore,
-            <b>we strongly recommend performing the transaction at a public place on campus during the day.</b>
-          </p>
-          <h6>How do I confirm my account?</h6>
-          <p>We automatically send you a confirmation email after you sign up. After that you can send a confirmation
-            email every hour at your account page.
-            <br />
-            <a class="nav-text" onclick="linkClicked(this, '/register')">Create an account</a> or <a class="nav-text"
-              onclick="linkClicked(this, '/login')">Log
-              in</a> &#x2192; User &#x2192; Account &#x2192;
-            <a class="genric-btn success circle" style="padding: 0 20px;">Send Confirmation Email to ...</a>
-          </p>
-          <h6>What personal information is given during transactions?</h6>
-          <p>
-            For the <b>Buyer</b>: Your university email address is given to the seller to let them reach you with.
-          </p>
-          <p>
-            For the <b>Seller</b>: You have no personal information exposed until you decide to respond to the buyer.
-            Using what method to reach out to the buyer is at your choice.
-          </p>
-          <h6>Is Unibooks a free service?</h6>
-          <p>
-            Yes! Unibooks is 100% free for you as a user. But it's not free for us to provide :( check out <a
-              class="nav-text" onclick="linkClicked(this, '/donate')">this page</a> to learn more about how you can help
-            us provide this service.
-          </p>
-        </div>
-      </div>
-      <!-- Report a bug -->
-      <div class="help-detail" id="help-detail-4">
-        <h2>Report a bug</h2>
-        <div
-          class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
-          {% if current_user.is_authenticated == True %}
-          <p>Email us at bugs@unibooks.io</p>
-          <p>OR</p>
-          {% endif %}
-          <div class="message-overlay">
-            <div class="message-error-container">
-              <div class="message-error">
-                <p>Please <a class="log-in-text"
-                    onclick="linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/help')}}'); return false"
-                    href="{{url_for('userAuth.login', next='/help')}}">log
-                    in</a> to contact us</p>
-                <p>OR</p>
-                <p>Reach us at support@unibooks.io</p>
+        <div class="accordion" style="text-align: left;" id="common-question-accordion">
+          <div class="card" id="accordion-header-1">
+            <button class="card-header p-3 btn btn-link collapsed" type="button" data-toggle="collapse"
+              data-target="#accordion-1" aria-expanded="true" aria-controls="accordion-1">
+              <h6 class="d-flex justify-content-between text-left mb-0">
+                What to do if I can't find the subject or course for my textbook?
+                <span class="lnr lnr-plus-circle"></span>
+                <span class="lnr lnr-circle-minus"></span>
+              </h6>
+            </button>
+            <div id="accordion-1" class="collapse" aria-labelledby="accordion-header-1"
+              data-parent="#common-question-accordion">
+              <div class="card-body">Please contact us at contact@unibooks.io with information regarding the subject
+                or course.
+                Preferably with a link to the course or subject page from the University website. If it's the course
+                that is missing
+                place it under the "Other" section for now. We'll get back to you once the subject or course is added.
               </div>
             </div>
           </div>
-          <form method="POST" id="message-form" action="" enctype="multipart/form-data">
-            {{message_form.hidden_tag()}}
-            <fieldset class="form-group">
-              {% include "message_form.html" %}
-        </div>
-      </div>
-      <!-- help -->
-      <div class="help-detail" id="help-detail-5">
-        <h2>Need Help?</h2>
-        <div
-          class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
-          <p>Email us at help@unibooks.io</p>
-          <p>OR</p>
-          <div class="message-overlay">
-            <div class="message-error-container">
-              <div class="message-error">
-                <p>Please <a class="log-in-text"
-                    onclick="linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/help')}}'); return false"
-                    href="{{url_for('userAuth.login', next='/help')}}">log
-                    in</a> to contact us</p>
-                <p>OR</p>
-                <p>Reach us at support@unibooks.io</p>
+          <div class="card" id="accordion-header-2">
+            <button class="card-header p-3 btn btn-link collapsed" type="button" data-toggle="collapse"
+              data-target="#accordion-2" aria-expanded="true" aria-controls="accordion-2">
+              <h6 class="d-flex justify-content-between text-left mb-0">
+                Any safety measurements for in person transactions?
+                <span class="lnr lnr-plus-circle"></span>
+                <span class="lnr lnr-circle-minus"></span>
+              </h6>
+            </button>
+            <div id="accordion-2" class="collapse" aria-labelledby="accordion-header-2"
+              data-parent="#common-question-accordion">
+              <div class="card-body">
+                We promote user safety by limiting all the sellers and buyers to local university students.
+                We do so by enforcing registration with the local university email domain and restricting the user
+                from selling items and messaging sellers before they confirm their account with their university email.
+                However, we still cannot guarantee that the buyer or seller does NOT have a malicious intent. Therefore,
+                <b>we strongly recommend performing the transaction at a public place on campus during the day.</b>
               </div>
             </div>
           </div>
-          <form method="POST" id="message-form-2" action="" enctype="multipart/form-data">
-            {{message_form.hidden_tag()}}
-            <fieldset class="form-group">
-              {% include "message_form_2.html" %}
+          <div class="card" id="accordion-header-3">
+            <button class="card-header p-3 btn btn-link collapsed" type="button" data-toggle="collapse"
+              data-target="#accordion-3" aria-expanded="true" aria-controls="accordion-3">
+              <h6 class="d-flex justify-content-between text-left mb-0">Is Unibooks a free service?
+                <span class="lnr lnr-plus-circle"></span>
+                <span class="lnr lnr-circle-minus"></span>
+              </h6>
+            </button>
+            <div id="accordion-3" class="collapse" aria-labelledby="accordion-header-3"
+              data-parent="#common-question-accordion">
+              <div class="card-body">
+                Yes! Unibooks is 100% free for you as a user. But it's not free for us to provide :( check out <a
+                  class="nav-text" onclick="linkClicked(this, '/donate')">the donation page</a> to help us provide this service.
+              </div>
+            </div>
+          </div>
+          <div class="card" id="accordion-header-4">
+            <button class="card-header p-3 btn btn-link collapsed" type="button" data-toggle="collapse"
+              data-target="#accordion-4" aria-expanded="true" aria-controls="accordion-4">
+              <h6 class="d-flex justify-content-between text-left mb-0">How do I confirm my account?
+                <span class="lnr lnr-plus-circle"></span>
+                <span class="lnr lnr-circle-minus"></span>
+              </h6>
+            </button>
+            <div id="accordion-4" class="collapse" aria-labelledby="accordion-header-4"
+              data-parent="#common-question-accordion">
+              <div class="card-body">
+                We automatically send you a confirmation email after you sign up. After that you can send a confirmation
+                email every hour at your account page.
+                <br />
+                <a class="nav-text" onclick="linkClicked(this, '/register')">Create an account</a> or <a
+                  class="nav-text" onclick="linkClicked(this, '/login')">Log
+                  in</a> &#x2192; User &#x2192; Account &#x2192;
+                <a class="genric-btn success circle" style="padding: 0 20px;">Send Confirmation Email to ...</a>
+              </div>
+            </div>
+          </div>
+          <div class="card" id="accordion-header-5">
+            <button class="card-header p-3 btn btn-link collapsed" type="button" data-toggle="collapse"
+              data-target="#accordion-5" aria-expanded="true" aria-controls="accordion-5">
+              <h6 class="d-flex justify-content-between text-left mb-0">What personal information is given during
+                transactions?
+                <span class="lnr lnr-plus-circle"></span>
+                <span class="lnr lnr-circle-minus"></span>
+              </h6>
+            </button>
+            <div id="accordion-5" class="collapse" aria-labelledby="accordion-header-5"
+              data-parent="#common-question-accordion">
+              <div class="card-body">
+                For the <b>Buyer</b>: Your university email address is given to the seller to let them reach you with.
+                <br /><br />
+                For the <b>Seller</b>: You have no personal information exposed until you decide to respond to the
+                buyer.
+                Using what email to reach out to the buyer is at your choice (Preferably your edu email account).
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <!-- Report a bug -->
+    <div class="help-detail" id="help-detail-4">
+      <h2>Report a bug</h2>
+      <div
+        class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
+        {% if current_user.is_authenticated == True %}
+        <p>Email us at bugs@unibooks.io</p>
+        <p>OR</p>
+        {% endif %}
+        <div class="message-overlay">
+          <div class="message-error-container">
+            <div class="message-error">
+              <p>Please <a class="log-in-text"
+                  onclick="linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/help')}}'); return false"
+                  href="{{url_for('userAuth.login', next='/help')}}">log
+                  in</a> to contact us</p>
+              <p>OR</p>
+              <p>Reach us at support@unibooks.io</p>
+            </div>
+          </div>
+        </div>
+        <form method="POST" id="message-form" action="" enctype="multipart/form-data">
+          {{message_form.hidden_tag()}}
+          <fieldset class="form-group">
+            {% include "message_form.html" %}
+      </div>
+    </div>
+    <!-- help -->
+    <div class="help-detail" id="help-detail-5">
+      <h2>Need Help?</h2>
+      <div
+        class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
+        <p>Email us at help@unibooks.io</p>
+        <p>OR</p>
+        <div class="message-overlay">
+          <div class="message-error-container">
+            <div class="message-error">
+              <p>Please <a class="log-in-text"
+                  onclick="linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/help')}}'); return false"
+                  href="{{url_for('userAuth.login', next='/help')}}">log
+                  in</a> to contact us</p>
+              <p>OR</p>
+              <p>Reach us at support@unibooks.io</p>
+            </div>
+          </div>
+        </div>
+        <form method="POST" id="message-form-2" action="" enctype="multipart/form-data">
+          {{message_form.hidden_tag()}}
+          <fieldset class="form-group">
+            {% include "message_form_2.html" %}
+      </div>
+    </div>
   </div>
+</div>
 </div>
 <script>
   let change = null;
