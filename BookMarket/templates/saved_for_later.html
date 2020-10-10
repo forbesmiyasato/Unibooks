@@ -62,7 +62,7 @@
                                             onclick="onItemClick('{{url_for('shop_api.item', item_id=post.id)}}'); return false"
                                             href="{{url_for('shop_api.item', item_id=post.id)}}">{{post.name}}</a>
                                     </h6>
-                                    <div class="prd-bottom">
+                                    <div>
                                         <p><a  class="hover-line"
                                                 onclick="onItemClick('{{url_for('shop_api.item', item_id=post.id)}}'); return false"
                                                 href="{{url_for('shop_api.item', item_id=post.id)}}">
@@ -84,8 +84,8 @@
                                         </p>
                                         {% elif current_user.confirmed == false %}
                                         <p>
-                                            <a class="hover-line confirm-acc single-edit">Confirm your identity</a> to
-                                            contact the seller
+                                            <a class="hover-line confirm-acc single-edit">Confirm your identity</a>
+                                            <span>to contact the seller</span>
                                         </p>
                                         {% else %}
                                         <p>

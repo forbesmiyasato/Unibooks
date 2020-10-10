@@ -305,13 +305,13 @@
   function load(elem, i) {
     setTimeout(function () {
       elem.classList.add("load");
-    }, 150 * i);
+    }, 100 * i);
   }
 
   function deLoad(elem, i) {
     setTimeout(function () {
       elem.classList.remove("load");
-    }, 150 * i);
+    }, 100 * i);
   }
 
   const fadeIn = () => {
@@ -324,8 +324,8 @@
 
   const changeContent = (num) => {
     document.getElementsByClassName('help-grid')[0].style.display = 'none';
-    $(`#help-detail-${num}`).fadeIn(500);
-    $('#help-back').fadeIn(500);
+    $(`#help-detail-${num}`).fadeIn(100);
+    $('#help-back').fadeIn(100);
     load(document.getElementById(`help-detail-container`), 0)
     change = num;
   }
@@ -408,9 +408,9 @@
 
   document.getElementById('help-back').addEventListener(
     "click", function () {
-      $('#help-back').fadeOut(500);
+      $('#help-back').fadeOut(100);
       deLoad(document.getElementById(`help-detail-container`))
-      $(`#help-detail-${change}`).fadeOut(500, function () {
+      $(`#help-detail-${change}`).fadeOut(100, function () {
         fadeIn();
         document.getElementsByClassName('help-grid')[0].style.display = 'grid'
       });
