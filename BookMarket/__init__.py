@@ -8,6 +8,8 @@ from flask_wtf.csrf import CSRFProtect
 from dotenv import load_dotenv
 from flask_mail import Mail
 from flask_talisman import Talisman
+from scout_apm.flask import ScoutApm
+from scout_apm.flask.sqlalchemy import instrument_sqlalchemy
 
 # from .background import test
 # from flask.ext.session import Session
@@ -16,7 +18,9 @@ app = Flask(__name__)
 
 csrf = CSRFProtect(app)
 talisman = Talisman(app, content_security_policy=[])
+ScoutApm(app)
 
+app.config["SCOUT_NAME"] = "Unibooks"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAIL_SERVER'] = os.getenv('EMAIL_SES_SERVER')
 app.config['MAIL_PORT'] = 587
@@ -61,9 +65,6 @@ login_manager = LoginManager = LoginManager(app)
 login_manager.login_view = 'userAuth.login'
 login_manager.login_message_category = 'info'
 
-# def test():
-#     return jsonify({'html': redirect(url_for('home', standalone=standalone)), 'state': 'login-required'})
-
-# login_manager.unauthorized_handler(test)
+instrument_sqlalchemy(db)
 
 from . import route
