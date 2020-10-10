@@ -38,8 +38,7 @@
                     {% endfor %}
                     {% else %}
                     <div class="single-prd-item">
-                        <img class="img-fluid"
-                            src="/static/item_pics/No_picture_available.png"
+                        <img class="img-fluid" src="/static/item_pics/No_picture_available.png"
                             alt="No Image Available">
                     </div>
                     {% endif %}
@@ -142,25 +141,28 @@
                                 mail_outline
                             </span></a>
                         {% else %}
-                        <a class="primary-btn single-product-button button-disabled"
-                            href="javascript:void(0)">
-                            Message Seller <span class="material-icons">
-                                mail_outline
-                            </span>
-                        </a>
+                        <div class="disabled-wrapper mr-2">
+                            <a class="primary-btn single-product-button button-disabled m-0" href="javascript:void(0)">
+                                Message Seller <span class="material-icons">
+                                    mail_outline
+                                </span>
+                            </a>
+                        </div>
                         {% endif %}
                         {% if current_user.is_authenticated == True %}
                         <a class="gray_btn default radius single-product-button"
-                            onclick="addToBag({{item.id}}, {{current_user.id}})">
+                            onclick="addToBag(this, {{item.id}}, {{current_user.id}})">
                             <span class="add-text">Add to Cart</span>
                             <span class="material-icons">
                                 add_shopping_cart
                             </span></a>
                         {% else %}
-                        <a class="gray_btn default radius single-product-button button-disabled">
-                            Add to Cart <span class="material-icons">
-                                add_shopping_cart
-                            </span></a>
+                        <div class="disabled-wrapper">
+                            <a class="gray_btn default radius single-product-button button-disabled">
+                                Add to Cart <span class="material-icons">
+                                    add_shopping_cart
+                                </span></a>
+                        </div>
                         {% endif %}
                         <!-- Message Modal -->
                         <div class="modal fade" id="messageModal" tabindex="-1" role="dialog"
@@ -230,15 +232,17 @@
         category_selectize.setValue(item_category);
     };
 
-    function addToBag(item_id, user_id) {
+    function addToBag(ele, item_id, user_id) {
         document.querySelector('span.add-text').innerHTML = 'Added!';
 
+        ele.onclick = null;
+        ele.classList.add("button-disabled");
+        
         $.ajax({
             type: 'POST',
             url: "{{url_for('add_to_bag')}}",
-            data: { 'item_id': item_id},
+            data: { 'item_id': item_id },
             success: function (data) {
-                console.log(data)
                 if (data.added) {
                     let bagIcon = document.getElementsByClassName("fa-stack")[0];
                     bagIcon.setAttribute("data-count", parseInt(bagIcon.getAttribute("data-count")) + 1)

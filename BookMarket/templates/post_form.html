@@ -436,7 +436,6 @@
     // form submit
     $form.on('submit', function (e) {
         e.preventDefault();
-        console.log("HIT")
         $("body").toggleClass("loading");
         if ($('#editModal').length) {
             $('#editModal').modal('hide')
@@ -472,10 +471,6 @@
             _fileuploaderFields.push($input);
         }
 
-        // formData.append(name, (files[i].file ? files[i].file : files[i]), (files[i].name ? files[i].name : false));
-        // console.log(files[i].file ? files[i].file : files[i])
-        // console.log(files[i].name)
-
         async function view() {
             for (var i = 0; i < files.length; i++) {
                 const file = files[i].file ? files[i].file : files[i]
@@ -504,9 +499,7 @@
             }
 
             formData.append('remaining_files', remainingFiles);
-            // for (var value of formData.values()) {
-            //     console.log("1", value);
-            // }
+
             post_url = '{{legend}}' === "New" ? "{{url_for('new_item')}}" : '{{item}}' ? "{{url_for('shop_api.item', item_id=item_id)}}" : null
             $.ajax({
                 url: post_url || '#',
@@ -517,10 +510,11 @@
                 contentType: false,
                 processData: false,
                 success: function (response) {
-                    console.log("success")
                     toastr.options = { "positionClass": "toast-top-center", "closeButton": true }
-                    if ($('#editModal').length) {
-                        $('#editModal').modal('hide')
+                    if (response.url.includes("/shop/")) {
+                        if ($('#editModal').length) {
+                            $('#editModal').modal('hide')
+                        }
                         toastr.success("Updated Post!");
                     } else {
                         listings_html = null;

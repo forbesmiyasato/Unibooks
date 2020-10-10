@@ -126,7 +126,8 @@
             class="fas fa-envelope"></i></p>
         <p>Requesters that include an easilly-parsable list of their school's course numbers, names, and associated
           departments get top priority <i class="fas fa-smile"></i></p>
-        <p>Consider making a donation - Unibooks is free, but adding coverage means increased costs. To maintain the service, we
+        <p>Consider making a donation - Unibooks is free, but adding coverage means increased costs. To maintain the
+          service, we
           rely on the kindness of our users!</p>
         <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
           <input type="hidden" name="cmd" value="_donations" />
@@ -194,7 +195,8 @@
               data-parent="#common-question-accordion">
               <div class="card-body">
                 Yes! Unibooks is 100% free for you as a user. But it's not free for us to provide :( check out <a
-                  class="nav-text" onclick="linkClicked(this, '/donate')">the donation page</a> to help us provide this service.
+                  class="nav-text" onclick="linkClicked(this, '/donate')">the donation page</a> to help us provide this
+                service.
               </div>
             </div>
           </div>
@@ -241,57 +243,57 @@
           </div>
         </div>
       </div>
-    </div>
-    <!-- Report a bug -->
-    <div class="help-detail" id="help-detail-4">
-      <h2>Report a bug</h2>
-      <div
-        class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
-        {% if current_user.is_authenticated == True %}
-        <p>Email us at bugs@unibooks.io</p>
-        <p>OR</p>
-        {% endif %}
-        <div class="message-overlay">
-          <div class="message-error-container">
-            <div class="message-error">
-              <p>Please <a class="log-in-text"
-                  onclick="linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/help')}}'); return false"
-                  href="{{url_for('userAuth.login', next='/help')}}">log
-                  in</a> to contact us</p>
-              <p>OR</p>
-              <p>Reach us at support@unibooks.io</p>
+      <!-- Report a bug -->
+      <div class="help-detail" id="help-detail-4">
+        <h2>Report a bug</h2>
+        <div
+          class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
+          {% if current_user.is_authenticated == True %}
+          <p>Email us at bugs@unibooks.io</p>
+          <p>OR</p>
+          {% endif %}
+          <div class="message-overlay">
+            <div class="message-error-container">
+              <div class="message-error">
+                <p>Please <a class="log-in-text"
+                    onclick="linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/help')}}'); return false"
+                    href="{{url_for('userAuth.login', next='/help')}}">log
+                    in</a> to contact us</p>
+                <p>OR</p>
+                <p>Reach us at support@unibooks.io</p>
+              </div>
             </div>
           </div>
+          <form method="POST" id="message-form" action="" enctype="multipart/form-data">
+            {{message_form.hidden_tag()}}
+            <fieldset class="form-group">
+              {% include "message_form.html" %}
         </div>
-        <form method="POST" id="message-form" action="" enctype="multipart/form-data">
-          {{message_form.hidden_tag()}}
-          <fieldset class="form-group">
-            {% include "message_form.html" %}
       </div>
-    </div>
-    <!-- help -->
-    <div class="help-detail" id="help-detail-5">
-      <h2>Need Help?</h2>
-      <div
-        class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
-        <p>Email us at help@unibooks.io</p>
-        <p>OR</p>
-        <div class="message-overlay">
-          <div class="message-error-container">
-            <div class="message-error">
-              <p>Please <a class="log-in-text"
-                  onclick="linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/help')}}'); return false"
-                  href="{{url_for('userAuth.login', next='/help')}}">log
-                  in</a> to contact us</p>
-              <p>OR</p>
-              <p>Reach us at support@unibooks.io</p>
+      <!-- help -->
+      <div class="help-detail" id="help-detail-5">
+        <h2>Need Help?</h2>
+        <div
+          class="container-sm mb-5 contact-us-container {% if current_user.is_authenticated == False %}not-logged-in{% endif %}">
+          <p>Email us at help@unibooks.io</p>
+          <p>OR</p>
+          <div class="message-overlay">
+            <div class="message-error-container">
+              <div class="message-error">
+                <p>Please <a class="log-in-text"
+                    onclick="linkClicked(document.getElementById('login'), '{{url_for('userAuth.login', next='/help')}}'); return false"
+                    href="{{url_for('userAuth.login', next='/help')}}">log
+                    in</a> to contact us</p>
+                <p>OR</p>
+                <p>Reach us at support@unibooks.io</p>
+              </div>
             </div>
           </div>
+          <form method="POST" id="message-form-2" action="" enctype="multipart/form-data">
+            {{message_form.hidden_tag()}}
+            <fieldset class="form-group">
+              {% include "message_form_2.html" %}
         </div>
-        <form method="POST" id="message-form-2" action="" enctype="multipart/form-data">
-          {{message_form.hidden_tag()}}
-          <fieldset class="form-group">
-            {% include "message_form_2.html" %}
       </div>
     </div>
   </div>

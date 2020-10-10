@@ -1829,6 +1829,9 @@
 	}
 }
 
+.disabled-wrapper {
+	cursor: not-allowed;
+}
 .button-disabled {
 	pointer-events: none;
 	filter: brightness(0.8);

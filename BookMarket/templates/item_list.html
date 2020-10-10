@@ -146,6 +146,9 @@
         let text = ele.children[1]
         text.innerHTML = 'Added!'
 
+        ele.onclick = null;
+        ele.classList.add("disabled-wrapper");
+
         $.ajax({
             type: 'POST',
             url: "{{url_for('add_to_bag')}}",
