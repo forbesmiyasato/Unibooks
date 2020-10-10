@@ -120,6 +120,9 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
             <ul class="nav navbar-nav menu_nav ml-auto">
+              <li class="nav-item switch-container-mobile">
+                <span id="school-name-mobile"></span>
+              </li>
               <li class="nav-item"><a id="home"
                   class="nav-link activable {% if (title == 'Home' or title == 'About Us' or title == 'Contact Us' or title == 'Help') %}active{% endif %}"
                   onclick="linkClicked(this, '{{ url_for('home')}}'); return false;"
@@ -174,9 +177,6 @@
               <!-- <li class="nav-item nav-donate">
                 <a class="nav-link activable" onclick="linkClicked(this, '{{url_for('donate')}}')">Donate</a>
               </li> -->
-              <li class="nav-item switch-container-mobile">
-                <span id="school-name-mobile"></span>
-              </li>
             </ul>
           </div>
         </div>
