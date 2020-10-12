@@ -11,7 +11,7 @@ Unibooks is an online university marketplace where studetns can buy, sell, or tr
 
 <br />
 
-### Table of Contents ��
+### Table of Contents <g-emoji class="g-emoji" alias="book" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f4d6.png">📖</g-emoji>
 <hr>
 
   - [Welcome](#welcome-to-Unibooks)
@@ -24,21 +24,21 @@ Unibooks is an online university marketplace where studetns can buy, sell, or tr
 
 <br />
 
-### Get Started ��
+### Get Started <g-emoji class="g-emoji" alias="rocket" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f680.png">🚀</g-emoji>
 <hr>
 
 Visit Unibooks at https://unibooks.io and start posting textbooks for sale or look for textbooks you need!
 
 <br />
 
-### Usage ⚙
+### Usage <g-emoji class="g-emoji" alias="gear" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2699.png">⚙</g-emoji>
 <hr>
 
 ~ooo~
 
 <br />
 
-### Technologies ��
+### Technologies <g-emoji class="g-emoji" alias="toolbox" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f9f0.png">🧰</g-emoji>
 <hr>
 
   - [flip.js](https://google.com)
@@ -47,21 +47,21 @@ Visit Unibooks at https://unibooks.io and start posting textbooks for sale or lo
 
 <br />
 
-### Contribute ��
+### Contribute <g-emoji class="g-emoji" alias="handshake" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f91d.png">🤝</g-emoji>
 <hr>
 
-~ooo~
+This project is feature complete and had no collaborators. I made this website to provide a free textbook trading service for university students. With the intention that they won't graduate with books from freshman year like me, and be able to avoid spending extra money at the bookstore. 
 
 <br />
 
-### Acknowledgements ��
+### Acknowledgements </a>Acknowledgements <g-emoji class="g-emoji" alias="blue_heart" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f499.png">💙</g-emoji>
 <hr>
 
-~ooo~
+Unibooks was founded by Forbes Miyasato, with implementation & design assist from Thomas Robasciotti.
 
 <br />
 
-### License, Stats, Author ��
+### License, Stats, Author <g-emoji class="g-emoji" alias="scroll" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f4dc.png">📜</g-emoji>
 <hr>
 <!-- badge cluster -->
 
@@ -70,10 +70,8 @@ Visit Unibooks at https://unibooks.io and start posting textbooks for sale or lo
 <!-- / -->
 See [License](https://google.com) for the full license text.
 
-This repository was authored by *Isaac Yep*.
+This repository was authored by *Forbes Miyasato*.
 
 [Back to Table of Contents](#table-of-contents-)
-
-![Imgur](https://i.imgur.com/jtNwEWu.png)
 
 <br /><br /><br /><br /><br /><br /><br />
