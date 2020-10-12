@@ -33,24 +33,35 @@ Visit Unibooks at https://unibooks.io and start posting textbooks for sale or lo
 
 ### Usage <g-emoji class="g-emoji" alias="gear" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2699.png">⚙</g-emoji>
 <hr>
+https://unibooks.io/?#how-unibooks-works
 
-~ooo~
+
+![Unibooks_Usage](unibooks_usage.png)
 
 <br />
 
-### Technologies <g-emoji class="g-emoji" alias="toolbox" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f9f0.png">🧰</g-emoji>
+### Technologies & Integrations<g-emoji class="g-emoji" alias="toolbox" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f9f0.png">🧰</g-emoji>
 <hr>
 
-  - [flip.js](https://google.com)
-  - [flop.js](https://google.com)
-  - [flap.js](https://google.com)
-
+  - Languages: Python, JavaScript, HTML, CSS
+  - PostgreSQL
+  - Flask
+  - Jinja2
+  - jQuery
+  - Sass
+  - AWS SES
+  - AWS S3
+  - Heroku (Hostinga and addons for database, monitoring, logging and load testing)
+  - Google Analytics & Tag Manager
+  
 <br />
 
 ### Contribute <g-emoji class="g-emoji" alias="handshake" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f91d.png">🤝</g-emoji>
 <hr>
 
-This project is feature complete and had no collaborators. I made this website to provide a free textbook trading service for university students. With the intention that they won't graduate with books from freshman year like me, and be able to avoid spending extra money at the bookstore. 
+This project is feature complete and had no collaborators. I made this website to provide a free textbook trading service for university students. With the intention that they won't graduate with books from freshman year like me, and be able to avoid spending extra money at the bookstore.
+
+Constructive feedback is always appreciated! Feel free to contact us at contact@unibooks.io or visit https://unibooks.io/contactus
 
 <br />
 
@@ -58,6 +69,8 @@ This project is feature complete and had no collaborators. I made this website t
 <hr>
 
 Unibooks was founded by Forbes Miyasato, with implementation & design assist from Thomas Robasciotti.
+
+Thanks Isaac Yep for providing the README template.
 
 <br />
 
