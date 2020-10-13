@@ -85,4 +85,3 @@ Copyright © 2020, Forbes Miyasato. All rights reserved.
 
 [Back to Table of Contents](#table-of-contents-)
 
-<br /><br /><br /><br /><br /><br /><br />
