@@ -1,4 +1,7 @@
 # Unibooks
+
+https://unibooks.io
+
 <br />
 
 ### Welcome to Unibooks!
@@ -57,9 +60,9 @@ https://unibooks.io/?#how-unibooks-works
 ### Contribute <g-emoji class="g-emoji" alias="handshake" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f91d.png">🤝</g-emoji>
 <hr>
 
-This project is feature complete and had no collaborators. I made this website to provide a free textbook trading service for university students. With the intention that they won't graduate with books from freshman year like me, and be able to avoid spending extra money at the bookstore.
+Unibooks is currently feature complete and not looking for collaborators. I made this website to provide a free textbook trading service for university students. With the intention that they won't graduate with books from freshman year like me and will be able to avoid spending extra money at the bookstore.
 
-Constructive feedback is always appreciated! Feel free to contact us at contact@unibooks.io or visit https://unibooks.io/contactus
+Constructive feedback is always appreciated! Feel free to contact me at contact@unibooks.io or visit https://unibooks.io/contactus
 
 <br />
 
@@ -77,6 +80,8 @@ Thanks Isaac Yep for providing the README template.
 <!-- badge cluster -->
 
 This repository was authored by *Forbes Miyasato*.
+
+Copyright © 2020, Forbes Miyasato. All rights reserved.
 
 [Back to Table of Contents](#table-of-contents-)
 
