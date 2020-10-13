@@ -1,12 +1,10 @@
 # Unibooks
-The ultimate university marketplace
-
 <br />
 
 ### Welcome to Unibooks!
 <hr>
 
-Unibooks is an online university marketplace where studetns can buy, sell, or trade used textbooks (and other stuff too). It currently supports Pacific Univeristy and Portland State University, and we're working on covering more school!
+Unibooks is an online university marketplace where students can buy, sell, or trade used textbooks (and other stuff too). It currently supports Pacific Univeristy and Portland State University, and we're working on covering more schools!
 
 
 <br />
@@ -14,11 +12,11 @@ Unibooks is an online university marketplace where studetns can buy, sell, or tr
 ### Table of Contents <g-emoji class="g-emoji" alias="book" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f4d6.png">📖</g-emoji>
 <hr>
 
-  - [Welcome](#welcome-to-Unibooks)
+  - [Welcome to Unibooks](#welcome-to-unibooks)
   - [**Get Started**](#get-started-)
   - [Usage](#usage-)
-  - [Technologies](#technologies-)
-  - [Contribute](#Contribute-)
+  - [Technologies/Integrations](#technologies-integrations-)
+  - [Contribute](#contribute-)
   - [Acknowledgements](#acknowledgements-)
   - [License/Stats/Author](#license-stats-author-)
 
@@ -27,7 +25,7 @@ Unibooks is an online university marketplace where studetns can buy, sell, or tr
 ### Get Started <g-emoji class="g-emoji" alias="rocket" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f680.png">🚀</g-emoji>
 <hr>
 
-Visit Unibooks at https://unibooks.io and start posting textbooks for sale or look for textbooks you need!
+Visit Unibooks at https://unibooks.io and start posting your textbooks for sale or look for textbooks you need!
 
 <br />
 
@@ -40,7 +38,7 @@ https://unibooks.io/?#how-unibooks-works
 
 <br />
 
-### Technologies & Integrations<g-emoji class="g-emoji" alias="toolbox" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f9f0.png">🧰</g-emoji>
+### Technologies, Integrations <g-emoji class="g-emoji" alias="toolbox" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f9f0.png">🧰</g-emoji>
 <hr>
 
   - Languages: Python, JavaScript, HTML, CSS
@@ -65,7 +63,7 @@ Constructive feedback is always appreciated! Feel free to contact us at contact@
 
 <br />
 
-### Acknowledgements </a>Acknowledgements <g-emoji class="g-emoji" alias="blue_heart" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f499.png">💙</g-emoji>
+### Acknowledgements <g-emoji class="g-emoji" alias="blue_heart" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f499.png">💙</g-emoji>
 <hr>
 
 Unibooks was founded by Forbes Miyasato, with implementation & design assist from Thomas Robasciotti.
@@ -77,11 +75,6 @@ Thanks Isaac Yep for providing the README template.
 ### License, Stats, Author <g-emoji class="g-emoji" alias="scroll" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f4dc.png">📜</g-emoji>
 <hr>
 <!-- badge cluster -->
-
-[~ooo~](https://shields.io/)
-
-<!-- / -->
-See [License](https://google.com) for the full license text.
 
 This repository was authored by *Forbes Miyasato*.
 
