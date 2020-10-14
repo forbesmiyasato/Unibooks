@@ -218,7 +218,7 @@
         <select required name="school-list" class="school-list" id='school-list' placeholder="Select School">
           <option value="">Select School</option>
           {% for school in schools %}
-          <option value='{{ school.id }}' {%if school.id == 2 or school.id == 3%} disabled {% endif %}>{{school.name}}
+          <option value='{{ school.id }}' {%if school.id == 3%} disabled {% endif %}>{{school.name}}
           </option>
           {% endfor %}
         </select>
