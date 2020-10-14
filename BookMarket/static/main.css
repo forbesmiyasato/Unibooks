@@ -446,7 +446,7 @@ label.field-required::after {
 }
 
 .dropdown-sort .dropdown-item.active {
-    padding-left: 10px;
+    padding-left: 12px;
 }
 
 .dropdown-item.active {
@@ -455,8 +455,9 @@ label.field-required::after {
 }
 
 .dropdown-item.active:after {
-    content: "X";
+    content: "\00D7";
     right: 10px;
+    font-size: 20px;
     position: absolute;
 }
 
