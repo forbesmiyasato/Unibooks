@@ -23,10 +23,12 @@ def save_images_to_db_and_s3(form_images, item_id):
             #     app.root_path, 'static/item_pics', picture_fn)
             image = Image.open(images)
             image_format = image.format
-            if image.height > 600 or image.width > 600:
-                output_size = (600, 600)
+            # if image.height > 600 or image.width > 600:
+                # output_size = (600, 600)
                 # image = image.resize(output_size, Image.ANTIALIAS)
-                image.thumbnail(output_size, Image.ANTIALIAS)
+                # image.thumbnail(output_size, Image.ANTIALIAS)
+            # output_size = (600, 600)
+            # image.thumbnail(output_size, Image.ANTIALIAS)
             in_mem_file = io.BytesIO()
             image = ImageOps.exif_transpose(image)
             image.save(in_mem_file, optimize=True, format=image_format)

@@ -85,7 +85,6 @@ def error404(error):
 @app.route('/')
 @app.route('/home')
 def home():
-    print(request.args.get('school-list'))
     standalone = request.args.get('standalone')
     return render_template('home.html', title="Home", standalone=standalone)
 
@@ -93,7 +92,6 @@ def home():
 @app.route('/aboutus')
 def about_us():
     standalone = request.args.get('standalone')
-    print(standalone)
     # if standalone != "true":
     #     standalone = False
     return render_template('about_us.html', standalone=standalone, title="About Us")
@@ -237,7 +235,6 @@ def new_item():
         if standalone:
             return jsonify({'state': "max-listings"})
         else:
-            print("!!!!!!!!!!!!")
             flash("There is a max of 10 listings at a time! Please wait or delete listings before selling.", 'error')
             return redirect(url_for('listings', standalone=standalone))
     form = ItemForm()
@@ -245,7 +242,6 @@ def new_item():
         school=session['school']).order_by(ItemDepartment.abbreviation).all()
     categories = ItemCategory.query.filter_by(school=session['school']).all()
     isBook = True  # default display is book item
-    print(session['school'])
     return render_template('create_post.html', title='Sell', form=form, legend='New', item_id=0, departments=departments,
                            standalone=standalone, categories=categories, isBook=isBook)
 
@@ -377,7 +373,6 @@ def delete_saved():
 @app.route('/post/delete', methods=['POST'])
 @login_required
 def delete_item():
-    print("TEST")
     item = request.args.get('item_id')
     standalone = request.form['standalone']
     deleting_item = Item.query.get_or_404(item)
@@ -401,7 +396,6 @@ def delete_item():
                                              args=(deleting_item.department_id, deleting_item.class_id, deleting_item.category_id,))
     decrement_count_async.start()
     # standalone = "standlone"
-    print(standalone)
     delete_images_from_s3_and_db(item)
     item_name = deleting_item.name
     current_user.listings = current_user.listings - 1
@@ -409,7 +403,6 @@ def delete_item():
     db.session.commit()
     # flash(f'Post "{item_name}" has been deleted', 'success')
     if standalone == "listings":
-        print(standalone)
         return jsonify(html=listings_html(standalone))
     return jsonify({'result': 'deleted'})
 
@@ -484,7 +477,6 @@ def get_edit_form(item_id=None):
         _item.class_id = request.form.get('class_id')
         _item.department_id = request.form.get('department_id')
         db.session.commit()
-        print(item_id)
         # result = {'url': url_for('shop_api.item', item_id=item_id)}
     images = ItemImage.query.filter_by(item_id=item_id).all()
     item_class = ItemClass.query.get(_item.class_id)
@@ -497,7 +489,6 @@ def get_edit_form(item_id=None):
     edit_form.isbn.data = _item.isbn
     edit_form.author.data = _item.author
     if _item.category_id is not None:
-        print(_item.category_id)
         edit_form.item_category.data = _item.category_id
     else:
         edit_form.item_class.data = item_class
@@ -525,7 +516,6 @@ def set_school_in_session():
     if school is None:
         flash('Invalid Behavior! No school session found.')
         return ('', 400)
-    print(school)
     session['school'] = school
     return ('', 204)
 
