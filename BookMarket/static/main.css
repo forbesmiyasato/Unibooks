@@ -445,9 +445,19 @@ label.field-required::after {
     color: #888 !important;
 }
 
+.dropdown-sort .dropdown-item.active {
+    padding-left: 10px;
+}
+
 .dropdown-item.active {
     background-color: #87ceeb !important;
     color: white !important;
+}
+
+.dropdown-item.active:after {
+    content: "X";
+    right: 10px;
+    position: absolute;
 }
 
 .head > i.fa-angle-down {

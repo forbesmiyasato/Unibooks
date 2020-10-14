@@ -7,9 +7,11 @@ const showSwitch = (show_term) => {
     switch (show_term) {
         case "all":
             $("#show-button-text").html("Showing All");
+            $("#all").html("Show Less");
             break;
         default:
             $("#show-button-text").html("Show All");
+            $("#all").html("Show All");
             break;
     }
 };
