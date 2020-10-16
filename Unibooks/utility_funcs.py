@@ -5,8 +5,21 @@ import io
 from PIL import Image, ImageOps
 from .models import ItemImage
 from . import db, S3_BUCKET, mail
+
+
 # Utility functions
+
+
 def save_images_to_db_and_s3(form_images, item_id):
+    """
+    Save the images to the database and the s3 bucket
+    ---
+    parameters:
+        form_images: filestorage object containg all the images to save and upload
+        item_id: The id of the item these images belong to
+    responses:
+        None
+    """
     thumbnail = None
     for index, images in enumerate(form_images):
         if images:
@@ -49,11 +62,27 @@ def save_images_to_db_and_s3(form_images, item_id):
 
 
 def delete_all_user_listings__images_from_s3_and_db(user):
+    """
+    Deletes all the user's items' images
+    ---
+    parameters:
+        user: The user that we want to delete all their items' images
+    responses:
+        None
+    """
     for item in user.items:
         delete_images_from_s3_and_db(item.id)
     db.session.commit()
 
 def delete_images_from_s3_and_db(item_id):
+    """
+    Deletes all the item's images
+    ---
+    parameters:
+        item_id: the id of the item that we want to delete it's images
+    responses:
+        None
+    """
     s3_resource = boto3.resource('s3')
     my_bucket = s3_resource.Bucket(S3_BUCKET)
     images = ItemImage.query.filter_by(item_id=item_id).all()
@@ -62,6 +91,15 @@ def delete_images_from_s3_and_db(item_id):
         my_bucket.Object(image.image_file).delete()
 
 def delete_non_remaining_images_from_s3_and_db(item_id, remains):
+    """
+    Deletes all the item's images that are not in the remaining image list
+    ---
+    parameters:
+        item_id: the id of the item that we want to delete it's images
+        remains: The remaining image list
+    responses:
+        None
+    """
     s3_resource = boto3.resource('s3')
     my_bucket = s3_resource.Bucket(S3_BUCKET)
     images = ItemImage.query.filter_by(item_id=item_id).all()
@@ -73,11 +111,28 @@ def delete_non_remaining_images_from_s3_and_db(item_id, remains):
 
 
 def send_message(app, message):
+    """
+    Sends an email with the current app context
+    ---
+    parameters:
+        app: the flask app
+        message: the message content
+    responses:
+        none
+    """
     with app.app_context():
         mail.send(message)
 
 
 def insert_space_before_first_number(string):
+    """
+    Inserts a space before the first number
+    ---
+    parameters:
+        string: the string we want to modify
+    responses:
+        The string modified based on the criteria
+    """
     for i, char in enumerate(string):
         if char.isdigit():
             break

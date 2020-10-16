@@ -25,8 +25,17 @@ app.register_blueprint(shop_api)
 
 @app.route('/sitemap.xml', methods=['GET'])
 def sitemap():
+    """
+    Generate sitemap.xml. Makes a list of urls and date modified.
+    ---
+    get:
+        parameters:
+            None
+        responses:
+            200:
+                The website's sitemap
+    """
     try:
-        """Generate sitemap.xml. Makes a list of urls and date modified."""
         pages = []
         ten_days_ago = (datetime.now() - timedelta(days=7)).date().isoformat()
         # static pages
@@ -52,6 +61,17 @@ def sitemap():
 
 @app.before_request
 def before_request():
+    """
+    Handle if request is standalone and doesn't have school in session
+    ---
+    parameters:
+        None
+    responses:
+        200:
+            If request is standalone and doesn't have school session, it'll
+            respond with a json object with missing-session and request path
+            key value pair
+    """
     standalone = request.args.get('standalone')
     if standalone and session.get('school') is None:
         path = request.path
@@ -64,11 +84,29 @@ def before_request():
 
 @app.route('/loaderio-d2cf780526acfac1fe150b2163a01707/')
 def loaderio():
+    """
+    Validation for loader.io load testing
+    ---
+    parameters:
+        None
+    responses:
+        200:
+            Renders the loader.io validation text file
+    """
     return render_template('loaderio-d2cf780526acfac1fe150b2163a01707.txt')
 
 
 @app.before_first_request
 def init_scheduler():
+    """
+    Background task that warns users via email that their post is about to expire
+    and delete posts that expired
+    ---
+    parameters:
+        None
+    responses:
+        None
+    """
     scheduler = BackgroundScheduler()
     job = scheduler.add_job(query_for_reminder, 'interval',
                             kwargs={'app': app}, hours=24)
@@ -78,6 +116,16 @@ def init_scheduler():
 
 @app.errorhandler(404)
 def error404(error):
+    """
+    Handles 404 errors
+    ---
+    get:
+        parameters:
+            error: the error
+        responses:
+            301:
+                Redirects to home
+    """
     flash("Page Not Found! Redirected back to home.", 'error')
     return redirect(url_for('home'))
 
@@ -85,12 +133,30 @@ def error404(error):
 @app.route('/')
 @app.route('/home')
 def home():
+    """
+    The home page endpoint
+    ---
+    parameters:
+        None
+    responses:
+        200:
+            The home page
+    """
     standalone = request.args.get('standalone')
     return render_template('home.html', title="Home", standalone=standalone)
 
 
 @app.route('/aboutus')
 def about_us():
+    """
+    The about us page endpoint
+    ---
+    parameters:
+        None
+    responses:
+        200:
+            The about us page
+    """
     standalone = request.args.get('standalone')
     # if standalone != "true":
     #     standalone = False
@@ -99,6 +165,24 @@ def about_us():
 
 @app.route('/help', methods=['GET', 'POST'])
 def help():
+    """
+    The help page endpoint
+    ---
+    get:
+        parameters:
+            None
+        responses:
+            200:
+                The help page
+    post:
+        parameters:
+            None
+        responses:
+            200:
+                The bug report or contact us email is successfully sent
+            400:
+                Missing csrf token
+    """
     message_form = MessageForm()
     standalone = request.args.get('standalone', None)
     if request.method == 'POST':
@@ -120,28 +204,32 @@ def help():
 @app.route("/account", methods=['GET'])
 @login_required
 def account():
+    """
+    The account page endpoint
+    ---
+    parameters:
+        None
+    responses:
+        200:
+            The account page
+    """
     standalone = request.args.get('standalone')
-    # form = UpdateAccountForm()
-    # if form.validate_on_submit():
-    #     if form.picture.data:
-    #         picture_file = save_picture(form.picture.data)
-    #         current_user.image_file = picture_file
-    #     current_user.username = form.username.data
-    #     current_user.email = form.email.data
-    #     db.session.commit()
-    #     flash('Your account has been updated!', 'success')
-    #     return redirect(url_for('account'))
-    # elif request.method == 'GET':
-    #     form.username.data = current_user.username
-    #     form.email.data = current_user.email
-    # image_file = url_for(
-    #     'static', filename='profile_pics/' + current_user.image_file)
     return render_template('account.html', title='Account', standalone=standalone)
 
 
 @app.route("/account/delete", methods=['POST'])
 @login_required
 def account_delete():
+    """
+    Deletes the current user's account and logs them out concurrently 
+    ---
+    post:
+        parameters:
+            None
+        responses:
+            301:
+                Redirects to home page after operation is done
+    """
     user = current_user
     @copy_current_request_context
     def delete_user_data(user):
@@ -158,6 +246,27 @@ def account_delete():
 
 @app.route("/item/new", methods=['GET', 'POST'])
 def new_item():
+    """
+    Handles the user reaching the sell page endpoint
+    ---
+    get:
+        parameters:
+            None
+        responses:
+            200:
+                The sell page
+            301:
+                Redirects due to missing school session, unauthenticated,
+                unconfirmed or reached max listings
+    post:
+        parameters:
+            None
+        Responses:
+            200:
+                Post successful, returns json with html and product detail page url
+            400:
+                Missing csrf token
+    """
     if session.get('school') is None:
         flash('School Session Needed!', 'error')
         return redirect(url_for('home'))
@@ -248,6 +357,16 @@ def new_item():
 
 @app.route('/class/<department>')
 def item_class(department):
+    """
+    Gets all the courses within a department
+    ---
+    get:
+        parameters:
+            department: department's ID
+        responses:
+            200:
+                A list of courses in the department in JSON
+    """
     classes = ItemClass.query.filter_by(department_id=department).order_by(
         ItemClass.abbreviation).all()
     classArray = []
@@ -262,17 +381,20 @@ def item_class(department):
     return jsonify({'classes': classArray})
 
 
-@app.route('/user/<string:username>')
-def user_posts(username):
-    page = request.args.get('page', 1, type=int)
-    user = User.query.filter_by(username=username).first_or_404()
-    posts = Item.query.order_by(Item.date_posted.desc()).filter_by(
-        author=user).paginate(page=page, per_page=5)
-    return render_template('user_posts.html', posts=posts, user=user)
-
-
 @app.route('/add-to-bag', methods=['POST'])
 def add_to_bag():
+    """
+    Adds the item to the users shopping bag (saved list)
+    ---
+    post:
+        parameters:
+            None
+        Responses:
+            200:
+                Added successfully, returns json with added being true
+            400:
+                Missing csrf token
+    """
     item = request.form.get('item_id')
     added = False
     if current_user.is_authenticated is True:
@@ -297,6 +419,24 @@ def add_to_bag():
 
 @app.route('/saved', methods=['GET', 'POST'])
 def saved_for_later():
+    """
+    Saved page endpoint and handles user messaging seller
+    ---
+    get:
+        parameters:
+            None
+        responses:
+            200:
+                The saved page
+    post:
+        parameters:
+            None
+        Responses:
+            200:
+                Messaged the seller successfully
+            400:
+                Missing csrf token
+    """
     standalone = request.args.get('standalone')
     if request.method == 'POST' and request.form.get('email'):
         item_id = request.args.get('item')
@@ -347,8 +487,19 @@ def saved_for_later():
 
 
 @app.route('/saved/delete', methods=['POST'])
-# @login_required
 def delete_saved():
+    """
+    Deletes item in shopping bag
+    ---
+    post:
+        parameters:
+            None
+        Responses:
+            200:
+                deleted successfully
+            400:
+                Missing csrf token
+    """
     item = request.args.get('item_id')
     item_name = request.args.get('item_name')
     if current_user.is_authenticated:
@@ -373,6 +524,18 @@ def delete_saved():
 @app.route('/post/delete', methods=['POST'])
 @login_required
 def delete_item():
+    """
+    Deletes the users post
+    ---
+    post:
+        parameters:
+            None
+        Responses:
+            200:
+                Post deleted successfully
+            400:
+                Missing csrf token
+    """
     item = request.args.get('item_id')
     standalone = request.form['standalone']
     deleting_item = Item.query.get_or_404(item)
@@ -408,6 +571,15 @@ def delete_item():
 
 
 def listings_html(standalone=None):
+    """
+    Generates html for listing page based on whether it's a standalone page or not
+    ---
+    parameters:
+        standalone - If the page is standalone or not (if is standalone, then it doesn't
+        need to request all the resources again)
+    Responses:
+        The html for listing page
+    """
     _listings = Item.query.filter_by(user_id=current_user.id).order_by(
         Item.date_posted.asc()).all()
     form = ItemForm()
@@ -418,6 +590,16 @@ def listings_html(standalone=None):
 @app.route('/listings')
 @login_required
 def listings():
+    """
+    The listing page endpoint
+    ---
+    get:
+        parameters:
+            None
+        responses:
+            200:
+                The listing page
+    """
     standalone = request.args.get('standalone')
     return listings_html(standalone)
 
@@ -434,6 +616,14 @@ def listings():
 
 @app.context_processor
 def inject_num_items():
+    """
+    Injects the users shopping bag item count to every request
+    ---
+    parameters:
+        None
+    Responses:
+        The number of items in the users shopping bag
+    """
     if current_user:
         if (current_user.is_authenticated):
             return {'numItems': db.session.query(SaveForLater.item_id).filter_by(
@@ -448,12 +638,31 @@ def inject_num_items():
 
 @app.route("/messagebuyerform")
 def message_buyer_form():
+    """
+    Gets the html for the message buyer form
+    ---
+    get:
+        parameters:
+            None
+        responses:
+            200:
+                The message buyer form
+    """
     message_form = MessageForm()
     return render_template('message_form.html', message_form=message_form, message_title="Contact Seller", need_customization=True)
 
 
 @app.route("/editform/<int:item_id>")
 def get_edit_form(item_id=None):
+    """
+    Gets the edit form for a specific item
+    ---
+    parameters:
+        item_id: the id of the item that we want the edit form
+    responses:
+        200:
+            The edit form for the specific item
+    """
     _item = Item.query.get_or_404(item_id)
     edit_form = ItemForm()
     # It's never actually posting here, just left it incase we need to
@@ -503,12 +712,33 @@ def get_edit_form(item_id=None):
 
 @app.context_processor
 def inject_schools():
+    """
+    Injects the list of schools to the request
+    ---
+    parameters:
+        None
+    Responses:
+        200:
+            The list of schools in the database
+    """
     schools = db.session.query(School).all()
     return {'schools': schools}
 
 
 @app.route('/setschool', methods=['POST'])
 def set_school_in_session():
+    """
+    Sets the user's school in session
+    ---
+    post:
+        parameters:
+            None
+        Responses:
+            200:
+                School successfully added in session
+            400:
+                Missing csrf token or the school is not found
+    """
     state = request.form.get('state', None)
     if state == "loggout":
         logout_user()
@@ -522,6 +752,24 @@ def set_school_in_session():
 
 @app.route('/contactus', methods=['GET', 'POST'])
 def leave_a_message():
+    """
+    The contact us page endpoint, also handles users sending contact us emails
+    ---
+    get:
+        parameters:
+            None
+        responses:
+            200:
+                The contact us page
+    post:
+        parameters:
+            None
+        Responses:
+            200: 
+                Message successfully sent
+            400:
+                Missing csrf token
+    """
     message_form = MessageForm()
     standalone = request.args.get('standalone', None)
 
@@ -542,6 +790,18 @@ def leave_a_message():
 
 @app.route('/report', methods=['POST'])
 def report_item():
+    """
+    Handles the user reporting a specific post as inappropriate
+    ---
+    post:
+        parameters:
+            None
+        Responses:
+            200: 
+                Reported successfully
+            400:
+                Missing csrf token
+    """
     item_id = request.form.get('item_id')
     item = Inappropriate.query.filter_by(id=item_id).first()
     current_user.num_reports += 1
@@ -552,11 +812,23 @@ def report_item():
     else:
         item.count += 1
         db.session.commit()
-
     return 'reported'
+
 
 @app.route('/unreport', methods=['POST'])
 def unreport_item():
+    """
+    Unreports a specific post
+    ---
+    post:
+        parameters:
+            None
+        Responses:
+            200: 
+                Unreports successfully
+            400:
+                Missing csrf token
+    """
     item_id = request.form.get('item_id')
     item = Inappropriate.query.filter_by(id=item_id).first()
     if item is not None:
@@ -568,16 +840,43 @@ def unreport_item():
 
 @app.route('/privacy')
 def private_policy():
+    """
+    Privacy policy page endpoint
+    ---
+    parameters:
+        None
+    responses:
+        200:
+            The privacy policy page
+    """
     standalone = request.args.get('standalone', None)
     return render_template('private_policy.html', standalone=standalone, title="Private Policy")
 
 
 @app.route('/legal')
 def terms_of_service():
+    """
+    Terms of service page endpoint
+    ---
+    parameters:
+        None
+    responses:
+        200:
+            The TOS page
+    """
     standalone = request.args.get('standalone', None)
     return render_template('terms_of_service.html', standalone=standalone, title="Terms of Service")
 
 @app.route('/donate')
 def donate():
+    """
+    Donate page endpoint
+    ---
+    parameters:
+        None
+    responses:
+        200:
+            The donate page
+    """
     standalone = request.args.get('standalone', None)
     return render_template('donate.html', standalone=standalone, title="Donate")
