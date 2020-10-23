@@ -18,6 +18,18 @@ shop_api = Blueprint('shop_api', __name__,
 
 @shop_api.route("/shop")
 def shop():
+    """
+    The shop page endpoint, initializes the side/top/bottom bars
+    ---
+    get:
+        parameters:
+            None
+        responses:
+            200:
+                The shop page html
+            301: 
+                Redirects to home if school session is missing
+    """
     standalone = request.args.get('standalone')
     if session.get('school') is None:
         flash("School Session Needed", 'error')
@@ -33,17 +45,51 @@ def shop():
     categories=categories, all=current_listings, totalCategory=total_category)
 
 
-def findMatchingCourse(courseSearch):
-    return ItemClass.query.filter_by(school=session['school']).filter(ItemClass.abbreviation.ilike(courseSearch)).first()
+def findMatchingCourse(search_term):
+    """
+    Finds courses for the current school in the database that match the search query
+    ---
+    parameter:
+        search_term: The search term that we're using to query the database
+    return:
+        Courses that match the search query
+    """
+    return ItemClass.query.filter_by(school=session['school']).filter(ItemClass.abbreviation.ilike(search_term)).first()
 
 def findMatchingDepartment(search_term):
+    """
+    Finds department for the current school in the database that match the search query
+    ---
+    parameter:
+        search_term: The search term that we're using to query the database
+    return:
+        Departments that match the search query
+    """
     return ItemDepartment.query.filter_by(school=session['school']).filter((ItemDepartment.department_name.ilike(search_term) | (ItemDepartment.abbreviation.ilike(search_term)))).first()
 
 def findMatchingCategory(search_term):
+    """
+    Finds categories for the current school in the database that match the search query
+    ---
+    parameter:
+        search_term: The search term that we're using to query the database
+    return:
+        Categories that match the search query
+    """
     return ItemCategory.query.filter_by(school=session['school']).filter((ItemCategory.category_name.ilike(search_term))).first()
 
 @shop_api.route("/shop/data")
 def getPosts():
+    """
+    Generates the items to display on the shop page based on the page/filter/sort/search/school
+    ---
+    get:
+        parameters:
+            None
+        responses:
+            200:
+                HTML for the items to show on the shop page
+    """
     num_results = 0
     department_id = request.args.get('department')
     category = request.args.get('nonbook')
@@ -132,6 +178,16 @@ def getPosts():
 
 
 def item_html(item_id, _item, standalone=None):
+    """
+    Gets the HTML for the single product page for the specific item
+    ---
+    parameters:
+        item_id: The items id
+        _item: The item object
+        standalone: Whether this page is standalone or not
+    responses:
+        The HTML for the single product page
+    """
     edit_form = ItemForm()
     message_form = MessageForm()
     if request.method == 'POST' and standalone != 'notfromnewitem':
@@ -200,6 +256,24 @@ def item_html(item_id, _item, standalone=None):
 
 @shop_api.route("/shop/<int:item_id>", methods=['GET', 'POST'])
 def item(item_id):
+    """
+    The single product page endpoint, handles post request if buyer messages seller
+    ---
+    get:
+        parameters:
+            item_id: The item id of the item to display on the single product page
+        responses:
+            200:
+                The single product page html
+            301: 
+                Redirects to home if school session is missing
+    post:
+        parameters:
+            none
+        response:
+            200:
+                Where the message originated from
+    """
     if session.get('school') is None:
         flash("School Session Needed", 'error')
         return redirect(url_for('home'))
@@ -214,7 +288,6 @@ def item(item_id):
             else:
                 time_difference = datetime.utcnow() - current_user.last_buy_message_sent
                 minutes = divmod(time_difference.total_seconds(), 60)[0]
-                print("TIME", minutes)
                 if minutes >= 60.0:
                     current_user.last_buy_message_sent = datetime.utcnow()
                     current_user.num_buy_message_sent = 1

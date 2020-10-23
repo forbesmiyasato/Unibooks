@@ -18,6 +18,22 @@ salt = "email_confirm"
 
 @userAuth.route("/register", methods=['GET', 'POST'])
 def register():
+    """
+    The register page endpoint
+    ---
+    get:
+        parameters:
+            None
+        responses:
+            200:
+                The register page html
+    post:
+        parameters:
+            None
+        responses:
+            301: redirects to login if registered successfully
+            and refreshes page if registering with invalid email domain
+    """
     standalone = request.args.get('standalone')
     form = RegistrationForm()
     if session.get('school') is None:
@@ -54,6 +70,18 @@ def register():
 
 @userAuth.route('/confirm_email/send/', methods=['POST'])
 def send_confirm_email():
+    """
+    End point which sends the confirmation email
+    ---
+    post:
+        parameters:
+            None
+        responses:
+            200:
+                JSON indicating sending confirmation email too frequently or sent successfully
+            301: 
+                Redirects to home if user is not logged in or account isn't confirmed
+    """
     if current_user.last_confirm_email_sent:
         time_difference = datetime.utcnow() - current_user.last_confirm_email_sent
         minutes = divmod(time_difference.total_seconds(), 60)[0]
@@ -83,13 +111,24 @@ def send_confirm_email():
 
 @userAuth.route('/password_reset', methods=['POST'])
 def send_password_reset():
+    """
+    End point which sends password reset email
+    ---
+    post:
+        parameters:
+            None
+        responses:
+            200:
+                JSON indicating current user doesn't exist or reset email sent successfully
+            301: 
+                Redirects to home if user if user is already authenticated
+    """
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     email = request.form.get('email')
     user = Users.query.filter_by(email=email).first()
     if user is None:
         return jsonify({'result': 'nouser'})
-    print("!!!!!!!!!!!!!!!!!!", email)
     token = serializer.dumps(email, salt=salt)  # salt is optional
     link = url_for('userAuth.reset_password', token=token, _external=True)
     msg = Message('Password Reset', sender=("Unibooks", "do-not-reply@unibooks.io"), recipients=[email],
@@ -104,9 +143,26 @@ def send_password_reset():
 
 @userAuth.route('/password_reset/<token>', methods=['GET', 'POST'])
 def reset_password(token):
+    """
+    End point which handles the password resetting
+    ---
+    get:
+        parameters:
+            token: the secret token sent for validation
+        responses:
+            200:
+                The password reset page/form
+            301: 
+                Redirects to home if token is invalid or expired
+    post:
+        parameters:
+            None
+        responses:
+            301: 
+                Redirects to home after user submits new password
+    """
     try:
         email = serializer.loads(token, salt=salt, max_age=3600)
-        print(email)
     except SignatureExpired:
         flash("The token is expired! Click \"Forgot password\" below to send another one.", 'error')
         return redirect(url_for('userAuth.login'))
@@ -127,9 +183,18 @@ def reset_password(token):
 
 @userAuth.route('/confirm_email/<token>')
 def confirm_email(token):
+    """
+    End point which handles the user account confirming
+    ---
+    get:
+        parameters:
+            token: the secret token sent for validation
+        responses:
+            301: 
+                Redirects to home regardless
+    """
     try:
         email = serializer.loads(token, salt=salt, max_age=3600)
-        print(email)
     except SignatureExpired:
         # return '<h1>The token is expired!<h1>'
         flash(
@@ -147,6 +212,17 @@ def confirm_email(token):
 
 
 def login_html(standalone=None, pattern=None, placeholder=None, error_message=None):
+    """
+    End point which handles the password resetting
+    ---
+    parameters:
+        standalone: whether this html is standalone or not
+        pattern: The school's email pattern
+        placeholder: placeholder text for email field
+        error_message: error message to display if user inputs invalid email
+    return: 
+        login page html
+    """
     form = LoginForm()
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
@@ -168,12 +244,28 @@ def login_html(standalone=None, pattern=None, placeholder=None, error_message=No
 
 @userAuth.route("/login", methods=['GET', 'POST'])
 def login():
+    """
+    The login page endpoint
+    ---
+    get:
+        parameters:
+            None
+        responses:
+            200:
+                The login page html
+    post:
+        parameters:
+            None
+        responses:
+            301: 
+                Redirects to next page (page that brought user to login page)
+                or home if logged in successfully
+    """
     standalone = request.args.get('standalone')
     if session.get('school') is None:
         return login_html()
     school = School.query.filter_by(id=session['school']).first()
     pattern = school.email_pattern
-    print(pattern)
     placeholder = "e.g. xxxx@" + school.email_domain
     error_message = "Must be a " + school.name + " email address!"
     return login_html(standalone, pattern, placeholder, error_message)
@@ -181,6 +273,16 @@ def login():
 
 @userAuth.route("/logout")
 def logout():
+    """
+    End point to log out the current user
+    ---
+    get:
+        parameters:
+            None
+        responses:
+            301: 
+                Redirects to home
+    """
     logout_user()
     standalone = request.args.get('standalone')
     flash('Logged out!',
